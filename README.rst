@@ -1,7 +1,7 @@
-behave.web
+behaving.web
 ==========
 
-`behave.web` provides *steps* useful for testing web applications with `behave`_.
+`behaving.web` provides *steps* useful for testing web applications with `behave`_.
 The package is pretty experimental, contributions are most welcome.
 
 

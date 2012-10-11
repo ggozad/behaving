@@ -1,4 +1,4 @@
-from behave.web import environment as webenv
+from behaving.web import environment as webenv
 
 
 def before_all(context):
