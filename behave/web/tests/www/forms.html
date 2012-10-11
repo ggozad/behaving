@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Forms test</title>
+</head>
+<body>
+    <form name="register_form" action="result.html" method="get">
+        <input type="text" name="name"><br/>
+        <input type="password" name="passwd"><br/>
+        <input type="radio" name="sex" value="male">Male<br/>
+        <input type="radio" name="sex" value="female">Female<br/>
+        <input type="checkbox" name="subscribe" value="subscribe">Subscribe<br>
+        <input type="checkbox" name="digest" value="digest" checked="on">Digest<br>
+        <select name="countries" multiple="multiple">
+            <option value="gr">Greece</option>
+            <option value="no">Norway</option>
+            <option value="br">Brazil</option>
+        </select>
+        <input type="submit" name="register" value="Register">
+    </form>
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+    };
+</script>
+</html>
