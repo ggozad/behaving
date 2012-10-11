@@ -4,7 +4,8 @@ version = '0.1'
 
 setup(name='behave.web',
       version=version,
-      description="",
+      description="Helpers for doing BDD on web applications with behave",
+      long_description=open("README.rst").read(),
       classifiers=[],
       keywords='',
       author='Yiorgis Gozadinos',
