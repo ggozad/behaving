@@ -1,3 +1,4 @@
+import os
 from behave import when
 
 
@@ -27,7 +28,7 @@ def i_select(context, value, name):
 
 
 @when('I press "{name}"')
-def when_i_press(context, name):
+def i_press(context, name):
     button = context.browser.find_by_id(name) or \
              context.browser.find_by_name(name) or \
              context.browser.find_link_by_text(name) or \
@@ -36,3 +37,14 @@ def when_i_press(context, name):
              context.browser.find_by_xpath("//button[contains(text(), '%s')]" % name)
     assert button
     button.first.click()
+
+
+@when('I attach the file "{path}" to "{name}"')
+def i_attach(context, name, path):
+    if not os.path.exists(path):
+        if not hasattr(context, 'attachment_dir'):
+            assert False
+        path = os.path.join(context.attachment_dir, path)
+        if not os.path.exists(path):
+            assert False
+    context.browser.attach_file(name, path)

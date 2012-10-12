@@ -12,8 +12,8 @@ Feature: Forms
         And I uncheck "digest"
         And I select "no" from "countries"
         And I select "gr" from "countries"
+        And I attach the file "test.txt" to "file"
         And I press "register"
-
         Then the browser's URL should contain "name=Foo+Bar"
         And the browser's URL should contain "passwd=hax0r"
         And the browser's URL should contain "sex=male"
@@ -22,3 +22,4 @@ Feature: Forms
         And the browser's URL should contain "countries=no"
         And the browser's URL should contain "countries=gr"
         And the browser's URL should contain "register=Register"
+        And the browser's URL should contain "file=test.txt"
