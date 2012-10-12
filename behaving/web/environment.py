@@ -3,6 +3,7 @@ from urllib2 import URLError
 
 def before_all(context):
     context.default_browser = ''
+    context.attachment_dir = '/'
 
 
 def before_feature(context, feature):
