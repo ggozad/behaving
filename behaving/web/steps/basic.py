@@ -1,4 +1,5 @@
-from behave import then
+import time
+from behave import when, then
 
 
 @then(u'I should see "{text}"')
@@ -59,3 +60,8 @@ def should_see_element_with_css_within_timeout(context, css, timeout):
 @then(u'I should not see an element with the css selector "{css}" within {timeout:d} seconds')
 def should_not_see_element_with_css_within_timeout(context, css, timeout):
     assert not context.browser.is_element_present_by_css(css, wait_time=timeout)
+
+
+@when(u'I wait for {timeout:d} seconds')
+def wait_for_timeout(context, timeout):
+    time.sleep(timeout)
