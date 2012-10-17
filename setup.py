@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 version = '0.1'
 
-setup(name='behaving.web',
+setup(name='behaving',
       version=version,
       description="Helpers for doing BDD on web applications with behave",
       long_description=open("README.rst").read(),
@@ -18,6 +18,7 @@ setup(name='behaving.web',
       zip_safe=False,
       install_requires=['setuptools', 'behave', 'splinter'],
       entry_points="""
-      # -*- Entry points: -*-
-      """,
+      [console_scripts]
+      smsmock = behaving.sms.mock:main
+      """
       )
