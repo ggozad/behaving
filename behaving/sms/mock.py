@@ -1,9 +1,12 @@
 import argparse
 import sys
-
+import os
 import SimpleHTTPServer
 import SocketServer
 import urlparse
+import logging
+import time
+output_dir = None
 
 
 class SMSServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
@@ -19,9 +22,26 @@ class SMSServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
             self.send_response(400)
             self.end_headers()
             return
+        fr = fr[0]
+        to = to[0]
+        body = body[0]
+
         self.send_response(200)
         self.end_headers()
-        print fr, to, body
+
+        global output_dir
+        phone_dir = os.path.join(output_dir, to)
+        if not os.path.exists(phone_dir):
+            try:
+                os.makedirs(phone_dir)
+            except OSError:
+                logging.error('Phone directory could not be created')
+                return
+
+        filename = time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
+        dest = os.path.join(phone_dir, "%s.sms" % filename)
+        with open(dest, "w") as f:
+            f.write(body)
 
 
 def main(args=sys.argv[1:]):
@@ -32,7 +52,21 @@ def main(args=sys.argv[1:]):
                         default='8099',
                         help='The port to use')
 
+    parser.add_argument('-o', '--output_dir',
+                        default=None,
+                        required=True,
+                        help='Directory where to dump the SMSs')
+
     options = parser.parse_args(args=args)
+
+    if not os.path.exists(options.output_dir):
+        try:
+            os.mkdir(options.output_dir)
+        except OSError:
+            logging.error('Output directory could not be created')
+    global output_dir
+    output_dir = options.output_dir
+
     httpd = SocketServer.TCPServer(("", int(options.port)), SMSServer)
     httpd.serve_forever()
 
