@@ -1,10 +1,10 @@
-from behaving.sms.helpers import SMSChecker
+from behaving.fsinspector import FSInspector
 
 
 def before_all(context):
     if not hasattr(context, 'sms_path'):
         context.sms_path = '/'
-    context.sms = SMSChecker(context.sms_path)
+    context.sms = FSInspector(context.sms_path)
     context.sms.clear()
 
 
