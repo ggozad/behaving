@@ -25,7 +25,7 @@ class SMSChecker(object):
         return messages
 
     def clear(self):
-        root, users, files = os.walk(self.sms_path).next()
-        for user in users:
-            dir_path = os.path.join(self.sms_path, user)
-            rmtree(dir_path)
+
+        dirs = os.listdir(self.sms_path)
+        for dir_path in dirs:
+            rmtree(os.path.join(self.sms_path, dir_path))

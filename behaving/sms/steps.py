@@ -15,6 +15,6 @@ def filter_messages(context, address, f=None):
     return messages
 
 
-@then('I should receive an sms at "{tel}"')
+@then('I should receive an sms at {tel}')
 def should_receive_sms(context, tel):
     assert filter_messages(context, tel)

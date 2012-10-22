@@ -4,7 +4,7 @@ from behaving.sms.helpers import SMSChecker
 def before_all(context):
     if not hasattr(context, 'sms_path'):
         context.sms_path = '/'
-    context.sms = SMSChecker()
+    context.sms = SMSChecker(context.sms_path)
     context.sms.clear()
 
 
