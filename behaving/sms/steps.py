@@ -15,6 +15,15 @@ def filter_messages(context, address, f=None):
     return messages
 
 
+@then('I should receive an sms at {tel} containing "{text}"')
+def should_receive_sms_with_text(context, tel, text):
+    msgs = filter_messages(context, tel)
+    for msg in msgs:
+        if text in msg:
+            return
+    assert False, 'Text not found'
+
+
 @then('I should receive an sms at {tel}')
 def should_receive_sms(context, tel):
     assert filter_messages(context, tel)
