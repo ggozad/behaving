@@ -2,10 +2,10 @@ from behaving.fsinspector import FSInspector
 
 
 def before_all(context):
-    if not hasattr(context, 'sms_path'):
-        context.sms_path = '/'
-    context.sms = FSInspector(context.sms_path)
-    context.sms.clear()
+    if not hasattr(context, 'mail_path'):
+        context.mail_path = '/'
+    context.mail = FSInspector(context.mail_path)
+    context.mail.clear()
 
 
 def before_feature(context, feature):
@@ -21,7 +21,7 @@ def after_feature(context, feature):
 
 
 def after_scenario(context, scenario):
-    context.sms.clear()
+    context.mail.clear()
 
 
 def after_all(context):

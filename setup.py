@@ -19,6 +19,7 @@ setup(name='behaving',
       install_requires=['setuptools', 'behave', 'splinter'],
       entry_points="""
       [console_scripts]
+      mailmock = behaving.mail.mock:main
       smsmock = behaving.sms.mock:main
       """
       )
