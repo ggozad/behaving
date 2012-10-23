@@ -5,7 +5,7 @@ from behaving.sms import environment as smsenv
 def before_all(context):
     import behaving
     context.sms_path = os.path.join(os.path.dirname(behaving.__file__),
-                                    '../../../var/sms/')
+                                    '../../var/sms/')
     smsenv.before_all(context)
 
 
