@@ -42,8 +42,6 @@ def i_press(context, name):
 @when('I attach the file "{path}" to "{name}"')
 def i_attach(context, name, path):
     if not os.path.exists(path):
-        if not hasattr(context, 'attachment_dir'):
-            assert False
         path = os.path.join(context.attachment_dir, path)
         if not os.path.exists(path):
             assert False

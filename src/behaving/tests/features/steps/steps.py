@@ -9,7 +9,7 @@ from behaving.sms.steps import *
 from behaving.mail.steps import *
 
 
-@when('I send an sms to "{to}"" with body "{body}"')
+@when('I send an sms to "{to}" with body "{body}"')
 def send_sms(context, to, body):
     url = 'http://localhost:8099'
     values = {'from': 'TEST',
@@ -24,7 +24,7 @@ def send_sms(context, to, body):
         assert False
 
 
-@when('I send an email to {to} with subject "{subject}" and body "{body}"')
+@when('I send an email to "{to}" with subject "{subject}" and body "{body}"')
 def send_email(context, to, subject, body):
     msg = MIMEText(body)
     msg['Subject'] = subject
