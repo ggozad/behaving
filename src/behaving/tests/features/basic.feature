@@ -3,6 +3,7 @@ Feature: Text presence
     Background:
         Given a browser
 
+    @web
     Scenario: Text presence
         When I visit "http://localhost:8080"
         Then I should see "Hello world"
@@ -11,6 +12,7 @@ Feature: Text presence
         Then I should see "Late text" within 2 seconds
         And I should not see "Very late text" within 2 seconds
 
+    @web
     Scenario: Element presence
         When I visit "http://localhost:8080"
         Then I should see an element with id "content"

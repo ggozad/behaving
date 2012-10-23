@@ -1,8 +1,9 @@
+from behaving.web.steps import *
+from behaving.sms.steps import *
+
 import urllib
 import urllib2
-
 from behave import when
-from behaving.sms.steps import *
 
 
 @when('I send an sms to {to} with body "{body}"')
