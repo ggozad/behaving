@@ -6,9 +6,10 @@ from behave import when
 
 from behaving.web.steps import *
 from behaving.sms.steps import *
+from behaving.mail.steps import *
 
 
-@when('I send an sms to {to} with body "{body}"')
+@when('I send an sms to "{to}"" with body "{body}"')
 def send_sms(context, to, body):
     url = 'http://localhost:8099'
     values = {'from': 'TEST',
