@@ -3,6 +3,7 @@ Feature: Forms
     Background:
         Given a browser
 
+    @web
     Scenario: Filling-in fields
         When I visit "http://localhost:8080/forms.html"
         And I fill in "name" with "Foo Bar"

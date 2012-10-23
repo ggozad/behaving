@@ -1,11 +1,15 @@
 import os
 from behaving.web import environment as webenv
+from behaving.sms import environment as smsenv
 
 
 def before_all(context):
+    import behaving
+    context.attachment_dir = os.path.join(os.path.dirname(behaving.__file__), 'tests/data')
+    context.sms_path = os.path.join(os.path.dirname(behaving.__file__),
+                                    '../../var/sms/')
     webenv.before_all(context)
-    import behaving.tests
-    context.attachment_dir = os.path.join(os.path.dirname(behaving.tests.__file__), 'data')
+    smsenv.before_all(context)
 
 
 def after_all(context):

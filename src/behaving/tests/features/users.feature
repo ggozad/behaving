@@ -1,5 +1,6 @@
 Feature: Url handling
 
+    @web
     Scenario: Change between users
         Given "Foo" as the user
         When I visit "http://localhost:8080"

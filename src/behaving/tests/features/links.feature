@@ -3,6 +3,7 @@ Feature: Links
     Background:
         Given a browser
 
+    @web
     Scenario: Clicking a link
         When I visit "http://localhost:8080"
         And I click the link to "/page2.html"
