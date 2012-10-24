@@ -13,7 +13,7 @@ def before_feature(context, feature):
 
 
 def before_scenario(context, scenario):
-    context.users = dict()
+    pass
 
 
 def after_feature(context, feature):
