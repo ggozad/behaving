@@ -15,9 +15,16 @@ def parse_sms_set_var(context, tel, expression):
     assert context.persona is not None
     msgs = context.sms.user_messages(tel)
     assert msgs
-    expression = '{}' + expression + '{}'
+
     parser = parse.compile(expression)
     res = parser.parse(msgs[-1])
+
+    # Make an implicit assumption that there might be something before/after the expression
+    if res is None:
+        expression = '{}' + expression + '{}'
+        parser = parse.compile(expression)
+        res = parser.parse(msgs[-1])
+
     assert res
     assert res.named
     for key, val in res.named.items():
