@@ -22,4 +22,5 @@ def set_variable(context, key, val):
 @then('"{key}" is set to "{val}"')
 def key_is_val(context, key, val):
     assert context.persona
+    assert key in context.persona
     assert context.persona[key] == val

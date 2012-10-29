@@ -1,4 +1,12 @@
-from behave import then
+from behave import when, then
+
+
+@when('I set "{key}" to the body of the sms I received at "{tel}"')
+def set_var_to_sms_body(context, key, tel):
+    assert context.persona is not None
+    msgs = context.sms.user_messages(tel)
+    assert msgs
+    context.persona[key] = msgs[-1]
 
 
 @then('I should receive an sms at "{tel}" containing "{text}"')
