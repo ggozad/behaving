@@ -1,5 +1,5 @@
 class Persona(dict):
     """
-    Nothing to see here...
+    A dictionary holding variables.
     """
     pass

@@ -7,7 +7,7 @@ def before_feature(context, feature):
 
 
 def before_scenario(context, scenario):
-    pass
+    context.persona = None
 
 
 def after_feature(context, feature):
