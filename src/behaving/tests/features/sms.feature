@@ -13,3 +13,6 @@ Feature: Send an SMS
         When I send an sms to "111" with body "Hello world"
         And I set "foo" to the body of the sms I received at "111"
         Then "foo" is set to "Hello world"
+        When I send an sms to "111" with body "You password is: 'hax0r'. Click here"
+        And I parse the sms I received at "111" and set "password is: '{password}'"
+        Then "password" is set to "hax0r"
