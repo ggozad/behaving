@@ -7,7 +7,8 @@ Feature: Send an SMS
         When I send an sms to "222" with body "Hello world"
         Then I should receive an sms at "222" containing "world"
 
-    @sms, @personas
+    @sms
+    @personas
     Scenario: Persona variables from sms
         Given "Foo" as the persona
         When I send an sms to "111" with body "Hello world"
