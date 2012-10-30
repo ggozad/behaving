@@ -1,8 +1,10 @@
 import os
 from behave import when
+from behaving.personas.persona import persona_vars
 
 
 @when('I fill in "{name}" with "{value}"')
+@persona_vars
 def i_fill_in_field(context, name, value):
     context.browser.fill(name, value)
 
