@@ -1,6 +1,7 @@
 from behave import given, when, then
 
 from behaving.personas.persona import Persona
+from behaving.personas.persona import persona_vars
 
 
 @given('"{name}" as the persona')
@@ -20,6 +21,7 @@ def set_variable(context, key, val):
 
 
 @then('"{key}" is set to "{val}"')
+@persona_vars
 def key_is_val(context, key, val):
     assert context.persona
     assert key in context.persona

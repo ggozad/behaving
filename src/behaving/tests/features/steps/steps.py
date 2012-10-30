@@ -8,6 +8,7 @@ from behaving.web.steps import *
 from behaving.sms.steps import *
 from behaving.mail.steps import *
 from behaving.personas.steps import *
+from behaving.personas.persona import persona_vars
 
 
 @when('I send an sms to "{to}" with body "{body}"')
@@ -21,7 +22,7 @@ def send_sms(context, to, body):
     req = urllib2.Request(url, data)
     try:
         urllib2.urlopen(req)
-    except HTTPError:
+    except urllib2.HTTPError:
         assert False
 
 
