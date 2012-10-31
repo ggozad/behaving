@@ -2,8 +2,11 @@ Feature: Send an SMS
 
     @sms
     Scenario: Receive SMSs
-        When I send an sms to "111" with body "Hello world"
-        Then I should receive an sms at "111"
+        When I send an sms to "+4745690111" with body "foo"
+        Then I should receive an sms at "+4745690111"
+
+    @sms
+    Scenario: Receive SMS with body
         When I send an sms to "222" with body "Hello world"
         Then I should receive an sms at "222" containing "world"
 
