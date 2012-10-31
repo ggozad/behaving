@@ -3,7 +3,7 @@ import parse
 from behaving.personas.persona import persona_vars
 
 
-@when('I set "{key}" to the body of the sms I received at "{tel}"')
+@then('I set "{key}" to the body of the sms I received at "{tel}"')
 @persona_vars
 def set_var_to_sms_body(context, key, tel):
     assert context.persona is not None
