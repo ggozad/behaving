@@ -12,7 +12,7 @@ def before_feature(context, feature):
 
 
 def before_scenario(context, scenario):
-    context.users = dict()
+    context.browsers = dict()
 
 
 def after_feature(context, feature):
@@ -20,7 +20,7 @@ def after_feature(context, feature):
 
 
 def after_scenario(context, scenario):
-    for user, browser in context.users.items():
+    for browser in context.browsers.values():
         browser.quit()
 
     if hasattr(context, 'browser'):

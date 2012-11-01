@@ -10,8 +10,9 @@ def given_a_persona(context, name):
     if name not in context.personas:
         context.personas[name] = Persona()
     context.persona = context.personas[name]
-    if context.default_browser:
-        context.execute_steps('Given "%s" as the user' % name)
+
+    if hasattr(context, 'browser'):
+        context.execute_steps('Given "%s" as the browser' % name)
 
 
 @when('I set "{key}" to "{val}"')

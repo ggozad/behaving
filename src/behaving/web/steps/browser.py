@@ -12,6 +12,18 @@ def given_a_browser(context):
         context.browser = Browser()
 
 
+@given(u'browser "{name}"')
+def named_browser(context, name):
+    if name in context.browsers:
+        context.browser = context.browsers[name]
+    else:
+        if context.default_browser:
+            context.browsers[name] = Browser(context.default_browser)
+        else:
+            context.browsers[name] = Browser()
+        context.browser = context.browsers[name]
+
+
 @given(u'{brand} as the browser')
 def given_some_browser(context, brand):
     brand = brand.lower()
