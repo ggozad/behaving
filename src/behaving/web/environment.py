@@ -12,6 +12,7 @@ def before_feature(context, feature):
 
 
 def before_scenario(context, scenario):
+    context.browser = None
     context.browsers = dict()
 
 
@@ -23,7 +24,7 @@ def after_scenario(context, scenario):
     for browser in context.browsers.values():
         browser.quit()
 
-    if hasattr(context, 'browser'):
+    if context.browser is not None:
         try:
             context.browser.quit()
         except URLError:
