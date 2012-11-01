@@ -28,7 +28,7 @@ def named_browser(context, name):
 def given_some_browser(context, brand):
     brand = brand.lower()
     assert brand in [u'firefox', u'chrome'], u'You can only use Firefox or Chrome as a browser'
-    if hasattr(context, 'browser'):
+    if context.browser is not None:
         context.browser.quit()
     context.default_browser = brand
     context.browser = Browser(brand)

@@ -3,8 +3,8 @@ import parse
 from behaving.personas.persona import persona_vars
 
 
-@when('I set "{key}" to the body of the sms I received at "{tel}"')
-@then('I set "{key}" to the body of the sms I received at "{tel}"')
+@when(u'I set "{key}" to the body of the sms I received at "{tel}"')
+@then(u'I set "{key}" to the body of the sms I received at "{tel}"')
 @persona_vars
 def set_var_to_sms_body(context, key, tel):
     assert context.persona is not None
@@ -13,12 +13,12 @@ def set_var_to_sms_body(context, key, tel):
     context.persona[key] = msgs[-1]
 
 
-@when('I parse the sms I received at "{tel}" and set "{expression}"')
+@when(u'I parse the sms I received at "{tel}" and set "{expression}"')
 @persona_vars
 def parse_sms_set_var(context, tel, expression):
-    assert context.persona is not None
+    assert context.persona is not None, u'no persona is setup'
     msgs = context.sms.user_messages(tel)
-    assert msgs
+    assert msgs, u'no sms received'
 
     parser = parse.compile(expression)
     res = parser.parse(msgs[-1])
@@ -29,13 +29,13 @@ def parse_sms_set_var(context, tel, expression):
         parser = parse.compile(expression)
         res = parser.parse(msgs[-1])
 
-    assert res
-    assert res.named
+    assert res, u'expression not found'
+    assert res.named, u'expression not found'
     for key, val in res.named.items():
         context.persona[key] = val
 
 
-@then('I should receive an sms at "{tel}" containing "{text}"')
+@then(u'I should receive an sms at "{tel}" containing "{text}"')
 @persona_vars
 def should_receive_sms_with_text(context, tel, text):
     print tel
@@ -43,10 +43,10 @@ def should_receive_sms_with_text(context, tel, text):
     for msg in msgs:
         if text in msg:
             return
-    assert False, 'Text not found'
+    assert False, u'Text not found in sms'
 
 
-@then('I should receive an sms at "{tel}"')
+@then(u'I should receive an sms at "{tel}"')
 @persona_vars
 def should_receive_sms(context, tel):
-    assert context.sms.user_messages(tel)
+    assert context.sms.user_messages(tel), u'sms not received'
