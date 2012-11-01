@@ -12,7 +12,7 @@ def given_a_persona(context, name):
     context.persona = context.personas[name]
 
     if hasattr(context, 'browser'):
-        context.execute_steps('Given "%s" as the browser' % name)
+        context.execute_steps('browser "%s"' % name)
 
 
 @when('I set "{key}" to "{val}"')
