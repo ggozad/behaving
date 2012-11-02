@@ -1,7 +1,6 @@
-from behave import when, then
+from behave import when
 
 
-@then('I set "{key}" to the text of "{name}"')
 @when('I set "{key}" to the text of "{name}"')
 def set_key_to_el_text(context, key, name):
     assert context.persona is not None, u'no persona is setup'
