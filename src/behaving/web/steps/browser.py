@@ -14,14 +14,12 @@ def given_a_browser(context):
 
 @given(u'browser "{name}"')
 def named_browser(context, name):
-    if name in context.browsers:
-        context.browser = context.browsers[name]
-    else:
+    if name not in context.browsers:
         if context.default_browser:
             context.browsers[name] = Browser(context.default_browser)
         else:
             context.browsers[name] = Browser()
-        context.browser = context.browsers[name]
+    context.browser = context.browsers[name]
 
 
 @given(u'{brand} as the browser')
