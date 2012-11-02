@@ -1,5 +1,5 @@
 import os
-from behave import when
+from behave import when, then
 from behaving.personas.persona import persona_vars
 
 
@@ -48,3 +48,19 @@ def i_attach(context, name, path):
         if not os.path.exists(path):
             assert False
     context.browser.attach_file(name, path)
+
+
+@then(u'"{name}" is enabled')
+def is_enabled(context, name):
+    el = context.browser.find_by_id(name) or \
+         context.browser.find_by_name(name)
+    assert el, u'Element not found'
+    assert el.first._element.is_enabled()
+
+
+@then(u'"{name}" is disabled')
+def is_disabled(context, name):
+    el = context.browser.find_by_id(name) or \
+         context.browser.find_by_name(name)
+    assert el, u'Element not found'
+    assert not el.first._element.is_enabled()

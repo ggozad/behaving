@@ -6,7 +6,9 @@ Feature: Forms
     @web
     Scenario: Filling-in fields
         When I visit "http://localhost:8080/forms.html"
-        And I fill in "name" with "Foo Bar"
+        Then "disabled" is disabled
+        And "name" is enabled
+        When I fill in "name" with "Foo Bar"
         And I fill in "passwd" with "hax0r"
         And I choose "male" from "sex"
         And I check "subscribe"
