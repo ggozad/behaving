@@ -64,3 +64,18 @@ def is_disabled(context, name):
          context.browser.find_by_name(name)
     assert el, u'Element not found'
     assert not el.first._element.is_enabled()
+
+
+@then(u'field "{name}" should be valid')
+def field_is_valid(context, name):
+    assert context.browser.find_by_name(name), u'Element not found'
+    assert context.browser.evaluate_script("document.getElementsByName('%s')[0].checkValidity()" % name), \
+        'Field is invalid'
+
+
+@then(u'field "{name}" should be invalid')
+@then(u'field "{name}" should not be valid')
+def field_is_invalid(context, name):
+    assert context.browser.find_by_name(name), u'Element not found'
+    assert not context.browser.evaluate_script("document.getElementsByName('%s')[0].checkValidity()" % name), \
+        'Field is valid'

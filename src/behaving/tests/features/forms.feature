@@ -26,3 +26,19 @@ Feature: Forms
         And the browser's URL should contain "countries=gr"
         And the browser's URL should contain "register=Register"
         And the browser's URL should contain "file=test.txt"
+
+    @web
+    Scenario: Checking for enabled/disabled fields
+        When I visit "http://localhost:8080/forms.html"
+        Then "disabled" is disabled
+        And "name" is enabled
+
+    @web
+    Scenario: Checking HTML5 validation
+        When I visit "http://localhost:8080/forms.html"
+        And I fill in "email" with "foo@"
+        Then field "email" should be invalid
+        When I fill in "email" with "foo@"
+        Then "disabled" is disabled
+        And "name" is enabled
+
