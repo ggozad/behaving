@@ -10,6 +10,7 @@ def i_fill_in_field(context, name, value):
 
 
 @when(u'I choose "{value}" from "{name}"')
+@persona_vars
 def i_choose_in_radio(context, name, value):
     context.browser.choose(name, value)
 
@@ -25,6 +26,7 @@ def i_uncheck(context, name):
 
 
 @when(u'I select "{value}" from "{name}"')
+@persona_vars
 def i_select(context, value, name):
     context.browser.select(name, value)
 
@@ -42,6 +44,7 @@ def i_press(context, name):
 
 
 @when('I attach the file "{path}" to "{name}"')
+@persona_vars
 def i_attach(context, name, path):
     if not os.path.exists(path):
         path = os.path.join(context.attachment_dir, path)
@@ -50,7 +53,7 @@ def i_attach(context, name, path):
     context.browser.attach_file(name, path)
 
 
-@then(u'"{name}" is enabled')
+@then(u'"{name}" should be enabled')
 def is_enabled(context, name):
     el = context.browser.find_by_id(name) or \
          context.browser.find_by_name(name)
@@ -58,7 +61,7 @@ def is_enabled(context, name):
     assert el.first._element.is_enabled()
 
 
-@then(u'"{name}" is disabled')
+@then(u'"{name}" should be disabled')
 def is_disabled(context, name):
     el = context.browser.find_by_id(name) or \
          context.browser.find_by_name(name)

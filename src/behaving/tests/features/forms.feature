@@ -6,8 +6,8 @@ Feature: Forms
     @web
     Scenario: Filling-in fields
         When I visit "http://localhost:8080/forms.html"
-        Then "disabled" is disabled
-        And "name" is enabled
+        Then "disabled" should be disabled
+        And "name" should be enabled
         When I fill in "name" with "Foo Bar"
         And I fill in "passwd" with "hax0r"
         And I choose "male" from "sex"
@@ -30,8 +30,8 @@ Feature: Forms
     @web
     Scenario: Checking for enabled/disabled fields
         When I visit "http://localhost:8080/forms.html"
-        Then "disabled" is disabled
-        And "name" is enabled
+        Then "disabled" should be disabled
+        And "name" should be enabled
 
     @web
     Scenario: Checking HTML5 validation
@@ -39,6 +39,6 @@ Feature: Forms
         And I fill in "email" with "foo@"
         Then field "email" should be invalid
         When I fill in "email" with "foo@"
-        Then "disabled" is disabled
-        And "name" is enabled
+        Then "disabled" should be disabled
+        And "name" should be enabled
 
