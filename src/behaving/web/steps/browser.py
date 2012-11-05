@@ -17,14 +17,11 @@ def named_browser(context, name):
     context.browser = context.browsers[name]
 
 
-@given(u'{brand} as the browser')
+@given(u'{brand} as the default browser')
 def given_some_browser(context, brand):
     brand = brand.lower()
     assert brand in [u'firefox', u'chrome'], u'You can only use Firefox or Chrome as a browser'
-    if context.browser is not None:
-        context.browser.quit()
     context.default_browser = brand
-    context.browser = Browser(brand)
 
 
 @when(u'I reload')
