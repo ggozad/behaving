@@ -1,12 +1,10 @@
 Feature: Browser handling
 
-    @rrr
     @web
     Scenario: Select Chrome browser
         Given Chrome as the default browser
         Given a browser
 
-    @rrr
     @web
     Scenario: Select Firefox browser
         Given Firefox as the default browser
