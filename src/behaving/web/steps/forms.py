@@ -35,10 +35,10 @@ def i_select(context, value, name):
 def i_press(context, name):
     button = context.browser.find_by_id(name) or \
              context.browser.find_by_name(name) or \
-             context.browser.find_link_by_text(name) or \
-             context.browser.find_link_by_partial_text(name) or \
              context.browser.find_by_xpath("//button[text()='%s']" % name) or \
-             context.browser.find_by_xpath("//button[contains(text(), '%s')]" % name)
+             context.browser.find_by_xpath("//button[contains(text(), '%s')]" % name) or \
+             context.browser.find_link_by_text(name) or \
+             context.browser.find_link_by_partial_text(name)
     assert button, u'Element not found'
     button.first.click()
 
