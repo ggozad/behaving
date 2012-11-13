@@ -15,6 +15,7 @@ def named_browser(context, name):
         else:
             context.browsers[name] = Browser()
     context.browser = context.browsers[name]
+    context.browser.switch_to_window(context.browser.windows[0])
 
 
 @given(u'{brand} as the default browser')

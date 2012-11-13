@@ -12,6 +12,7 @@ from behaving.personas.persona import persona_vars
 
 
 @when('I send an sms to "{to}" with body "{body}"')
+@persona_vars
 def send_sms(context, to, body):
     url = 'http://localhost:8099'
     values = {'from': 'TEST',
@@ -27,6 +28,7 @@ def send_sms(context, to, body):
 
 
 @when('I send an email to "{to}" with subject "{subject}" and body "{body}"')
+@persona_vars
 def send_email(context, to, subject, body):
     msg = MIMEText(body)
     msg['Subject'] = subject
