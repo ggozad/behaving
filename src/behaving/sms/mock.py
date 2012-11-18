@@ -16,9 +16,10 @@ class SMSServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         content_length = int(self.headers.getheader('content-length'))
         post_body = self.rfile.read(content_length)
         params = urlparse.parse_qs(post_body)
-        fr = params.get('from')
-        to = params.get('to')
-        body = params.get('body')
+        fr = params.get('SenderAddress')
+        to = params.get('tel')
+        body = params.get('msg')
+        print fr, to, body
         if not (fr and to and body):
             self.send_response(400)
             self.end_headers()

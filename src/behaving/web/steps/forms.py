@@ -40,7 +40,10 @@ def i_press(context, name):
              context.browser.find_link_by_text(name) or \
              context.browser.find_link_by_partial_text(name)
     assert button, u'Element not found'
-    button.first.click()
+    # Go figure why checking for button.first is necessary, but it seems to be for elements
+    #that listen to onclick and change somehow
+    if button.first:
+        button.first.click()
 
 
 @when('I attach the file "{path}" to "{name}"')
