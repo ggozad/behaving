@@ -2,7 +2,8 @@ from urllib2 import URLError
 
 
 def before_all(context):
-    context.default_browser = ''
+    if not hasattr(context, 'default_browser'):
+        context.default_browser = ''
     if not hasattr(context, 'attachment_dir'):
         context.attachment_dir = '/'
 
