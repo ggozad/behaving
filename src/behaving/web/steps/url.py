@@ -14,7 +14,7 @@ def when_i_visit_url(context, url):
 
 @then(u'the browser\'s URL should be "{url}"')
 def the_browser_url_should_be(context, url):
-    assert context.browser.url == url, 'Expected %s but got %s' % (url, context.browser.url)
+    assert context.browser.url.strip() == url, 'Expected %s but got %s' % (url, context.browser.url)
 
 
 @then(u'the browser\'s URL should contain "{text}"')
