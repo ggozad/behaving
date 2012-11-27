@@ -56,6 +56,14 @@ def i_attach(context, name, path):
     context.browser.attach_file(name, path)
 
 
+@then(u'field "{name}" should have the value "{value}"')
+def field_has_value(context, name, value):
+    el = context.browser.find_by_id(name) or \
+         context.browser.find_by_name(name)
+    assert el, u'Element not found'
+    assert el.first.value == value, "Values do not match"
+
+
 @then(u'"{name}" should be enabled')
 def is_enabled(context, name):
     el = context.browser.find_by_id(name) or \
