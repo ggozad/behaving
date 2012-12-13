@@ -14,3 +14,11 @@ Feature: Url handling
         Then the browser's URL should be "http://localhost:8080/"
         And the browser's URL should contain "localhost"
         And the browser's URL should not contain "google"
+
+    @web
+    Scenario: Base url
+        Given the base url "http://localhost:8080/"
+        When I go to "/page2.html"
+        Then the browser's URL should be "http://localhost:8080/page2.html"
+        And the browser's URL should be "/page2.html"
+        And the browser's URL should contain "localhost"
