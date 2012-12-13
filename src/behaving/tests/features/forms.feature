@@ -42,3 +42,10 @@ Feature: Forms
         Then "disabled" should be disabled
         And "name" should be enabled
 
+    @web
+    Scenario: Content editable
+        When I visit "http://localhost:8080/forms.html"
+        And I set the inner HTML of the element with id "ce" to "<p>Hello foo world</p>"
+        Then I should see "Hello foo world"
+        When I set the inner HTML of the element with class "ce" to "<p>Hello bar world</p>"
+        Then I should see "Hello bar world"

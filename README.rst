@@ -56,6 +56,8 @@ Supported matchers/steps
         * *When I uncheck "name"*
         * *When I select "value" from "name"*
         * *When I press "name"*
+        * *When I set the innner HTML of the element with id "id" to "contents"* (Sets html on a contenteditable element with id `id` to `contents`)
+        * *When I set the innner HTML of the element with class "class" to "contents"* (Sets html on a contenteditable element with class `class` to `contents`)
 
     * Multiple-user interaction
 

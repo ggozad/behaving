@@ -56,6 +56,16 @@ def i_attach(context, name, path):
     context.browser.attach_file(name, path)
 
 
+@when('I set the inner HTML of the element with id "{id}" to "{contents}"')
+def set_html_content_to_element_with_id(context, id, contents):
+    assert context.browser.evaluate_script("document.getElementById('%s').innerHTML = '%s'" % (id, contents)), u'Element not found or could not set HTML content'
+
+
+@when('I set the inner HTML of the element with class "{klass}" to "{contents}"')
+def set_html_content_to_element_with_class(context, klass, contents):
+    assert context.browser.evaluate_script("document.getElementsByClassName('%s')[0].innerHTML = '%s'" % (klass, contents)), u'Element not found or could not set HTML content'
+
+
 @then(u'field "{name}" should have the value "{value}"')
 @persona_vars
 def field_has_value(context, name, value):
