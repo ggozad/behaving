@@ -6,6 +6,8 @@ def before_all(context):
         context.default_browser = ''
     if not hasattr(context, 'attachment_dir'):
         context.attachment_dir = '/'
+    if not hasattr(context, 'base_url'):
+        context.base_url = ''
 
 
 def before_feature(context, feature):

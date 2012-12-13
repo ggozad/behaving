@@ -19,6 +19,7 @@ Supported matchers/steps
 
     * URLs
 
+        * *Given the base url "url"* (sets the base url to `url`, alternatively set `context.base_url` directly in `environment.py`)
         * *When I visit "url"*
         * *When I go to "url"* (opens `url`)
         * *Then the browser's url should be "url"* (asserts the url is `url`)
