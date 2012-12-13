@@ -57,6 +57,7 @@ def i_attach(context, name, path):
 
 
 @then(u'field "{name}" should have the value "{value}"')
+@persona_vars
 def field_has_value(context, name, value):
     el = context.browser.find_by_id(name) or \
          context.browser.find_by_name(name)
