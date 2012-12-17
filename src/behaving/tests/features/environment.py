@@ -14,6 +14,7 @@ def before_all(context):
     smsenv.before_all(context)
     mailenv.before_all(context)
     personaenv.before_all(context)
+    context.config.log_capture = False
 
 
 def after_all(context):
