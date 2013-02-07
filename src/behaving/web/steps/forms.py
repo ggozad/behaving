@@ -46,6 +46,16 @@ def i_press(context, name):
         button.first.click()
 
 
+@when(u'I press the element with xpath "{xpath}"')
+def i_press_xpath(context, xpath):
+    button = context.browser.find_by_xpath(xpath)
+    assert button, u'Element not found'
+    # Go figure why checking for button.first is necessary, but it seems to be for elements
+    #that listen to onclick and change somehow
+    if button.first:
+        button.first.click()
+
+
 @when('I attach the file "{path}" to "{name}"')
 @persona_vars
 def i_attach(context, name, path):
