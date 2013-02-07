@@ -2,6 +2,23 @@ import time
 from behave import when, then
 
 
+@when(u'I wait for {timeout:d} seconds')
+def wait_for_timeout(context, timeout):
+    time.sleep(timeout)
+
+
+@when(u'I show the element with id "{id}"')
+def show_element_by_id(context, id):
+    assert context.browser.find_by_id(id)
+    context.browser.evaluate_script('document.getElementById("%s").style.display="inline";' % id)
+
+
+@when(u'I hide the element with id "{id}"')
+def hide_element_by_id(context, id):
+    assert context.browser.find_by_id(id)
+    context.browser.evaluate_script('document.getElementById("%s").style.display="none";' % id)
+
+
 @then(u'I should see "{text}"')
 def should_see(context, text):
     assert context.browser.is_text_present(text), u'Text not found'
@@ -60,8 +77,3 @@ def should_see_element_with_css_within_timeout(context, css, timeout):
 @then(u'I should not see an element with the css selector "{css}" within {timeout:d} seconds')
 def should_not_see_element_with_css_within_timeout(context, css, timeout):
     assert not context.browser.is_element_present_by_css(css, wait_time=timeout), u'Element is present'
-
-
-@when(u'I wait for {timeout:d} seconds')
-def wait_for_timeout(context, timeout):
-    time.sleep(timeout)
