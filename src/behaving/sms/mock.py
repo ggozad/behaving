@@ -35,7 +35,7 @@ class SMSServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
         self.send_response(200)
         self.end_headers()
-        self.wfile.write('"{"messages":[{"status":"0"}]}"')
+        self.wfile.write('{"messages":[{"status":"0"}]}')
         global output_dir
         phone_dir = os.path.join(output_dir, to)
         if not os.path.exists(phone_dir):
