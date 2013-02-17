@@ -15,9 +15,9 @@ from behaving.personas.persona import persona_vars
 @persona_vars
 def send_sms(context, to, body):
     url = 'http://localhost:8099'
-    values = {'SenderAddress': 'TEST',
-              'tel': to,
-              'msg': body}
+    values = {'from': 'TEST',
+              'to': to,
+              'text': body}
 
     data = urllib.urlencode(values)
     req = urllib2.Request(url, data)

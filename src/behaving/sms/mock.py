@@ -16,9 +16,9 @@ class SMSServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         content_length = int(self.headers.getheader('content-length'))
         post_body = self.rfile.read(content_length)
         params = urlparse.parse_qs(post_body)
-        fr = params.get('SenderAddress')
-        to = params.get('tel')
-        body = params.get('msg')
+        fr = params.get('from')
+        to = params.get('to')
+        body = params.get('text')
         print fr, to, body
         if not (fr and to and body):
             self.send_response(400)
@@ -28,9 +28,14 @@ class SMSServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         to = to[0]
         body = body[0]
 
+        # Vianet settings
+        # fr = params.get('SenderAddress')
+        # to = params.get('tel')
+        # body = params.get('msg')
+
         self.send_response(200)
         self.end_headers()
-
+        self.wfile.write('"{"messages":[{"status":"0"}]}"')
         global output_dir
         phone_dir = os.path.join(output_dir, to)
         if not os.path.exists(phone_dir):
