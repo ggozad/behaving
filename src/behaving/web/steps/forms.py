@@ -1,4 +1,6 @@
 import os
+import random
+import time
 from behave import when, then
 from behaving.personas.persona import persona_vars
 
@@ -7,6 +9,21 @@ from behaving.personas.persona import persona_vars
 @persona_vars
 def i_fill_in_field(context, name, value):
     context.browser.fill(name, value)
+
+
+@when(u'I type "{value}" to "{name}"')
+@persona_vars
+def i_type_to(context, name, value):
+    for key in context.browser.type(name, value, slowly=True):
+        assert key
+
+
+@when(u'I slowly type "{value}" to "{name}"')
+@persona_vars
+def i_slowly_type_to(context, name, value):
+    for key in context.browser.type(name, value, slowly=True):
+        assert key
+        time.sleep(random.random() * 0.15)
 
 
 @when(u'I choose "{value}" from "{name}"')
@@ -40,6 +57,7 @@ def i_press(context, name):
              context.browser.find_link_by_text(name) or \
              context.browser.find_link_by_partial_text(name)
     assert button, u'Element not found'
+    button.mouseover()
     # Go figure why checking for button.first is necessary, but it seems to be for elements
     #that listen to onclick and change somehow
     if button.first:
