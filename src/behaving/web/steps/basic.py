@@ -10,13 +10,13 @@ def wait_for_timeout(context, timeout):
 @when(u'I show the element with id "{id}"')
 def show_element_by_id(context, id):
     assert context.browser.find_by_id(id)
-    context.browser.evaluate_script('document.getElementById("%s").style.display="inline";' % id)
+    context.browser.execute_script('document.getElementById("%s").style.display="inline";' % id)
 
 
 @when(u'I hide the element with id "{id}"')
 def hide_element_by_id(context, id):
     assert context.browser.find_by_id(id)
-    context.browser.evaluate_script('document.getElementById("%s").style.display="none";' % id)
+    context.browser.execute_script('document.getElementById("%s").style.display="none";' % id)
 
 
 @then(u'I should see "{text}"')
