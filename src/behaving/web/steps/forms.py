@@ -50,18 +50,15 @@ def i_select(context, value, name):
 
 @when(u'I press "{name}"')
 def i_press(context, name):
-    button = context.browser.find_by_id(name) or \
-             context.browser.find_by_name(name) or \
-             context.browser.find_by_xpath("//button[text()='%s']" % name) or \
-             context.browser.find_by_xpath("//button[contains(text(), '%s')]" % name) or \
-             context.browser.find_link_by_text(name) or \
-             context.browser.find_link_by_partial_text(name)
+    button = \
+        context.browser.find_by_id(name) or \
+        context.browser.find_by_name(name) or \
+        context.browser.find_by_xpath("//button[text()='%s']" % name) or \
+        context.browser.find_by_xpath("//button[contains(text(), '%s')]" % name) or \
+        context.browser.find_link_by_text(name) or \
+        context.browser.find_link_by_partial_text(name)
     assert button, u'Element not found'
-    button.mouseover()
-    # Go figure why checking for button.first is necessary, but it seems to be for elements
-    #that listen to onclick and change somehow
-    if button.first:
-        button.first.click()
+    button.first.click()
 
 
 @when(u'I press the element with xpath "{xpath}"')
@@ -83,12 +80,12 @@ def i_attach(context, name, path):
 
 @when('I set the inner HTML of the element with id "{id}" to "{contents}"')
 def set_html_content_to_element_with_id(context, id, contents):
-    assert context.browser.evaluate_script("document.getElementById('%s').innerHTML = '%s'" % (id, contents)), u'Element not found or could not set HTML content'
+    assert context.browser.execute_script("document.getElementById('%s').innerHTML = '%s'" % (id, contents)), u'Element not found or could not set HTML content'
 
 
 @when('I set the inner HTML of the element with class "{klass}" to "{contents}"')
 def set_html_content_to_element_with_class(context, klass, contents):
-    assert context.browser.evaluate_script("document.getElementsByClassName('%s')[0].innerHTML = '%s'" % (klass, contents)), u'Element not found or could not set HTML content'
+    assert context.browser.execute_script("document.getElementsByClassName('%s')[0].innerHTML = '%s'" % (klass, contents)), u'Element not found or could not set HTML content'
 
 
 @then(u'field "{name}" should have the value "{value}"')
