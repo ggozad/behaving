@@ -11,6 +11,11 @@ Feature: Browser handling
         Given a browser
 
     @web
+    Scenario: Select PhantomJS browser
+        Given PhantomJS as the default browser
+        Given a browser
+
+    @web
     Scenario: History
         Given a browser
         When I visit "http://localhost:8080"

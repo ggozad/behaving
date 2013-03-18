@@ -21,7 +21,7 @@ def named_browser(context, name):
 @given(u'{brand} as the default browser')
 def given_some_browser(context, brand):
     brand = brand.lower()
-    assert brand in [u'firefox', u'chrome'], u'You can only use Firefox or Chrome as a browser'
+    assert brand in [u'firefox', u'chrome', u'phantomjs'], u'You can only use Firefox or Chrome as a browser'
     context.default_browser = brand
 
 
