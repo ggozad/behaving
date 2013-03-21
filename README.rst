@@ -3,7 +3,7 @@ behaving
 
 `behaving` is a web application testing framework for Behavior-Driver-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
 
-`behaving` is written in python and is based on `behave`_. To make full use of it, you should have a thorough understanding of `behave`, so go ahead and read the excellent `documentation <http://pythonhosted.org/behave/>`_.
+`behaving` is written in python and is based on `behave`_. Please refer to `behave`'s ' excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend `behaving`.
 
 Personas
 --------
@@ -14,7 +14,7 @@ Example
 
 `behaving` is best explained by example. As is the case with most BDD frameworks, you write your tests using the Gherkin conventions.
 
-Let us assume the following (coming from a real example) scenario, from `Crypho`_, an online messaging/sharing site that provides users with encrypted real-time communications. In Crypho, to invite somebody in a *space* the invitee has to share a token with an invitor, so both can verify each other's identity.
+Let us assume the following (coming from a real example) scenario. `Crypho`_, is an online messaging/sharing site that provides users with encrypted real-time communications. In Crypho, to invite somebody in a *space* the invitee has to share a token with an invitor, so both can verify each other's identity.
 
 ::
 
