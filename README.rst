@@ -5,16 +5,53 @@ behaving
 
 `behaving` is written in python and is based on `behave`_. Please refer to `behave`'s ' excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend `behaving`.
 
-Personas
---------
-To allow for easy multi-user interaction testing, `behaving` uses the notion of *personas*.
+Hello world
+-----------
 
-Example
--------
+Starting using `behaving` is pretty easy. Inside some python module, add your *features* consisting each of one or more scenarios. These features are Gherkin language files with an extension of `.feature`. In the same directory you should have a steps module which imports the `behaving` steps as well as your own custom steps. Here's a basic example:
 
-`behaving` is best explained by example. As is the case with most BDD frameworks, you write your tests using the Gherkin conventions.
+::
 
-Let us assume the following (coming from a real example) scenario. `Crypho`_, is an online messaging/sharing site that provides users with encrypted real-time communications. In Crypho, to invite somebody in a *space* the invitee has to share a token with an invitor, so both can verify each other's identity.
+    Feature: Text presence
+
+        Background:
+            Given a browser
+
+        Scenario: Search for BDD
+            When I visit "http://www.wikipedia.org/"
+            And I fill in "search" with "BDD"
+            And I press "go"
+            Then I should see "Behavior-driven development" within 5 seconds
+
+Email & SMS
+-----------
+
+While the web is the focus of `behaving`, it also includes simple mocks for a mail and an SMS server. These come with a small collection of steps allowing you to do things like:
+
+::
+
+    Feature: Email & SMS
+
+        Scenario: Click link in an email
+            Given a browser
+            When I send an email to "foo@bar.com" with subject "Crypho" and body "Try out our product at http://crypho.com"
+            And I click the link in the email I received at "foo@bar.com"
+            Then the browser's URL should be "http://crypho.com/"
+
+        Scenario: Receive SMS with body
+            When I send an sms to "+4745690001" with body "Hello world"
+            Then I should receive an sms at "+4745690001" containing "world"
+
+Typically of course, it will be your web application that sends mail/sms.
+
+Personas & state
+----------------
+
+A lot of web apps today rely on multi-user interactions. To help you with those interactions, `behaving` uses the notion of *personas*. A persona has its own browser, and is implemented as a simple dictionary allowing it to carry state. A persona can therefore save state in variables and reuse it inside a scenario.
+
+Let us assume the following (coming from a real example) scenario. `Crypho`_, is an online messaging/sharing site that provides users with end-to-end encrypted real-time communications. `behaving` was written to help test Crypho.
+
+In Crypho, to invite somebody in a *space* the invitee has to share a token with an invitor, so both can verify each other's identity.
 
 ::
 
@@ -25,7 +62,7 @@ Let us assume the following (coming from a real example) scenario. `Crypho`_, is
             Given "Gandalf" as the persona
             When I log in
 
-Here, first Gandalf logs in. The step `Given "Gandalf" as the persona`, fires up a browser that belongs to the persona Gandalf. The following step, `When I log in` is a custom step defined as such:
+Here, first Gandalf logs in. The step `Given "Gandalf" as the persona`, fires up a browser that belongs to the persona Gandalf. The following step, `When I log in` is a custom step defined as follows:
 
 ::
 
@@ -48,7 +85,10 @@ Here, first Gandalf logs in. The step `Given "Gandalf" as the persona`, fires up
                 Then I should see "Crypho" within 5 seconds
         """)
 
-asdasd
+Observe above how the current persona (Gandalf) parses the sms it receives and saves it as "token". Later Gandalf reuses it to fill in the two-factor authentication field.
+
+Now that Gandalf is logged in, the test proceeds with Frodo. Frodo will log in, and invite Gandalf to a private space.
+
 ::
 
             Given "Frodo" as the persona
@@ -56,11 +96,16 @@ asdasd
             And I click the link with text that contains "My spaces"
             And I click the link with text that contains "The Shire"
             And I press "invite-members"
-                Then I should see "Invite members" within 2 seconds
+                Then I should see "Invite members" within 1 seconds
             When I fill in "invitees" with "gandalf@wizardry.com"
             And I fill in "invitation-message" with "Come and join us!"
             And I press "send-invitations"
                 Then I should see "Your invitations have been sent" within 2 seconds
+
+
+Once the invitations are sent we switch back to Gandalf's browser, who should have received a notification in his browser, as well as an email. He then proceeds to send an sms to Frodo with the token who completes the invitation.
+
+::
 
             Given "Gandalf" as the persona
             Then I should see "Your invitations have been updated" within 2 seconds
@@ -80,8 +125,6 @@ asdasd
             And I press "Submit"
                 Then I should see "The invitation has been accepted." within 5 seconds
                 And I should see "Gandalf the Grey has joined the space, invited by Frodo Baggins" within 10 seconds
-
-
 
 `behaving.web` Supported matchers/steps
 ---------------------------------------
