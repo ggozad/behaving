@@ -1,6 +1,4 @@
 import os
-import random
-import time
 from behave import when, then
 from behaving.personas.persona import persona_vars
 
@@ -16,14 +14,6 @@ def i_fill_in_field(context, name, value):
 def i_type_to(context, name, value):
     for key in context.browser.type(name, value, slowly=True):
         assert key
-
-
-@when(u'I slowly type "{value}" to "{name}"')
-@persona_vars
-def i_slowly_type_to(context, name, value):
-    for key in context.browser.type(name, value, slowly=True):
-        assert key
-        time.sleep(random.random() * 0.15)
 
 
 @when(u'I choose "{value}" from "{name}"')
@@ -106,6 +96,7 @@ def is_enabled(context, name):
 
 
 @then(u'"{name}" should be disabled')
+@then(u'"{name}" should not be enabled')
 def is_disabled(context, name):
     el = context.browser.find_by_id(name) or \
          context.browser.find_by_name(name)

@@ -139,8 +139,10 @@ Once the invitations are sent we switch back to Gandalf's browser, who should ha
 
         * Given a browser
             [opens the default browser, i.e. Firefox]
-        * Given Chrome as the browser
-        * Given Firefox as the browser
+        * Given `brand` as the default browser
+            [sets the default browser to be `brand`, where brand can be Firefox, Chrome, Safari, PhantomJS, or Remote]
+        * Given browser "`name`"
+            [opens the browser named `name`]
         * When I reload
         * When I go back
         * When I go forward
@@ -178,24 +180,36 @@ Once the invitations are sent we switch back to Gandalf's browser, who should ha
         * Then I should see an element with the css selector "`selector`"
         * Then I should not see an element with the css selector "`selector`"
         * Then I should see an element with the css selector "`selector`" within `timeout` seconds
-        * Then I should not see an element with the css selector "`selector`" within `timeout` secondss)
+        * Then I should not see an element with the css selector "`selector`" within `timeout` seconds
 
     * Forms
 
         * When I fill in "`name`" with "`value`"
+        * When I type "`value`" to "`name`"
+            [same as fill, but happens slowly triggering keyboard events]
         * When I choose "`value`" from "`name`"
         * When I check "`name`"
         * When I uncheck "`name`"
         * When I select "`value`" from "`name`""
         * When I press "`name|id|text|innerText`"
+        * When I press the element with xpath "`xpath`"
+        * When I attach the file "`path`" to "`name`"
         * When I set the innner HTML of the element with id "`id`" to "`contents`"
             [Sets html on a `contenteditable` element with id `id` to `contents`]
         * When I set the innner HTML of the element with class "`class`" to "`contents`"
+        * When I set the innner HTML of the element with class "`class`" to "`contents`"
+        * Then field "`name`" should have the value "`value`"
+        * Then "`name`" should be enabled
+        * Then "`name`" should be disabled
+        * Then "`name`" should not be enabled
+        * Then "`name`" should be valid
+        * Then "`name`" should be invalid
+        * Then "`name`" should not be valid
 
     * Persona interaction
 
         * Given "`name`" as the user
-            [opens a reusable browser to be used by user `name`)
+            [opens a reusable browser named `name`)
         * When I set "`key`" to the text of "`id|name`"
 
 
