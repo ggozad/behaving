@@ -51,18 +51,24 @@ A lot of web apps today rely on multi-user interactions. To help you with those 
 
 Let us assume the following (coming from a real example) scenario. `Crypho`_, is an online messaging/sharing site that provides users with end-to-end encrypted real-time communications. `behaving` was written to help test Crypho.
 
+You can see the test in action on video `here <http://vimeo.com/62777458/>`_.
+
 In Crypho, to invite somebody in a *space* the invitee has to share a token with an invitor, so both can verify each other's identity.
 
 ::
 
     Feature: Frodo invites Gandalf to The Shire space
 
+        Given state "the-shire"
+
         Scenario: Frodo invites Gandalf to The Shire
 
             Given "Gandalf" as the persona
             When I log in
 
-Here, first Gandalf logs in. The step `Given "Gandalf" as the persona`, fires up a browser that belongs to the persona Gandalf. The following step, `When I log in` is a custom step defined as follows:
+Before the scenarios start, the custom step `Given state "the-shire"` executes. This preloads the db with data sets up the server etc. Then the scenario executes:
+
+First Gandalf logs in. The step `Given "Gandalf" as the persona`, fires up a browser that belongs to the persona Gandalf. The following step, `When I log in` is a custom step defined as follows:
 
 ::
 
