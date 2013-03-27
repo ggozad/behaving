@@ -28,11 +28,6 @@ class SMSServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         to = to[0]
         body = body[0]
 
-        # Vianet settings
-        # fr = params.get('SenderAddress')
-        # to = params.get('tel')
-        # body = params.get('msg')
-
         self.send_response(200)
         self.send_header("Content-type:", "text/json")
         self.end_headers()
