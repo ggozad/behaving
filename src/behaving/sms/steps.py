@@ -1,5 +1,5 @@
-from behave import when, then
 import parse
+from behave import when, then
 from behaving.personas.persona import persona_vars
 
 

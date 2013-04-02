@@ -1,11 +1,11 @@
 import argparse
-import sys
+import logging
 import os
+import sys
 import SimpleHTTPServer
 import SocketServer
-import urlparse
-import logging
 import time
+import urlparse
 
 output_dir = None
 
