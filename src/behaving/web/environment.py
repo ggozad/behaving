@@ -25,7 +25,10 @@ def after_feature(context, feature):
 
 def after_scenario(context, scenario):
     for browser in context.browsers.values():
-        browser.quit()
+        try:
+            browser.quit()
+        except URLError:
+            pass
 
     if context.browser is not None:
         try:
