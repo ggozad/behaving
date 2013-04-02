@@ -4,13 +4,13 @@ version = '0.1'
 
 setup(name='behaving',
       version=version,
-      description="Helpers for doing BDD on web applications with behave",
+      description="BDD web-app testing done right.",
       long_description=open("README.rst").read(),
       classifiers=[],
       keywords='',
       author='Yiorgis Gozadinos',
       author_email='ggozad@crypho.com',
-      url='http://ggozad.com',
+      url='http://github.com/ggozad/behaving',
       license='GPL',
 
       packages=find_packages('src', exclude=['tests']),
