@@ -8,7 +8,7 @@ behaving
 Hello world
 -----------
 
-Starting using `behaving` is pretty easy. Inside some python module, add your *features* consisting each of one or more scenarios. These features are Gherkin language files with an extension of `.feature`. In the same directory you should have a steps module which imports the `behaving` steps as well as your own custom steps. Here's a basic example:
+Starting using `behaving` is pretty easy. Inside some python module, add your *features* consisting each of one or more scenarios. These features are Gherkin language files with an extension of `.feature`. In the same directory you should have a steps module which imports the `behaving` steps as well as your own custom steps (more later in the setup_ section) . Here's a basic example:
 
 ::
 
@@ -131,6 +131,107 @@ Once the invitations are sent we switch back to Gandalf's browser, who should ha
             And I press "Submit"
                 Then I should see "The invitation has been accepted." within 5 seconds
                 And I should see "Gandalf the Grey has joined the space, invited by Frodo Baggins" within 10 seconds
+
+.. _setup:
+
+Setting up a test environment
+-----------------------------
+
+Typically you will be having a folder containing all your features and steps. For example a directory structure like the following:
+
+::
+
+    features/
+    features/mytest.feature
+    features/myothertest.feature
+    features/environment.py
+    features/steps/
+    features/steps/steps.py
+
+In the steps directory you will need to import the `behaving` steps you need. You can also define your own steps. So `steps.py` might look like:
+
+::
+
+    from behave import when
+    from behaving.web.steps import *
+    from behaving.sms.steps import *
+    from behaving.mail.steps import *
+    from behaving.personas.steps import *
+
+    @when('I go to home')
+    def go_to_home(context):
+        context.browser.visit('https://localhost:8080/')
+
+In `environment.py` you specify settings as well the things that need to happen at various stages of testing. An example of an environment that does simply set some variables and then rely on default actions for the various stages, might look like the following:
+
+::
+
+    import os
+    from behaving.web import environment as webenv
+    from behaving.sms import environment as smsenv
+    from behaving.mail import environment as mailenv
+    from behaving.personas import environment as personaenv
+
+
+    def before_all(context):
+        import mypackage
+        context.attachment_dir = os.path.join(os.path.dirname(mypackage.__file__), 'tests/data')
+        context.sms_path = os.path.join(os.path.dirname(mypackage.__file__), '../../var/sms/')
+        context.mail_path = os.path.join(os.path.dirname(mypackage.__file__), '../../var/mail/')
+        webenv.before_all(context)
+        smsenv.before_all(context)
+        mailenv.before_all(context)
+        personaenv.before_all(context)
+
+
+    def after_all(context):
+        webenv.after_all(context)
+        smsenv.after_all(context)
+        mailenv.after_all(context)
+        personaenv.after_all(context)
+
+
+    def before_feature(context, feature):
+        webenv.before_feature(context, feature)
+        smsenv.before_feature(context, feature)
+        mailenv.before_feature(context, feature)
+        personaenv.before_feature(context, feature)
+
+
+    def after_feature(context, feature):
+        webenv.after_feature(context, feature)
+        smsenv.after_feature(context, feature)
+        mailenv.after_feature(context, feature)
+        personaenv.after_feature(context, feature)
+
+
+    def before_scenario(context, scenario):
+        webenv.before_scenario(context, scenario)
+        smsenv.before_scenario(context, scenario)
+        mailenv.before_scenario(context, scenario)
+        personaenv.before_scenario(context, scenario)
+
+
+    def after_scenario(context, scenario):
+        webenv.after_scenario(context, scenario)
+        smsenv.after_scenario(context, scenario)
+        mailenv.after_scenario(context, scenario)
+        personaenv.after_scenario(context, scenario)
+
+The following variables are supported and can be set to override defaults:
+
+* `attachment_dir`
+* `sms_path`
+* `mail_path`
+* `default_browser`
+* `base_url`
+
+Finally, when `behaving` is installed, it creates two scripts to help you test mail and sms, `mailmock` and `smsmock` respectively. You can directly invoke them before run your tests, they both take a port as well as the directory to output data as parameters. For example,
+
+::
+    ./bin/smsmock -p 8081 -o ./var/sms
+    ./bin/mailmock -p 8082 -o ./var/mail
+
 
 `behaving.web` Supported matchers/steps
 ---------------------------------------
