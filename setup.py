@@ -18,7 +18,7 @@ setup(name='behaving',
       namespace_packages=['behaving'],
       include_package_data=True,
       zip_safe=False,
-      install_requires=['setuptools', 'behave', 'splinter'],
+      install_requires=['setuptools', 'parse', 'behave', 'splinter'],
       entry_points="""
       [console_scripts]
       mailmock = behaving.mail.mock:main
