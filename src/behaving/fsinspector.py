@@ -1,5 +1,5 @@
-import os
 import logging
+import os
 import time
 from shutil import rmtree
 
