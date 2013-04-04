@@ -10,3 +10,4 @@ parts/
 *.egg-info
 *.pyc
 chromedriver.log
+.long-description.html
