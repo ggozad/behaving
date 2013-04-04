@@ -9,6 +9,9 @@ def before_all(context):
     if not hasattr(context, 'base_url'):
         context.base_url = ''
 
+    # Disable logging, selenium tends to be pretty verbose
+    context.config.log_capture = False
+
 
 def before_feature(context, feature):
     pass
