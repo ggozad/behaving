@@ -1,6 +1,9 @@
 import os
+import logging
 import time
 from shutil import rmtree
+
+logger = logging.getLogger('behaving')
 
 
 class FSInspector(object):
@@ -40,4 +43,8 @@ class FSInspector(object):
 
         dirs = os.listdir(self.path)
         for dir_path in dirs:
-            rmtree(os.path.join(self.path, dir_path))
+            try:
+                rmtree(os.path.join(self.path, dir_path))
+            except:
+                logger.error('Could not clear folder %s' % self.path)
+                exit(1)
