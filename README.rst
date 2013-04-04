@@ -220,9 +220,9 @@ In `environment.py` you specify settings as well the things that need to happen 
 
 The following variables are supported and can be set to override defaults:
 
-* `attachment_dir`
-* `sms_path`
-* `mail_path`
+* `attachment_dir` (the path where file attachments can be found)
+* `sms_path` (the path to be used by `smsmock` to save sms. Defaults to `current_dir/sms` )
+* `mail_path` (the path to be used by `mailmock` to save mail. Defaults to `current_dir/mail` )
 * `default_browser`
 * `base_url`
 
