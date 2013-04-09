@@ -240,11 +240,11 @@ Finally, when *behaving* is installed, it creates two scripts to help you test m
 * Browsers
 
     * Given a browser
-        [opens the default browser, i.e. Firefox]
+      [opens the default browser, i.e. Firefox]
     * Given ``brand`` as the default browser
-        [sets the default browser to be ``brand``, where brand can be Firefox, Chrome, Safari, PhantomJS, or Remote]
+      [sets the default browser to be ``brand``, where brand can be Firefox, Chrome, Safari, PhantomJS, or Remote]
     * Given browser "``name``"
-        [opens the browser named ``name``]
+      [opens the browser named ``name``]
     * When I reload
     * When I go back
     * When I go forward
@@ -252,7 +252,7 @@ Finally, when *behaving* is installed, it creates two scripts to help you test m
 * URLs
 
     * Given the base url "``url``"
-        [sets the base url to ``url``, alternatively set ``context.base_url`` directly in ``environment.py``]
+      [sets the base url to ``url``, alternatively set ``context.base_url`` directly in ``environment.py``]
     * When I visit "``url``"
     * When I go to "``url``"
     * Then the browser's url should be "``url``"
@@ -288,7 +288,7 @@ Finally, when *behaving* is installed, it creates two scripts to help you test m
 
     * When I fill in "``name``" with "``value``"
     * When I type "``value``" to "``name``"
-        [same as fill, but happens slowly triggering keyboard events]
+      [same as fill, but happens slowly triggering keyboard events]
     * When I choose "``value``" from "``name``"
     * When I check "``name``"
     * When I uncheck "``name``"
@@ -297,7 +297,7 @@ Finally, when *behaving* is installed, it creates two scripts to help you test m
     * When I press the element with xpath "``xpath``"
     * When I attach the file "``path``" to "``name``"
     * When I set the innner HTML of the element with id "``id``" to "``contents``"
-        [Sets html on a ``contenteditable`` element with id ``id`` to ``contents``]
+      [Sets html on a ``contenteditable`` element with id ``id`` to ``contents``]
     * When I set the innner HTML of the element with class "``class``" to "``contents``"
     * When I set the innner HTML of the element with class "``class``" to "``contents``"
     * Then field "``name``" should have the value "``value``"
@@ -311,7 +311,7 @@ Finally, when *behaving* is installed, it creates two scripts to help you test m
 * Persona interaction
 
     * Given "``name``" as the user
-        [opens a reusable browser named ``name``)
+      [opens a reusable browser named ``name``)
     * When I set "``key``" to the text of "``id|name``"
 
 
