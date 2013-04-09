@@ -210,7 +210,7 @@ In the steps directory you will need to import the *behaving* steps you need. Yo
     def go_to_home(context):
         context.browser.visit('https://localhost:8080/')
 
-In ``environment.py`` you specify settings as well the things that need to happen at various stages of testing, i.e. before and after everything, a feature run, or a scenario run. For convenience you can import and reuse ``behaving.environment`` which will perform deafult actions like closing all browsers after a scenario, clean the email folder etc.
+In ``environment.py`` you specify settings as well the things that need to happen at various stages of testing, i.e. before and after everything, a feature run, or a scenario run. For convenience you can import and reuse ``behaving.environment`` which will perform default actions like closing all browsers after a scenario, clean the email folder etc.
 
 It is also possible to use ``behaving.web.environment``, ``behaving.mail.environment``, ``behaving.sms.environment`` and ``behaving.personas.environment`` on their own, if you don't have need for SMS for example.
 
