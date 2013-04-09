@@ -4,15 +4,18 @@ version = '0.1'
 
 setup(name='behaving',
       version=version,
-      description="BDD web-app testing done right.",
+      description="Behavior-Driven-Development testing for multi-user web/mail/sms apps",
       long_description=open("README.rst").read(),
-      classifiers=[],
-      keywords='',
+      classifiers=[
+      "Development Status :: 4 - Beta",
+      "Intended Audience :: Developers",
+      "Programming Language :: Python",
+      ],
+      keywords='BDD Behavior-Driven-Development testing',
       author='Yiorgis Gozadinos',
       author_email='ggozad@crypho.com',
       url='http://github.com/ggozad/behaving',
       license='GPL',
-
       packages=find_packages('src', exclude=['tests']),
       package_dir={'': 'src'},
       namespace_packages=['behaving'],
