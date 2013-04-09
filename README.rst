@@ -1,14 +1,14 @@
 behaving
 ========
 
-`behaving` is a web application testing framework for Behavior-Driver-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
+``behaving`` is a web application testing framework for Behavior-Driver-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
 
-`behaving` is written in python and is based on `behave`_. Please refer to `behave`'s ' excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend `behaving`.
+``behaving`` is written in python and is based on `behave`_. Please refer to ``behave``'s ' excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend ``behaving``.
 
 Hello world
 -----------
 
-Starting using `behaving` is pretty easy. Inside some python module, add your *features* consisting each of one or more scenarios. These features are Gherkin language files with an extension of `.feature`. In the same directory you should have a steps module which imports the `behaving` steps as well as your own custom steps (more later in the setup_ section) . Here's a basic example:
+Starting using ``behaving`` is pretty easy. Inside some python module, add your *features* consisting each of one or more scenarios. These features are Gherkin language files with an extension of ``.feature``. In the same directory you should have a steps module which imports the ``behaving`` steps as well as your own custom steps (more later in the setup_ section) . Here's a basic example:
 
 ::
 
@@ -26,7 +26,7 @@ Starting using `behaving` is pretty easy. Inside some python module, add your *f
 Email & SMS
 -----------
 
-While the web is the focus of `behaving`, it also includes simple mocks for a mail and an SMS server. These come with a small collection of steps allowing you to do things like:
+While the web is the focus of ``behaving``, it also includes simple mocks for a mail and an SMS server. These come with a small collection of steps allowing you to do things like:
 
 ::
 
@@ -47,9 +47,9 @@ Typically of course, it will be your web application that sends mail/sms.
 Personas & state
 ----------------
 
-A lot of web apps today rely on multi-user interactions. To help you with those interactions, `behaving` uses the notion of *personas*. A persona has its own browser, and is implemented as a simple dictionary allowing it to carry state. A persona can therefore save state in variables and reuse it inside a scenario.
+A lot of web apps today rely on multi-user interactions. To help you with those interactions, ``behaving`` uses the notion of *personas*. A persona has its own browser, and is implemented as a simple dictionary allowing it to carry state. A persona can therefore save state in variables and reuse it inside a scenario.
 
-Let us assume the following (coming from a real example) scenario. `Crypho`_, is an online messaging/sharing site that provides users with end-to-end encrypted real-time communications. `behaving` was written to help test Crypho.
+Let us assume the following (coming from a real example) scenario. `Crypho`_, is an online messaging/sharing site that provides users with end-to-end encrypted real-time communications. ``behaving`` was written to help test Crypho.
 
 You can see the test in action on video `here <http://vimeo.com/62777458/>`_.
 
@@ -66,9 +66,9 @@ In Crypho, to invite somebody in a *space* the invitee has to share a token with
             Given "Gandalf" as the persona
             When I log in
 
-Before the scenarios start, the custom step `Given state "the-shire"` executes. This preloads the db with data sets up the server etc. Then the scenario executes:
+Before the scenarios start, the custom step ``Given state "the-shire"`` executes. This preloads the db with data sets up the server etc. Then the scenario executes:
 
-First Gandalf logs in. The step `Given "Gandalf" as the persona`, fires up a browser that belongs to the persona Gandalf. The following step, `When I log in` is a custom step defined as follows:
+First Gandalf logs in. The step ``Given "Gandalf" as the persona``, fires up a browser that belongs to the persona Gandalf. The following step, ``When I log in`` is a custom step defined as follows:
 
 ::
 
@@ -148,7 +148,7 @@ Typically you will be having a folder containing all your features and steps. Fo
     features/steps/
     features/steps/steps.py
 
-In the steps directory you will need to import the `behaving` steps you need. You can also define your own steps. So `steps.py` might look like:
+In the steps directory you will need to import the ``behaving`` steps you need. You can also define your own steps. So ``steps.py`` might look like:
 
 ::
 
@@ -162,7 +162,7 @@ In the steps directory you will need to import the `behaving` steps you need. Yo
     def go_to_home(context):
         context.browser.visit('https://localhost:8080/')
 
-In `environment.py` you specify settings as well the things that need to happen at various stages of testing. An example of an environment that does simply set some variables and then rely on default actions for the various stages, might look like the following:
+In ``environment.py`` you specify settings as well the things that need to happen at various stages of testing. An example of an environment that does simply set some variables and then rely on default actions for the various stages, might look like the following:
 
 ::
 
@@ -220,122 +220,123 @@ In `environment.py` you specify settings as well the things that need to happen 
 
 The following variables are supported and can be set to override defaults:
 
-* `attachment_dir` (the path where file attachments can be found)
-* `sms_path` (the path to be used by `smsmock` to save sms. Defaults to `current_dir/sms` )
-* `mail_path` (the path to be used by `mailmock` to save mail. Defaults to `current_dir/mail` )
-* `default_browser`
-* `base_url`
+* ``attachment_dir`` (the path where file attachments can be found)
+* ``sms_path`` (the path to be used by ``smsmock`` to save sms. Defaults to ``current_dir/sms`` )
+* ``mail_path`` (the path to be used by ``mailmock`` to save mail. Defaults to ``current_dir/mail`` )
+* ``default_browser``
+* ``base_url``
 
-Finally, when `behaving` is installed, it creates two scripts to help you test mail and sms, `mailmock` and `smsmock` respectively. You can directly invoke them before run your tests, they both take a port as well as the directory to output data as parameters. For example,
+Finally, when ``behaving`` is installed, it creates two scripts to help you test mail and sms, ``mailmock`` and ``smsmock`` respectively. You can directly invoke them before run your tests, they both take a port as well as the directory to output data as parameters. For example,
 
 ::
+
     ./bin/smsmock -p 8081 -o ./var/sms
     ./bin/mailmock -p 8082 -o ./var/mail
 
 
-`behaving.web` Supported matchers/steps
----------------------------------------
+``behaving.web`` Supported matchers/steps
+-----------------------------------------
 
     * Browsers
 
         * Given a browser
             [opens the default browser, i.e. Firefox]
-        * Given `brand` as the default browser
-            [sets the default browser to be `brand`, where brand can be Firefox, Chrome, Safari, PhantomJS, or Remote]
-        * Given browser "`name`"
-            [opens the browser named `name`]
+        * Given ``brand`` as the default browser
+            [sets the default browser to be ``brand``, where brand can be Firefox, Chrome, Safari, PhantomJS, or Remote]
+        * Given browser "``name``"
+            [opens the browser named ``name``]
         * When I reload
         * When I go back
         * When I go forward
 
     * URLs
 
-        * Given the base url "`url`"
-            [sets the base url to `url`, alternatively set `context.base_url` directly in `environment.py`]
-        * When I visit "`url`"
-        * When I go to "`url`"
-        * Then the browser's url should be "`url`"
-        * Then the browser's url should contain "`text`"
-        * Then the browser's url should not contain "`text`"
+        * Given the base url "``url``"
+            [sets the base url to ``url``, alternatively set ``context.base_url`` directly in ``environment.py``]
+        * When I visit "``url``"
+        * When I go to "``url``"
+        * Then the browser's url should be "``url``"
+        * Then the browser's url should contain "``text``"
+        * Then the browser's url should not contain "``text``"
 
     * Links
 
-        * When I click the link to "`url`"
-        * When I click the link to a url that contains "`url`"
-        * When I click the link with text "`text`"
-        * When I click the link with text that contains "`text`"
+        * When I click the link to "``url``"
+        * When I click the link to a url that contains "``url``"
+        * When I click the link with text "``text``"
+        * When I click the link with text that contains "``text``"
 
     * Text & element presence
 
-        * When I wait for `timeout` seconds
-        * When I show the element with id "`id`"
-        * When I hide the element with id "`id`"
-        * Then I should see "`text`"
-        * Then I should not see "`text`"
-        * Then I should see "`text`" within `timeout` seconds
-        * Then I should not see "`text`" within `timeout` seconds
-        * Then I should see an element with id "`id`"
-        * Then I should not see an element with id "`id`"
-        * Then I should see an element with id "`id`" within `timeout` seconds
-        * Then I should not see an element with id "`id`" within `timeout` seconds
-        * Then I should see an element with the css selector "`selector`"
-        * Then I should not see an element with the css selector "`selector`"
-        * Then I should see an element with the css selector "`selector`" within `timeout` seconds
-        * Then I should not see an element with the css selector "`selector`" within `timeout` seconds
+        * When I wait for ``timeout`` seconds
+        * When I show the element with id "``id``"
+        * When I hide the element with id "``id``"
+        * Then I should see "``text``"
+        * Then I should not see "``text``"
+        * Then I should see "``text``" within ``timeout`` seconds
+        * Then I should not see "``text``" within ``timeout`` seconds
+        * Then I should see an element with id "``id``"
+        * Then I should not see an element with id "``id``"
+        * Then I should see an element with id "``id``" within ``timeout`` seconds
+        * Then I should not see an element with id "``id``" within ``timeout`` seconds
+        * Then I should see an element with the css selector "``selector``"
+        * Then I should not see an element with the css selector "``selector``"
+        * Then I should see an element with the css selector "``selector``" within ``timeout`` seconds
+        * Then I should not see an element with the css selector "``selector``" within ``timeout`` seconds
 
     * Forms
 
-        * When I fill in "`name`" with "`value`"
-        * When I type "`value`" to "`name`"
+        * When I fill in "``name``" with "``value``"
+        * When I type "``value``" to "``name``"
             [same as fill, but happens slowly triggering keyboard events]
-        * When I choose "`value`" from "`name`"
-        * When I check "`name`"
-        * When I uncheck "`name`"
-        * When I select "`value`" from "`name`""
-        * When I press "`name|id|text|innerText`"
-        * When I press the element with xpath "`xpath`"
-        * When I attach the file "`path`" to "`name`"
-        * When I set the innner HTML of the element with id "`id`" to "`contents`"
-            [Sets html on a `contenteditable` element with id `id` to `contents`]
-        * When I set the innner HTML of the element with class "`class`" to "`contents`"
-        * When I set the innner HTML of the element with class "`class`" to "`contents`"
-        * Then field "`name`" should have the value "`value`"
-        * Then "`name`" should be enabled
-        * Then "`name`" should be disabled
-        * Then "`name`" should not be enabled
-        * Then "`name`" should be valid
-        * Then "`name`" should be invalid
-        * Then "`name`" should not be valid
+        * When I choose "``value``" from "``name``"
+        * When I check "``name``"
+        * When I uncheck "``name``"
+        * When I select "``value``" from "``name``""
+        * When I press "``name|id|text|innerText``"
+        * When I press the element with xpath "``xpath``"
+        * When I attach the file "``path``" to "``name``"
+        * When I set the innner HTML of the element with id "``id``" to "``contents``"
+            [Sets html on a ``contenteditable`` element with id ``id`` to ``contents``]
+        * When I set the innner HTML of the element with class "``class``" to "``contents``"
+        * When I set the innner HTML of the element with class "``class``" to "``contents``"
+        * Then field "``name``" should have the value "``value``"
+        * Then "``name``" should be enabled
+        * Then "``name``" should be disabled
+        * Then "``name``" should not be enabled
+        * Then "``name``" should be valid
+        * Then "``name``" should be invalid
+        * Then "``name``" should not be valid
 
     * Persona interaction
 
-        * Given "`name`" as the user
-            [opens a reusable browser named `name`)
-        * When I set "`key`" to the text of "`id|name`"
+        * Given "``name``" as the user
+            [opens a reusable browser named ``name``)
+        * When I set "``key``" to the text of "``id|name``"
 
 
-`behaving.mail` Supported matchers/steps
-----------------------------------------
+``behaving.mail`` Supported matchers/steps
+------------------------------------------
 
-    * When I click the link in the email I received at "`address`"
-    * Then I should receive an email at "`address`"
-    * Then I should receive an email at "`address`" with subject "`subject`"
-    * Then I should receive an email at "`address`" containing "`text`"
+    * When I click the link in the email I received at "``address``"
+    * Then I should receive an email at "``address``"
+    * Then I should receive an email at "``address``" with subject "``subject``"
+    * Then I should receive an email at "``address``" containing "``text``"
 
-`behaving.sms` Supported matchers/steps
----------------------------------------
+``behaving.sms`` Supported matchers/steps
+-----------------------------------------
 
-    * When I set "`key`" to the body of the sms I received at "`number`"
-    * When I parse the sms I received at "`number`" and set "`expressions`"
-    * Then I should receive an sms at "`number`"
-    * Then I should receive an sms at "`number`" containing "`text`"
+    * When I set "``key``" to the body of the sms I received at "``number``"
+    * When I parse the sms I received at "``number``" and set "``expressions``"
+    * Then I should receive an sms at "``number``"
+    * Then I should receive an sms at "``number``" containing "``text``"
 
-`behaving.personas` Supported matchers/steps
---------------------------------------------
+``behaving.personas`` Supported matchers/steps
+----------------------------------------------
 
-    * Given "`name`" as the persona
-    * When I set "`key`" to "`value`"
-    * Then "`key`" is set to "`value`"
+    * Given "``name``" as the persona
+    * When I set "``key``" to "``value``"
+    * Then "``key``" is set to "``value``"
 
     .. _`Cucumber`: http://cukes.info/
     .. _`lettuce`: http://lettuce.it/
