@@ -3,12 +3,12 @@ behaving
 
 *behaving* is a web application testing framework for Behavior-Driver-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
 
-*behaving* is written in python and is based on `behave`_. Please refer to *behave*'s ' excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
+*behaving* is written in python and is based on `behave`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
 
 Hello world
 -----------
 
-Starting using *behaving* is pretty easy. Inside some python module, add your *features* consisting each of one or more scenarios. These features are Gherkin language files with an extension of ``.feature``. In the same directory you should have a steps module which imports the *behaving* steps as well as your own custom steps (more later in the setup_ section) . Here's a basic example:
+Starting using *behaving* is pretty easy. Inside some python module, add your *features* consisting each of one or more scenarios. These features are Gherkin language files with an extension of ``.feature``. In the same directory you should have a steps module which imports the *behaving* steps as well as your own custom steps (more on that later in the setup_ section) . Here's a basic example:
 
 ::
 
@@ -42,18 +42,16 @@ While the web is the focus of *behaving*, it also includes simple mocks for a ma
             When I send an sms to "+4745690001" with body "Hello world"
             Then I should receive an sms at "+4745690001" containing "world"
 
-Typically of course, it will be your web application that sends mail/sms.
+Typically, it will be your web application that sends email/sms and testing it comes down to configuring the application to send email/sms to the mock servers.
 
 Personas & state
 ----------------
 
-A lot of web apps today rely on multi-user interactions. To help you with those interactions, *behaving* uses the notion of *personas*. A persona has its own browser, and is implemented as a simple dictionary allowing it to carry state. A persona can therefore save state in variables and reuse it inside a scenario.
+A lot of web apps today rely on multi-user interactions. To help you with those interactions, *behaving* uses the notion of *personas*. A persona within a test runs in its own instance of a browser. It is also implemented as a simple dictionary allowing it to carry state, save and reuse variables inside a scenario.
 
 Let us assume the following (coming from a real example) scenario. `Crypho`_, is an online messaging/sharing site that provides users with end-to-end encrypted real-time communications. *behaving* was written to help test Crypho.
 
-You can see the test in action on video `here <http://vimeo.com/62777458/>`_.
-
-In Crypho, to invite somebody in a *space* the invitee has to share a token with an invitor, so both can verify each other's identity.
+In Crypho, teams collaborate in *spaces*. To invite somebody in a *space* the invitee has to share a token with an invitor, so both can verify each other's identity.
 
 ::
 
@@ -131,6 +129,8 @@ Once the invitations are sent we switch back to Gandalf's browser, who should ha
             And I press "Submit"
                 Then I should see "The invitation has been accepted." within 5 seconds
                 And I should see "Gandalf the Grey has joined the space, invited by Frodo Baggins" within 10 seconds
+
+You can see the test in action on video `here <http://vimeo.com/62777458/>`_.
 
 .. _setup:
 
@@ -226,7 +226,10 @@ The following variables are supported and can be set to override defaults:
 * ``default_browser``
 * ``base_url``
 
-Finally, when *behaving* is installed, it creates two scripts to help you test mail and sms, ``mailmock`` and ``smsmock`` respectively. You can directly invoke them before run your tests, they both take a port as well as the directory to output data as parameters. For example,
+Mail and SMS mock servers
+-------------------------
+
+When *behaving* is installed, it creates two scripts to help you test mail and sms, ``mailmock`` and ``smsmock`` respectively. You can directly invoke them before running your tests, they both take a port as well as the directory to output data as parameters. For example,
 
 ::
 
