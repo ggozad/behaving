@@ -176,7 +176,7 @@ Once the invitations are sent we switch back to Gandalf's browser, who should ha
                 Then I should see "The invitation has been accepted." within 5 seconds
                 And I should see "Gandalf the Grey has joined the space, invited by Frodo Baggins" within 10 seconds
 
-You can see the test in action on video `here <http://vimeo.com/62777458/>`_.
+You can see the test in action on video `here <http://vimeo.com/63672466/>`_.
 
 .. _setup:
 
