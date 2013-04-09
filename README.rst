@@ -183,6 +183,8 @@ You can see the test in action on video `here <http://vimeo.com/62777458/>`_.
 Setting up a test environment
 -----------------------------
 
+Start by installing *behaving* by using either ``pip`` or ``easy_install``. This will also install dependencies and create the ``behave`` script with which you invoke your tests. If you prefer using buildout, clone the package itself from its repository, it contains already a buildout configuration.
+
 Typically you will be having a folder containing all your features and steps. For example a directory structure like the following:
 
 ::
@@ -271,6 +273,12 @@ The following variables are supported and can be set to override defaults:
 * ``mail_path`` (the path to be used by ``mailmock`` to save mail. Defaults to ``current_dir/mail`` )
 * ``default_browser``
 * ``base_url``
+
+You can run the tests simply by issuing
+
+::
+
+    ./bin/behave ./features
 
 Mail and SMS mock servers
 -------------------------
