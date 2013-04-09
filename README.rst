@@ -237,108 +237,108 @@ Finally, when ``behaving`` is installed, it creates two scripts to help you test
 ``behaving.web`` Supported matchers/steps
 -----------------------------------------
 
-    * Browsers
+* Browsers
 
-        * Given a browser
-            [opens the default browser, i.e. Firefox]
-        * Given ``brand`` as the default browser
-            [sets the default browser to be ``brand``, where brand can be Firefox, Chrome, Safari, PhantomJS, or Remote]
-        * Given browser "``name``"
-            [opens the browser named ``name``]
-        * When I reload
-        * When I go back
-        * When I go forward
+    * Given a browser
+        [opens the default browser, i.e. Firefox]
+    * Given ``brand`` as the default browser
+        [sets the default browser to be ``brand``, where brand can be Firefox, Chrome, Safari, PhantomJS, or Remote]
+    * Given browser "``name``"
+        [opens the browser named ``name``]
+    * When I reload
+    * When I go back
+    * When I go forward
 
-    * URLs
+* URLs
 
-        * Given the base url "``url``"
-            [sets the base url to ``url``, alternatively set ``context.base_url`` directly in ``environment.py``]
-        * When I visit "``url``"
-        * When I go to "``url``"
-        * Then the browser's url should be "``url``"
-        * Then the browser's url should contain "``text``"
-        * Then the browser's url should not contain "``text``"
+    * Given the base url "``url``"
+        [sets the base url to ``url``, alternatively set ``context.base_url`` directly in ``environment.py``]
+    * When I visit "``url``"
+    * When I go to "``url``"
+    * Then the browser's url should be "``url``"
+    * Then the browser's url should contain "``text``"
+    * Then the browser's url should not contain "``text``"
 
-    * Links
+* Links
 
-        * When I click the link to "``url``"
-        * When I click the link to a url that contains "``url``"
-        * When I click the link with text "``text``"
-        * When I click the link with text that contains "``text``"
+    * When I click the link to "``url``"
+    * When I click the link to a url that contains "``url``"
+    * When I click the link with text "``text``"
+    * When I click the link with text that contains "``text``"
 
-    * Text & element presence
+* Text & element presence
 
-        * When I wait for ``timeout`` seconds
-        * When I show the element with id "``id``"
-        * When I hide the element with id "``id``"
-        * Then I should see "``text``"
-        * Then I should not see "``text``"
-        * Then I should see "``text``" within ``timeout`` seconds
-        * Then I should not see "``text``" within ``timeout`` seconds
-        * Then I should see an element with id "``id``"
-        * Then I should not see an element with id "``id``"
-        * Then I should see an element with id "``id``" within ``timeout`` seconds
-        * Then I should not see an element with id "``id``" within ``timeout`` seconds
-        * Then I should see an element with the css selector "``selector``"
-        * Then I should not see an element with the css selector "``selector``"
-        * Then I should see an element with the css selector "``selector``" within ``timeout`` seconds
-        * Then I should not see an element with the css selector "``selector``" within ``timeout`` seconds
+    * When I wait for ``timeout`` seconds
+    * When I show the element with id "``id``"
+    * When I hide the element with id "``id``"
+    * Then I should see "``text``"
+    * Then I should not see "``text``"
+    * Then I should see "``text``" within ``timeout`` seconds
+    * Then I should not see "``text``" within ``timeout`` seconds
+    * Then I should see an element with id "``id``"
+    * Then I should not see an element with id "``id``"
+    * Then I should see an element with id "``id``" within ``timeout`` seconds
+    * Then I should not see an element with id "``id``" within ``timeout`` seconds
+    * Then I should see an element with the css selector "``selector``"
+    * Then I should not see an element with the css selector "``selector``"
+    * Then I should see an element with the css selector "``selector``" within ``timeout`` seconds
+    * Then I should not see an element with the css selector "``selector``" within ``timeout`` seconds
 
-    * Forms
+* Forms
 
-        * When I fill in "``name``" with "``value``"
-        * When I type "``value``" to "``name``"
-            [same as fill, but happens slowly triggering keyboard events]
-        * When I choose "``value``" from "``name``"
-        * When I check "``name``"
-        * When I uncheck "``name``"
-        * When I select "``value``" from "``name``""
-        * When I press "``name|id|text|innerText``"
-        * When I press the element with xpath "``xpath``"
-        * When I attach the file "``path``" to "``name``"
-        * When I set the innner HTML of the element with id "``id``" to "``contents``"
-            [Sets html on a ``contenteditable`` element with id ``id`` to ``contents``]
-        * When I set the innner HTML of the element with class "``class``" to "``contents``"
-        * When I set the innner HTML of the element with class "``class``" to "``contents``"
-        * Then field "``name``" should have the value "``value``"
-        * Then "``name``" should be enabled
-        * Then "``name``" should be disabled
-        * Then "``name``" should not be enabled
-        * Then "``name``" should be valid
-        * Then "``name``" should be invalid
-        * Then "``name``" should not be valid
+    * When I fill in "``name``" with "``value``"
+    * When I type "``value``" to "``name``"
+        [same as fill, but happens slowly triggering keyboard events]
+    * When I choose "``value``" from "``name``"
+    * When I check "``name``"
+    * When I uncheck "``name``"
+    * When I select "``value``" from "``name``""
+    * When I press "``name|id|text|innerText``"
+    * When I press the element with xpath "``xpath``"
+    * When I attach the file "``path``" to "``name``"
+    * When I set the innner HTML of the element with id "``id``" to "``contents``"
+        [Sets html on a ``contenteditable`` element with id ``id`` to ``contents``]
+    * When I set the innner HTML of the element with class "``class``" to "``contents``"
+    * When I set the innner HTML of the element with class "``class``" to "``contents``"
+    * Then field "``name``" should have the value "``value``"
+    * Then "``name``" should be enabled
+    * Then "``name``" should be disabled
+    * Then "``name``" should not be enabled
+    * Then "``name``" should be valid
+    * Then "``name``" should be invalid
+    * Then "``name``" should not be valid
 
-    * Persona interaction
+* Persona interaction
 
-        * Given "``name``" as the user
-            [opens a reusable browser named ``name``)
-        * When I set "``key``" to the text of "``id|name``"
+    * Given "``name``" as the user
+        [opens a reusable browser named ``name``)
+    * When I set "``key``" to the text of "``id|name``"
 
 
 ``behaving.mail`` Supported matchers/steps
 ------------------------------------------
 
-    * When I click the link in the email I received at "``address``"
-    * Then I should receive an email at "``address``"
-    * Then I should receive an email at "``address``" with subject "``subject``"
-    * Then I should receive an email at "``address``" containing "``text``"
+* When I click the link in the email I received at "``address``"
+* Then I should receive an email at "``address``"
+* Then I should receive an email at "``address``" with subject "``subject``"
+* Then I should receive an email at "``address``" containing "``text``"
 
 ``behaving.sms`` Supported matchers/steps
 -----------------------------------------
 
-    * When I set "``key``" to the body of the sms I received at "``number``"
-    * When I parse the sms I received at "``number``" and set "``expressions``"
-    * Then I should receive an sms at "``number``"
-    * Then I should receive an sms at "``number``" containing "``text``"
+* When I set "``key``" to the body of the sms I received at "``number``"
+* When I parse the sms I received at "``number``" and set "``expressions``"
+* Then I should receive an sms at "``number``"
+* Then I should receive an sms at "``number``" containing "``text``"
 
 ``behaving.personas`` Supported matchers/steps
 ----------------------------------------------
 
-    * Given "``name``" as the persona
-    * When I set "``key``" to "``value``"
-    * Then "``key``" is set to "``value``"
+* Given "``name``" as the persona
+* When I set "``key``" to "``value``"
+* Then "``key``" is set to "``value``"
 
-    .. _`Cucumber`: http://cukes.info/
-    .. _`lettuce`: http://lettuce.it/
-    .. _`behave`: http://pypi.python.org/pypi/behave
-    .. _`Crypho`: http://crypho.com
+.. _`Cucumber`: http://cukes.info/
+.. _`lettuce`: http://lettuce.it/
+.. _`behave`: http://pypi.python.org/pypi/behave
+.. _`Crypho`: http://crypho.com
