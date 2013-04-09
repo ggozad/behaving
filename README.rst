@@ -3,7 +3,7 @@ behaving
 
 *behaving* is a web application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
 
-*behaving* is written in python and is based on `behave`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
+*behaving* is written in python and is based on `behave`_ and `splinter`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
 
 Hello world
 -----------
@@ -381,4 +381,5 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 .. _`Cucumber`: http://cukes.info/
 .. _`lettuce`: http://lettuce.it/
 .. _`behave`: http://pypi.python.org/pypi/behave
+.. _`splinter`: http://splinter.cobrateam.info/
 .. _`Crypho`: http://crypho.com
