@@ -1,14 +1,14 @@
 behaving
 ========
 
-*behaving* is a web application testing framework for Behavior-Driver-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
+*behaving* is a web application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
 
 *behaving* is written in python and is based on `behave`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
 
 Hello world
 -----------
 
-Starting using *behaving* is pretty easy. Inside some python module, add your *features* consisting each of one or more scenarios. These features are Gherkin language files with an extension of ``.feature``. In the same directory you should have a steps module which imports the *behaving* steps as well as your own custom steps (more on that later in the setup_ section) . Here's a basic example:
+Starting to use *behaving* is pretty easy. Inside some python module, add your *features* consisting each of one or more scenarios. These features are Gherkin language files with an extension of ``.feature``. In the same directory you should have a steps module which imports the *behaving* steps as well as your own custom steps (more on that later in the setup_ section) . Here's a basic example:
 
 ::
 
@@ -47,7 +47,53 @@ Typically, it will be your web application that sends email/sms and testing it c
 Personas & state
 ----------------
 
-A lot of web apps today rely on multi-user interactions. To help you with those interactions, *behaving* uses the notion of *personas*. A persona within a test runs in its own instance of a browser. It is also implemented as a simple dictionary allowing it to carry state, save and reuse variables inside a scenario.
+A lot of web apps today rely on multi-user interactions. To help you with those interactions, *behaving* uses the notion of *personas*. A persona within a test runs in its own instance of a browser and you can have more than one persona (and its browser instance) running concurrently. You switch among personas by calling
+
+::
+
+    Given "PersonaName" as the persona
+
+Personas are also typically implemented as simple dictionaries allowing them to carry state, save and reuse variables inside a scenario. When a persona is first invoked it is created as an empty dictionary. You can predefine personas though with set values.
+
+Let's take the familiar LOTR characters as our test users. On setting up the test environment (details later in the setup_ section), we set up the characters basic variables we might be needing in the tests as such:
+
+::
+
+    PERSONAS = {
+        'Frodo': dict(
+                fullname=u'Frodo Baggins',
+                email=u'frodo@shire.com',
+                password=u'frodopass',
+                mobile='+4745690001'
+            ),
+
+        'Gandalf': dict(
+                fullname=u'Gandalf the Grey',
+                email=u'gandalf@wizardry.com',
+                password=u'gandalfpass',
+                mobile='+4745690004'
+            ),
+        ...
+    }
+
+    def before_all(context):
+        ...
+        context.personas = PERSONAS
+
+
+Within a test and given a persona, you can now use ``$var_name`` to access a variable of a persona. You can also set new variables on personas. So the following,
+
+::
+
+    Given "Gandalf" as the persona
+    When I fill in "name" with "$fullname"
+    And I set "title" to the text of "document-title"
+    And I fill in "delete" with "$title"
+
+would fill in the field with id ``name`` with ``Gandalf the Grey``, set the variable ``title`` to the text of the element with id ``document-title`` and reuse the variable ``title`` to fill in the field with id ``delete``.
+
+Hello Persona example
+---------------------
 
 Let us assume the following (coming from a real example) scenario. `Crypho`_, is an online messaging/sharing site that provides users with end-to-end encrypted real-time communications. *behaving* was written to help test Crypho.
 
@@ -64,7 +110,7 @@ In Crypho, teams collaborate in *spaces*. To invite somebody in a *space* the in
             Given "Gandalf" as the persona
             When I log in
 
-Before the scenarios start, the custom step ``Given state "the-shire"`` executes. This preloads the db with data sets up the server etc. Then the scenario executes:
+Before the scenarios start, the custom step ``Given state "the-shire"`` executes. This preloads the db with data, sets up the server etc. Then the scenario executes:
 
 First Gandalf logs in. The step ``Given "Gandalf" as the persona``, fires up a browser that belongs to the persona Gandalf. The following step, ``When I log in`` is a custom step defined as follows:
 
