@@ -33,12 +33,6 @@ def after_scenario(context, scenario):
         except URLError:
             pass
 
-    if context.browser is not None:
-        try:
-            context.browser.quit()
-        except URLError:
-            pass
-
 
 def after_all(context):
     pass
