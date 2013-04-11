@@ -1,13 +1,8 @@
-from urllib2 import URLError
+from . import setup, teardown
 
 
 def before_all(context):
-    if not hasattr(context, 'default_browser'):
-        context.default_browser = ''
-    if not hasattr(context, 'attachment_dir'):
-        context.attachment_dir = '/'
-    if not hasattr(context, 'base_url'):
-        context.base_url = ''
+    setup(context)
 
     # Disable logging, selenium tends to be pretty verbose
     context.config.log_capture = False
@@ -18,8 +13,7 @@ def before_feature(context, feature):
 
 
 def before_scenario(context, scenario):
-    context.browser = None
-    context.browsers = dict()
+    setup(context)
 
 
 def after_feature(context, feature):
@@ -27,12 +21,8 @@ def after_feature(context, feature):
 
 
 def after_scenario(context, scenario):
-    for browser in context.browsers.values():
-        try:
-            browser.quit()
-        except URLError:
-            pass
+    teardown(context)
 
 
 def after_all(context):
-    pass
+    teardown(context)
