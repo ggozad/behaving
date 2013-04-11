@@ -1,5 +1,7 @@
 from urllib2 import URLError
 
+# Generic setup/teardown for compatibility with pytest et al.
+
 
 def setup(context):
     if not hasattr(context, 'default_browser'):
