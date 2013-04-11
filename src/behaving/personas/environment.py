@@ -1,5 +1,8 @@
+from . import setup
+
+
 def before_all(context):
-    context.personas = {}
+    setup(context)
 
 
 def before_feature(context, feature):
