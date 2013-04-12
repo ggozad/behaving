@@ -1,10 +1,10 @@
-from behave import given, when, then
+from behave import step
 
 from behaving.personas.persona import Persona
 from behaving.personas.persona import persona_vars
 
 
-@given(u'"{name}" as the persona')
+@step(u'"{name}" as the persona')
 def given_a_persona(context, name):
 
     if name not in context.personas:
@@ -15,13 +15,13 @@ def given_a_persona(context, name):
         context.execute_steps('Given browser "%s"' % name)
 
 
-@when(u'I set "{key}" to "{val}"')
+@step(u'I set "{key}" to "{val}"')
 def set_variable(context, key, val):
     assert context.persona is not None, u'no persona is setup'
     context.persona[key] = val
 
 
-@then(u'"{key}" is set to "{val}"')
+@step(u'"{key}" is set to "{val}"')
 @persona_vars
 def key_is_val(context, key, val):
     assert context.persona is not None, u'no persona is setup'
