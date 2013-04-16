@@ -255,6 +255,8 @@ The following variables are supported and can be set to override defaults:
 * ``sms_path`` (the path to be used by ``smsmock`` to save sms. Defaults to ``current_dir/sms`` )
 * ``mail_path`` (the path to be used by ``mailmock`` to save mail. Defaults to ``current_dir/mail`` )
 * ``default_browser``
+* ``remote_webdriver`` (whether to use the remote webdriver. Defaults to ``False``)
+* ``browser_args`` (a dict of additional keyword arguments used when creating a browser)
 * ``base_url``
 
 You can run the tests simply by issuing
@@ -282,7 +284,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * Given a browser
       [opens the default browser, i.e. Firefox]
     * Given ``brand`` as the default browser
-      [sets the default browser to be ``brand``, where brand can be Firefox, Chrome, Safari, PhantomJS, or Remote]
+      [sets the default browser to be ``brand``, this is the browser name when using the remote webdriver or Firefox, Chrome, Safari or PhantomJS]
     * Given browser "``name``"
       [opens the browser named ``name``]
     * When I reload
