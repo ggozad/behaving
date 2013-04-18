@@ -24,7 +24,7 @@ class PersonaVarMatcher(object):
                 variables = var_exp.findall(kwvalue)
                 for var in variables:
                     if var in context.persona:
-                        kwargs[kwname] = context.persona[var]
+                        kwargs[kwname] = kwargs[kwname].replace('$' + var, context.persona[var])
 
         self.func.__call__(*args, **kwargs)
 

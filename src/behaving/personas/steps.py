@@ -16,6 +16,7 @@ def given_a_persona(context, name):
 
 
 @step(u'I set "{key}" to "{val}"')
+@persona_vars
 def set_variable(context, key, val):
     assert context.persona is not None, u'no persona is setup'
     context.persona[key] = val
@@ -26,4 +27,4 @@ def set_variable(context, key, val):
 def key_is_val(context, key, val):
     assert context.persona is not None, u'no persona is setup'
     assert key in context.persona, u'key not set'
-    assert context.persona[key] == val, u'values do not match'
+    assert context.persona[key] == val, u'%s != %s, values do not match' % (context.persona[key], val)
