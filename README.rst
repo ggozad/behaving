@@ -350,12 +350,12 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * Then "``name``" should be invalid
     * Then "``name``" should not be valid
 
-* Persona interaction
+* Persona interaction & variables
 
     * Given "``name``" as the user
       [opens a reusable browser named ``name``)
     * When I set "``key``" to the text of "``id|name``"
-
+    * When I set "``key``" to the attribute "``attr``" of the element with xpath "``xpath``"
 
 ``behaving.mail`` Supported matchers/steps
 ------------------------------------------
