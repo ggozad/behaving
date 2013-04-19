@@ -1,0 +1,27 @@
+Changelog
+=========
+
+0.2 2013-04-19
+--------------
+
+- Step matchers for setting variables to attributes of
+  elements returned from XPATH expressions.
+  [ggozad]
+
+- Parse persona variables inside expressions.
+  [ggozad]
+
+- Simplify step decorators
+  [lrowe]
+
+- Support for remote webdriver.
+  [lrowe]
+
+- Prepare integration with pytest.
+  [lrowe]
+
+0.1 2013-04-09
+--------------
+
+- Initial release
+  [ggozad]

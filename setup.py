@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 
-version = '0.1'
+version = '0.2'
 
 setup(name='behaving',
       version=version,
       description="Behavior-Driven-Development testing for multi-user web/mail/sms apps",
-      long_description=open("README.rst").read(),
+      long_description=open("README.rst").read() + open("CHANGES.txt").read(),
       classifiers=[
       "Development Status :: 4 - Beta",
       "Intended Audience :: Developers",
