@@ -19,6 +19,11 @@ Feature: Text presence
         And I should see an element with the css selector "div#content"
         And I should not see an element with id "foo"
         And I should not see an element with the css selector "div#foo"
+        And I should see an element with xpath "//div[@id='content']"
+        And I should not see an element with xpath "//div[@id='foo']"
         When I reload
         Then I should see an element with the css selector "span#late" within 2 seconds
         And I should not see an element with the css selector "span#very-late" within 2 seconds
+        When I reload
+        Then I should see an element with xpath "//span[@id='late']" within 2 seconds
+        And I should not see an element with xpath "//span[@id='very-late']" within 2 seconds

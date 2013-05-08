@@ -4,6 +4,9 @@ Changelog
 0.3 Unreleased
 --------------
 
+- Check for element visibility by xpath
+  [ggozad]
+
 0.2 2013-04-19
 --------------
 
