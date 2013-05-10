@@ -21,7 +21,7 @@ class PersonaVarMatcher(object):
         context = args[0]
         if hasattr(context, 'persona'):
             for kwname, kwvalue in kwargs.items():
-                variables = var_exp.findall(kwvalue)
+                variables = var_exp.findall(str(kwvalue))
                 for var in variables:
                     if var in context.persona:
                         kwargs[kwname] = kwargs[kwname].replace('$' + var, context.persona[var])

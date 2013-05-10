@@ -1,6 +1,8 @@
 import time
 from behave import step
 
+from behaving.personas.persona import persona_vars
+
 
 @step(u'I wait for {timeout:d} seconds')
 def wait_for_timeout(context, timeout):
@@ -80,20 +82,25 @@ def should_not_see_element_with_css_within_timeout(context, css, timeout):
 
 
 @step(u'I should see an element with xpath "{xpath}"')
+@persona_vars
 def should_see_element_with_xpath(context, xpath):
+    print xpath
     assert context.browser.is_element_present_by_xpath(xpath), u'Element not present'
 
 
 @step(u'I should not see an element with xpath "{xpath}"')
+@persona_vars
 def should_not_see_element_with_xpath(context, xpath):
     assert not context.browser.is_element_present_by_xpath(xpath), u'Element is present'
 
 
 @step(u'I should see an element with xpath "{xpath}" within {timeout:d} seconds')
+@persona_vars
 def should_see_element_with_xpath_within_timeout(context, xpath, timeout):
     assert context.browser.is_element_present_by_xpath(xpath, wait_time=timeout), u'Element not present'
 
 
 @step(u'I should not see an element with xpath "{xpath}" within {timeout:d} seconds')
+@persona_vars
 def should_not_see_element_with_xpath_within_timeout(context, xpath, timeout):
     assert not context.browser.is_element_present_by_xpath(xpath, wait_time=timeout), u'Element is present'
