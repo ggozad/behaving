@@ -297,6 +297,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
       [sets the base url to ``url``, alternatively set ``context.base_url`` directly in ``environment.py``]
     * When I visit "``url``"
     * When I go to "``url``"
+    * When I parse the url path and set "``{expression}``"
     * Then the browser's url should be "``url``"
     * Then the browser's url should contain "``text``"
     * Then the browser's url should not contain "``text``"
