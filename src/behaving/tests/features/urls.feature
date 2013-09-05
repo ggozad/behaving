@@ -23,7 +23,7 @@ Feature: Url handling
         And the browser's URL should be "/page2.html"
         And the browser's URL should contain "localhost"
 
-    @www
+    @web
     Scenario: Parse a url
     Given "Foo" as the persona
     Given the base url "http://localhost:8080/"
