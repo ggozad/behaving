@@ -38,7 +38,7 @@ def should_see_within_timeout(context, text, timeout):
 
 @step(u'I should not see "{text}" within {timeout:d} seconds')
 def should_not_see_within_timeout(context, text, timeout):
-    assert context.browser.is_text_not_present(text), u'Text was found'
+    assert context.browser.is_text_not_present(text, wait_time=timeout), u'Text was found'
 
 
 @step(u'I should see an element with id "{id}"')
