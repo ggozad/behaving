@@ -354,6 +354,8 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * Then "``name``" should be valid
     * Then "``name``" should be invalid
     * Then "``name``" should not be valid
+    * Then "``name``" should be required
+    * Then "``name``" should not be required
 
 * Persona interaction & variables
 

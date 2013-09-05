@@ -49,3 +49,9 @@ Feature: Forms
         Then I should see "Hello foo world"
         When I set the inner HTML of the element with class "ce" to "<p>Hello bar world</p>"
         Then I should see "Hello bar world"
+
+    @web
+    Scenario: Checking required fields
+        When I visit "http://localhost:8080/forms.html"
+        Then field "name" should be required
+        And field "passwd" should not be required

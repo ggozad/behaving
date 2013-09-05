@@ -124,3 +124,19 @@ def field_is_invalid(context, name):
     assert context.browser.find_by_name(name), u'Element not found'
     assert not context.browser.evaluate_script("document.getElementsByName('%s')[0].checkValidity()" % name), \
         'Field is valid'
+
+
+@step(u'field "{name}" should be required')
+@persona_vars
+def field_is_required(context, name):
+    assert context.browser.find_by_name(name), u'Element not found'
+    assert context.browser.evaluate_script("document.getElementsByName('%s')[0].getAttribute('required')" % name), \
+        'Field is not required'
+
+
+@step(u'field "{name}" should not be required')
+@persona_vars
+def field_is_not_required(context, name):
+    assert context.browser.find_by_name(name), u'Element not found'
+    assert not context.browser.evaluate_script("document.getElementsByName('%s')[0].getAttribute('required')" % name), \
+        'Field is required'
