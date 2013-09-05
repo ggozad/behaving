@@ -4,6 +4,8 @@ Changelog
 0.4 Unreleased
 --------------
 
+- Make I select "{value}" from "{name}" to work with radio as well
+  [ggozad]
 
 0.3 2013-09-5
 -------------

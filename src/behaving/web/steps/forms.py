@@ -1,5 +1,7 @@
 import os
 from behave import step
+from splinter.exceptions import ElementDoesNotExist
+
 from behaving.personas.persona import persona_vars
 
 
@@ -37,7 +39,12 @@ def i_uncheck(context, name):
 @step(u'I select "{value}" from "{name}"')
 @persona_vars
 def i_select(context, value, name):
-    context.browser.select(name, value)
+    try:
+        context.browser.select(name, value)
+    except ElementDoesNotExist:
+        inp = context.browser.find_by_xpath("//input[@name='%s'][@value='%s']" % (name, value))
+        assert inp, u'Element not found'
+        inp.first.check()
 
 
 @step(u'I press "{name}"')
