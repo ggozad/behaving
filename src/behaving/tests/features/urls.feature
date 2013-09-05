@@ -22,3 +22,11 @@ Feature: Url handling
         Then the browser's URL should be "http://localhost:8080/page2.html"
         And the browser's URL should be "/page2.html"
         And the browser's URL should contain "localhost"
+
+    @www
+    Scenario: Parse a url
+    Given "Foo" as the persona
+    Given the base url "http://localhost:8080/"
+        When I go to "/page2.html"
+        And I parse the url path and set "/page{page_no}.html"
+        Then "page_no" is set to "2"
