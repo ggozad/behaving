@@ -76,7 +76,7 @@ Let's take the familiar LOTR characters as our test users. On setting up the tes
         ...
     }
 
-    def before_all(context):
+    def before_scenario(context, scenario):
         ...
         context.personas = PERSONAS
 
@@ -221,6 +221,7 @@ An example of an environment that does simply set some variables and then rely o
     import os
     from behaving import environment as benv
 
+    PERSONAS = {}
 
     def before_all(context):
         import mypackage
@@ -244,7 +245,7 @@ An example of an environment that does simply set some variables and then rely o
 
     def before_scenario(context, scenario):
         benv.before_scenario(context, scenario)
-
+        context.personas = PERSONAS
 
     def after_scenario(context, scenario):
         benv.after_scenario(context, scenario)
