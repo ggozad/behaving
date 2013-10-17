@@ -84,7 +84,6 @@ def should_not_see_element_with_css_within_timeout(context, css, timeout):
 @step(u'I should see an element with xpath "{xpath}"')
 @persona_vars
 def should_see_element_with_xpath(context, xpath):
-    print xpath
     assert context.browser.is_element_present_by_xpath(xpath), u'Element not present'
 
 
