@@ -68,7 +68,7 @@ def should_see_element_with_css(context, css):
 
 @step(u'I should not see an element with the css selector "{css}"')
 def should_not_see_element_with_css(context, css):
-    assert not context.browser.is_element_present_by_css(css), u'Element is present'
+    assert context.browser.is_element_not_present_by_css(css), u'Element is present'
 
 
 @step(u'I should see an element with the css selector "{css}" within {timeout:d} seconds')
@@ -78,7 +78,7 @@ def should_see_element_with_css_within_timeout(context, css, timeout):
 
 @step(u'I should not see an element with the css selector "{css}" within {timeout:d} seconds')
 def should_not_see_element_with_css_within_timeout(context, css, timeout):
-    assert not context.browser.is_element_present_by_css(css, wait_time=timeout), u'Element is present'
+    assert context.browser.is_element_not_present_by_css(css, wait_time=timeout), u'Element is present'
 
 
 @step(u'I should see an element with xpath "{xpath}"')
@@ -91,7 +91,7 @@ def should_see_element_with_xpath(context, xpath):
 @step(u'I should not see an element with xpath "{xpath}"')
 @persona_vars
 def should_not_see_element_with_xpath(context, xpath):
-    assert not context.browser.is_element_present_by_xpath(xpath), u'Element is present'
+    assert context.browser.is_element_not_present_by_xpath(xpath), u'Element is present'
 
 
 @step(u'I should see an element with xpath "{xpath}" within {timeout:d} seconds')
@@ -103,4 +103,4 @@ def should_see_element_with_xpath_within_timeout(context, xpath, timeout):
 @step(u'I should not see an element with xpath "{xpath}" within {timeout:d} seconds')
 @persona_vars
 def should_not_see_element_with_xpath_within_timeout(context, xpath, timeout):
-    assert not context.browser.is_element_present_by_xpath(xpath, wait_time=timeout), u'Element is present'
+    assert context.browser.is_element_not_present_by_xpath(xpath, wait_time=timeout), u'Element is present'
