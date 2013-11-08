@@ -92,7 +92,9 @@ def set_html_content_to_element_with_class(context, klass, contents):
 @step(u'field "{name}" should have the value "{value}"')
 @persona_vars
 def field_has_value(context, name, value):
-    el = context.browser.find_by_id(name) or context.browser.find_by_name(name)
+    el = context.browser.find_by_xpath(
+        ("//*[@id='%(name)s']|"
+         "//*[@name='%(name)s']") % {'name': name})
     assert el, u'Element not found'
     assert el.first.value == value, "Values do not match"
 
@@ -100,7 +102,9 @@ def field_has_value(context, name, value):
 @step(u'"{name}" should be enabled')
 @persona_vars
 def is_enabled(context, name):
-    el = context.browser.find_by_id(name) or context.browser.find_by_name(name)
+    el = context.browser.find_by_xpath(
+        ("//*[@id='%(name)s']|"
+         "//*[@name='%(name)s']") % {'name': name})
     assert el, u'Element not found'
     assert el.first._element.is_enabled()
 
@@ -109,7 +113,9 @@ def is_enabled(context, name):
 @step(u'"{name}" should not be enabled')
 @persona_vars
 def is_disabled(context, name):
-    el = context.browser.find_by_id(name) or context.browser.find_by_name(name)
+    el = context.browser.find_by_xpath(
+        ("//*[@id='%(name)s']|"
+         "//*[@name='%(name)s']") % {'name': name})
     assert el, u'Element not found'
     assert not el.first._element.is_enabled()
 

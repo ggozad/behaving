@@ -4,6 +4,12 @@ Changelog
 0.4 Unreleased
 --------------
 
+- Speed up find_by in cases where we search by id, name, text etc.
+  [antych]
+
+- Various bud fixes
+  [antych]
+
 - Make I select "{value}" from "{name}" to work with radio as well
   [ggozad]
 
