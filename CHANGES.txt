@@ -1,7 +1,11 @@
 Changelog
 =========
 
-0.4 Unreleased
+0.5 Unreleased
+--------------
+
+
+0.4 2013-11-08
 --------------
 
 - Speed up find_by in cases where we search by id, name, text etc.
