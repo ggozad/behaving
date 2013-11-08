@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
-version = '0.4-dev'
+version = '0.4'
 
 setup(name='behaving',
       version=version,
       description="Behavior-Driven-Development testing for multi-user web/mail/sms apps",
       long_description=open("README.rst").read() + open("CHANGES.txt").read(),
       classifiers=[
-      "Development Status :: 4 - Beta",
+      "Development Status :: 5 - Production/Stable",
       "Intended Audience :: Developers",
       "Programming Language :: Python",
       ],
