@@ -256,6 +256,7 @@ The following variables are supported and can be set to override defaults:
 * ``sms_path`` (the path to be used by ``smsmock`` to save sms. Defaults to ``current_dir/sms`` )
 * ``mail_path`` (the path to be used by ``mailmock`` to save mail. Defaults to ``current_dir/mail`` )
 * ``default_browser``
+* ``default_browser_size`` (tuple (width, height), applied to each browser as it's created)
 * ``remote_webdriver`` (whether to use the remote webdriver. Defaults to ``False``)
 * ``browser_args`` (a dict of additional keyword arguments used when creating a browser)
 * ``base_url``
@@ -291,6 +292,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I reload
     * When I go back
     * When I go forward
+    * When I resize the browser to ``width``x``height``
 
 * URLs
 
