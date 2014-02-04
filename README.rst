@@ -252,6 +252,7 @@ An example of an environment that does simply set some variables and then rely o
 
 The following variables are supported and can be set to override defaults:
 
+* ``screenshots_dir`` (the path where screenshots will be saved. If it is set, any failure in a scenario will result in a screenshot of the browser at the time when the failure happened.)
 * ``attachment_dir`` (the path where file attachments can be found)
 * ``sms_path`` (the path to be used by ``smsmock`` to save sms. Defaults to ``current_dir/sms`` )
 * ``mail_path`` (the path to be used by ``mailmock`` to save mail. Defaults to ``current_dir/mail`` )
@@ -294,6 +295,8 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I go forward
     * When I resize the browser to ``width``x``height``
     * When I resize the viewport to ``width``x``height``
+    * When I take a screenshot
+      [will save a screenshot of the browser if ``screenshots_dir`` is set on the environment. Also, if ``screenshots_dir`` is set, all failing tests will result in a screenshot.]
 
 * URLs
 

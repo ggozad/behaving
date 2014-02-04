@@ -4,10 +4,13 @@ Changelog
 0.5 Unreleased
 --------------
 
-- Set browser viewport size
+- Take a screenshot manually (in a step) or automatically on failures.
   [ggozad]
 
-- Set browser window size
+- Set browser viewport size.
+  [ggozad]
+
+- Set browser window size.
   [kageurufu, ggozad]
 
 0.4 2013-11-08
@@ -16,25 +19,25 @@ Changelog
 - Speed up find_by in cases where we search by id, name, text etc.
   [antych]
 
-- Various bud fixes
+- Various bud fixes.
   [antych]
 
-- Make I select "{value}" from "{name}" to work with radio as well
+- Make I select "{value}" from "{name}" to work with radio as well.
   [ggozad]
 
 0.3 2013-09-5
 -------------
 
-- Check if fields are/are not required
+- Check if fields are/are not required.
   [ggozad]
 
-- Allow to parse urls and set persona expressions
+- Allow to parse urls and set persona expressions.
   [ggozad]
 
-- Check for element visibility by xpath
+- Check for element visibility by xpath.
   [ggozad]
 
-- Fix for wait_time when checking an element is not present
+- Fix for wait_time when checking an element is not present.
   [moreandres]
 
 0.2 2013-04-19
@@ -47,7 +50,7 @@ Changelog
 - Parse persona variables inside expressions.
   [ggozad]
 
-- Simplify step decorators
+- Simplify step decorators.
   [lrowe]
 
 - Support for remote webdriver.
@@ -59,5 +62,5 @@ Changelog
 0.1 2013-04-09
 --------------
 
-- Initial release
+- Initial release.
   [ggozad]

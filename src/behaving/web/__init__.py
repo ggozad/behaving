@@ -1,3 +1,4 @@
+import os
 from urllib2 import URLError
 
 # Generic setup/teardown for compatibility with pytest et al.
@@ -16,6 +17,14 @@ def setup(context):
         context.base_url = ''
     if not hasattr(context, 'default_browser_size'):
         context.default_browser_size = None
+    if hasattr(context, 'screenshots_dir'):
+        if not os.path.isdir(context.screenshots_dir):
+            try:
+                os.mkdir(context.screenshots_dir)
+            except OSError:
+                context.screenshots_dir = ''
+    else:
+        context.screenshots_dir = ''
 
     context.browser = None
     context.browsers = {}

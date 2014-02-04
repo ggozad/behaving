@@ -1,3 +1,6 @@
+import os
+import time
+
 from behave import step
 from splinter.browser import Browser
 
@@ -64,3 +67,15 @@ def resize_viewport(context, width, height):
     context.browser.driver.set_window_size(
         b_width + width - v_width,
         b_height + height - v_height)
+
+
+@step(u'I take a screenshot')
+def take_screenshot(context):
+    assert context.browser is not None, u'need a browser to take a screenshot'
+    assert context.screenshots_dir !='', u'no screenshots_dir specified'
+
+    filename = context.scenario.feature.name + u'-' + \
+        context.scenario.name + u'-' + \
+        time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
+    filename = os.path.join(context.screenshots_dir, filename)
+    context.browser.screenshot(filename)
