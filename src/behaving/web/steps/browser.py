@@ -20,7 +20,7 @@ def named_browser(context, name):
         context.browsers[name] = Browser(**args)
     context.browser = context.browsers[name]
     context.browser.switch_to_window(context.browser.windows[0])
-    if context.default_browser_size: #(width, height)
+    if context.default_browser_size:
         context.browser.driver.set_window_size(*context.browser.default_browser_size)
 
 
@@ -43,6 +43,7 @@ def go_back(context):
 @step(u'I go forward')
 def go_forward(context):
     context.browser.forward()
+
 
 @step(u'I resize the browser to {width}x{height}')
 def resize_browser(context, height, width):
