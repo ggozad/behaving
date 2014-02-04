@@ -45,3 +45,12 @@ Feature: Browser handling
         Then I should see "Hidden in mobile"
         When I resize the browser to 300x200
         Then I should not see "Hidden in mobile"
+
+    @web
+    Scenario: Change viewport size
+        Given a browser
+        When I visit "http://localhost:8080"
+        And I resize the viewport to 501x800
+        Then I should see "Hidden in mobile"
+        When I resize the viewport to 499x800
+        Then I should not see "Hidden in mobile"

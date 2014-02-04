@@ -46,5 +46,21 @@ def go_forward(context):
 
 
 @step(u'I resize the browser to {width}x{height}')
-def resize_browser(context, height, width):
+def resize_browser(context, width, height):
     context.browser.driver.set_window_size(int(width), int(height))
+
+
+@step(u'I resize the viewport to {width}x{height}')
+def resize_viewport(context, width, height):
+    width = int(width)
+    height = int(height)
+
+    b_size = context.browser.driver.get_window_size()
+    b_width = b_size['width']
+    b_height = b_size['height']
+    v_width = context.browser.evaluate_script("document.documentElement.clientWidth")
+    v_height = context.browser.evaluate_script("document.documentElement.clientHeight")
+
+    context.browser.driver.set_window_size(
+        b_width + width - v_width,
+        b_height + height - v_height)

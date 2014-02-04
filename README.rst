@@ -293,6 +293,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I go back
     * When I go forward
     * When I resize the browser to ``width``x``height``
+    * When I resize the viewport to ``width``x``height``
 
 * URLs
 
