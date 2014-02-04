@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5 Unreleased
+0.5 2014-02-04
 --------------
 
 - Take a screenshot manually (in a step) or automatically on failures.
