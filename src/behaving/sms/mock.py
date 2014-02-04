@@ -19,7 +19,6 @@ class SMSServer(SimpleHTTPServer.SimpleHTTPRequestHandler):
         fr = params.get('from')
         to = params.get('to')
         body = params.get('text')
-        print fr, to, body
         if not (fr and to and body):
             self.send_response(400)
             self.end_headers()

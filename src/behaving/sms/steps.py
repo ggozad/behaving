@@ -37,7 +37,6 @@ def parse_sms_set_var(context, tel, expression):
 @step(u'I should receive an sms at "{tel}" containing "{text}"')
 @persona_vars
 def should_receive_sms_with_text(context, tel, text):
-    print tel
     msgs = context.sms.user_messages(tel)
     for msg in msgs:
         if text in msg:
