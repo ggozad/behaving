@@ -295,6 +295,8 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I go forward
     * When I resize the browser to ``width``x``height``
     * When I resize the viewport to ``width``x``height``
+    * When I take a screenshot
+      [will save a screenshot of the browser if ``screenshots_dir`` is set on the environment. Also, if ``screenshots_dir`` is set, all failing tests will result in a screenshot.]
 
 * URLs
 

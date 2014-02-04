@@ -22,7 +22,7 @@ def setup(context):
             try:
                 os.mkdir(context.screenshots_dir)
             except OSError:
-                context.screenshots_dir = None
+                context.screenshots_dir = ''
     else:
         context.screenshots_dir = ''
 
