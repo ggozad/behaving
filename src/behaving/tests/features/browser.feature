@@ -36,3 +36,12 @@ Feature: Browser handling
         Then the browser's URL should be "http://localhost:8080/page2.html"
         Given browser "Foo"
         Then the browser's URL should be "http://localhost:8080/"
+
+    @web
+    Scenario: Change browser size
+        Given a browser
+        When I visit "http://localhost:8080"
+        And I resize the browser to 800x600
+        Then I should see "Hidden in mobile"
+        When I resize the browser to 300x200
+        Then I should not see "Hidden in mobile"
