@@ -4,6 +4,8 @@ Changelog
 0.5 Unreleased
 --------------
 
+- Set browser window size.
+  [kageurufu, ggozad]
 
 0.4 2013-11-08
 --------------
