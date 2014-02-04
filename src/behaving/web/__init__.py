@@ -14,6 +14,8 @@ def setup(context):
         context.attachment_dir = '/'
     if not hasattr(context, 'base_url'):
         context.base_url = ''
+    if not hasattr(context, 'default_browser_size'):
+        context.default_browser_size = None
 
     context.browser = None
     context.browsers = {}

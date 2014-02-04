@@ -3,6 +3,19 @@
 <head>
 <meta charset="utf-8" />
 <title>Test page</title>
+<style type="text/css">
+    @media screen and (max-width: 500px) {
+        #hidden_in_small_viewport {
+            display: none;
+        }
+    }
+    #hidden_in_small_viewport {
+        background-color: red;
+        width: 10px;
+        height: 10px;
+    }
+</style>
+
 </head>
 <body>
     <div id="header">
@@ -11,6 +24,9 @@
     <div id="content"/>
     <div style="display: none">
         <span id="hidden_text">I am hidden</span>
+    </div>
+    <div id="hidden_in_small_viewport">
+        Hidden in mobile
     </div>
     <div id="xpath-id" data-test="testing"/>
     <a href="/page2.html">Page 2</a>
