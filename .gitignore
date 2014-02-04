@@ -10,4 +10,5 @@ parts/
 *.egg-info
 *.pyc
 chromedriver.log
+ghostdriver.log
 .long-description.html
