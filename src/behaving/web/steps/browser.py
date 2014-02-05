@@ -24,7 +24,7 @@ def named_browser(context, name):
     context.browser = context.browsers[name]
     context.browser.switch_to_window(context.browser.windows[0])
     if context.default_browser_size:
-        context.browser.driver.set_window_size(*context.browser.default_browser_size)
+        context.browser.driver.set_window_size(*context.default_browser_size)
 
 
 @step(u'{brand} as the default browser')
