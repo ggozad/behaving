@@ -4,6 +4,8 @@ Changelog
 0.6 Unreleased
 --------------
 
+- Fix multipart mime emails.
+  [kageurufu]
 
 0.5 2014-02-04
 --------------
