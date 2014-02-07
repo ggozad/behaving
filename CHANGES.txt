@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.6 Unreleased
+0.6 2014-02-07
 --------------
 
 - Fix multipart mime emails.
