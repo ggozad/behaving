@@ -6,6 +6,8 @@ downloads/
 eggs/
 extends/
 parts/
+var/
+dist/
 *.DS_Store
 *.egg-info
 *.pyc
