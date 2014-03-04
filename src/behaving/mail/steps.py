@@ -40,7 +40,7 @@ def should_receive_email(context, address):
 def click_link_in_email(context, address):
     mails = context.mail.user_messages(address)
     assert mails, u'message not found'
-    mail = email.message_from_string(mails[0])
+    mail = email.message_from_string(mails[-1])
     links = URL_RE.findall(str(mail).replace('=\n', ''))
     assert links, u'link not found'
     url = links[0]
