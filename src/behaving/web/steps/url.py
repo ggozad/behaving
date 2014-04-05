@@ -1,4 +1,7 @@
-from urlparse import urljoin, urlparse
+try:
+    from urlparse import urljoin, urlparse
+except ImportError:
+    from urllib.parse import urljoin, urlparse
 from behave import step
 from splinter.browser import Browser
 import parse

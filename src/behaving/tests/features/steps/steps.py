@@ -1,5 +1,10 @@
-import urllib
-import urllib2
+try:
+    from urllib import urlencode
+    from urllib2 import Request, urlopen, HTTPError
+except ImportError:
+    from urllib.parse import urlencode
+    from urllib.request import Request, urlopen
+    from urllib.error import HTTPError
 import smtplib
 from email.mime.text import MIMEText
 from behave import when
@@ -19,11 +24,11 @@ def send_sms(context, to, body):
               'to': to,
               'text': body}
 
-    data = urllib.urlencode(values)
-    req = urllib2.Request(url, data)
+    data = urlencode(values)
+    req = Request(url, data.encode('utf-8'))
     try:
-        urllib2.urlopen(req)
-    except urllib2.HTTPError:
+        urlopen(req)
+    except HTTPError:
         assert False
 
 

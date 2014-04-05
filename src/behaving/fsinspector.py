@@ -15,7 +15,7 @@ class FSInspector(object):
     def messages_for_user(self, user):
         user_path = os.path.join(self.path, user)
         try:
-            root, dirs, paths = os.walk(user_path).next()
+            root, dirs, paths = next(os.walk(user_path))
         except StopIteration:
             return []
 
@@ -33,7 +33,7 @@ class FSInspector(object):
         messages = []
         start = time.time()
         while time.time() - start < self.timeout:
-            messages = filter(f, self.messages_for_user(user))
+            messages = list(filter(f, self.messages_for_user(user)))
             if messages:
                 break
             time.sleep(0.2)
