@@ -1,5 +1,8 @@
 import os
-from urllib2 import URLError
+try:
+    from urllib2 import URLError
+except ImportError:
+    from urllib.error import URLError
 
 # Generic setup/teardown for compatibility with pytest et al.
 
