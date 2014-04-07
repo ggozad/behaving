@@ -4,6 +4,9 @@ Changelog
 0.7 - Unreleased
 ----------------
 
+- Python 3 compatibility, Travis CI integration
+  [fgimian]
+
 - Step click the link in the email received at "{email}" now uses the most recently received email
   [kageurufu]
 
