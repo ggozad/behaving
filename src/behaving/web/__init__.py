@@ -20,6 +20,8 @@ def setup(context):
         context.base_url = ''
     if not hasattr(context, 'default_browser_size'):
         context.default_browser_size = None
+    if not hasattr(context, 'max_browser_attempts'):
+        context.max_browser_attempts = 3
     if hasattr(context, 'screenshots_dir'):
         if not os.path.isdir(context.screenshots_dir):
             try:
