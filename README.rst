@@ -258,6 +258,7 @@ The following variables are supported and can be set to override defaults:
 * ``mail_path`` (the path to be used by ``mailmock`` to save mail. Defaults to ``current_dir/mail`` )
 * ``default_browser``
 * ``default_browser_size`` (tuple (width, height), applied to each browser as it's created)
+* ``max_browser_attempts`` (how many times to retry creating the browser if it fails)
 * ``remote_webdriver`` (whether to use the remote webdriver. Defaults to ``False``)
 * ``browser_args`` (a dict of additional keyword arguments used when creating a browser)
 * ``base_url``

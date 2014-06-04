@@ -3,6 +3,7 @@ import time
 
 from behave import step
 from splinter.browser import Browser
+from selenium.common.exceptions import WebDriverException
 
 
 @step(u'a browser')
@@ -20,7 +21,15 @@ def named_browser(context, name):
                 args['browser'] = context.default_browser
         elif context.default_browser:
             args['driver_name'] = context.default_browser
-        context.browsers[name] = Browser(**args)
+        browser_attempts = 0
+        while browser_attempts < context.max_browser_attempts:
+            try:
+                context.browsers[name] = Browser(**args)
+                break
+            except WebDriverException as e:
+                browser_attempts += 1
+        else:
+            raise WebDriverException("Failed to initialize browser")
     context.browser = context.browsers[name]
     context.browser.switch_to_window(context.browser.windows[0])
     if context.default_browser_size:

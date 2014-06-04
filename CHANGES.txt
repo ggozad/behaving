@@ -4,6 +4,9 @@ Changelog
 0.8 - Unreleased
 ----------------
 
+- Updated step "given browser '{name}'" to retry up to three times if the webdriver fails to initialize
+  [kageurufu]
+
 0.7 - 2014-04-07
 ----------------
 
