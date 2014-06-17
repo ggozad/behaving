@@ -12,7 +12,9 @@ def given_a_persona(context, name):
     context.persona = context.personas[name]
 
     if hasattr(context, 'browser'):
-        context.execute_steps('Given browser "%s"' % name)
+        if not hasattr(context, 'is_connected'):
+            context.execute_steps('Given browser "%s"' % name)
+            context.is_connected = True
 
 
 @step(u'I set "{key}" to "{val}"')
