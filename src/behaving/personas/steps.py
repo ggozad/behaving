@@ -10,10 +10,13 @@ def given_a_persona(context, name):
     if name not in context.personas:
         context.personas[name] = Persona()
     context.persona = context.personas[name]
+    single_browser = hasattr(context, 'single_browser')
 
     if hasattr(context, 'browser'):
-        if not hasattr(context, 'is_connected'):
-            context.execute_steps('Given browser "%s"' % name)
+        if single_browser and hasattr(context, 'is_connected'):
+            return
+        context.execute_steps('Given browser "%s"' % name)
+        if single_browser:
             context.is_connected = True
 
 

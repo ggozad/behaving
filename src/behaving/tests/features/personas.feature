@@ -17,22 +17,22 @@ Feature: Use Personas
         Then "bar" is set to "Hello world"
 
     @personas
-    Scenario: Don't start up multiple browsers
-	Given browser "Chrome"
-	And I note browser session
-	When I visit "http://localhost:8080"
-	And I note browser session
-	Given "Foo" as the persona
-	And I note browser session
-	When I visit "http://localhost:8080"
-	And I note browser session
-	And I set "bar" to "Hello world"
-	Then "bar" is set to "Hello world"
-	Given "Bar" as the persona
-	And I note browser session
-	When I visit "http://localhost:8080"
-	And I set "foo" to "Hello world"
-	And I note browser session
-	Then "foo" is set to "Hello world"
-	And I only used one browser session
-
+        Scenario: Don't start up multiple browsers
+        Given I enable single browser mode
+        And browser "Chrome"
+        And I note browser session
+        When I visit "http://localhost:8080"
+        And I note browser session
+        Given "Foo" as the persona
+        And I note browser session
+        When I visit "http://localhost:8080"
+        And I note browser session
+        And I set "bar" to "Hello world"
+        Then "bar" is set to "Hello world"
+        Given "Bar" as the persona
+        And I note browser session
+        When I visit "http://localhost:8080"
+        And I set "foo" to "Hello world"
+        And I note browser session
+        Then "foo" is set to "Hello world"
+        And I only used one browser session
