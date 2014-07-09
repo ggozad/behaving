@@ -178,7 +178,7 @@ Once the invitations are sent we switch back to Gandalf's browser, who should ha
 
 You can see the test in action on video `here <http://vimeo.com/63672466/>`_.
 
-There maybe instances where you require personas but do not want a seperate browser associated with each persona, this can be achived by adding the attribute *single_browser* to the context object (usually performed in one of the hooks in ``environment.py```), e.g:
+There maybe instances where you require personas but do not want a seperate browser associated with each persona, this can be achieved by adding the attribute *single_browser* to the context object (usually performed in one of the hooks in ``environment.py``), e.g:
 
 ::
 
