@@ -25,6 +25,7 @@ def when_i_visit_url(context, url):
 
 
 @step(u'the browser\'s URL should be "{url}"')
+@persona_vars
 def the_browser_url_should_be(context, url):
     full_url = urljoin(context.base_url, url)
     assert context.browser.url.strip() == full_url, 'Expected %s but got %s' % (full_url, context.browser.url)
