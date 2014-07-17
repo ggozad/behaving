@@ -27,3 +27,11 @@ Feature: Text presence
         When I reload
         Then I should see an element with xpath "//span[@id='late']" within 2 seconds
         And I should not see an element with xpath "//span[@id='very-late']" within 2 seconds
+
+    @web
+    Scenario: Various
+        When I visit "http://localhost:8080"
+        Then I should see "Hello world"
+        When I execute the script "document.getElementById('helloworld').innerHTML='Hello JS';"
+        Then I should see "Hello JS"
+        And I should not see "Hello world"

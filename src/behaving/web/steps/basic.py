@@ -114,3 +114,8 @@ def should_see_element_with_xpath_within_timeout(context, xpath, timeout):
 @persona_vars
 def should_not_see_element_with_xpath_within_timeout(context, xpath, timeout):
     assert context.browser.is_element_not_present_by_xpath(xpath, wait_time=timeout), u'Element is present'
+
+
+@step(u'I execute the script "{script}"')
+def execute_script(context, script):
+    context.browser.execute_script(script)

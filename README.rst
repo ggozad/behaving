@@ -365,6 +365,10 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * Then "``name``" should be required
     * Then "``name``" should not be required
 
+* Various
+
+    * When I execute the script "``script``"
+
 * Persona interaction & variables
 
     * Given "``name``" as the user

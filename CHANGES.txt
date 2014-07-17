@@ -4,6 +4,9 @@ Changelog
 0.8 - Unreleased
 ----------------
 
+- Added ability to execute JS
+  [ggozad]
+
 - Updated step "given browser '{name}'" to retry up to three times if the webdriver fails to initialize
   [kageurufu]
 
