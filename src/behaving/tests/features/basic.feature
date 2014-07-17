@@ -29,9 +29,12 @@ Feature: Text presence
         And I should not see an element with xpath "//span[@id='very-late']" within 2 seconds
 
     @web
-    Scenario: Various
+    Scenario: JS interaction
+        Given "Foo" as the persona
         When I visit "http://localhost:8080"
         Then I should see "Hello world"
         When I execute the script "document.getElementById('helloworld').innerHTML='Hello JS';"
         Then I should see "Hello JS"
         And I should not see "Hello world"
+        When I evaluate the script "(40 + 2).toString();" and assign the result to "math"
+        Then "math" is set to "42"

@@ -119,3 +119,9 @@ def should_not_see_element_with_xpath_within_timeout(context, xpath, timeout):
 @step(u'I execute the script "{script}"')
 def execute_script(context, script):
     context.browser.execute_script(script)
+
+
+@step(u'I evaluate the script "{script}" and assign the result to "{key}"')
+def evaluate_script(context, script, key):
+    assert context.persona is not None, u'no persona is setup'
+    context.persona[key] = context.browser.evaluate_script(script)

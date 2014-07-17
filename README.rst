@@ -298,6 +298,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I resize the viewport to ``width``x``height``
     * When I take a screenshot
       [will save a screenshot of the browser if ``screenshots_dir`` is set on the environment. Also, if ``screenshots_dir`` is set, all failing tests will result in a screenshot.]
+    * When I execute the script "``script``"
 
 * URLs
 
@@ -365,16 +366,13 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * Then "``name``" should be required
     * Then "``name``" should not be required
 
-* Various
-
-    * When I execute the script "``script``"
-
 * Persona interaction & variables
 
     * Given "``name``" as the user
       [opens a reusable browser named ``name``)
     * When I set "``key``" to the text of "``id|name``"
     * When I set "``key``" to the attribute "``attr``" of the element with xpath "``xpath``"
+    * When I evaluate the script "``script``" and assign the result to "``key``"
 
 ``behaving.mail`` Supported matchers/steps
 ------------------------------------------
