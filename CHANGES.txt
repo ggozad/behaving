@@ -4,6 +4,9 @@ Changelog
 0.8 - Unreleased
 ----------------
 
+- Cookie handling
+  [ggozad]
+
 - Execute/evaluate JS
   [ggozad]
 

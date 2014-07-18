@@ -306,6 +306,9 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I take a screenshot
       [will save a screenshot of the browser if ``screenshots_dir`` is set on the environment. Also, if ``screenshots_dir`` is set, all failing tests will result in a screenshot.]
     * When I execute the script "``script``"
+    * When I set the cookie "``key``" to "``value``"
+    * When I delete the cookie "``key``"
+    * When I delete all cookies
 
 * URLs
 

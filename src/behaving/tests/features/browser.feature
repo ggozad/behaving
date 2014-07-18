@@ -38,6 +38,23 @@ Feature: Browser handling
         Then the browser's URL should be "http://localhost:8080/"
 
     @web
+    Scenario: Browser cookies
+        Given "Foo" as the persona
+        When I visit "http://localhost:8080"
+        And I set the cookie "foo" to "bar"
+        And I evaluate the script "document.cookie" and assign the result to "cookie"
+        Then "cookie" is set to "foo=bar"
+        When I set the cookie "bar" to "foo"
+        And I evaluate the script "document.cookie" and assign the result to "cookie"
+        Then "cookie" is set to "foo=bar; bar=foo"
+        When I delete the cookie "foo"
+        And I evaluate the script "document.cookie" and assign the result to "cookie"
+        Then "cookie" is set to "bar=foo"
+        When I delete all cookies
+        And I evaluate the script "document.cookie" and assign the result to "cookie"
+        Then "cookie" is set to ""
+
+    @web
     Scenario: Change browser size
         Given a browser
         When I visit "http://localhost:8080"

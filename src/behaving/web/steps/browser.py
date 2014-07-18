@@ -63,6 +63,21 @@ def go_forward(context):
     context.browser.forward()
 
 
+@step(u'I set the cookie "{key}" to "{value}"')
+def set_cookie(context, key, value):
+    context.browser.cookies.add({key: value})
+
+
+@step(u'I delete the cookie "{key}"')
+def delete_cookie(context, key):
+    context.browser.cookies.delete(key)
+
+
+@step(u'I delete all cookies')
+def delete_all_cookies(context):
+    context.browser.cookies.delete()
+
+
 @step(u'I resize the browser to {width}x{height}')
 def resize_browser(context, width, height):
     context.browser.driver.set_window_size(int(width), int(height))
