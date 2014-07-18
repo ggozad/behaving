@@ -51,8 +51,8 @@ Feature: Browser handling
         And I evaluate the script "document.cookie" and assign the result to "cookie"
         Then "cookie" is set to "bar=foo"
         When I delete all cookies
-        And I evaluate the script "document.cookie" and assign the result to "cookie"
-        Then "cookie" is set to ""
+        And I evaluate the script "document.cookie || 'none'" and assign the result to "cookie"
+        Then "cookie" is set to "none"
 
     @web
     Scenario: Change browser size
