@@ -15,7 +15,8 @@ def given_a_browser(context):
 def named_browser(context, name):
     single_browser = hasattr(context, 'single_browser')
     if single_browser and context.browser == name:
-        return #  don't start up multiple browsers
+        #  don't start up multiple browsers
+        return
     if name not in context.browsers:
         args = context.browser_args.copy()
         if context.remote_webdriver:
@@ -29,7 +30,7 @@ def named_browser(context, name):
             try:
                 context.browsers[name] = Browser(**args)
                 break
-            except WebDriverException as e:
+            except WebDriverException:
                 browser_attempts += 1
         else:
             raise WebDriverException("Failed to initialize browser")
@@ -86,7 +87,7 @@ def resize_viewport(context, width, height):
 @step(u'I take a screenshot')
 def take_screenshot(context):
     assert context.browser is not None, u'need a browser to take a screenshot'
-    assert context.screenshots_dir !='', u'no screenshots_dir specified'
+    assert context.screenshots_dir != '', u'no screenshots_dir specified'
 
     filename = context.scenario.feature.name + u'-' + \
         context.scenario.name + u'-' + \
