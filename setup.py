@@ -1,16 +1,16 @@
 from setuptools import setup, find_packages
 
-version = '0.8-dev'
+version = '0.8'
 
 setup(name='behaving',
       version=version,
       description="Behavior-Driven-Development testing for multi-user web/mail/sms apps",
       long_description=open("README.rst").read() + open("CHANGES.txt").read(),
       classifiers=[
-      "Development Status :: 5 - Production/Stable",
-      "Intended Audience :: Developers",
-      "Programming Language :: Python",
-      "Programming Language :: Python :: 3",
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
       ],
       keywords='BDD Behavior-Driven-Development testing',
       author='Yiorgis Gozadinos',

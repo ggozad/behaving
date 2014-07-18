@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.8 - Unreleased
+0.8 - 2014-08-18
 ----------------
 
 - Cookie handling
