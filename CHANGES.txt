@@ -7,6 +7,12 @@ Changelog
 - Execute/evaluate JS
   [ggozad]
 
+- Try not to open multiple browser sessions
+  [rosselliott]
+
+- Make persona_vars available to more steps
+  [rosselliott]
+
 - Updated step "given browser '{name}'" to retry up to three times if the webdriver fails to initialize
   [kageurufu]
 

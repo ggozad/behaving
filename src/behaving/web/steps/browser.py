@@ -13,6 +13,9 @@ def given_a_browser(context):
 
 @step(u'browser "{name}"')
 def named_browser(context, name):
+    single_browser = hasattr(context, 'single_browser')
+    if single_browser and context.browser == name:
+        return #  don't start up multiple browsers
     if name not in context.browsers:
         args = context.browser_args.copy()
         if context.remote_webdriver:
@@ -32,6 +35,8 @@ def named_browser(context, name):
             raise WebDriverException("Failed to initialize browser")
     context.browser = context.browsers[name]
     context.browser.switch_to_window(context.browser.windows[0])
+    if single_browser:
+        context.is_connected = True
     if context.default_browser_size:
         context.browser.driver.set_window_size(*context.default_browser_size)
 
