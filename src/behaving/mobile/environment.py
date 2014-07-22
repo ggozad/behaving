@@ -18,7 +18,9 @@ def after_feature(context, feature):
 
 
 def after_scenario(context, scenario):
-    context.mail.clear()
+    if hasattr(context, 'iosdriver'):
+        context.iosdriver.quit()
+        del context.iosdriver
 
 
 def after_all(context):
