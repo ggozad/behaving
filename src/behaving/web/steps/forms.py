@@ -1,5 +1,6 @@
 import os
 from behave import step
+from selenium.common.exceptions import NoSuchElementException
 from splinter.exceptions import ElementDoesNotExist
 
 from behaving.personas.persona import persona_vars
@@ -8,14 +9,24 @@ from behaving.personas.persona import persona_vars
 @step(u'I fill in "{name}" with "{value}"')
 @persona_vars
 def i_fill_in_field(context, name, value):
-    context.browser.fill(name, value)
+    if context.browser:
+        context.browser.fill(name, value)
+    elif context.mobile:
+        try:
+            el = context.mobile.find_element_by_accessibility_id(name)
+            el.send_keys(value)
+        except NoSuchElementException:
+            assert False, u'Element not found'
 
 
 @step(u'I type "{value}" to "{name}"')
 @persona_vars
 def i_type_to(context, name, value):
-    for key in context.browser.type(name, value, slowly=True):
-        assert key
+    if context.browser:
+        for key in context.browser.type(name, value, slowly=True):
+            assert key
+    elif context.mobile:
+        i_fill_in_field(context, name, value)
 
 
 @step(u'I choose "{value}" from "{name}"')
@@ -50,13 +61,20 @@ def i_select(context, value, name):
 @step(u'I press "{name}"')
 @persona_vars
 def i_press(context, name):
-    element = context.browser.find_by_xpath(
-        ("//*[@id='%(name)s']|"
-         "//*[@name='%(name)s']|"
-         "//button[contains(text(), '%(name)s')]|"
-         "//a[contains(text(), '%(name)s')]") % {'name': name})
-    assert element, u'Element not found'
-    element.first.click()
+    if context.browser:
+        element = context.browser.find_by_xpath(
+            ("//*[@id='%(name)s']|"
+             "//*[@name='%(name)s']|"
+             "//button[contains(text(), '%(name)s')]|"
+             "//a[contains(text(), '%(name)s')]") % {'name': name})
+        assert element, u'Element not found'
+        element.first.click()
+    elif context.mobile:
+        try:
+            el = context.mobile.find_element_by_accessibility_id(name)
+            el.click()
+        except NoSuchElementException:
+            assert False, u'Element not found'
 
 
 @step(u'I press the element with xpath "{xpath}"')
@@ -80,13 +98,15 @@ def i_attach(context, name, path):
 @step('I set the inner HTML of the element with id "{id}" to "{contents}"')
 @persona_vars
 def set_html_content_to_element_with_id(context, id, contents):
-    assert context.browser.evaluate_script("document.getElementById('%s').innerHTML = '%s'" % (id, contents)), u'Element not found or could not set HTML content'
+    assert context.browser.evaluate_script("document.getElementById('%s').innerHTML = '%s'" % (id, contents)), \
+        u'Element not found or could not set HTML content'
 
 
 @step('I set the inner HTML of the element with class "{klass}" to "{contents}"')
 @persona_vars
 def set_html_content_to_element_with_class(context, klass, contents):
-    assert context.browser.evaluate_script("document.getElementsByClassName('%s')[0].innerHTML = '%s'" % (klass, contents)), u'Element not found or could not set HTML content'
+    assert context.browser.evaluate_script("document.getElementsByClassName('%s')[0].innerHTML = '%s'" % (klass, contents)), \
+        u'Element not found or could not set HTML content'
 
 
 @step(u'field "{name}" should have the value "{value}"')

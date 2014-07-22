@@ -1,6 +1,5 @@
 import os
 from appium import webdriver
-
 from behave import step
 
 
@@ -8,7 +7,7 @@ from behave import step
 def given_an_ios_simulator(context, name):
 
     app_path = os.path.join(context.app_dir, name)
-    context.iosdriver = webdriver.Remote(
+    context.mobile = webdriver.Remote(
         command_executor=context.webdriver_url,
         desired_capabilities={
             'app': app_path,

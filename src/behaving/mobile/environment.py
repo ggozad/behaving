@@ -18,9 +18,9 @@ def after_feature(context, feature):
 
 
 def after_scenario(context, scenario):
-    if hasattr(context, 'iosdriver'):
-        context.iosdriver.quit()
-        del context.iosdriver
+    if hasattr(context, 'mobile'):
+        context.mobile.quit()
+        del context.mobile
 
 
 def after_all(context):
