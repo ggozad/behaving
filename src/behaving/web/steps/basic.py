@@ -27,13 +27,34 @@ def hide_element_by_id(context, id):
 @step(u'I should see "{text}"')
 @persona_vars
 def should_see(context, text):
-    assert context.browser.is_text_present(text), u'Text not found'
+    if context.browser:
+        assert context.browser.is_text_present(text), u'Text not found'
+    elif context.mobile:
+        # XXX
+        # This should be replaced with something more sane
+        # It also only works on iOS
+        elems = context.mobile.find_elements_by_ios_uiautomation('elements()')
+        texts = [e.text for e in elems]
+        for t in texts:
+            if text in str(t):
+                return
+        assert False, u'Text not found'
 
 
 @step(u'I should not see "{text}"')
 @persona_vars
 def should_not_see(context, text):
-    assert context.browser.is_text_not_present(text), u'Text was found'
+    if context.browser:
+        assert context.browser.is_text_not_present(text), u'Text was found'
+    elif context.mobile:
+        # XXX
+        # This should be replaced with something more sane
+        # It also only works on iOS
+        elems = context.mobile.find_elements_by_ios_uiautomation('elements()')
+        texts = [e.text for e in elems]
+        for t in texts:
+            if text in str(t):
+                assert False, u'Text found'
 
 
 @step(u'I should see "{text}" within {timeout:d} seconds')
