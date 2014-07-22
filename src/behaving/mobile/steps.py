@@ -1,5 +1,6 @@
 import os
 from appium import webdriver
+from appium.webdriver.common.touch_action import TouchAction
 from behave import step
 
 
@@ -15,3 +16,12 @@ def given_an_ios_simulator(context, name):
             'platformVersion': '7.1',
             'deviceName': 'iPhone Simulator'
         })
+
+
+@step('I tap "{name}" and drag to "{coords}"')
+def drag_name_to_coords(context, name, coords):
+    coords = eval(coords)
+    el = context.mobile.find_element_by_accessibility_id(name)
+    action = TouchAction(context.mobile)
+    action.press(el).move_to(x=0, y=0).move_to(x=100, y=0).move_to(x=0, y=100).release()
+    action.perform()
