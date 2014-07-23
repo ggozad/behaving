@@ -13,12 +13,8 @@ def given_an_ios_simulator(context, name):
     try:
         context.mobile = webdriver.Remote(
             command_executor=context.webdriver_url,
-            desired_capabilities={
-                'app': app_path,
-                'platformName': 'iOS',
-                'platformVersion': '7.1',
-                'deviceName': 'iPhone Simulator'
-            })
+            desired_capabilities=dict(context.ios_caps, app=app_path)
+        )
     except URLError:
         assert False, 'Appium is not running on the specified webdriver_url'
 
@@ -30,12 +26,7 @@ def given_an_android_simulator(context, name):
     try:
         context.mobile = webdriver.Remote(
             command_executor=context.webdriver_url,
-            desired_capabilities={
-                'app': app_path,
-                'platformName': 'Android',
-                'platformVersion': '4.4.2',
-                'deviceName': 'Android Emulator'
-            })
+            desired_capabilities=dict(context.android_caps, app=app_path))
     except URLError:
         assert False, 'Appium is not running on the specified webdriver_url'
 
