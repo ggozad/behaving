@@ -1,9 +1,9 @@
 behaving
 ========
 
-*behaving* is a web application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
+*behaving* is a web & mobile application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/mobile/email/sms interactions.
 
-*behaving* is written in python and is based on `behave`_ and `splinter`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
+*behaving* is written in python and is based on `behave`_, `splinter`_ and `appium`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
 
 Hello world
 -----------
@@ -22,6 +22,11 @@ Starting to use *behaving* is pretty easy. Inside some python module, add your *
             And I fill in "search" with "BDD"
             And I press "go"
             Then I should see "Behavior-driven development" within 5 seconds
+
+Mobile apps
+-----------
+
+Since version 1.0 you can use *behaving* to test your mobile apps, native or not, provided you have set up your development environment properly. We aim to support iOS, Android as well as Firefox OS, but this is still very experimental so your mileage may vary.
 
 Email & SMS
 -----------
@@ -411,5 +416,6 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 .. _`lettuce`: http://lettuce.it/
 .. _`behave`: http://pypi.python.org/pypi/behave
 .. _`splinter`: http://splinter.cobrateam.info/
+.. _`appium`: http://appium.io/
 .. _`Crypho`: http://crypho.com
 
