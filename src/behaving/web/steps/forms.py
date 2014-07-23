@@ -11,9 +11,9 @@ from behaving.personas.persona import persona_vars
 def i_fill_in_field(context, name, value):
     if context.browser:
         context.browser.fill(name, value)
-    elif context.mobile:
+    elif context.device:
         try:
-            el = context.mobile.find_element_by_accessibility_id(name)
+            el = context.device.find_element_by_accessibility_id(name)
             el.send_keys(value)
         except NoSuchElementException:
             assert False, u'Element not found'
@@ -25,7 +25,7 @@ def i_type_to(context, name, value):
     if context.browser:
         for key in context.browser.type(name, value, slowly=True):
             assert key
-    elif context.mobile:
+    elif context.device:
         i_fill_in_field(context, name, value)
 
 
@@ -69,9 +69,9 @@ def i_press(context, name):
              "//a[contains(text(), '%(name)s')]") % {'name': name})
         assert element, u'Element not found'
         element.first.click()
-    elif context.mobile:
+    elif context.device:
         try:
-            el = context.mobile.find_element_by_accessibility_id(name)
+            el = context.device.find_element_by_accessibility_id(name)
             el.click()
         except NoSuchElementException:
             assert False, u'Element not found'

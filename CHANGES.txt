@@ -1,9 +1,11 @@
 Changelog
 =========
 
-0.9 - Unreleased
+1.0 - Unreleased
 ----------------
 
+- First implementation of iOS/Android/FFOS capabilities
+  [ggozad, erlendfh]
 
 0.8 - 2014-08-18
 ----------------
