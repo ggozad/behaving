@@ -34,7 +34,7 @@ def given_an_android_simulator(context, name):
 @step('I tap "{name}" and drag to "{coords}"')
 def drag_name_to_coords(context, name, coords):
     coords = eval(coords)
-    el = context.mobile.find_element_by_accessibility_id(name)
+    el = context.mobile.find_element_by_name(name)
     action = TouchAction(context.mobile)
     action.press(el).move_to(x=0, y=0).move_to(x=100, y=0).move_to(x=0, y=100).release()
     action.perform()

@@ -76,7 +76,7 @@ def should_see_element_with_id(context, id):
         assert context.browser.is_element_present_by_id(id), u'Element not present'
     elif context.mobile:
         try:
-            context.mobile.find_element_by_accessibility_id(id)
+            context.mobile.find_element_by_name(id)
         except NoSuchElementException:
             elements = context.mobile.find_elements_by_ios_uiautomation('.elements()')
             names = [el.get_attribute("name") for el in elements]
