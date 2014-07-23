@@ -1,4 +1,6 @@
 import os
+from urllib2 import URLError
+
 from appium import webdriver
 from appium.webdriver.common.touch_action import TouchAction
 from behave import step
@@ -8,14 +10,17 @@ from behave import step
 def given_an_ios_simulator(context, name):
 
     app_path = os.path.join(context.app_dir, name)
-    context.mobile = webdriver.Remote(
-        command_executor=context.webdriver_url,
-        desired_capabilities={
-            'app': app_path,
-            'platformName': 'iOS',
-            'platformVersion': '7.1',
-            'deviceName': 'iPhone Simulator'
-        })
+    try:
+        context.mobile = webdriver.Remote(
+            command_executor=context.webdriver_url,
+            desired_capabilities={
+                'app': app_path,
+                'platformName': 'iOS',
+                'platformVersion': '7.1',
+                'deviceName': 'iPhone Simulator'
+            })
+    except URLError:
+        assert False, 'Appium is not running on the specified webdriver_url'
 
 
 @step('I tap "{name}" and drag to "{coords}"')
