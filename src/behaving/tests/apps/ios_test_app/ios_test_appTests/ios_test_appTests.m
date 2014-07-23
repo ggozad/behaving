@@ -1,6 +1,6 @@
 //
-//  Behaving_Test_AppTests.m
-//  Behaving Test AppTests
+//  ios_test_appTests.m
+//  ios_test_appTests
 //
 //  Created by Erlend Halvorsen on 23/07/14.
 //  Copyright (c) 2014 Behaving. All rights reserved.
@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface Behaving_Test_AppTests : XCTestCase
+@interface ios_test_appTests : XCTestCase
 
 @end
 
-@implementation Behaving_Test_AppTests
+@implementation ios_test_appTests
 
 - (void)setUp
 {

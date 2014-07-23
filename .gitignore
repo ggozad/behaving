@@ -8,7 +8,7 @@ extends/
 parts/
 var/
 dist/
-apps/
+/apps/
 *.DS_Store
 *.egg-info
 *.pyc
