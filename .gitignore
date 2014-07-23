@@ -15,3 +15,5 @@ apps/
 chromedriver.log
 ghostdriver.log
 .long-description.html
+build/
+xcuserdata/
