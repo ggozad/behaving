@@ -8,4 +8,9 @@ Feature: Mobile devices
         And I press "OK"
         And I wait for 3 seconds
         And I tap "mapEl" and drag to "[(0,0), (100,0), (0,100)]"
+
+    @runme
+    @mobile
+    Scenario: Select android Simulator
+        Given an android simulator running "ContactManager.apk"
         And I wait for 3600 seconds

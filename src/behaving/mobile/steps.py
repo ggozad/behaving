@@ -23,6 +23,23 @@ def given_an_ios_simulator(context, name):
         assert False, 'Appium is not running on the specified webdriver_url'
 
 
+@step('an android simulator running "{name}"')
+def given_an_android_simulator(context, name):
+
+    app_path = os.path.join(context.app_dir, name)
+    try:
+        context.mobile = webdriver.Remote(
+            command_executor=context.webdriver_url,
+            desired_capabilities={
+                'app': app_path,
+                'platformName': 'Android',
+                'platformVersion': '4.4.2',
+                'deviceName': 'Android Emulator'
+            })
+    except URLError:
+        assert False, 'Appium is not running on the specified webdriver_url'
+
+
 @step('I tap "{name}" and drag to "{coords}"')
 def drag_name_to_coords(context, name, coords):
     coords = eval(coords)
