@@ -1,5 +1,6 @@
 Feature: Mobile devices
 
+    @runme
     @mobile
     Scenario: Select iOS Simulator
         Given an iOS simulator running "TestApp.app"
@@ -13,4 +14,3 @@ Feature: Mobile devices
     @mobile
     Scenario: Select android Simulator
         Given an android simulator running "ContactManager.apk"
-        And I wait for 3600 seconds

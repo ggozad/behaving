@@ -31,11 +31,11 @@ def hide_element_by_id(context, id):
 def should_see(context, text):
     if context.browser:
         assert context.browser.is_text_present(text), u'Text not found'
-    elif context.mobile:
+    elif context.device:
         # XXX
         # This should be replaced with something more sane
         # It also only works on iOS
-        elems = context.mobile.find_elements_by_ios_uiautomation('elements()')
+        elems = context.device.find_elements_by_ios_uiautomation('elements()')
         texts = [e.text for e in elems]
         for t in texts:
             if text in str(t):
@@ -48,11 +48,11 @@ def should_see(context, text):
 def should_not_see(context, text):
     if context.browser:
         assert context.browser.is_text_not_present(text), u'Text was found'
-    elif context.mobile:
+    elif context.device:
         # XXX
         # This should be replaced with something more sane
         # It also only works on iOS
-        elems = context.mobile.find_elements_by_ios_uiautomation('elements()')
+        elems = context.device.find_elements_by_ios_uiautomation('elements()')
         texts = [e.text for e in elems]
         for t in texts:
             if text in str(t):
@@ -76,11 +76,11 @@ def should_not_see_within_timeout(context, text, timeout):
 def should_see_element_with_id(context, id):
     if context.browser:
         assert context.browser.is_element_present_by_id(id), u'Element not present'
-    elif context.mobile:
+    elif context.device:
         try:
-            context.mobile.find_element_by_name(id)
+            context.device.find_element_by_name(id)
         except NoSuchElementException:
-            elements = context.mobile.find_elements_by_ios_uiautomation('.elements()')
+            elements = context.device.find_elements_by_ios_uiautomation('.elements()')
             names = [el.get_attribute("name") for el in elements]
             assert False, u'Element not found. Available elements: {}'.format(names)
 
