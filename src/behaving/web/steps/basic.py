@@ -1,6 +1,8 @@
 import time
 from behave import step
 
+from selenium.common.exceptions import NoSuchElementException
+
 from behaving.personas.persona import persona_vars
 
 
@@ -72,7 +74,15 @@ def should_not_see_within_timeout(context, text, timeout):
 @step(u'I should see an element with id "{id}"')
 @persona_vars
 def should_see_element_with_id(context, id):
-    assert context.browser.is_element_present_by_id(id), u'Element not present'
+    if context.browser:
+        assert context.browser.is_element_present_by_id(id), u'Element not present'
+    elif context.device:
+        try:
+            context.device.find_element_by_name(id)
+        except NoSuchElementException:
+            elements = context.device.find_elements_by_ios_uiautomation('.elements()')
+            names = [el.get_attribute("name") for el in elements]
+            assert False, u'Element not found. Available elements: {}'.format(names)
 
 
 @step(u'I should not see an element with id "{id}"')

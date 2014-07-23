@@ -71,7 +71,7 @@ def i_press(context, name):
         element.first.click()
     elif context.device:
         try:
-            el = context.device.find_element_by_accessibility_id(name)
+            el = context.device.find_element_by_name(name)
             el.click()
         except NoSuchElementException:
             assert False, u'Element not found'
