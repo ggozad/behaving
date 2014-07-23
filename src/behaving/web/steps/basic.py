@@ -1,6 +1,8 @@
 import time
 from behave import step
 
+from selenium.common.exceptions import NoSuchElementException
+
 from behaving.personas.persona import persona_vars
 
 

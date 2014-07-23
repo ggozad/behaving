@@ -8,12 +8,14 @@
 
 #import "TAViewController.h"
 
-@interface TAViewController ()
+@interface TAViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIButton *button;
 @property (weak, nonatomic) IBOutlet UISwitch *aSwitch;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (weak, nonatomic) IBOutlet UILabel *scrollViewLabel;
+@property (weak, nonatomic) IBOutlet UILabel *resultLabel;
+@property (weak, nonatomic) IBOutlet UILabel *scrollOffsetLabel;
 
 @end
 
@@ -22,6 +24,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.textField.accessibilityIdentifier = @"textInput";
+    self.aSwitch.accessibilityIdentifier = @"toggleCalculate";
+    self.slider.accessibilityIdentifier = @"slider";
+    self.resultLabel.accessibilityIdentifier = @"resultLabel";
+    self.scrollOffsetLabel.accessibilityIdentifier = @"scrollOffsetLabel";
+}
+- (IBAction)calculate:(id)sender {
+
+    self.resultLabel.text = [NSString stringWithFormat:@"%d", self.textField.text.intValue * 2];
+}
+
+- (IBAction)resetInput:(id)sender {
+    self.button.enabled = self.aSwitch.on;
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    self.scrollOffsetLabel.text = [NSString stringWithFormat:@"%.0f, %.0f", scrollView.contentOffset.x, scrollView.contentOffset.y];
 }
 
 @end
