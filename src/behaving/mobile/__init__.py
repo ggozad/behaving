@@ -26,4 +26,6 @@ def setup(context):
 
 
 def teardown(context):
-    pass
+    if hasattr(context, 'device'):
+        context.device.quit()
+        del context.device

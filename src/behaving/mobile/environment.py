@@ -18,9 +18,7 @@ def after_feature(context, feature):
 
 
 def after_scenario(context, scenario):
-    if hasattr(context, 'device'):
-        context.device.quit()
-        del context.device
+    teardown(context)
 
 
 def after_all(context):
