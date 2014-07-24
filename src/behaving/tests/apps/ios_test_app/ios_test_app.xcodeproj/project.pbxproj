@@ -457,6 +457,7 @@
 				A7B38998197FE05A00F427CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A7B38999197FE05A00F427CF /* Build configuration list for PBXNativeTarget "ios_test_appTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +466,7 @@
 				A7B3899B197FE05A00F427CF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
