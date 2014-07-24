@@ -19,7 +19,7 @@ Feature: Use Personas
     @personas
         Scenario: Don't start up multiple browsers
         Given I enable single browser mode
-        And browser "Chrome"
+        And browser "foobar"
         And I note browser session
         When I visit "http://localhost:8080"
         And I note browser session
