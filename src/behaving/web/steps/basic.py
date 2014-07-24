@@ -29,9 +29,9 @@ def hide_element_by_id(context, id):
 @step(u'I should see "{text}"')
 @persona_vars
 def should_see(context, text):
-    if context.browser:
+    if hasattr(context, 'browser'):
         assert context.browser.is_text_present(text), u'Text not found'
-    elif context.device:
+    elif hasattr(context, 'device'):
         # XXX
         # This should be replaced with something more sane
         # It also only works on iOS
@@ -46,9 +46,9 @@ def should_see(context, text):
 @step(u'I should not see "{text}"')
 @persona_vars
 def should_not_see(context, text):
-    if context.browser:
+    if hasattr(context, 'browser'):
         assert context.browser.is_text_not_present(text), u'Text was found'
-    elif context.device:
+    elif hasattr(context, 'device'):
         # XXX
         # This should be replaced with something more sane
         # It also only works on iOS
@@ -74,9 +74,9 @@ def should_not_see_within_timeout(context, text, timeout):
 @step(u'I should see an element with id "{id}"')
 @persona_vars
 def should_see_element_with_id(context, id):
-    if context.browser:
+    if hasattr(context, 'browser'):
         assert context.browser.is_element_present_by_id(id), u'Element not present'
-    elif context.device:
+    elif hasattr(context, 'device'):
         try:
             context.device.find_element_by_name(id)
         except NoSuchElementException:

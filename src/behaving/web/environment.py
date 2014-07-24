@@ -26,7 +26,7 @@ def after_feature(context, feature):
 def after_scenario(context, scenario):
     if scenario.status == 'failed' and \
        context.screenshots_dir and \
-       context.browser:
+       hasattr(context, 'browser'):
 
         filename = scenario.feature.name + u'-' + \
             scenario.name + u'-' + \

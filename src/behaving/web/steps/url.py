@@ -3,7 +3,6 @@ try:
 except ImportError:
     from urllib.parse import urljoin, urlparse
 from behave import step
-from splinter.browser import Browser
 import parse
 
 from behaving.personas.persona import persona_vars
@@ -19,8 +18,6 @@ def given_the_base_url(context, url):
 @persona_vars
 def when_i_visit_url(context, url):
     full_url = urljoin(context.base_url, url)
-    if not context.browser:
-        context.browser = Browser()
     context.browser.visit(full_url)
 
 

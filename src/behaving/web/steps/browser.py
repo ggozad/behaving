@@ -14,7 +14,7 @@ def given_a_browser(context):
 @step(u'browser "{name}"')
 def named_browser(context, name):
     single_browser = hasattr(context, 'single_browser')
-    if single_browser and context.browser == name:
+    if single_browser and hasattr(context, 'browser') and context.browser == name:
         #  don't start up multiple browsers
         return
     if name not in context.browsers:

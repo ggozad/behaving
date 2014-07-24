@@ -9,9 +9,9 @@ from behaving.personas.persona import persona_vars
 @step(u'I fill in "{name}" with "{value}"')
 @persona_vars
 def i_fill_in_field(context, name, value):
-    if context.browser:
+    if hasattr(context, 'browser'):
         context.browser.fill(name, value)
-    elif context.device:
+    elif hasattr(context, 'device'):
         try:
             el = context.device.find_element_by_accessibility_id(name)
             el.send_keys(value)
@@ -22,10 +22,10 @@ def i_fill_in_field(context, name, value):
 @step(u'I type "{value}" to "{name}"')
 @persona_vars
 def i_type_to(context, name, value):
-    if context.browser:
+    if hasattr(context, 'browser'):
         for key in context.browser.type(name, value, slowly=True):
             assert key
-    elif context.device:
+    elif hasattr(context, 'device'):
         i_fill_in_field(context, name, value)
 
 
@@ -61,7 +61,7 @@ def i_select(context, value, name):
 @step(u'I press "{name}"')
 @persona_vars
 def i_press(context, name):
-    if context.browser:
+    if hasattr(context, 'browser'):
         element = context.browser.find_by_xpath(
             ("//*[@id='%(name)s']|"
              "//*[@name='%(name)s']|"
@@ -69,7 +69,7 @@ def i_press(context, name):
              "//a[contains(text(), '%(name)s')]") % {'name': name})
         assert element, u'Element not found'
         element.first.click()
-    elif context.device:
+    elif hasattr(context, 'device'):
         try:
             el = context.device.find_element_by_name(name)
             el.click()

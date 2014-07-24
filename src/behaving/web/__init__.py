@@ -31,7 +31,6 @@ def setup(context):
     else:
         context.screenshots_dir = ''
 
-    context.browser = None
     context.browsers = {}
 
 
@@ -41,6 +40,6 @@ def teardown(context):
             browser.quit()
         except URLError:
             pass
-
-    context.browser = None
+    if hasattr(context, 'browser'):
+        del context.browser
     context.browsers = {}
