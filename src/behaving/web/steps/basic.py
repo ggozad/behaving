@@ -35,7 +35,7 @@ def should_see(context, text):
         # XXX
         # This should be replaced with something more sane
         # It also only works on iOS
-        elems = context.device.find_elements_by_ios_uiautomation('elements()')
+        elems = context.device.find_elements_by_ios_uiautomation('.elements()')
         texts = [e.text for e in elems]
         for t in texts:
             if text in str(t):
