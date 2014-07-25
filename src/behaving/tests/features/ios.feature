@@ -20,14 +20,12 @@ Feature: iOS support
         And I lock the device for 3 seconds
         #Then the application "com.behaving.test.app.ios-test-app" is installed
 
-    @runme
+    @persona
     @ios
     @mobile
     Scenario: Save/load files from device
+        Given "Foo" as the persona
         Given an iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
-        # When I wait for 3600 seconds
-        When I save the folder "/ios_test_app.app/Documents" from the app to "asd"
-
-        # When I save the file "/ios_test_app.app/Library/Preferences/com.apple.PeoplePicker.plist" from the app to "asd"
-        # When I save the folder "Library/AddressBook" from the app to "asd"
-        # When I save the file "Library/AddressBook/AddressBook.sqlitedb" from the app to "asd"
+        When I push the file "test.txt" to the device at "/ios_test_app.app/../Documents/test.txt"
+        And I pull the file "/ios_test_app.app/../Documents/test.txt" from the app and set it to "foo"
+        Then "foo" is set to "Hello world"

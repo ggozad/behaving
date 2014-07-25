@@ -1,3 +1,4 @@
+import base64
 import os
 from urllib2 import URLError
 
@@ -86,13 +87,22 @@ def application_is_installed(context, uid):
     assert context.device.is_app_installed(uid), 'Application %s is not installed' % uid
 
 
-@step('I save the folder "{load_path}" from the app to "{save_path}"')
-def save_folder(context, load_path, save_path):
-    zipped = context.device.pull_folder(load_path)
-    assert zipped
+@step('I pull the file "{load_path}" from the app and set it to "{key}"')
+def pull_file(context, load_path, key):
+    try:
+        b64 = context.device.pull_file(load_path)
+        context.persona[key] = base64.b64decode(b64)
+    except WebDriverException, e:
+        assert False, e.msg
 
 
-@step('I save the file "{load_path}" from the app to "{save_path}"')
-def save_file(context, load_path, save_path):
-    b64 = context.device.pull_file(load_path)
-    assert b64
+@step('I push the file "{load_path}" to the device at "{save_path}"')
+def push_file(context, load_path, save_path):
+    full_path = os.path.join(context.device_data_path, load_path)
+    with open(full_path, 'r') as f:
+        data = f.read()
+    data = base64.b64encode(data)
+    try:
+        context.device.push_file(save_path, data)
+    except WebDriverException, e:
+        assert False, e.msg
