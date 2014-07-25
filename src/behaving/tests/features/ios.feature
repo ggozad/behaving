@@ -19,3 +19,15 @@ Feature: iOS support
         And I launch the app
         And I lock the device for 3 seconds
         #Then the application "com.behaving.test.app.ios-test-app" is installed
+
+    @runme
+    @ios
+    @mobile
+    Scenario: Save/load files from device
+        Given an iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
+        # When I wait for 3600 seconds
+        When I save the folder "/ios_test_app.app/Documents" from the app to "asd"
+
+        # When I save the file "/ios_test_app.app/Library/Preferences/com.apple.PeoplePicker.plist" from the app to "asd"
+        # When I save the folder "Library/AddressBook" from the app to "asd"
+        # When I save the file "Library/AddressBook/AddressBook.sqlitedb" from the app to "asd"

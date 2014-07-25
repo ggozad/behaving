@@ -8,7 +8,7 @@ from behave import step
 
 
 @step('an iOS simulator running "{name}"')
-def given_an_ios_simulator(context, name):
+def given_an_ios_simulator_running_app(context, name):
 
     app_path = os.path.join(context.app_dir, name)
     try:
@@ -21,7 +21,7 @@ def given_an_ios_simulator(context, name):
 
 
 @step('an android simulator running "{name}"')
-def given_an_android_simulator(context, name):
+def given_an_android_simulator_running_app(context, name):
 
     app_path = os.path.join(context.app_dir, name)
     try:
@@ -84,3 +84,15 @@ def close_app(context):
 @step('the application "{uid}" is installed')
 def application_is_installed(context, uid):
     assert context.device.is_app_installed(uid), 'Application %s is not installed' % uid
+
+
+@step('I save the folder "{load_path}" from the app to "{save_path}"')
+def save_folder(context, load_path, save_path):
+    zipped = context.device.pull_folder(load_path)
+    assert zipped
+
+
+@step('I save the file "{load_path}" from the app to "{save_path}"')
+def save_file(context, load_path, save_path):
+    b64 = context.device.pull_file(load_path)
+    assert b64
