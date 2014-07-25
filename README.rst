@@ -3,7 +3,7 @@ behaving
 
 *behaving* is a web & mobile application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/mobile/email/sms interactions.
 
-*behaving* is written in python and is based on `behave`_, `splinter`_ and `appium`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
+*behaving* is written in python and is based on `behave`_, `splinter`_ and `appium`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*. The *appium* docs are a good starting point if you want to extend the mobile testing functionality.
 
 Hello world
 -----------
@@ -273,7 +273,7 @@ The following variables are supported and can be set to override defaults:
 * ``max_browser_attempts`` (how many times to retry creating the browser if it fails)
 * ``remote_webdriver`` (whether to use the remote webdriver. Defaults to ``False``)
 * ``browser_args`` (a dict of additional keyword arguments used when creating a browser)
-* ``base_url``
+* ``base_url`` (the base url for a browser, allows you to use relative paths)
 
 You can run the tests simply by issuing
 
@@ -383,11 +383,39 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 
 * Persona interaction & variables
 
-    * Given "``name``" as the user
-      [opens a reusable browser named ``name``)
     * When I set "``key``" to the text of "``id|name``"
     * When I set "``key``" to the attribute "``attr``" of the element with xpath "``xpath``"
     * When I evaluate the script "``script``" and assign the result to "``key``"
+
+``behaving.mobile`` Supported matchers/steps
+--------------------------------------------
+
+    * Devices/apps
+
+        * Given an iOS simulator running "``app``"
+        * Given an android simulator running "``app``"
+        * When I lock the device for ``timeout`` seconds
+        * When I install the app "``name``"
+        * When I remove the app "``uid``"
+        * When I launch the app
+        * When I close the app
+        * Then the application "``uid``" is installed
+
+    * Interactions
+
+        * When I pull the file "``load_path``" from the app and set it to "``key``"
+        * When I push the file "``load_path``" to the device at "``save_path``"
+        * When I tap "``name``" and drag to "``coords``"
+        [``coords`` is a list of points, say [(0,100), (100,100)], relative to the element you tap.]
+        * When I fill in "``name``" with "``value``"
+        * When I type "``value``" to "``name``"
+          [same as fill, but happens slowly triggering keyboard events]
+        * When I select "``value``" from "``name``""
+        * When I press "``name|text``"
+        * Then I should see "``text``"
+        * Then I should not see "``text``"
+        * Then I should see an element with id "``id``"
+        * Then I should see an element with id "``id``" within ``timeout`` seconds
 
 ``behaving.mail`` Supported matchers/steps
 ------------------------------------------

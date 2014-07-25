@@ -5,10 +5,10 @@ from selenium.common.exceptions import NoSuchElementException
 
 from behaving.personas.persona import persona_vars
 
+
 def list_elements_from_context(context):
     elements = context.device.find_elements_by_ios_uiautomation('.elements()')
     return [el.get_attribute("name") for el in elements]
-    
 
 
 @step(u'I wait for {timeout:d} seconds')
