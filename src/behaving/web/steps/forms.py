@@ -13,7 +13,7 @@ def i_fill_in_field(context, name, value):
         context.browser.fill(name, value)
     elif hasattr(context, 'device'):
         try:
-            el = context.device.find_element_by_accessibility_id(name)
+            el = context.device.find_element_by_name(name)
             el.send_keys(value)
         except NoSuchElementException:
             assert False, u'Element not found'

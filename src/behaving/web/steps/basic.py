@@ -5,6 +5,11 @@ from selenium.common.exceptions import NoSuchElementException
 
 from behaving.personas.persona import persona_vars
 
+def list_elements_from_context(context):
+    elements = context.device.find_elements_by_ios_uiautomation('.elements()')
+    return [el.get_attribute("name") for el in elements]
+    
+
 
 @step(u'I wait for {timeout:d} seconds')
 @persona_vars
@@ -80,9 +85,7 @@ def should_see_element_with_id(context, id):
         try:
             context.device.find_element_by_name(id)
         except NoSuchElementException:
-            elements = context.device.find_elements_by_ios_uiautomation('.elements()')
-            names = [el.get_attribute("name") for el in elements]
-            assert False, u'Element not found. Available elements: {}'.format(names)
+            assert False, u'Element not found. Available elements: {}'.format(list_elements_from_context(context))
 
 
 @step(u'I should not see an element with id "{id}"')
@@ -94,7 +97,18 @@ def should_not_see_element_with_id(context, id):
 @step(u'I should see an element with id "{id}" within {timeout:d} seconds')
 @persona_vars
 def should_see_element_with_id_within_timeout(context, id, timeout):
-    assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
+    if context.browser:
+        assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
+    elif context.device:
+        expiration = timeout + time.time()
+        while time.time() < expiration:
+            try:
+                context.device.find_element_by_name(id)
+                return
+            except NoSuchElementException:
+                print list_elements_from_context(context)
+                time.sleep(0.5)
+        assert False, "Element not present. Available elements: {}".format(list_elements_from_context(context))
 
 
 @step(u'I should not see an element with id "{id}" within {timeout:d} seconds')
