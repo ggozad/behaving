@@ -390,32 +390,32 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 ``behaving.mobile`` Supported matchers/steps
 --------------------------------------------
 
-    * Devices/apps
+* Devices/apps
 
-        * Given an iOS simulator running "``app``"
-        * Given an android simulator running "``app``"
-        * When I lock the device for ``timeout`` seconds
-        * When I install the app "``name``"
-        * When I remove the app "``uid``"
-        * When I launch the app
-        * When I close the app
-        * Then the application "``uid``" is installed
+    * Given an iOS simulator running "``app``"
+    * Given an android simulator running "``app``"
+    * When I lock the device for ``timeout`` seconds
+    * When I install the app "``name``"
+    * When I remove the app "``uid``"
+    * When I launch the app
+    * When I close the app
+    * Then the application "``uid``" is installed
 
-    * Interactions
+* Interactions
 
-        * When I pull the file "``load_path``" from the app and set it to "``key``"
-        * When I push the file "``load_path``" to the device at "``save_path``"
-        * When I tap "``name``" and drag to "``coords``"
-        [``coords`` is a list of points, say [(0,100), (100,100)], relative to the element you tap.]
-        * When I fill in "``name``" with "``value``"
-        * When I type "``value``" to "``name``"
-          [same as fill, but happens slowly triggering keyboard events]
-        * When I select "``value``" from "``name``""
-        * When I press "``name|text``"
-        * Then I should see "``text``"
-        * Then I should not see "``text``"
-        * Then I should see an element with id "``id``"
-        * Then I should see an element with id "``id``" within ``timeout`` seconds
+    * When I pull the file "``load_path``" from the app and set it to "``key``"
+    * When I push the file "``load_path``" to the device at "``save_path``"
+    * When I tap "``name``" and drag to "``coords``"
+    [``coords`` is a list of points, say [(0,100), (100,100)], relative to the element you tap.]
+    * When I fill in "``name``" with "``value``"
+    * When I type "``value``" to "``name``"
+      [same as fill, but happens slowly triggering keyboard events]
+    * When I select "``value``" from "``name``""
+    * When I press "``name|text``"
+    * Then I should see "``text``"
+    * Then I should not see "``text``"
+    * Then I should see an element with id "``id``"
+    * Then I should see an element with id "``id``" within ``timeout`` seconds
 
 ``behaving.mail`` Supported matchers/steps
 ------------------------------------------
