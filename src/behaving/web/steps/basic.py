@@ -97,9 +97,9 @@ def should_not_see_element_with_id(context, id):
 @step(u'I should see an element with id "{id}" within {timeout:d} seconds')
 @persona_vars
 def should_see_element_with_id_within_timeout(context, id, timeout):
-    if context.browser:
+    if hasattr(context, 'browser'):
         assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
-    elif context.device:
+    elif hasattr(context, 'device'):
         expiration = timeout + time.time()
         while time.time() < expiration:
             try:
