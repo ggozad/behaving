@@ -10,6 +10,9 @@ def list_elements_from_context(context):
     elements = context.device.find_elements_by_ios_uiautomation('.elements()')
     return [el.get_attribute("name") for el in elements]
 
+def raise_element_not_found_exception(name, context):
+    assert False, u'Element "%s" not found. Available elements: %s' % (name, list_elements_from_context(context))
+
 
 @step(u'I wait for {timeout:d} seconds')
 @persona_vars
@@ -85,7 +88,7 @@ def should_see_element_with_id(context, id):
         try:
             context.device.find_element_by_name(id)
         except NoSuchElementException:
-            assert False, u'Element not found. Available elements: {}'.format(list_elements_from_context(context))
+            raise_element_not_found_exception(id, context)
 
 
 @step(u'I should not see an element with id "{id}"')
@@ -108,7 +111,7 @@ def should_see_element_with_id_within_timeout(context, id, timeout):
             except NoSuchElementException:
                 print list_elements_from_context(context)
                 time.sleep(0.5)
-        assert False, "Element not present. Available elements: {}".format(list_elements_from_context(context))
+        raise_element_not_found_exception(id, context)
 
 
 @step(u'I should not see an element with id "{id}" within {timeout:d} seconds')

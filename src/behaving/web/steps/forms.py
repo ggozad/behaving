@@ -1,9 +1,8 @@
 import os
-import time
 from behave import step
 from selenium.common.exceptions import NoSuchElementException
 from splinter.exceptions import ElementDoesNotExist
-
+from basic import raise_element_not_found_exception
 from behaving.personas.persona import persona_vars
 
 
@@ -18,7 +17,7 @@ def i_fill_in_field(context, name, value):
             el.click() # workaround for failing send_keys call
             el.send_keys(value)
         except NoSuchElementException:
-            assert False, u'Element not found'
+            raise_element_not_found_exception(name, context)
 
 
 @step(u'I type "{value}" to "{name}"')
@@ -76,7 +75,7 @@ def i_press(context, name):
             el = context.device.find_element_by_name(name)
             el.click()
         except NoSuchElementException:
-            assert False, u'Element not found'
+            raise_element_not_found_exception(name, context)
 
 
 @step(u'I press the element with xpath "{xpath}"')
