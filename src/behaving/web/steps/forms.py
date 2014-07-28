@@ -1,4 +1,5 @@
 import os
+import time
 from behave import step
 from selenium.common.exceptions import NoSuchElementException
 from splinter.exceptions import ElementDoesNotExist
@@ -14,6 +15,7 @@ def i_fill_in_field(context, name, value):
     elif hasattr(context, 'device'):
         try:
             el = context.device.find_element_by_name(name)
+            el.click() # workaround for failing send_keys call
             el.send_keys(value)
         except NoSuchElementException:
             assert False, u'Element not found'
