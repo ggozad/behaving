@@ -20,6 +20,20 @@ def i_fill_in_field(context, name, value):
             raise_element_not_found_exception(name, context)
 
 
+@step(u'I clear field "{name}"')
+@persona_vars
+def i_clear_field(context, name):
+    if hasattr(context, 'browser'):
+        el = context.browser.find_element_by_name(name)
+        el.clear()
+    elif hasattr(context, 'device'):
+        try:
+            el = context.device.find_element_by_name(name)
+            el.clear()
+        except NoSuchElementException:
+            raise_element_not_found_exception(name, context)
+
+
 @step(u'I type "{value}" to "{name}"')
 @persona_vars
 def i_type_to(context, name, value):
