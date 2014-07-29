@@ -96,6 +96,16 @@ def pull_file(context, load_path, key):
         assert False, e.msg
 
 
+@step('I pull the file "{remote_path}" from the app and save it to "{local_path}"')
+def pull_file(context, remote_path, local_path):
+    try:
+        b64 = context.device.pull_file(remote_path)
+        with open(local_path, 'w') as f:
+            f.write(base64.b64decode(b64))
+            
+    except WebDriverException, e:
+        assert False, e.msg
+
 @step('I push the file "{load_path}" to the device at "{save_path}"')
 def push_file(context, load_path, save_path):
     full_path = os.path.join(context.device_data_path, load_path)
