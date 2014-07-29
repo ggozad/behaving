@@ -81,9 +81,16 @@ def i_press(context, name):
 @step(u'I press the element with xpath "{xpath}"')
 @persona_vars
 def i_press_xpath(context, xpath):
-    button = context.browser.find_by_xpath(xpath)
-    assert button, u'Element not found'
-    button.first.click()
+    if hasattr(context, 'browser'):
+        button = context.browser.find_by_xpath(xpath)
+        assert button, u'Element not found'
+        button.first.click()
+    elif hasattr(context, 'device'):
+        try:
+            el = context.device.find_element_by_xpath(xpath)
+            el.click()
+        except NoSuchElementException:
+            raise_element_not_found_exception(xpath, context)
 
 
 @step('I attach the file "{path}" to "{name}"')

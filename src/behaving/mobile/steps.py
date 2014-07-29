@@ -106,3 +106,11 @@ def push_file(context, load_path, save_path):
         context.device.push_file(save_path, data)
     except WebDriverException, e:
         assert False, e.msg
+
+
+@step('I switch to the "{context_name}" context')
+def switch_to_webview_context(context, context_name):
+    try:
+        context.device.switch_to.context(context_name)
+    except WebDriverException, e:
+        assert False, e.msg
