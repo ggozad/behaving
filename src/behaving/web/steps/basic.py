@@ -1,4 +1,5 @@
 import time
+import gevent
 from behave import step
 
 from selenium.common.exceptions import NoSuchElementException
@@ -13,6 +14,19 @@ def list_elements_from_context(context):
 def raise_element_not_found_exception(name, context):
     assert False, u'Element "%s" not found. Available elements: %s' % (name, list_elements_from_context(context))
 
+def text_exists_on_device(context, text):
+    # This should be replaced with something more sane
+    # It also only works on iOS
+    elems = context.device.find_elements_by_ios_uiautomation('.elements()')
+    texts = [e.text for e in elems]
+    for t in texts:
+        try:
+            if text in str(t):
+                return True
+        except UnicodeEncodeError, e:
+            pass
+
+    return False
 
 @step(u'I wait for {timeout:d} seconds')
 @persona_vars
@@ -40,15 +54,8 @@ def should_see(context, text):
     if hasattr(context, 'browser'):
         assert context.browser.is_text_present(text), u'Text not found'
     elif hasattr(context, 'device'):
-        # XXX
-        # This should be replaced with something more sane
-        # It also only works on iOS
-        elems = context.device.find_elements_by_ios_uiautomation('.elements()')
-        texts = [e.text for e in elems]
-        for t in texts:
-            if text in str(t):
-                return
-        assert False, u'Text not found. Available text: "%s"' % '", "'.join(texts)
+        if not text_exists_on_device(context, text):
+            assert False, u'Text not found. Available text: "%s"' % '", "'.join(texts)
 
 
 @step(u'I should not see "{text}"')
@@ -57,20 +64,23 @@ def should_not_see(context, text):
     if hasattr(context, 'browser'):
         assert context.browser.is_text_not_present(text), u'Text was found'
     elif hasattr(context, 'device'):
-        # XXX
-        # This should be replaced with something more sane
-        # It also only works on iOS
-        elems = context.device.find_elements_by_ios_uiautomation('elements()')
-        texts = [e.text for e in elems]
-        for t in texts:
-            if text in str(t):
-                assert False, u'Text found'
+        if text_exists_on_device(context, text):
+            assert False, u'Text found'
 
 
 @step(u'I should see "{text}" within {timeout:d} seconds')
 @persona_vars
 def should_see_within_timeout(context, text, timeout):
-    assert context.browser.is_text_present(text, wait_time=timeout), u'Text not found'
+    if hasattr(context, 'browser'):
+        assert context.browser.is_text_present(text, wait_time=timeout), u'Text not found'
+    elif hasattr(context, 'device'):
+        try:
+            with gevent.Timeout(timeout, Exception("")):
+                while not text_exists_on_device(context, text):
+                    gevent.sleep(1)
+        except Exception, e:
+            import pdb; pdb.set_trace()
+            assert False, u'Text not found'
 
 
 @step(u'I should not see "{text}" within {timeout:d} seconds')
@@ -103,16 +113,16 @@ def should_see_element_with_id_within_timeout(context, id, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
     elif hasattr(context, 'device'):
-        expiration = timeout + time.time()
-        while time.time() < expiration:
-            try:
-                context.device.find_element_by_name(id)
-                return
-            except NoSuchElementException:
-                print list_elements_from_context(context)
-                time.sleep(0.5)
-        raise_element_not_found_exception(id, context)
-
+        try:
+            with gevent.Timeout(timeout, Exception("")):
+                while True:
+                    try:
+                        context.device.find_element_by_name(id)
+                        break
+                    except NoSuchElementException:
+                        gevent.sleep(0.5)
+        except:
+            raise_element_not_found_exception(id, context)
 
 @step(u'I should not see an element with id "{id}" within {timeout:d} seconds')
 @persona_vars
