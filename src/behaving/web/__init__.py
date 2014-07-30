@@ -42,4 +42,5 @@ def teardown(context):
             pass
     if hasattr(context, 'browser'):
         del context.browser
-    context.browsers = {}
+    if hasattr(context, 'browsers'):
+        context.browsers.clear()
