@@ -48,7 +48,7 @@ def should_see(context, text):
         for t in texts:
             if text in str(t):
                 return
-        assert False, u'Text not found'
+        assert False, u'Text not found. Available text: "%s"' % '", "'.join(texts)
 
 
 @step(u'I should not see "{text}"')
