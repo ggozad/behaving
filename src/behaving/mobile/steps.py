@@ -1,7 +1,7 @@
 import base64
 import os
+import logging
 from urllib2 import URLError
-
 from appium import webdriver
 from appium.webdriver.common.touch_action import TouchAction
 from selenium.common.exceptions import WebDriverException
@@ -18,9 +18,9 @@ def given_an_ios_simulator_running_app(context, name):
 
 def given_an_ios_simulator_running_app_with_reset(context, name, reset):
     if reset:
-        print "Starting a clean iOS simulator with %s" % name
+        logging.debug("Starting a clean iOS simulator with %s" % name)
     else:
-        print "Starting a dirty iOS simulator with %s" % name
+        logging.debug("Starting a dirty iOS simulator with %s" % name)
     app_path = os.path.join(context.app_dir, name)
     context.ios_app_name = name
 
@@ -126,23 +126,23 @@ def pull_file(context, load_path, key):
 
 @step('I pull the file "{remote_path}" from the app and save it to "{local_path}"')
 def pull_file(context, remote_path, local_path):
-    print "pulling file %s to %s" % (remote_path, local_path)
+    logging.debug("pulling file %s to %s" % (remote_path, local_path))
     try:
         b64 = context.device.pull_file(remote_path)
         with open(local_path, 'w') as f:
             f.write(base64.b64decode(b64))
             
     except WebDriverException, e:
-        print "failed to pull file"
+        logging.debug("failed to pull file")
         assert False, e.msg
 
-    print "done"
+    logging.debug("done")
 @step('I push the file "{load_path}" to the device at "{save_path}"')
 def push_file(context, load_path, save_path):
     if not load_path.startswith("/"):
         load_path = os.path.join(context.device_data_path, load_path)
 
-    print "pushing file %s to %s" % (load_path, save_path)
+    logging.debug("pushing file %s to %s" % (load_path, save_path))
     with open(load_path, 'r') as f:
         data = f.read()
     data = base64.b64encode(data)

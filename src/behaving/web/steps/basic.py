@@ -113,16 +113,19 @@ def should_see_element_with_id_within_timeout(context, id, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
     elif hasattr(context, 'device'):
+        element = None
+        timeout = gevent.Timeout(timeout, False)
         try:
-            with gevent.Timeout(timeout, Exception("")):
-                while True:
-                    try:
-                        context.device.find_element_by_name(id)
-                        break
-                    except NoSuchElementException:
-                        gevent.sleep(0.5)
-        except:
-            raise_element_not_found_exception(id, context)
+            while True:
+                try:
+                    element = context.device.find_element_by_name(id)
+                    break
+                except NoSuchElementException, e:
+                    gevent.sleep(0.5)
+        finally:
+            timeout.cancel()
+            if not element:
+                raise_element_not_found_exception(id, context)
 
 @step(u'I should not see an element with id "{id}" within {timeout:d} seconds')
 @persona_vars

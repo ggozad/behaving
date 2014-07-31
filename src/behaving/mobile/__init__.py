@@ -1,6 +1,8 @@
 # Generic setup/teardown for compatibility with pytest et al.
 import os
 import logging
+import atexit
+
 
 logger = logging.getLogger('behaving')
 
@@ -30,9 +32,14 @@ def setup(context):
             'deviceName': 'iPhone'
         }
 
+    # ensure we kill the appium server if the tests crash
+    def cleanup():
+        teardown(context)
+
+    atexit.register(cleanup)
 
 def teardown(context):
-    logger.info("Tearing down mobilde device")
     if hasattr(context, 'device'):
+        logger.info("Tearing down mobilde device")
         context.device.quit()
         del context.device
