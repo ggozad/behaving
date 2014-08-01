@@ -14,12 +14,14 @@ def list_elements_from_context(context):
 def raise_element_not_found_exception(name, context):
     assert False, u'Element "%s" not found. Available elements: %s' % (name, list_elements_from_context(context))
 
+def texts_on_device(context):
+    elems = context.device.find_elements_by_ios_uiautomation('.elements()')
+    return [e.text for e in elems]
+
 def text_exists_on_device(context, text):
     # This should be replaced with something more sane
     # It also only works on iOS
-    elems = context.device.find_elements_by_ios_uiautomation('.elements()')
-    texts = [e.text for e in elems]
-    for t in texts:
+    for t in texts_on_device(context):
         try:
             if text in str(t):
                 return True
@@ -55,7 +57,7 @@ def should_see(context, text):
         assert context.browser.is_text_present(text), u'Text not found'
     elif hasattr(context, 'device'):
         if not text_exists_on_device(context, text):
-            assert False, u'Text not found. Available text: "%s"' % '", "'.join(texts)
+            assert False, u'Text not found. Available text: "%s"' % '", "'.join(texts_on_device(context))
 
 
 @step(u'I should not see "{text}"')
