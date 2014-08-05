@@ -1,10 +1,25 @@
 import time
-import gevent
 from behave import step
 
 from selenium.common.exceptions import NoSuchElementException
 
 from behaving.personas.persona import persona_vars
+
+# Accepts a lambda as second paramter, returns lambda result on success, or False on timeout
+def retry(timeout, func, delay=1):
+    start = time.time()
+    while True:
+        try:
+            res = func()
+            if res is False or res is None:
+                time.sleep(delay)
+            else:
+                return res
+        except:
+            time.sleep(delay)
+
+        if time.time() - start > timeout:
+            return False
 
 
 def raise_element_not_found_exception(name, context):
@@ -79,19 +94,16 @@ def should_see_within_timeout(context, text, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_text_present(text, wait_time=timeout), u'Text not found'
     elif hasattr(context, 'device'):
-        try:
-            with gevent.Timeout(timeout, Exception("")):
-                while not text_exists_on_device(context, text):
-                    gevent.sleep(1)
-        except Exception, e:
-            import pdb; pdb.set_trace()
-            assert False, u'Text not found'
+        assert retry(timeout, lambda: text_exists_on_device(context, text)), u'Text not found'
 
 
 @step(u'I should not see "{text}" within {timeout:d} seconds')
 @persona_vars
 def should_not_see_within_timeout(context, text, timeout):
-    assert context.browser.is_text_not_present(text, wait_time=timeout), u'Text was found'
+    if hasattr(context, 'browser'):
+        assert context.browser.is_text_not_present(text, wait_time=timeout), u'Text was found'
+    elif hasattr(context, 'device'):
+        assert retry(timeout, lambda: not text_exists_on_device(context, text)), u'Text was found'
 
 
 @step(u'I should see an element with id "{id}"')
@@ -109,7 +121,14 @@ def should_see_element_with_id(context, id):
 @step(u'I should not see an element with id "{id}"')
 @persona_vars
 def should_not_see_element_with_id(context, id):
-    assert context.browser.is_element_not_present_by_id(id), u'Element is present'
+    if hasattr(context, 'browser'):
+        assert context.browser.is_element_not_present_by_id(id), u'Element is present'
+    elif hasattr(context, 'device'):
+        try:
+            context.device.find_element_by_name(id)
+            assert False, u'Element is present'
+        except NoSuchElementException:
+            pass
 
 
 @step(u'I should see an element with id "{id}" within {timeout:d} seconds')
@@ -118,25 +137,16 @@ def should_see_element_with_id_within_timeout(context, id, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
     elif hasattr(context, 'device'):
-        element = None
-        timeout = gevent.Timeout(timeout, False)
-        timeout.start()
-        try:
-            while True:
-                try:
-                    element = context.device.find_element_by_name(id)
-                    break
-                except NoSuchElementException, e:
-                    gevent.sleep(0.5)
-        finally:
-            timeout.cancel()
-            if not element:
-                raise_element_not_found_exception(id, context)
+        if not retry(timeout, lambda: context.device.find_element_by_name(id)):
+           raise_element_not_found_exception(id, context)
 
 @step(u'I should not see an element with id "{id}" within {timeout:d} seconds')
 @persona_vars
 def should_not_see_element_with_id_within_timeout(context, id, timeout):
-    assert context.browser.is_element_not_present_by_id(id, wait_time=timeout), u'Element is present'
+    if hasattr(context, 'browser'):
+        assert context.browser.is_element_not_present_by_id(id, wait_time=timeout), u'Element is present'
+    elif hasattr(context, 'device'):
+        assert not retry(timeout, lambda: context.device.find_element_by_name(id)), u'Element is present'
 
 
 @step(u'I should see an element with the css selector "{css}"')

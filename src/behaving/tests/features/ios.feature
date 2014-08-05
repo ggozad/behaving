@@ -36,6 +36,13 @@ Feature: iOS support
     @mobile
     Scenario: Dirty iOS simulator
         Given a dirty iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
+        Then I should see "Result:" within 10 seconds
+        And I should not see "asdf:" within 10 seconds
+        And I should see an element with id "textInput"
+        And I should see an element with id "textInput" within 10 seconds
+        And I should not see an element with id "foobar"
+        And I should not see an element with id "foobar" within 10 seconds
+        And I should see an element with xpath "//"
         Then I fill in "textInput" with "400"
         When I restart the iOS simulator
         Then field "textInput" should have the value "400"
