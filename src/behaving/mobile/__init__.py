@@ -40,6 +40,6 @@ def setup(context):
 
 def teardown(context):
     if hasattr(context, 'device'):
-        logger.info("Tearing down mobilde device")
+        logger.info("Tearing down mobile device")
         context.device.quit()
         del context.device
