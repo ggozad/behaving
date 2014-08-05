@@ -134,11 +134,18 @@ def set_html_content_to_element_with_class(context, klass, contents):
 @step(u'field "{name}" should have the value "{value}"')
 @persona_vars
 def field_has_value(context, name, value):
-    el = context.browser.find_by_xpath(
-        ("//*[@id='%(name)s']|"
-         "//*[@name='%(name)s']") % {'name': name})
-    assert el, u'Element not found'
-    assert el.first.value == value, "Values do not match"
+    if hasattr(context, 'browser'):
+        el = context.browser.find_by_xpath(
+            ("//*[@id='%(name)s']|"
+             "//*[@name='%(name)s']") % {'name': name})
+        assert el, u'Element not found'
+        assert el.first.value == value, "Values do not match"
+    elif hasattr(context, 'device'):
+        try:
+            el = context.device.find_element_by_name(name)
+            assert el.get_attribute('value') == value, "Values do not match"
+        except NoSuchElementException:
+            raise_element_not_found_exception(name, context)
 
 
 @step(u'"{name}" should be enabled')

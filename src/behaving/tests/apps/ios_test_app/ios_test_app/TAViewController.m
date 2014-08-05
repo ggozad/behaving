@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *resultLabel;
 @property (weak, nonatomic) IBOutlet UILabel *scrollOffsetLabel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UILabel *checked;
 
 @end
 
@@ -25,12 +26,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.textField.accessibilityIdentifier = @"textInput";
     self.aSwitch.accessibilityIdentifier = @"toggleCalculate";
     self.slider.accessibilityIdentifier = @"slider";
     self.resultLabel.accessibilityIdentifier = @"resultLabel";
     self.scrollOffsetLabel.accessibilityIdentifier = @"scrollOffsetLabel";
+    self.textField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"textFieldValue"];
     
     [self scrollViewDidScroll:self.scrollView];
     
@@ -39,20 +41,13 @@
 }
 
 - (IBAction)calculate:(id)sender {
-
+    
     self.resultLabel.text = [NSString stringWithFormat:@"%d", self.textField.text.intValue * 2];
 }
 
 - (IBAction)resetInput:(id)sender {
     self.button.enabled = self.aSwitch.on;
-    
-    self.textField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"textFieldValue"];
-    
-    UITapGestureRecognizer* viewTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
-    
-    [self.view addGestureRecognizer:viewTapRecognizer];
-    
-    [self scrollViewDidScroll:self.scrollView];
+    self.checked.hidden = !self.aSwitch.on;
 }
 
 - (void)viewTapped:(id)sender
