@@ -117,6 +117,7 @@ def should_see_element_with_id_within_timeout(context, id, timeout):
     elif hasattr(context, 'device'):
         element = None
         timeout = gevent.Timeout(timeout, False)
+        timeout.start()
         try:
             while True:
                 try:
