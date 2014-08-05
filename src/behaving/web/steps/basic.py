@@ -5,13 +5,13 @@ from selenium.common.exceptions import NoSuchElementException
 
 from behaving.personas.persona import persona_vars
 
-# Accepts a lambda as second paramter, returns lambda result on success, or False on timeout
-def retry(timeout, func, delay=1):
+# Accepts a lambda as first paramter, returns lambda result on success, or False on timeout
+def retry(func, timeout=0, delay=1):
     start = time.time()
     while True:
         try:
             res = func()
-            if res is False or res is None:
+            if not res:
                 time.sleep(delay)
             else:
                 return res
@@ -94,7 +94,7 @@ def should_see_within_timeout(context, text, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_text_present(text, wait_time=timeout), u'Text not found'
     elif hasattr(context, 'device'):
-        assert retry(timeout, lambda: text_exists_on_device(context, text)), u'Text not found'
+        assert retry(lambda: text_exists_on_device(context, text), timeout), u'Text not found'
 
 
 @step(u'I should not see "{text}" within {timeout:d} seconds')
@@ -103,7 +103,7 @@ def should_not_see_within_timeout(context, text, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_text_not_present(text, wait_time=timeout), u'Text was found'
     elif hasattr(context, 'device'):
-        assert retry(timeout, lambda: not text_exists_on_device(context, text)), u'Text was found'
+        assert retry(lambda: not text_exists_on_device(context, text), timeout), u'Text was found'
 
 
 @step(u'I should see an element with id "{id}"')
@@ -137,7 +137,7 @@ def should_see_element_with_id_within_timeout(context, id, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
     elif hasattr(context, 'device'):
-        if not retry(timeout, lambda: context.device.find_element_by_name(id)):
+        if not retry(lambda: context.device.find_element_by_name(id), timeout):
            raise_element_not_found_exception(id, context)
 
 @step(u'I should not see an element with id "{id}" within {timeout:d} seconds')
@@ -146,7 +146,7 @@ def should_not_see_element_with_id_within_timeout(context, id, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_not_present_by_id(id, wait_time=timeout), u'Element is present'
     elif hasattr(context, 'device'):
-        assert not retry(timeout, lambda: context.device.find_element_by_name(id)), u'Element is present'
+        assert not retry(lambda: context.device.find_element_by_name(id), timeout), u'Element is present'
 
 
 @step(u'I should see an element with the css selector "{css}"')

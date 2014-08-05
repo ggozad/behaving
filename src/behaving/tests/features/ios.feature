@@ -28,11 +28,10 @@ Feature: iOS support
         Given an iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
         When I push the file "test.txt" to the device at "/ios_test_app.app/../Documents/test.txt"
         And I pull the file "/ios_test_app.app/../Documents/test.txt" from the app and set it to "foo"
-        And I pull the file "/ios_test_app.app/../Documents/test.txt" from the app and save it to "/tmp/test.txt"
         Then "foo" is set to "Hello world"
+        Then I pull the file "/ios_test_app.app/../Documents/test.txt" from the app and save it to "/tmp/test.txt"
 
     @ios
-    @runme
     @mobile
     Scenario: Dirty iOS simulator
         Given a dirty iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
@@ -42,7 +41,6 @@ Feature: iOS support
         And I should see an element with id "textInput" within 10 seconds
         And I should not see an element with id "foobar"
         And I should not see an element with id "foobar" within 10 seconds
-        And I should see an element with xpath "//"
         Then I fill in "textInput" with "400"
         When I restart the iOS simulator
         Then field "textInput" should have the value "400"
