@@ -17,7 +17,6 @@ class PersonaVarMatcher(object):
         self.func = func
 
     def replace(self, *args, **kwargs):
-        import pdb
         context = args[0]
         if hasattr(context, 'persona'):
             for kwname, kwvalue in kwargs.items():

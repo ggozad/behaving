@@ -9,7 +9,7 @@ logger = logging.getLogger('behaving')
 
 def setup(context):
     logger.info("Setting up mobile device")
-    
+
     if not hasattr(context, 'webdriver_url'):
         context.webdriver_url = 'http://127.0.0.1:4723/wd/hub'
         logger.info('No default webdriver url is specified. Using %s' % context.webdriver_url)
@@ -37,6 +37,7 @@ def setup(context):
         teardown(context)
 
     atexit.register(cleanup)
+
 
 def teardown(context):
     if hasattr(context, 'device'):

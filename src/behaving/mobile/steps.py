@@ -12,9 +12,11 @@ from behave import step
 def given_an_ios_simulator_running_app(context, name):
     given_an_ios_simulator_running_app_with_reset(context, name, True)
 
+
 @step('a dirty iOS simulator running "{name}"')
-def given_an_ios_simulator_running_app(context, name):
+def given_an_dirty_ios_simulator_running_app(context, name):
     given_an_ios_simulator_running_app_with_reset(context, name, False)
+
 
 def given_an_ios_simulator_running_app_with_reset(context, name, reset):
     if reset:
@@ -32,11 +34,13 @@ def given_an_ios_simulator_running_app_with_reset(context, name, reset):
     except URLError:
         assert False, 'Appium is not running on the specified webdriver_url'
 
+
 @step('I restart the iOS simulator')
 def restart_the_ios_simulator(context):
     if hasattr(context, 'device'):
         context.device.quit()
     given_an_ios_simulator_running_app_with_reset(context, context.ios_app_name, False)
+
 
 @step('an android simulator running "{name}"')
 def given_an_android_simulator_running_app(context, name):
@@ -103,7 +107,7 @@ def close_app(context):
 
 
 @step('I reset the app')
-def close_app(context):
+def reset_app(context):
     try:
         context.device.reset()
     except WebDriverException, e:
@@ -125,18 +129,17 @@ def pull_file(context, load_path, key):
 
 
 @step('I pull the file "{remote_path}" from the app and save it to "{local_path}"')
-def pull_file(context, remote_path, local_path):
+def pull_save_file(context, remote_path, local_path):
     logging.debug("pulling file %s to %s" % (remote_path, local_path))
     try:
         b64 = context.device.pull_file(remote_path)
         with open(local_path, 'w') as f:
             f.write(base64.b64decode(b64))
-            
+
     except WebDriverException, e:
-        logging.debug("failed to pull file")
         assert False, e.msg
 
-    logging.debug("done")
+
 @step('I push the file "{load_path}" to the device at "{save_path}"')
 def push_file(context, load_path, save_path):
     if not load_path.startswith("/"):
@@ -163,5 +166,5 @@ def switch_to_webview_context(context, context_name):
     except WebDriverException, e:
         error = e.msg
 
-    if error != None:
+    if error is not None:
         assert False, "%s. Available contexts: %s" % (error, context.device.contexts)

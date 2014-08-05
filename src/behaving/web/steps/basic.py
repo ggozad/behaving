@@ -7,16 +7,18 @@ from selenium.common.exceptions import NoSuchElementException
 from behaving.personas.persona import persona_vars
 
 
-def list_elements_from_context(context):
-    elements = context.device.find_elements_by_ios_uiautomation('.elements()')
-    return [el.get_attribute("name") for el in elements]
-
 def raise_element_not_found_exception(name, context):
+    def list_elements_from_context(context):
+        elements = context.device.find_elements_by_ios_uiautomation('.elements()')
+        return [el.get_attribute("name") for el in elements]
+
     assert False, u'Element "%s" not found. Available elements: %s' % (name, list_elements_from_context(context))
+
 
 def texts_on_device(context):
     elems = context.device.find_elements_by_ios_uiautomation('.elements()')
     return [e.text for e in elems]
+
 
 def text_exists_on_device(context, text):
     # This should be replaced with something more sane
@@ -25,10 +27,11 @@ def text_exists_on_device(context, text):
         try:
             if text in str(t):
                 return True
-        except UnicodeEncodeError, e:
+        except UnicodeEncodeError:
             pass
 
     return False
+
 
 @step(u'I wait for {timeout:d} seconds')
 @persona_vars
