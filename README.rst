@@ -69,14 +69,23 @@ Let's take the familiar LOTR characters as our test users. On setting up the tes
                 fullname=u'Frodo Baggins',
                 email=u'frodo@shire.com',
                 password=u'frodopass',
-                mobile='+4745690001'
+                mobile='+4745690001',
+                address: {
+                    street: "The Shire",
+                    zip: "4321"
+                }
+
             ),
 
         'Gandalf': dict(
                 fullname=u'Gandalf the Grey',
                 email=u'gandalf@wizardry.com',
                 password=u'gandalfpass',
-                mobile='+4745690004'
+                mobile='+4745690004',
+                address: {
+                    street: "Rivendell street 1",
+                    zip: "1234"
+                }
             ),
         ...
     }
@@ -92,10 +101,12 @@ Within a test and given a persona, you can now use ``$var_name`` to access a var
 
     Given "Gandalf" as the persona
     When I fill in "name" with "$fullname"
+    And I fill in "street" with "$address.street"
     And I set "title" to the text of "document-title"
     And I fill in "delete" with "$title"
+    And I set "address.country" to the text of "country"
 
-would fill in the field with id ``name`` with ``Gandalf the Grey``, set the variable ``title`` to the text of the element with id ``document-title`` and reuse the variable ``title`` to fill in the field with id ``delete``.
+would fill in the field with id ``name`` with ``Gandalf the Grey``, ``street`` with ``Rivendell street 1`` set the variable ``title`` to the text of the element with id ``document-title`` and reuse the variable ``title`` to fill in the field with id ``delete``. It would also store the value of the field with id "country" in address[``country``].
 
 Hello Persona example
 ---------------------

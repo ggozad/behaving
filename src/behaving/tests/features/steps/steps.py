@@ -8,6 +8,7 @@ except ImportError:
 import smtplib
 from email.mime.text import MIMEText
 from behave import when
+from behave import step
 
 from behaving.web.steps import *
 from behaving.sms.steps import *
@@ -43,3 +44,8 @@ def send_email(context, to, subject, body):
     s = smtplib.SMTP('localhost', 8025)
     s.sendmail('test@localhost', [to], msg.as_string())
     s.quit()
+
+@step('"{key}" has property "{propname}"')
+@persona_vars
+def persona_var_has_property(context, key, propname):
+    assert hasattr(context.persona, key) or context.persona.has_key(key), "context.persona[%s] does not have property %s" % (key, propname)
