@@ -7,6 +7,8 @@ from behaving.personas.persona import persona_vars
 
 # Accepts a lambda as first paramter, returns lambda result on success, or False on timeout
 def retry(func, timeout=0, delay=1):
+    assert isinstance(func, type(lambda: None)), "Retry expects a lambda as the first argument"
+ 
     start = time.time()
     while True:
         try:
@@ -22,23 +24,24 @@ def retry(func, timeout=0, delay=1):
             return False
 
 
-def raise_element_not_found_exception(name, context):
-    def list_elements_from_context(context):
-        elements = context.device.find_elements_by_ios_uiautomation('.elements()')
-        return [el.get_attribute("name") for el in elements]
+def list_elements_from_context(context):
+    elems = context.device.find_elements_by_xpath('//*')
+    return [el.get_attribute("name") for el in elems]
 
+def raise_element_not_found_exception(name, context):
     assert False, u'Element "%s" not found. Available elements: %s' % (name, list_elements_from_context(context))
 
 
-def texts_on_device(context):
-    elems = context.device.find_elements_by_ios_uiautomation('.elements()')
-    return [e.text for e in elems]
+def texts_on_device(context, id=None):
+    elems = context.device.find_elements_by_class_name('UIAStaticText')
+    return [e.get_attribute("label") for e in elems]
 
 
-def text_exists_on_device(context, text):
+def text_exists_on_device(context, text, id=None):
     # This should be replaced with something more sane
     # It also only works on iOS
-    for t in texts_on_device(context):
+
+    for t in texts_on_device(context, id):
         try:
             if text in str(t):
                 return True
@@ -78,6 +81,15 @@ def should_see(context, text):
             assert False, u'Text not found. Available text: "%s"' % '", "'.join(texts_on_device(context))
 
 
+@step(u'I should see "{text}" inside the element with id "{id}" within {timeout:d} seconds')
+@persona_vars
+def should_see(context, text, id, timeout):
+    if hasattr(context, 'browser'):
+        assert False, u'Not implemented'
+    elif hasattr(context, 'device'):
+        assert retry(lambda: text_exists_on_device(context, text, id), timeout), u'Text %s not found. Available text: "%s"' % (text, '", "'.join(texts_on_device(context, id)))
+
+
 @step(u'I should not see "{text}"')
 @persona_vars
 def should_not_see(context, text):
@@ -94,7 +106,7 @@ def should_see_within_timeout(context, text, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_text_present(text, wait_time=timeout), u'Text not found'
     elif hasattr(context, 'device'):
-        assert retry(lambda: text_exists_on_device(context, text), timeout), u'Text not found'
+        assert retry(lambda: text_exists_on_device(context, text), timeout), u'Text not found. Available text: "%s"' % '", "'.join(texts_on_device(context))
 
 
 @step(u'I should not see "{text}" within {timeout:d} seconds')
