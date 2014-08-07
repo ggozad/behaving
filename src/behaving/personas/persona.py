@@ -27,10 +27,10 @@ class Persona(dict):
             else:
                 try:
                     current = current[component]
-                except KeyError, e:
+                except KeyError:
                     current[component] = {}
                     current = current[component]
-        
+
         if isinstance(current, dict):
             current[prop] = value
         else:

@@ -427,6 +427,12 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * Then I should not see "``text``"
     * Then I should see an element with id "``id``"
     * Then I should see an element with id "``id``" within ``timeout`` seconds
+    * Then I should not see an element with id "``id``"
+    * Then I should not see an element with id "``id``" within ``timeout`` seconds
+    * Then I should see an element with xpath "``xpath``"
+    * Then I should not see an element with xpath "``xpath``"
+    * Then I should see an element with xpath "``xpath``" within ``timeout`` seconds
+    * Then I should not see an element with xpath "``xpath``" within ``timeout`` seconds
 
 ``behaving.mail`` Supported matchers/steps
 ------------------------------------------

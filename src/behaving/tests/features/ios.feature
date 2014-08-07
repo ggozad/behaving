@@ -6,6 +6,9 @@ Feature: iOS support
         Given an iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
         Then I should see "Result"
         And I should see an element with id "resultLabel"
+        And I should not see an element with id "nonExistant"
+        And I should see an element with xpath "//UIAStaticText"
+        And I should not see an element with xpath "//NonExistant"
         When I fill in "textInput" with "42"
         And I press "Calculate"
         Then I should see "84"
@@ -36,11 +39,7 @@ Feature: iOS support
     Scenario: Dirty iOS simulator
         Given a dirty iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
         Then I should see "Result:" within 10 seconds
-        And I should not see "asdf:" within 10 seconds
         And I should see an element with id "textInput"
-        And I should see an element with id "textInput" within 10 seconds
-        And I should not see an element with id "foobar"
-        And I should not see an element with id "foobar" within 10 seconds
-        Then I fill in "textInput" with "400"
+        Then I fill in "textInput" with "42"
         When I restart the iOS simulator
-        Then field "textInput" should have the value "400"
+        Then field "textInput" should have the value "42"
