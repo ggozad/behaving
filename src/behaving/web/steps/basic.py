@@ -5,10 +5,11 @@ from selenium.common.exceptions import NoSuchElementException
 
 from behaving.personas.persona import persona_vars
 
+
 # Accepts a lambda as first paramter, returns lambda result on success, or False on timeout
-def retry(func, timeout=0, delay=1):
+def _retry(func, timeout=0, delay=1):
     assert isinstance(func, type(lambda: None)), "Retry expects a lambda as the first argument"
- 
+
     start = time.time()
     while True:
         try:
@@ -27,6 +28,7 @@ def retry(func, timeout=0, delay=1):
 def list_elements_from_context(context):
     elems = context.device.find_elements_by_xpath('//*')
     return [el.get_attribute("name") for el in elems]
+
 
 def raise_element_not_found_exception(name, context):
     assert False, u'Element "%s" not found. Available elements: %s' % (name, list_elements_from_context(context))
@@ -84,11 +86,12 @@ def should_see(context, text):
 
 @step(u'I should see "{text}" inside the element with id "{id}" within {timeout:d} seconds')
 @persona_vars
-def should_see(context, text, id, timeout):
+def should_see_timeout(context, text, id, timeout):
     if hasattr(context, 'browser'):
         assert False, u'Not implemented'
     elif hasattr(context, 'device'):
-        assert retry(lambda: text_exists_on_device(context, text, id), timeout), u'Text %s not found. Available text: "%s"' % (text, '", "'.join(texts_on_device(context, id)))
+        assert _retry(lambda: text_exists_on_device(context, text, id), timeout), \
+            u'Text %s not found. Available text: "%s"' % (text, '", "'.join(texts_on_device(context, id)))
 
 
 @step(u'I should not see "{text}"')
@@ -107,7 +110,8 @@ def should_see_within_timeout(context, text, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_text_present(text, wait_time=timeout), u'Text not found'
     elif hasattr(context, 'device'):
-        assert retry(lambda: text_exists_on_device(context, text), timeout), u'Text not found. Available text: "%s"' % '", "'.join(texts_on_device(context))
+        assert _retry(lambda: text_exists_on_device(context, text), timeout), \
+            u'Text not found. Available text: "%s"' % '", "'.join(texts_on_device(context))
 
 
 @step(u'I should not see "{text}" within {timeout:d} seconds')
@@ -116,7 +120,7 @@ def should_not_see_within_timeout(context, text, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_text_not_present(text, wait_time=timeout), u'Text was found'
     elif hasattr(context, 'device'):
-        assert retry(lambda: not text_exists_on_device(context, text), timeout), u'Text was found'
+        assert _retry(lambda: not text_exists_on_device(context, text), timeout), u'Text was found'
 
 
 @step(u'I should see an element with id "{id}"')
@@ -150,8 +154,9 @@ def should_see_element_with_id_within_timeout(context, id, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
     elif hasattr(context, 'device'):
-        if not retry(lambda: context.device.find_element_by_name(id), timeout):
-           raise_element_not_found_exception(id, context)
+        if not _retry(lambda: context.device.find_element_by_name(id), timeout):
+            raise_element_not_found_exception(id, context)
+
 
 @step(u'I should not see an element with id "{id}" within {timeout:d} seconds')
 @persona_vars
@@ -159,7 +164,7 @@ def should_not_see_element_with_id_within_timeout(context, id, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_not_present_by_id(id, wait_time=timeout), u'Element is present'
     elif hasattr(context, 'device'):
-        assert not retry(lambda: context.device.find_element_by_name(id), timeout), u'Element is present'
+        assert not _retry(lambda: context.device.find_element_by_name(id), timeout), u'Element is present'
 
 
 @step(u'I should see an element with the css selector "{css}"')
@@ -189,10 +194,9 @@ def should_see_element_with_xpath(context, xpath):
         assert context.browser.is_element_present_by_xpath(xpath), u'Element not present'
     elif hasattr(context, 'device'):
         try:
-            el = context.device.find_element_by_xpath(xpath)
+            context.device.find_element_by_xpath(xpath)
         except NoSuchElementException:
             raise_element_not_found_exception(xpath, context)
-
 
 
 @step(u'I should not see an element with xpath "{xpath}"')
@@ -202,7 +206,7 @@ def should_not_see_element_with_xpath(context, xpath):
         assert context.browser.is_element_not_present_by_xpath(xpath), u'Element is present'
     elif hasattr(context, 'device'):
         try:
-            el = context.device.find_element_by_xpath(xpath), 
+            context.device.find_element_by_xpath(xpath),
             assert False, u'Element is present'
         except NoSuchElementException:
             pass
@@ -214,7 +218,7 @@ def should_see_element_with_xpath_within_timeout(context, xpath, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_present_by_xpath(xpath, wait_time=timeout), u'Element not present'
     elif hasattr(context, 'device'):
-        el = retry(lambda:context.device.find_element_by_xpath(xpath), timeout)
+        _retry(lambda: context.device.find_element_by_xpath(xpath), timeout)
         raise_element_not_found_exception(xpath, context)
 
 
@@ -224,7 +228,7 @@ def should_not_see_element_with_xpath_within_timeout(context, xpath, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_not_present_by_xpath(xpath, wait_time=timeout), u'Element is present'
     elif hasattr(context, 'device'):
-        el = retry(lambda:context.device.find_element_by_xpath(xpath), timeout)
+        el = _retry(lambda: context.device.find_element_by_xpath(xpath), timeout)
         assert not el, u'Element is present'
 
 
