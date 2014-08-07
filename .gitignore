@@ -17,3 +17,4 @@ ghostdriver.log
 .long-description.html
 build/
 xcuserdata/
+src/appium/
