@@ -17,7 +17,8 @@ Feature: Use Personas
         Then "bar" is set to "Hello world"
         When I set "mydict.foo" to "aaa"
         And I set "mydict.bar" to "bbb"
-        Then "mydict" has property "foo"
+        Then "mydict" is a dictionary
+        And "mydict" has property "foo"
         And "mydict.foo" is set to "aaa"
         And "mydict" has property "bar"
         And "mydict.bar" is set to "bbb"

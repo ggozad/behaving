@@ -11,6 +11,8 @@ class Persona(dict):
         for component in components:
             if hasattr(current, component):
                 current = getattr(current, component)
+                if type(current) == type(self.get_value):
+                    current = current()
             else:
                 current = current[component]
         return current
@@ -50,7 +52,11 @@ class PersonaVarMatcher(object):
                 variables = var_exp.findall(str(kwvalue))
                 for var in variables:
                     value = context.persona.get_value(var)
-                    kwargs[kwname] = kwargs[kwname].replace('$' + var, value)
+
+                    if type(value) == str or type(value) == unicode:
+                        kwargs[kwname] = kwargs[kwname].replace('$' + var, value)
+                    else:
+                        kwargs[kwname] = value
 
         self.func.__call__(*args, **kwargs)
 
