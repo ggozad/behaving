@@ -61,7 +61,7 @@ def main(args=sys.argv[1:]):
     """
     parser = argparse.ArgumentParser(description='SMS mock server')
     parser.add_argument('-p', '--port',
-                        default='8099',
+                        default='8199',
                         help='The port to use')
 
     parser.add_argument('-o', '--output_dir',

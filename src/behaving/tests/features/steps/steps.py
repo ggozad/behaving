@@ -21,7 +21,7 @@ from behaving.personas.persona import persona_vars
 @when('I send an sms to "{to}" with body "{body}"')
 @persona_vars
 def send_sms(context, to, body):
-    url = 'http://localhost:8099'
+    url = 'http://localhost:8199'
     values = {'from': 'TEST',
               'to': to,
               'text': body}
