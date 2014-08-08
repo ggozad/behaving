@@ -1,5 +1,6 @@
 Feature: iOS support
 
+    @runme
     @ios
     @mobile
     Scenario: Test features with iOS simulator

@@ -5,17 +5,21 @@ from splinter.exceptions import ElementDoesNotExist
 from basic import raise_element_not_found_exception
 from basic import find_device_element_by_name_or_id
 from behaving.personas.persona import persona_vars
+from behaving.mobile.multiplatform import multiplatform
 
 
 @step(u'I fill in "{name}" with "{value}"')
 @persona_vars
+@multiplatform
 def i_fill_in_field(context, name, value):
-    if hasattr(context, 'browser'):
+
+    def browser(context, name, value):
         context.browser.fill(name, value)
-    elif hasattr(context, 'device'):
+
+    def ios(context, name, value):
         try:
             el = find_device_element_by_name_or_id(context, name)
-            el.click() # workaround for failing send_keys call
+            el.click()  # workaround for failing send_keys call
             el.send_keys(value)
         except NoSuchElementException:
             raise_element_not_found_exception(name, context)
