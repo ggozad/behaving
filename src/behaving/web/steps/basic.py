@@ -35,8 +35,12 @@ def raise_element_not_found_exception(name, context):
 
 
 def texts_on_device(context, id=None):
-    elems = context.device.find_elements_by_class_name('UIAStaticText')
-    return [e.get_attribute("label") for e in elems]
+    if context.device.name == 'Android':
+        elems = context.device.find_elements_by_class_name('android.widget.TextView')
+        return [e.text for e in elems]
+    else:
+        elems = context.device.find_elements_by_class_name('UIAStaticText')
+        return [e.get_attribute("label") for e in elems]
 
 
 def text_exists_on_device(context, text, id=None):
@@ -52,6 +56,12 @@ def text_exists_on_device(context, text, id=None):
             print t
 
     return False
+
+def find_device_element_by_name_or_id(context, id):
+    try:
+        return context.device.find_element_by_id(id)
+    except NoSuchElementException:
+        return context.device.find_element_by_name(id)
 
 
 @step(u'I wait for {timeout:d} seconds')
@@ -130,7 +140,7 @@ def should_see_element_with_id(context, id):
         assert context.browser.is_element_present_by_id(id), u'Element not present'
     elif hasattr(context, 'device'):
         try:
-            context.device.find_element_by_name(id)
+            find_device_element_by_name_or_id(context, id)
         except NoSuchElementException:
             raise_element_not_found_exception(id, context)
 
@@ -142,7 +152,7 @@ def should_not_see_element_with_id(context, id):
         assert context.browser.is_element_not_present_by_id(id), u'Element is present'
     elif hasattr(context, 'device'):
         try:
-            context.device.find_element_by_name(id)
+            find_device_element_by_name_or_id(context, id)
             assert False, u'Element is present'
         except NoSuchElementException:
             pass
@@ -154,7 +164,7 @@ def should_see_element_with_id_within_timeout(context, id, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
     elif hasattr(context, 'device'):
-        if not _retry(lambda: context.device.find_element_by_name(id), timeout):
+        if not _retry(lambda: find_device_element_by_name_or_id(context, id), timeout):
             raise_element_not_found_exception(id, context)
 
 
@@ -164,7 +174,7 @@ def should_not_see_element_with_id_within_timeout(context, id, timeout):
     if hasattr(context, 'browser'):
         assert context.browser.is_element_not_present_by_id(id, wait_time=timeout), u'Element is present'
     elif hasattr(context, 'device'):
-        assert not _retry(lambda: context.device.find_element_by_name(id), timeout), u'Element is present'
+        assert not _retry(lambda: find_device_element_by_name_or_id(context, id), timeout), u'Element is present'
 
 
 @step(u'I should see an element with the css selector "{css}"')

@@ -9,7 +9,7 @@
     tools:context="com.behaving.test.app.android_test_app.MainActivity$PlaceholderFragment" >
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/textInput"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -49,15 +49,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/editText1"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="27dp"
-        android:text="Switch" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -69,12 +60,29 @@
         android:text="TextView" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/calculateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/switch1"
         android:layout_alignBottom="@+id/switch1"
         android:layout_alignLeft="@+id/editText1"
         android:text="Calculate" />
+
+    <TextView
+        android:id="@+id/resultLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText1"
+        android:layout_centerHorizontal="true"
+        android:text="Result" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textInput"
+        android:layout_below="@+id/textInput"
+        android:layout_marginTop="34dp"
+        android:text="Switch" />
 
 </RelativeLayout>

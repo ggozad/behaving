@@ -28,6 +28,22 @@ Mobile apps
 
 Since version 1.0 you can use *behaving* to test your mobile apps, native or not, provided you have set up your development environment properly. We aim to support iOS, Android as well as Firefox OS, but this is still very experimental so your mileage may vary.
 
+Android
+-----------
+To run the android tests, you need the android simulator installed and configured correctly. First, you need to run
+
+:: 
+    android avd
+
+and set up a virtual device. Then run
+
+
+::
+    emulator -avd <AVD Name>
+
+To launch the simulator. Now you can run the android tests through Behaving and Appium.
+
+
 Email & SMS
 -----------
 

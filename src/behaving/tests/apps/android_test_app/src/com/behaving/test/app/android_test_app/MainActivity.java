@@ -9,6 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.os.Build;
 
 
@@ -58,6 +61,21 @@ public class MainActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            
+            final TextView result = (TextView) rootView.findViewById(R.id.resultLabel);
+            final EditText textInput = (EditText) rootView.findViewById(R.id.textInput);
+            
+            
+        	Button calculateButton = (Button) rootView.findViewById(R.id.calculateButton);
+        	calculateButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					
+					Float input = new Float(textInput.getText().toString()) * 2;
+					result.setText(input.toString());
+				}
+			});
+
             return rootView;
         }
     }

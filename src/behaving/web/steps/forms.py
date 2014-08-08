@@ -3,6 +3,7 @@ from behave import step
 from selenium.common.exceptions import NoSuchElementException
 from splinter.exceptions import ElementDoesNotExist
 from basic import raise_element_not_found_exception
+from basic import find_device_element_by_name_or_id
 from behaving.personas.persona import persona_vars
 
 
@@ -13,7 +14,7 @@ def i_fill_in_field(context, name, value):
         context.browser.fill(name, value)
     elif hasattr(context, 'device'):
         try:
-            el = context.device.find_element_by_name(name)
+            el = find_device_element_by_name_or_id(context, name)
             el.click() # workaround for failing send_keys call
             el.send_keys(value)
         except NoSuchElementException:
@@ -28,7 +29,7 @@ def i_clear_field(context, name):
         el.clear()
     elif hasattr(context, 'device'):
         try:
-            el = context.device.find_element_by_name(name)
+            el = find_device_element_by_name_or_id(context, name)
             el.clear()
         except NoSuchElementException:
             raise_element_not_found_exception(name, context)
@@ -86,7 +87,7 @@ def i_press(context, name):
         element.first.click()
     elif hasattr(context, 'device'):
         try:
-            el = context.device.find_element_by_name(name)
+            el = find_device_element_by_name_or_id(context, name)
             el.click()
         except NoSuchElementException:
             raise_element_not_found_exception(name, context)
@@ -142,7 +143,7 @@ def field_has_value(context, name, value):
         assert el.first.value == value, "Values do not match"
     elif hasattr(context, 'device'):
         try:
-            el = context.device.find_element_by_name(name)
+            el = find_device_element_by_name_or_id(context, name)
             assert el.get_attribute('value') == value, "Values do not match"
         except NoSuchElementException:
             raise_element_not_found_exception(name, context)
