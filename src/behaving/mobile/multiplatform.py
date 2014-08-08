@@ -1,20 +1,45 @@
+import sys
+
+
+class MultiplatformException(Exception):
+    pass
+
+
 class Multiplatform(object):
+    """
+    Decorate steps that work differently depending on the
+    platform (Browser, iOS, Android) using this function.
+    The step is then expected to define the appropriate local functions
+    and not assert anything itself. The decorator will then find the appropriate
+    local and use that.
+    """
 
     def __init__(self, func, *args):
         self.func = func
-        self.browser = None
-        self.iOS = None
+        self._locals = {}
 
     def platform_specific(self, context, *args, **kwargs):
-        if hasattr(context, 'browser'):
-            platform = 'browser'
-        elif hasattr(context, 'device'):
-            platform = 'ios'
 
-        return self.func.__call__(context, *args, **kwargs)[platform](context, *args, **kwargs)
+        def tracer(frame, event, arg):
+            if event == 'return':
+                self._locals = frame.f_locals.copy()
 
-    def browser(*args, **kwargs):
-        pass
+        # tracer is activated on next call, return or exception
+        sys.setprofile(tracer)
+        try:
+            # trace the function call
+            self.func(context, *args, **kwargs)
+        finally:
+            # disable tracer and replace with old one
+            sys.setprofile(None)
+
+        if hasattr(context, 'browser') and 'browser' in self._locals:
+            return self._locals['browser'](context, *args, **kwargs)
+        elif hasattr(context, 'device') and 'ios' in self._locals:
+            return self._locals['ios'](context, *args, **kwargs)
+
+        raise MultiplatformException(
+            "Function %s was decorated with @multiplatform but could not find appropriate context" % self.func)
 
 
 def multiplatform(func):

@@ -87,11 +87,6 @@ def should_see(context, text, platform='browser'):
         if not text_exists_on_device(context, text):
             assert False, u'Text not found. Available text: "%s"' % '", "'.join(texts_on_device(context))
 
-    return {
-        'browser': browser,
-        'ios': ios
-    }
-
 
 @step(u'I should see "{text}" inside the element with id "{id}" within {timeout:d} seconds')
 @persona_vars
