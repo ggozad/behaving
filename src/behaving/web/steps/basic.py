@@ -1,9 +1,9 @@
 import time
 from behave import step
-
 from selenium.common.exceptions import NoSuchElementException
 
 from behaving.personas.persona import persona_vars
+from behaving.mobile.multiplatform import multiplatform
 
 
 # Accepts a lambda as first paramter, returns lambda result on success, or False on timeout
@@ -76,12 +76,21 @@ def hide_element_by_id(context, id):
 
 @step(u'I should see "{text}"')
 @persona_vars
-def should_see(context, text):
-    if hasattr(context, 'browser'):
-        assert context.browser.is_text_present(text), u'Text not found'
-    elif hasattr(context, 'device'):
+@multiplatform
+def should_see(context, text, platform='browser'):
+
+    def browser(context, text):
+        if hasattr(context, 'browser'):
+            assert context.browser.is_text_present(text), u'Text not found'
+
+    def ios(context, text):
         if not text_exists_on_device(context, text):
             assert False, u'Text not found. Available text: "%s"' % '", "'.join(texts_on_device(context))
+
+    return {
+        'browser': browser,
+        'ios': ios
+    }
 
 
 @step(u'I should see "{text}" inside the element with id "{id}" within {timeout:d} seconds')
