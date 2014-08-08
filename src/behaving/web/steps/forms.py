@@ -14,7 +14,7 @@ def i_fill_in_field(context, name, value):
     elif hasattr(context, 'device'):
         try:
             el = context.device.find_element_by_name(name)
-            el.click() # workaround for failing send_keys call
+            el.click()  # workaround for failing send_keys call
             el.send_keys(value)
         except NoSuchElementException:
             raise_element_not_found_exception(name, context)
