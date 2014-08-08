@@ -9,6 +9,7 @@
 /var/
 /dist/
 /apps/
+/etc/
 *.DS_Store
 *.egg-info
 *.pyc
