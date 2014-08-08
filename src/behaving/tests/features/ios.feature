@@ -1,6 +1,5 @@
 Feature: iOS support
 
-    @runme
     @ios
     @mobile
     Scenario: Test features with iOS simulator
@@ -13,16 +12,14 @@ Feature: iOS support
         When I fill in "textInput" with "42"
         And I press "Calculate"
         Then I should see "84"
-        # When I press "toggleCalculate"
 
     @ios
     @mobile
-    Scenario: Application is installed
+    Scenario: Close launch app
         Given an iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
         When I close the app
         And I launch the app
         And I lock the device for 3 seconds
-        #Then the application "com.behaving.test.app.ios-test-app" is installed
 
     @persona
     @ios

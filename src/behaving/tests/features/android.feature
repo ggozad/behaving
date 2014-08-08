@@ -1,6 +1,6 @@
 Feature: iOS support
 
-    @ios
+    @android
     @mobile
     Scenario: Test features with Android simulator
         Given "Leland" as the persona

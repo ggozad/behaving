@@ -8,23 +8,12 @@ from selenium.common.exceptions import WebDriverException
 from behave import step
 
 
-@step('an iOS simulator running "{name}"')
-def given_an_ios_simulator_running_app(context, name):
-    given_an_ios_simulator_running_app_with_reset(context, name, True)
-
-
-@step('a dirty iOS simulator running "{name}"')
-def given_an_dirty_ios_simulator_running_app(context, name):
-    given_an_ios_simulator_running_app_with_reset(context, name, False)
-
-
 def given_an_ios_simulator_running_app_with_reset(context, name, reset):
-    if reset:
-        logging.debug("Starting a clean iOS simulator with %s" % name)
-    else:
-        logging.debug("Starting a dirty iOS simulator with %s" % name)
     app_path = os.path.join(context.app_dir, name)
     context.ios_app_name = name
+
+    if hasattr(context, 'device'):
+        context.device.quit()
 
     try:
         context.device = webdriver.Remote(
@@ -35,10 +24,18 @@ def given_an_ios_simulator_running_app_with_reset(context, name, reset):
         assert False, 'Appium is not running on the specified webdriver_url'
 
 
+@step('an iOS simulator running "{name}"')
+def given_an_ios_simulator_running_app(context, name):
+    given_an_ios_simulator_running_app_with_reset(context, name, True)
+
+
+@step('a dirty iOS simulator running "{name}"')
+def given_an_dirty_ios_simulator_running_app(context, name):
+    given_an_ios_simulator_running_app_with_reset(context, name, False)
+
+
 @step('I restart the iOS simulator')
 def restart_the_ios_simulator(context):
-    if hasattr(context, 'device'):
-        context.device.quit()
     given_an_ios_simulator_running_app_with_reset(context, context.ios_app_name, False)
 
 
@@ -109,7 +106,7 @@ def close_app(context):
 @step('I reset the app')
 def reset_app(context):
     try:
-        context.device.reset()
+        context.device = context.device.reset()
     except WebDriverException, e:
         assert False, e.msg
 
