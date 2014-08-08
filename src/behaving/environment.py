@@ -4,6 +4,7 @@ from behaving.mail import environment as mailenv
 from behaving.personas import environment as personaenv
 from behaving.mobile import environment as mobileenv
 
+
 def before_all(context):
     webenv.before_all(context)
     smsenv.before_all(context)
