@@ -5,7 +5,7 @@ Changelog
 ----------------
 
 - First implementation of iOS/Android/FFOS capabilities
-  [ggozad, erlendfh]
+  [ggozad, erlendfh, leosobral]
 
 0.8 - 2014-08-18
 ----------------
