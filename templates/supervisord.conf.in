@@ -29,6 +29,15 @@ autostart = true
 autorestart = true
 priority = 100
 
+[program:android]
+command = ${supervisor-conf:android_home}/tools/emulator @${supervisor-conf:android_virtual_device}
+startretries = 5
+redirect_stderr = true
+stderr_logfile = NONE
+autostart = true
+autorestart = true
+priority = 150
+
 [program:http]
 command = python -m SimpleHTTPServer 8080
 directory = ${buildout:directory}/src/behaving/tests/www
@@ -38,7 +47,6 @@ stderr_logfile = NONE
 autostart = true
 autorestart = true
 priority = 100
-
 
 [program:sms]
 command = ${buildout:bin-directory}/smsmock -o ${buildout:directory}/var/sms
