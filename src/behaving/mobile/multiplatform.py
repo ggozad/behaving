@@ -36,8 +36,13 @@ class Multiplatform(object):
         if hasattr(context, 'browser') and 'browser' in self._locals:
             return self._locals['browser'](context, *args, **kwargs)
         elif hasattr(context, 'device'):
-            if context.device.capabilities['deviceName'] in ['iPhone', 'iPad'] and 'ios' in self._locals:
+            if context.device.capabilities['platformName'] == 'iOS' and 'ios' in self._locals:
                 return self._locals['ios'](context, *args, **kwargs)
+            elif context.device.capabilities['platformName'] == 'Android' and 'android' in self._locals:
+                return self._locals['android'](context, *args, **kwargs)
+            elif 'mobile' in self._locals:
+                return self._locals['mobile'](context, *args, **kwargs)
+
 
         raise MultiplatformException(
             "Function %s was decorated with @multiplatform but could not find appropriate context" % self.func)
