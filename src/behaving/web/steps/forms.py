@@ -16,7 +16,7 @@ def i_fill_in_field(context, name, value):
     def browser(context, name, value):
         context.browser.fill(name, value)
 
-    def ios(context, name, value):
+    def mobile(context, name, value):
         try:
             el = find_device_element_by_name_or_id(context, name)
             el.click()  # workaround for failing send_keys call

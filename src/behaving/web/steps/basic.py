@@ -94,7 +94,7 @@ def should_see(context, text, platform='browser'):
         if hasattr(context, 'browser'):
             assert context.browser.is_text_present(text), u'Text not found'
 
-    def ios(context, text):
+    def mobile(context, text):
         if not text_exists_on_device(context, text):
             assert False, u'Text not found. Available text: "%s"' % '", "'.join(texts_on_device(context))
 
@@ -104,7 +104,7 @@ def should_see(context, text, platform='browser'):
 @multiplatform
 def should_see_timeout(context, text, id, timeout):
 
-    def ios(context, text, id, timeout):
+    def mobile(context, text, id, timeout):
         assert _retry(lambda: text_exists_on_device(context, text, id), timeout), \
             u'Text %s not found. Available text: "%s"' % (text, '", "'.join(texts_on_device(context, id)))
 
@@ -117,7 +117,7 @@ def should_not_see(context, text):
     def browser(context, text):
         assert context.browser.is_text_not_present(text), u'Text was found'
 
-    def ios(context, text):
+    def mobile(context, text):
         if text_exists_on_device(context, text):
             assert False, u'Text found'
 
@@ -130,7 +130,7 @@ def should_see_within_timeout(context, text, timeout):
     def browser(context, text, timeout):
         assert context.browser.is_text_present(text, wait_time=timeout), u'Text not found'
 
-    def ios(context, text, timeout):
+    def mobile(context, text, timeout):
         assert _retry(lambda: text_exists_on_device(context, text), timeout), \
             u'Text not found. Available text: "%s"' % '", "'.join(texts_on_device(context))
 
@@ -143,7 +143,7 @@ def should_not_see_within_timeout(context, text, timeout):
     def browser(context, text, timeout):
         assert context.browser.is_text_not_present(text, wait_time=timeout), u'Text was found'
 
-    def ios(context, text, timeout):
+    def mobile(context, text, timeout):
         assert _retry(lambda: not text_exists_on_device(context, text), timeout), u'Text was found'
 
 
@@ -155,7 +155,7 @@ def should_see_element_with_id(context, id):
     def browser(context, id):
         assert context.browser.is_element_present_by_id(id), u'Element not present'
 
-    def ios(context, id):
+    def mobile(context, id):
         try:
             find_device_element_by_name_or_id(context, id)
         except NoSuchElementException:
@@ -170,7 +170,7 @@ def should_not_see_element_with_id(context, id):
     def browser(context, id):
         assert context.browser.is_element_not_present_by_id(id), u'Element is present'
 
-    def ios(context, id):
+    def mobile(context, id):
         try:
             find_device_element_by_name_or_id(context, id)
             assert False, u'Element is present'
@@ -186,7 +186,7 @@ def should_see_element_with_id_within_timeout(context, id, timeout):
     def browser(context, id, timeout):
         assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
 
-    def ios(context, id, timeout):
+    def mobile(context, id, timeout):
         if not _retry(lambda: find_device_element_by_name_or_id(context, id), timeout):
             raise_element_not_found_exception(id, context)
 
@@ -199,7 +199,7 @@ def should_not_see_element_with_id_within_timeout(context, id, timeout):
     def browser(context, id, timeout):
         assert context.browser.is_element_not_present_by_id(id, wait_time=timeout), u'Element is present'
 
-    def ios(context, id, timeout):
+    def mobile(context, id, timeout):
         assert not _retry(lambda: find_device_element_by_name_or_id(context, id), timeout), u'Element is present'
 
 
@@ -231,7 +231,7 @@ def should_see_element_with_xpath(context, xpath):
     def browser(context, xpath):
         assert context.browser.is_element_present_by_xpath(xpath), u'Element not present'
 
-    def ios(context, xpath):
+    def mobile(context, xpath):
         try:
             context.device.find_element_by_xpath(xpath)
         except NoSuchElementException:
@@ -246,7 +246,7 @@ def should_not_see_element_with_xpath(context, xpath):
     def browser(context, xpath):
         assert context.browser.is_element_not_present_by_xpath(xpath), u'Element is present'
 
-    def ios(context, xpath):
+    def mobile(context, xpath):
         try:
             context.device.find_element_by_xpath(xpath),
             assert False, u'Element is present'
@@ -262,7 +262,7 @@ def should_see_element_with_xpath_within_timeout(context, xpath, timeout):
     def browser(context, xpath, timeout):
         assert context.browser.is_element_present_by_xpath(xpath, wait_time=timeout), u'Element not present'
 
-    def ios(context, xpath, timeout):
+    def mobile(context, xpath, timeout):
         _retry(lambda: context.device.find_element_by_xpath(xpath), timeout)
         raise_element_not_found_exception(xpath, context)
 
@@ -275,7 +275,7 @@ def should_not_see_element_with_xpath_within_timeout(context, xpath, timeout):
     def browser(context, xpath, timeout):
         assert context.browser.is_element_not_present_by_xpath(xpath, wait_time=timeout), u'Element is present'
 
-    def ios(context, xpath, timeout):
+    def mobile(context, xpath, timeout):
         el = _retry(lambda: context.device.find_element_by_xpath(xpath), timeout)
         assert not el, u'Element is present'
 
