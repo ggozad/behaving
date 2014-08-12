@@ -51,9 +51,8 @@ def text_exists_on_device(context, text, id=None):
         try:
             if text in t:
                 return True
-        except UnicodeEncodeError, e:
-            print e
-            print t
+        except UnicodeEncodeError:
+            pass
 
     return False
 
@@ -91,8 +90,7 @@ def hide_element_by_id(context, id):
 def should_see(context, text):
 
     def browser(context, text):
-        if hasattr(context, 'browser'):
-            assert context.browser.is_text_present(text), u'Text not found'
+        assert context.browser.is_text_present(text), u'Text not found'
 
     def mobile(context, text):
         if not text_exists_on_device(context, text):
