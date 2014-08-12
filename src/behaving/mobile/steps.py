@@ -51,9 +51,10 @@ def given_an_android_simulator_running_app(context, name):
         assert False, 'Appium is not running on the specified webdriver_url'
 
 
-@step('I lock the device for {timeout:d} seconds')
-def lock_device(context, timeout):
-    context.device.lock(timeout)
+@step('I lock the device')
+def lock_device(context):
+    # retry command during 5 seconds
+    context.device.lock(5)
 
 
 @step('I tap "{name}" and drag to "{coords}"')

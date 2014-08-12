@@ -19,7 +19,9 @@ Feature: iOS support
         Given an iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
         When I close the app
         And I launch the app
-        And I lock the device for 3 seconds
+        Then I should see "Result"
+        And I lock the device
+        Then I should not see "Result"
 
     @persona
     @ios
