@@ -88,7 +88,7 @@ def hide_element_by_id(context, id):
 @step(u'I should see "{text}"')
 @persona_vars
 @multiplatform
-def should_see(context, text, platform='browser'):
+def should_see(context, text):
 
     def browser(context, text):
         if hasattr(context, 'browser'):

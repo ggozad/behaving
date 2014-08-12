@@ -43,7 +43,6 @@ class Multiplatform(object):
             elif 'mobile' in self._locals:
                 return self._locals['mobile'](context, *args, **kwargs)
 
-
         raise MultiplatformException(
             "Function %s was decorated with @multiplatform but could not find appropriate context" % self.func)
 
