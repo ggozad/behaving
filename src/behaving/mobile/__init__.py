@@ -22,6 +22,7 @@ def setup(context):
         context.android_caps = {
             'platformName': 'Android',
             'platformVersion': '4.4.2',
+            'language': 'en',
             'deviceName': 'Android Emulator'
         }
 
@@ -29,6 +30,7 @@ def setup(context):
         context.ios_caps = {
             'platformName': 'iOS',
             'platformVersion': '7.1',
+            'language': 'en',
             'deviceName': 'iPhone'
         }
 
