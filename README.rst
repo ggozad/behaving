@@ -32,7 +32,7 @@ Android
 -----------
 To run the android tests, you need the android simulator installed and configured correctly. First, you need to run
 
-:: 
+::
     android avd
 
 and set up a virtual device. Then run
@@ -421,7 +421,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 
     * Given an iOS simulator running "``app``"
     * Given an android simulator running "``app``"
-    * When I lock the device for ``timeout`` seconds
+    * When I lock the device
     * When I install the app "``name``"
     * When I remove the app "``uid``"
     * When I launch the app
@@ -473,10 +473,15 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 * When I set "``key``" to "``value``"
 * Then "``key``" is set to "``value``"
 
+Contributing to behaving
+------------------------
+Please see the `Contribution Guidelines`_
+
 .. _`Cucumber`: http://cukes.info/
 .. _`lettuce`: http://lettuce.it/
 .. _`behave`: http://pypi.python.org/pypi/behave
 .. _`splinter`: http://splinter.cobrateam.info/
 .. _`appium`: http://appium.io/
 .. _`Crypho`: http://crypho.com
+.. _`Contribution Guidelines`: https://github.com/ggozad/behaving/blob/master/CONTRIBUTING.rst
 
