@@ -23,8 +23,6 @@ directory=%(here)s
 [program:appium]
 command = ${buildout:bin-directory}/node ${buildout:directory}/src/appium
 startretries = 5
-redirect_stderr = true
-stderr_logfile = NONE
 autostart = true
 autorestart = true
 priority = 100
@@ -32,8 +30,6 @@ priority = 100
 [program:android]
 command = ${supervisor-conf:android_home}/tools/emulator @${supervisor-conf:android_virtual_device}
 startretries = 5
-redirect_stderr = true
-stderr_logfile = NONE
 autostart = true
 autorestart = true
 priority = 150
@@ -42,8 +38,6 @@ priority = 150
 command = python -m SimpleHTTPServer 8080
 directory = ${buildout:directory}/src/behaving/tests/www
 startretries = 5
-redirect_stderr = true
-stderr_logfile = NONE
 autostart = true
 autorestart = true
 priority = 100
@@ -51,8 +45,6 @@ priority = 100
 [program:sms]
 command = ${buildout:bin-directory}/smsmock -o ${buildout:directory}/var/sms
 startretries = 5
-redirect_stderr = true
-stderr_logfile = NONE
 autostart = true
 autorestart = true
 priority = 300
@@ -60,8 +52,6 @@ priority = 300
 [program:mail]
 command = ${buildout:bin-directory}/mailmock -o ${buildout:directory}/var/mail
 startretries = 5
-redirect_stderr = true
-stderr_logfile = NONE
 autostart = true
 autorestart = true
 priority = 400
