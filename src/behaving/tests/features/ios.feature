@@ -12,6 +12,10 @@ Feature: iOS support
         When I fill in "textInput" with "42"
         And I press "Calculate"
         Then I should see "84"
+        When I check "switch"
+        Then field "switch" should have the value "1"
+        When I uncheck "switch"
+        Then field "switch" should have the value "0"
 
     @ios
     @mobile

@@ -14,6 +14,8 @@ Feature: Android support
         When I fill in "$p:id/textInput" with "42"
         And I press "Calculate"
         Then I should see "84.0"
+        When I check "$p:id/switch1"
+        When I uncheck "$p:id/switch1"
 
 
     @android

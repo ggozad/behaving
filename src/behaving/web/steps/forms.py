@@ -64,14 +64,41 @@ def i_choose_in_radio(context, name, value):
 
 @step(u'I check "{name}"')
 @persona_vars
+@multiplatform
 def i_check(context, name):
-    context.browser.check(name)
+
+    def browser(context, name):
+        context.browser.check(name)
+
+    def ios(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        if el.get_attribute('value') == 0:
+            el.click()
+
+    def android(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        if el.get_attribute('checked') == u'false':
+            el.click()
 
 
 @step(u'I uncheck "{name}"')
 @persona_vars
+@multiplatform
 def i_uncheck(context, name):
-    context.browser.uncheck(name)
+
+    def browser(context, name):
+        context.browser.uncheck(name)
+
+    def ios(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        if el.get_attribute('value') == 1:
+            el.click()
+
+    def android(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        import pdb ; pdb.set_trace()
+        if el.get_attribute('checked') == u'true':
+            el.click()
 
 
 @step(u'I select "{value}" from "{name}"')
@@ -164,7 +191,7 @@ def field_has_value(context, name, value):
     def mobile(context, name, value):
         try:
             el = find_device_element_by_name_or_id(context, name)
-            assert el.get_attribute('value') == value, "Values do not match"
+            assert str(el.get_attribute('value')) == value, "Values do not match"
         except NoSuchElementException:
             raise_element_not_found_exception(name, context)
 
