@@ -15,7 +15,11 @@ def find_device_element_by_name_or_id(context, id):
     try:
         return context.device.find_element_by_id(id)
     except NoSuchElementException:
-        return context.device.find_element_by_name(id)
+        try:
+            return context.device.find_element_by_name(id)
+        except NoSuchElementException:
+            pass
+    return None
 
 
 def given_an_ios_simulator_running_app_with_reset(context, name, reset):
@@ -83,6 +87,7 @@ def drag_name_to_coords(context, name, coords):
 @persona_vars
 def slide_to_percent(context, name, percent):
     el = find_device_element_by_name_or_id(context, name)
+    assert el, u'Element not found'
     el.set_value(percent / 100.0)
 
 

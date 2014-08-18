@@ -23,7 +23,7 @@ def _retry(func, timeout=0, delay=1):
             time.sleep(delay)
 
         if time.time() - start > timeout:
-            return False
+            return None
 
 
 def list_elements_from_context(context):
@@ -148,10 +148,7 @@ def should_see_element_with_id(context, id):
         assert context.browser.is_element_present_by_id(id), u'Element not present'
 
     def mobile(context, id):
-        try:
-            find_device_element_by_name_or_id(context, id)
-        except NoSuchElementException:
-            raise_element_not_found_exception(id, context)
+        assert find_device_element_by_name_or_id(context, id), u'Element not found'
 
 
 @step(u'I should not see an element with id "{id}"')
@@ -163,11 +160,7 @@ def should_not_see_element_with_id(context, id):
         assert context.browser.is_element_not_present_by_id(id), u'Element is present'
 
     def mobile(context, id):
-        try:
-            find_device_element_by_name_or_id(context, id)
-            assert False, u'Element is present'
-        except NoSuchElementException:
-            pass
+        assert find_device_element_by_name_or_id(context, id) is None, u'Element is present'
 
 
 @step(u'I should see an element with id "{id}" within {timeout:d} seconds')
@@ -176,11 +169,10 @@ def should_not_see_element_with_id(context, id):
 def should_see_element_with_id_within_timeout(context, id, timeout):
 
     def browser(context, id, timeout):
-        assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not present'
+        assert context.browser.is_element_present_by_id(id, wait_time=timeout), u'Element not found'
 
     def mobile(context, id, timeout):
-        if not _retry(lambda: find_device_element_by_name_or_id(context, id), timeout):
-            raise_element_not_found_exception(id, context)
+        assert _retry(lambda: find_device_element_by_name_or_id(context, id), timeout), u'Element not found'
 
 
 @step(u'I should not see an element with id "{id}" within {timeout:d} seconds')
