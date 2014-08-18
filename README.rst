@@ -440,6 +440,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I select "``value``" from "``name``""
     * When I press "``name|text``"
     * When I check "``name``"
+    * When I slide "``name``" to ``percent``% [iOS only]
     * When I uncheck "``name``"
     * Then I should see "``text``"
     * Then I should not see "``text``"

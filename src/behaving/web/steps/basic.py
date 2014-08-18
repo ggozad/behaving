@@ -4,6 +4,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 from behaving.personas.persona import persona_vars
 from behaving.mobile.multiplatform import multiplatform
+from behaving.mobile.steps import find_device_element_by_name_or_id
 
 
 # Accepts a lambda as first paramter, returns lambda result on success, or False on timeout
@@ -55,13 +56,6 @@ def text_exists_on_device(context, text, id=None):
             pass
 
     return False
-
-
-def find_device_element_by_name_or_id(context, id):
-    try:
-        return context.device.find_element_by_id(id)
-    except NoSuchElementException:
-        return context.device.find_element_by_name(id)
 
 
 @step(u'I wait for {timeout:d} seconds')

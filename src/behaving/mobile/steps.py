@@ -4,8 +4,18 @@ import logging
 from urllib2 import URLError
 from appium import webdriver
 from appium.webdriver.common.touch_action import TouchAction
+from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import WebDriverException
 from behave import step
+
+from behaving.personas.persona import persona_vars
+
+
+def find_device_element_by_name_or_id(context, id):
+    try:
+        return context.device.find_element_by_id(id)
+    except NoSuchElementException:
+        return context.device.find_element_by_name(id)
 
 
 def given_an_ios_simulator_running_app_with_reset(context, name, reset):
@@ -67,6 +77,13 @@ def drag_name_to_coords(context, name, coords):
         action.move_to(x=pair[0], y=pair[1])
     action.release()
     action.perform()
+
+
+@step('I slide "{name}" to {percent:d}%')
+@persona_vars
+def slide_to_percent(context, name, percent):
+    el = find_device_element_by_name_or_id(context, name)
+    el.set_value(percent / 100.0)
 
 
 @step('I install the app "{name}"')

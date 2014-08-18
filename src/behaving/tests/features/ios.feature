@@ -18,6 +18,8 @@ Feature: iOS support
         Then field "switch" should have the value "0"
         When I toggle "switch"
         Then field "switch" should have the value "1"
+        When I slide "slider" to 20%
+        Then field "slider" should have the value "20%"
 
 
     @ios
