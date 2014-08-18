@@ -28,11 +28,14 @@ def i_fill_in_field(context, name, value):
 
 @step(u'I clear field "{name}"')
 @persona_vars
+@multiplatform
 def i_clear_field(context, name):
-    if hasattr(context, 'browser'):
+
+    def browser(context, name):
         el = context.browser.find_element_by_name(name)
         el.clear()
-    elif hasattr(context, 'device'):
+
+    def mobile(context, name):
         try:
             el = find_device_element_by_name_or_id(context, name)
             el.clear()
@@ -42,11 +45,14 @@ def i_clear_field(context, name):
 
 @step(u'I type "{value}" to "{name}"')
 @persona_vars
+@multiplatform
 def i_type_to(context, name, value):
-    if hasattr(context, 'browser'):
+
+    def browsewr(context, name, value):
         for key in context.browser.type(name, value, slowly=True):
             assert key
-    elif hasattr(context, 'device'):
+
+    def mobile(context, name, value):
         i_fill_in_field(context, name, value)
 
 
@@ -81,8 +87,10 @@ def i_select(context, value, name):
 
 @step(u'I press "{name}"')
 @persona_vars
+@multiplatform
 def i_press(context, name):
-    if hasattr(context, 'browser'):
+
+    def browser(context, name):
         element = context.browser.find_by_xpath(
             ("//*[@id='%(name)s']|"
              "//*[@name='%(name)s']|"
@@ -90,7 +98,8 @@ def i_press(context, name):
              "//a[contains(text(), '%(name)s')]") % {'name': name})
         assert element, u'Element not found'
         element.first.click()
-    elif hasattr(context, 'device'):
+
+    def mobile(context, name):
         try:
             el = find_device_element_by_name_or_id(context, name)
             el.click()
@@ -100,12 +109,15 @@ def i_press(context, name):
 
 @step(u'I press the element with xpath "{xpath}"')
 @persona_vars
+@multiplatform
 def i_press_xpath(context, xpath):
-    if hasattr(context, 'browser'):
+
+    def browser(context, xpath):
         button = context.browser.find_by_xpath(xpath)
         assert button, u'Element not found'
         button.first.click()
-    elif hasattr(context, 'device'):
+
+    def mobile(context, xpath):
         try:
             el = context.device.find_element_by_xpath(xpath)
             el.click()
@@ -139,14 +151,17 @@ def set_html_content_to_element_with_class(context, klass, contents):
 
 @step(u'field "{name}" should have the value "{value}"')
 @persona_vars
+@multiplatform
 def field_has_value(context, name, value):
-    if hasattr(context, 'browser'):
+
+    def browser(context, name, value):
         el = context.browser.find_by_xpath(
             ("//*[@id='%(name)s']|"
              "//*[@name='%(name)s']") % {'name': name})
         assert el, u'Element not found'
         assert el.first.value == value, "Values do not match"
-    elif hasattr(context, 'device'):
+
+    def mobile(context, name, value):
         try:
             el = find_device_element_by_name_or_id(context, name)
             assert el.get_attribute('value') == value, "Values do not match"
