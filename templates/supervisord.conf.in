@@ -21,7 +21,7 @@ minprocs=200                ; (min. avail process descriptors;default 200)
 directory=%(here)s
 
 [program:appium]
-command = ${buildout:bin-directory}/node ${buildout:directory}/src/appium
+command = ${buildout:bin-directory}/appium
 startretries = 5
 autostart = true
 autorestart = true
