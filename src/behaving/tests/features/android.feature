@@ -15,7 +15,9 @@ Feature: Android support
         And I press "Calculate"
         Then I should see "84.0"
         When I check "$p:id/switch1"
+        Then attribute "checked" of field "$p:id/switch1" should have the value "true"
         When I uncheck "$p:id/switch1"
+        Then attribute "checked" of field "$p:id/switch1" should have the value "false"
 
 
     @android

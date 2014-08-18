@@ -96,7 +96,6 @@ def i_uncheck(context, name):
 
     def android(context, name):
         el = find_device_element_by_name_or_id(context, name)
-        import pdb ; pdb.set_trace()
         if el.get_attribute('checked') == u'true':
             el.click()
 
@@ -192,6 +191,19 @@ def field_has_value(context, name, value):
         try:
             el = find_device_element_by_name_or_id(context, name)
             assert str(el.get_attribute('value')) == value, "Values do not match"
+        except NoSuchElementException:
+            raise_element_not_found_exception(name, context)
+
+
+@step(u'attribute "{attr_name}" of field "{name}" should have the value "{value}"')
+@persona_vars
+@multiplatform
+def fields_attribute_has_value(context, attr_name, name, value):
+
+    def mobile(context, attr_name, name, value):
+        try:
+            el = find_device_element_by_name_or_id(context, name)
+            assert str(el.get_attribute(attr_name)) == value, "Values do not match"
         except NoSuchElementException:
             raise_element_not_found_exception(name, context)
 
