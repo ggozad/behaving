@@ -19,11 +19,11 @@ def i_fill_in_field(context, name, value):
     def mobile(context, name, value):
         try:
             el = find_device_element_by_name_or_id(context, name)
-            el.clear()
-            el.click()  # workaround for failing send_keys call
-            el.send_keys(value)
         except NoSuchElementException:
             raise_element_not_found_exception(name, context)
+        el.clear()
+        el.click()  # workaround for failing send_keys call
+        el.send_keys(value)
 
 
 @step(u'I clear field "{name}"')
@@ -71,12 +71,18 @@ def i_check(context, name):
         context.browser.check(name)
 
     def ios(context, name):
-        el = find_device_element_by_name_or_id(context, name)
+        try:
+            el = find_device_element_by_name_or_id(context, name)
+        except NoSuchElementException:
+            raise_element_not_found_exception(name, context)
         if el.get_attribute('value') == 0:
             el.click()
 
     def android(context, name):
-        el = find_device_element_by_name_or_id(context, name)
+        try:
+            el = find_device_element_by_name_or_id(context, name)
+        except NoSuchElementException:
+            raise_element_not_found_exception(name, context)
         if el.get_attribute('checked') == u'false':
             el.click()
 
@@ -90,14 +96,41 @@ def i_uncheck(context, name):
         context.browser.uncheck(name)
 
     def ios(context, name):
-        el = find_device_element_by_name_or_id(context, name)
+        try:
+            el = find_device_element_by_name_or_id(context, name)
+        except NoSuchElementException:
+            raise_element_not_found_exception(name, context)
         if el.get_attribute('value') == 1:
             el.click()
 
     def android(context, name):
-        el = find_device_element_by_name_or_id(context, name)
+        try:
+            el = find_device_element_by_name_or_id(context, name)
+        except NoSuchElementException:
+            raise_element_not_found_exception(name, context)
         if el.get_attribute('checked') == u'true':
             el.click()
+
+
+@step(u'I toggle "{name}"')
+@multiplatform
+def i_toggle(context, name):
+
+    def browser(context, name):
+        el = context.browser.find_by_name('digest')
+        assert el, u'Element not found'
+        el = el.first
+        if el.checked:
+            el.uncheck()
+        else:
+            el.check()
+
+    def mobile(context, name):
+        try:
+            el = find_device_element_by_name_or_id(context, name)
+        except NoSuchElementException:
+            raise_element_not_found_exception(name, context)
+        el.click()
 
 
 @step(u'I select "{value}" from "{name}"')

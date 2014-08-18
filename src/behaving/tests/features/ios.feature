@@ -16,6 +16,9 @@ Feature: iOS support
         Then field "switch" should have the value "1"
         When I uncheck "switch"
         Then field "switch" should have the value "0"
+        When I toggle "switch"
+        Then field "switch" should have the value "1"
+
 
     @ios
     @mobile
