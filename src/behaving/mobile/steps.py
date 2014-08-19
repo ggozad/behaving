@@ -8,17 +8,14 @@ from selenium.common.exceptions import WebDriverException
 from behave import step
 
 
-def given_an_ios_simulator_running_app_with_reset(context, name, reset):
-    app_path = os.path.join(context.app_dir, name)
-    context.ios_app_name = name
-
+def given_a_simulator_running_with_caps(context, caps):
     if hasattr(context, 'device'):
         context.device.quit()
 
     try:
         context.device = webdriver.Remote(
             command_executor=context.webdriver_url,
-            desired_capabilities=dict(context.ios_caps, app=app_path, noReset=not reset)
+            desired_capabilities=caps
         )
     except URLError:
         assert False, 'Appium is not running on the specified webdriver_url'
@@ -26,29 +23,35 @@ def given_an_ios_simulator_running_app_with_reset(context, name, reset):
 
 @step('an iOS simulator running "{name}"')
 def given_an_ios_simulator_running_app(context, name):
-    given_an_ios_simulator_running_app_with_reset(context, name, True)
+    app_path = os.path.join(context.app_dir, name)
+    context.ios_app_name = name
+    given_a_simulator_running_with_caps(context, dict(context.ios_caps, app=app_path, noReset=False))
 
 
 @step('a dirty iOS simulator running "{name}"')
-def given_an_dirty_ios_simulator_running_app(context, name):
-    given_an_ios_simulator_running_app_with_reset(context, name, False)
+def given_a_dirty_ios_simulator_running_app(context, name):
+    app_path = os.path.join(context.app_dir, name)
+    context.ios_app_name = name
+    given_a_simulator_running_with_caps(context, dict(context.ios_caps, app=app_path, noReset=True))
 
 
 @step('I restart the iOS simulator')
 def restart_the_ios_simulator(context):
-    given_an_ios_simulator_running_app_with_reset(context, context.ios_app_name, False)
+    app_path = os.path.join(context.app_dir, context.ios_app_name)
+    given_a_simulator_running_with_caps(context, dict(context.ios_caps, app=app_path, noReset=True))
 
 
 @step('an android simulator running "{name}"')
 def given_an_android_simulator_running_app(context, name):
-
     app_path = os.path.join(context.app_dir, name)
-    try:
-        context.device = webdriver.Remote(
-            command_executor=context.webdriver_url,
-            desired_capabilities=dict(context.android_caps, app=app_path))
-    except URLError:
-        assert False, 'Appium is not running on the specified webdriver_url'
+    context.android_app_name = name
+    given_a_simulator_running_with_caps(context, dict(context.android_caps, app=app_path, noReset=False))
+
+@step('a dirty android simulator running "{name}"')
+def given_a_dirty_android_simulator_running_app(context, name):
+    app_path = os.path.join(context.app_dir, name)
+    context.android_app_name = name
+    given_a_simulator_running_with_caps(context, dict(context.android_caps, app=app_path, noReset=True))
 
 
 @step('I lock the device')
