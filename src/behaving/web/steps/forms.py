@@ -15,10 +15,18 @@ def i_fill_in_field(context, name, value):
     def browser(context, name, value):
         context.browser.fill(name, value)
 
-    def mobile(context, name, value):
+    def ios(context, name, value):
         el = find_device_element_by_name_or_id(context, name)
         assert el, u'Element not found'
         el.clear()
+        el.click()  # workaround for failing send_keys call
+        el.send_keys(value)
+
+    # For some reason appium reports an error if we clear before fill
+    # See https://github.com/appium/appium/issues/3367, https://github.com/appium/appium/issues/1228
+    def android(context, name, value):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
         el.click()  # workaround for failing send_keys call
         el.send_keys(value)
 
@@ -30,6 +38,7 @@ def i_clear_field(context, name):
 
     def browser(context, name):
         el = context.browser.find_element_by_name(name)
+        assert el, 'Element not found'
         el.clear()
 
     def mobile(context, name):
