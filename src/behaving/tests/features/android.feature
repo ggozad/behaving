@@ -20,7 +20,9 @@ Feature: Android support
         Then attribute "checked" of field "$p:id/switch1" should have the value "true"
         When I uncheck "$p:id/switch1"
         Then attribute "checked" of field "$p:id/switch1" should have the value "false"
-
+        # Slider set_value not implemented on appium for android
+        # When I slide "$p:id/seekBar1" to 20%
+        # Then field "$p:id/seekBar1" should have the value "20%"
 
     @android
     @mobile

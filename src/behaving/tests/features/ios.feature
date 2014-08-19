@@ -29,8 +29,7 @@ Feature: iOS support
     @mobile
     Scenario: Test tag & drag
         Given an iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
-        When I wait for 5 seconds
-        When I tap "slider" and drag to "[(100,100)]"
+        When I tap "slider" and drag to "[(50,0), (-50,0), (100, 0)]"
         Then field "slider" should have the value "100%"
 
 

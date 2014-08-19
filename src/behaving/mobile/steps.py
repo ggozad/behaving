@@ -8,6 +8,7 @@ from selenium.common.exceptions import WebDriverException
 from behave import step
 
 from behaving.personas.persona import persona_vars
+from behaving.mobile.multiplatform import multiplatform
 
 
 def find_device_element_by_name_or_id(context, id):
@@ -83,10 +84,13 @@ def drag_name_to_coords(context, name, coords):
 
 @step('I slide "{name}" to {percent:d}%')
 @persona_vars
+@multiplatform
 def slide_to_percent(context, name, percent):
-    el = find_device_element_by_name_or_id(context, name)
-    assert el, u'Element not found'
-    el.set_value(percent / 100.0)
+
+    def ios(context, name, percent):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        el.set_value(percent / 100.0)
 
 
 @step('I install the app "{name}"')
