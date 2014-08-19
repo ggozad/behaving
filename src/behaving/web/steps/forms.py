@@ -1,10 +1,9 @@
 import os
 from behave import step
-from selenium.common.exceptions import NoSuchElementException
 from splinter.exceptions import ElementDoesNotExist
-from basic import raise_element_not_found_exception
-from basic import find_device_element_by_name_or_id
+
 from behaving.personas.persona import persona_vars
+from behaving.mobile.steps import find_device_element_by_name_or_id
 from behaving.mobile.multiplatform import multiplatform
 
 
@@ -17,10 +16,8 @@ def i_fill_in_field(context, name, value):
         context.browser.fill(name, value)
 
     def mobile(context, name, value):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
         el.clear()
         el.click()  # workaround for failing send_keys call
         el.send_keys(value)
@@ -36,11 +33,9 @@ def i_clear_field(context, name):
         el.clear()
 
     def mobile(context, name):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-            el.clear()
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        el.clear()
 
 
 @step(u'I type "{value}" to "{name}"')
@@ -71,18 +66,14 @@ def i_check(context, name):
         context.browser.check(name)
 
     def ios(context, name):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
         if el.get_attribute('value') == 0:
             el.click()
 
     def android(context, name):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
         if el.get_attribute('checked') == u'false':
             el.click()
 
@@ -96,18 +87,14 @@ def i_uncheck(context, name):
         context.browser.uncheck(name)
 
     def ios(context, name):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
         if el.get_attribute('value') == 1:
             el.click()
 
     def android(context, name):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
         if el.get_attribute('checked') == u'true':
             el.click()
 
@@ -126,10 +113,8 @@ def i_toggle(context, name):
             el.check()
 
     def mobile(context, name):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
         el.click()
 
 
@@ -159,11 +144,9 @@ def i_press(context, name):
         element.first.click()
 
     def mobile(context, name):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-            el.click()
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        el.click()
 
 
 @step(u'I press the element with xpath "{xpath}"')
@@ -177,11 +160,9 @@ def i_press_xpath(context, xpath):
         button.first.click()
 
     def mobile(context, xpath):
-        try:
-            el = context.device.find_element_by_xpath(xpath)
-            el.click()
-        except NoSuchElementException:
-            raise_element_not_found_exception(xpath, context)
+        el = context.device.find_element_by_xpath(xpath)
+        assert el, u'Element not found'
+        el.click()
 
 
 @step('I attach the file "{path}" to "{name}"')
@@ -221,11 +202,9 @@ def field_has_value(context, name, value):
         assert el.first.value == value, "Values do not match"
 
     def mobile(context, name, value):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-            assert str(el.get_attribute('value')) == value, "Values do not match"
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        assert str(el.get_attribute('value')) == value, "Values do not match"
 
 
 @step(u'attribute "{attr_name}" of field "{name}" should have the value "{value}"')
@@ -234,11 +213,9 @@ def field_has_value(context, name, value):
 def fields_attribute_has_value(context, attr_name, name, value):
 
     def mobile(context, attr_name, name, value):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-            assert str(el.get_attribute(attr_name)) == value, "Values do not match"
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        assert str(el.get_attribute(attr_name)) == value, "Values do not match"
 
 
 @step(u'"{name}" should be enabled')

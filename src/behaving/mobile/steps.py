@@ -1,6 +1,5 @@
 import base64
 import os
-import logging
 from urllib2 import URLError
 from appium import webdriver
 from appium.webdriver.common.touch_action import TouchAction
@@ -15,10 +14,14 @@ def find_device_element_by_name_or_id(context, id):
     try:
         return context.device.find_element_by_id(id)
     except NoSuchElementException:
-        return context.device.find_element_by_name(id)
+        try:
+            return context.device.find_element_by_name(id)
+        except NoSuchElementException:
+            pass
+    return None
 
 
-def given_an_ios_simulator_running_app_with_reset(context, name, reset):
+def _start_ios_simulator(context, name, reset):
     app_path = os.path.join(context.app_dir, name)
     context.ios_app_name = name
 
@@ -36,17 +39,17 @@ def given_an_ios_simulator_running_app_with_reset(context, name, reset):
 
 @step('an iOS simulator running "{name}"')
 def given_an_ios_simulator_running_app(context, name):
-    given_an_ios_simulator_running_app_with_reset(context, name, True)
+    _start_ios_simulator(context, name, True)
 
 
 @step('a dirty iOS simulator running "{name}"')
 def given_an_dirty_ios_simulator_running_app(context, name):
-    given_an_ios_simulator_running_app_with_reset(context, name, False)
+    _start_ios_simulator(context, name, False)
 
 
 @step('I restart the iOS simulator')
 def restart_the_ios_simulator(context):
-    given_an_ios_simulator_running_app_with_reset(context, context.ios_app_name, False)
+    _start_ios_simulator(context, context.ios_app_name, False)
 
 
 @step('an android simulator running "{name}"')
@@ -63,7 +66,6 @@ def given_an_android_simulator_running_app(context, name):
 
 @step('I lock the device')
 def lock_device(context):
-    # retry command during 5 seconds
     context.device.lock(5)
 
 
@@ -83,6 +85,7 @@ def drag_name_to_coords(context, name, coords):
 @persona_vars
 def slide_to_percent(context, name, percent):
     el = find_device_element_by_name_or_id(context, name)
+    assert el, u'Element not found'
     el.set_value(percent / 100.0)
 
 
@@ -145,7 +148,6 @@ def pull_file(context, load_path, key):
 
 @step('I pull the file "{remote_path}" from the app and save it to "{local_path}"')
 def pull_save_file(context, remote_path, local_path):
-    logging.debug("pulling file %s to %s" % (remote_path, local_path))
     try:
         b64 = context.device.pull_file(remote_path)
         with open(local_path, 'w') as f:
@@ -160,7 +162,6 @@ def push_file(context, load_path, save_path):
     if not load_path.startswith("/"):
         load_path = os.path.join(context.device_data_path, load_path)
 
-    logging.debug("pushing file %s to %s" % (load_path, save_path))
     with open(load_path, 'r') as f:
         data = f.read()
     data = base64.b64encode(data)
