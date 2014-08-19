@@ -12,6 +12,8 @@ Feature: iOS support
         When I fill in "textInput" with "42"
         And I press "Calculate"
         Then I should see "84"
+        When I clear field "textInput"
+        Then I should not see "42"
         When I check "switch"
         Then field "switch" should have the value "1"
         When I uncheck "switch"

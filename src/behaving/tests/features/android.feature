@@ -14,6 +14,8 @@ Feature: Android support
         When I fill in "$p:id/textInput" with "42"
         And I press "Calculate"
         Then I should see "84.0"
+        When I clear field "$p:id/textInput"
+        Then I should not see "42"
         When I check "$p:id/switch1"
         Then attribute "checked" of field "$p:id/switch1" should have the value "true"
         When I uncheck "$p:id/switch1"
