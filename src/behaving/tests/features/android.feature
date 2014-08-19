@@ -2,7 +2,7 @@ Feature: Android support
 
     @android
     @mobile
-    Scenario: Test features with Android simulator
+    Scenario: Test basic/form features with Android simulator
         Given "foo" as the persona
         Given I set "p" to "com.behaving.test.app.android_test_app"
         Given an Android simulator running "android_test_app/build/outputs/apk/android_test_app-release-unsigned.apk"
@@ -14,7 +14,26 @@ Feature: Android support
         When I fill in "$p:id/textInput" with "42"
         And I press "Calculate"
         Then I should see "84.0"
+        When I clear field "$p:id/textInput"
+        Then I should not see "42"
+        When I check "$p:id/switch1"
+        Then attribute "checked" of field "$p:id/switch1" should have the value "true"
+        When I uncheck "$p:id/switch1"
+        Then attribute "checked" of field "$p:id/switch1" should have the value "false"
+        # Slider set_value not implemented on appium for android
+        # When I slide "$p:id/seekBar1" to 20%
+        # Then field "$p:id/seekBar1" should have the value "20%"
 
+    @android
+    @mobile
+    Scenario: Test tag & drag
+        # Not working on android
+        # Given "foo" as the persona
+        # Given I set "p" to "com.behaving.test.app.android_test_app"
+        # Given an Android simulator running "android_test_app/build/outputs/apk/android_test_app-release-unsigned.apk"
+        # When I tap "$p:id/seekBar1" and drag to "[(50,0)]"
+        # And I wait for 20 seconds
+        # Then field "$p:id/seekBar1" should have the value "100%"
 
     @android
     @mobile

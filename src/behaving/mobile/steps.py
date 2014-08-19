@@ -1,12 +1,24 @@
 import base64
 import os
-import logging
 from urllib2 import URLError
 from appium import webdriver
 from appium.webdriver.common.touch_action import TouchAction
+from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import WebDriverException
 from behave import step
 
+from behaving.personas.persona import persona_vars
+from behaving.mobile.multiplatform import multiplatform
+
+def find_device_element_by_name_or_id(context, id):
+    try:
+        return context.device.find_element_by_id(id)
+    except NoSuchElementException:
+        try:
+            return context.device.find_element_by_name(id)
+        except NoSuchElementException:
+            pass
+    return None
 
 def given_a_simulator_running_with_caps(context, caps):
     if hasattr(context, 'device'):
@@ -56,20 +68,32 @@ def given_a_dirty_android_simulator_running_app(context, name):
 
 @step('I lock the device')
 def lock_device(context):
-    # retry command during 5 seconds
     context.device.lock(5)
 
 
 @step('I tap "{name}" and drag to "{coords}"')
+@persona_vars
 def drag_name_to_coords(context, name, coords):
     coords = eval(coords)
-    el = context.device.find_element_by_name(name)
+    el = find_device_element_by_name_or_id(context, name)
+    assert el, u'Element not found'
     action = TouchAction(context.device)
     action.press(el)
     for pair in coords:
         action.move_to(x=pair[0], y=pair[1])
     action.release()
     action.perform()
+
+
+@step('I slide "{name}" to {percent:d}%')
+@persona_vars
+@multiplatform
+def slide_to_percent(context, name, percent):
+
+    def ios(context, name, percent):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        el.set_value(percent / 100.0)
 
 
 @step('I install the app "{name}"')
@@ -131,7 +155,6 @@ def pull_file(context, load_path, key):
 
 @step('I pull the file "{remote_path}" from the app and save it to "{local_path}"')
 def pull_save_file(context, remote_path, local_path):
-    logging.debug("pulling file %s to %s" % (remote_path, local_path))
     try:
         b64 = context.device.pull_file(remote_path)
         with open(local_path, 'w') as f:
@@ -146,7 +169,6 @@ def push_file(context, load_path, save_path):
     if not load_path.startswith("/"):
         load_path = os.path.join(context.device_data_path, load_path)
 
-    logging.debug("pushing file %s to %s" % (load_path, save_path))
     with open(load_path, 'r') as f:
         data = f.read()
     data = base64.b64encode(data)

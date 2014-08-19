@@ -2,7 +2,7 @@ Feature: iOS support
 
     @ios
     @mobile
-    Scenario: Test features with iOS simulator
+    Scenario: Test basic/form features with iOS simulator
         Given an iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
         Then I should see "Result"
         And I should see an element with id "resultLabel"
@@ -12,6 +12,26 @@ Feature: iOS support
         When I fill in "textInput" with "42"
         And I press "Calculate"
         Then I should see "84"
+        When I clear field "textInput"
+        Then I should not see "42"
+        When I check "switch"
+        Then field "switch" should have the value "1"
+        When I uncheck "switch"
+        Then field "switch" should have the value "0"
+        When I toggle "switch"
+        Then field "switch" should have the value "1"
+        When I slide "slider" to 20%
+        Then field "slider" should have the value "20%"
+        When I tap "slider" and drag to "[(10,10)]"
+        Then field "slider" should have the value "20%"
+
+    @ios
+    @mobile
+    Scenario: Test tag & drag
+        Given an iOS simulator running "ios_test_app/build/Release-iphonesimulator/ios_test_app.app"
+        When I tap "slider" and drag to "[(50,0), (-50,0), (100, 0)]"
+        Then field "slider" should have the value "100%"
+
 
     @ios
     @mobile

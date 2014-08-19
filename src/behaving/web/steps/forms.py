@@ -1,10 +1,9 @@
 import os
 from behave import step
-from selenium.common.exceptions import NoSuchElementException
 from splinter.exceptions import ElementDoesNotExist
-from basic import raise_element_not_found_exception
-from basic import find_device_element_by_name_or_id
+
 from behaving.personas.persona import persona_vars
+from behaving.mobile.steps import find_device_element_by_name_or_id
 from behaving.mobile.multiplatform import multiplatform
 
 
@@ -16,37 +15,48 @@ def i_fill_in_field(context, name, value):
     def browser(context, name, value):
         context.browser.fill(name, value)
 
-    def mobile(context, name, value):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-            el.clear()
-            el.click()  # workaround for failing send_keys call
-            el.send_keys(value)
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+    def ios(context, name, value):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        el.clear()
+        el.click()  # workaround for failing send_keys call
+        el.send_keys(value)
+
+    # For some reason appium reports an error if we clear before fill
+    # See https://github.com/appium/appium/issues/3367, https://github.com/appium/appium/issues/1228
+    def android(context, name, value):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        el.click()  # workaround for failing send_keys call
+        el.send_keys(value)
 
 
 @step(u'I clear field "{name}"')
 @persona_vars
+@multiplatform
 def i_clear_field(context, name):
-    if hasattr(context, 'browser'):
+
+    def browser(context, name):
         el = context.browser.find_element_by_name(name)
+        assert el, 'Element not found'
         el.clear()
-    elif hasattr(context, 'device'):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-            el.clear()
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+
+    def mobile(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        el.clear()
 
 
 @step(u'I type "{value}" to "{name}"')
 @persona_vars
+@multiplatform
 def i_type_to(context, name, value):
-    if hasattr(context, 'browser'):
+
+    def browser(context, name, value):
         for key in context.browser.type(name, value, slowly=True):
             assert key
-    elif hasattr(context, 'device'):
+
+    def mobile(context, name, value):
         i_fill_in_field(context, name, value)
 
 
@@ -58,14 +68,63 @@ def i_choose_in_radio(context, name, value):
 
 @step(u'I check "{name}"')
 @persona_vars
+@multiplatform
 def i_check(context, name):
-    context.browser.check(name)
+
+    def browser(context, name):
+        context.browser.check(name)
+
+    def ios(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        if el.get_attribute('value') == 0:
+            el.click()
+
+    def android(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        if el.get_attribute('checked') == u'false':
+            el.click()
 
 
 @step(u'I uncheck "{name}"')
 @persona_vars
+@multiplatform
 def i_uncheck(context, name):
-    context.browser.uncheck(name)
+
+    def browser(context, name):
+        context.browser.uncheck(name)
+
+    def ios(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        if el.get_attribute('value') == 1:
+            el.click()
+
+    def android(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        if el.get_attribute('checked') == u'true':
+            el.click()
+
+
+@step(u'I toggle "{name}"')
+@multiplatform
+def i_toggle(context, name):
+
+    def browser(context, name):
+        el = context.browser.find_by_name('digest')
+        assert el, u'Element not found'
+        el = el.first
+        if el.checked:
+            el.uncheck()
+        else:
+            el.check()
+
+    def mobile(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        el.click()
 
 
 @step(u'I select "{value}" from "{name}"')
@@ -81,8 +140,10 @@ def i_select(context, value, name):
 
 @step(u'I press "{name}"')
 @persona_vars
+@multiplatform
 def i_press(context, name):
-    if hasattr(context, 'browser'):
+
+    def browser(context, name):
         element = context.browser.find_by_xpath(
             ("//*[@id='%(name)s']|"
              "//*[@name='%(name)s']|"
@@ -90,27 +151,27 @@ def i_press(context, name):
              "//a[contains(text(), '%(name)s')]") % {'name': name})
         assert element, u'Element not found'
         element.first.click()
-    elif hasattr(context, 'device'):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-            el.click()
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+
+    def mobile(context, name):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        el.click()
 
 
 @step(u'I press the element with xpath "{xpath}"')
 @persona_vars
+@multiplatform
 def i_press_xpath(context, xpath):
-    if hasattr(context, 'browser'):
+
+    def browser(context, xpath):
         button = context.browser.find_by_xpath(xpath)
         assert button, u'Element not found'
         button.first.click()
-    elif hasattr(context, 'device'):
-        try:
-            el = context.device.find_element_by_xpath(xpath)
-            el.click()
-        except NoSuchElementException:
-            raise_element_not_found_exception(xpath, context)
+
+    def mobile(context, xpath):
+        el = context.device.find_element_by_xpath(xpath)
+        assert el, u'Element not found'
+        el.click()
 
 
 @step('I attach the file "{path}" to "{name}"')
@@ -139,19 +200,31 @@ def set_html_content_to_element_with_class(context, klass, contents):
 
 @step(u'field "{name}" should have the value "{value}"')
 @persona_vars
+@multiplatform
 def field_has_value(context, name, value):
-    if hasattr(context, 'browser'):
+
+    def browser(context, name, value):
         el = context.browser.find_by_xpath(
             ("//*[@id='%(name)s']|"
              "//*[@name='%(name)s']") % {'name': name})
         assert el, u'Element not found'
-        assert el.first.value == value, "Values do not match"
-    elif hasattr(context, 'device'):
-        try:
-            el = find_device_element_by_name_or_id(context, name)
-            assert el.get_attribute('value') == value, "Values do not match"
-        except NoSuchElementException:
-            raise_element_not_found_exception(name, context)
+        assert el.first.value == value, "Values do not match, expected %s but got %s" % (value, el.first.value)
+
+    def mobile(context, name, value):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        assert str(el.get_attribute('value')) == value, "Values do not match, expected %s but got %s" % (value, el.get_attribute('value'))
+
+
+@step(u'attribute "{attr_name}" of field "{name}" should have the value "{value}"')
+@persona_vars
+@multiplatform
+def fields_attribute_has_value(context, attr_name, name, value):
+
+    def mobile(context, attr_name, name, value):
+        el = find_device_element_by_name_or_id(context, name)
+        assert el, u'Element not found'
+        assert str(el.get_attribute(attr_name)) == value, "Values do not match"
 
 
 @step(u'"{name}" should be enabled')
