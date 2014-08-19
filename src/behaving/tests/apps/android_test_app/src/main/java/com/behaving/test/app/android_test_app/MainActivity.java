@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.os.Build;
 
@@ -55,6 +57,7 @@ public class MainActivity extends Activity {
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
+
         }
 
         @Override
@@ -64,8 +67,9 @@ public class MainActivity extends Activity {
             
             final TextView result = (TextView) rootView.findViewById(R.id.resultLabel);
             final EditText textInput = (EditText) rootView.findViewById(R.id.textInput);
-            
-            
+            final ScrollView scrollView = (ScrollView) rootView.findViewById(R.id.scrollView1);
+            final TextView scrollPosition = (TextView) rootView.findViewById(R.id.textView1);
+
         	Button calculateButton = (Button) rootView.findViewById(R.id.calculateButton);
         	calculateButton.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -75,6 +79,14 @@ public class MainActivity extends Activity {
 					result.setText(input.toString());
 				}
 			});
+
+            scrollView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                        scrollPosition.setText("" + scrollView.getScrollY());
+                    return false;
+                }
+            });
 
             return rootView;
         }
