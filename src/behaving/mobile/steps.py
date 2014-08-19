@@ -71,9 +71,11 @@ def lock_device(context):
 
 
 @step('I tap "{name}" and drag to "{coords}"')
+@persona_vars
 def drag_name_to_coords(context, name, coords):
     coords = eval(coords)
-    el = context.device.find_element_by_name(name)
+    el = find_device_element_by_name_or_id(context, name)
+    assert el, u'Element not found'
     action = TouchAction(context.device)
     action.press(el)
     for pair in coords:

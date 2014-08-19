@@ -26,6 +26,17 @@ Feature: Android support
 
     @android
     @mobile
+    Scenario: Test tag & drag
+        # Not working on android
+        # Given "foo" as the persona
+        # Given I set "p" to "com.behaving.test.app.android_test_app"
+        # Given an Android simulator running "android_test_app/build/outputs/apk/android_test_app-release-unsigned.apk"
+        # When I tap "$p:id/seekBar1" and drag to "[(50,0)]"
+        # And I wait for 20 seconds
+        # Then field "$p:id/seekBar1" should have the value "100%"
+
+    @android
+    @mobile
     Scenario: Close launch app
         Given an Android simulator running "android_test_app/build/outputs/apk/android_test_app-release-unsigned.apk"
         When I close the app
