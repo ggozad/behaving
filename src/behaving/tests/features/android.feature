@@ -2,7 +2,7 @@ Feature: Android support
 
     @android
     @mobile
-    Scenario: Test features with Android simulator
+    Scenario: Test basic/form features with Android simulator
         Given "foo" as the persona
         Given I set "p" to "com.behaving.test.app.android_test_app"
         Given an Android simulator running "android_test_app/build/outputs/apk/android_test_app-release-unsigned.apk"

@@ -31,7 +31,10 @@
     self.aSwitch.accessibilityIdentifier = @"toggleCalculate";
     self.slider.accessibilityIdentifier = @"slider";
     self.aSwitch.accessibilityIdentifier = @"switch";
-    self.resultLabel.accessibilityIdentifier = @"resultLabel";
+    self.resultLabel.accessibilityIdentifier = @"resultLabel
+    ";
+    self.scrollView.accessibilityIdentifier = @"scrollView";
+    self.scrollViewLabel.accessibilityIdentifier = @"scrollViewLabel";
     self.scrollOffsetLabel.accessibilityIdentifier = @"scrollOffsetLabel";
     self.textField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"textFieldValue"];
     

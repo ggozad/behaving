@@ -208,12 +208,12 @@ def field_has_value(context, name, value):
             ("//*[@id='%(name)s']|"
              "//*[@name='%(name)s']") % {'name': name})
         assert el, u'Element not found'
-        assert el.first.value == value, "Values do not match"
+        assert el.first.value == value, "Values do not match, expected %s but got %s" % (value, el.first.value)
 
     def mobile(context, name, value):
         el = find_device_element_by_name_or_id(context, name)
         assert el, u'Element not found'
-        assert str(el.get_attribute('value')) == value, "Values do not match"
+        assert str(el.get_attribute('value')) == value, "Values do not match, expected %s but got %s" % (value, el.get_attribute('value'))
 
 
 @step(u'attribute "{attr_name}" of field "{name}" should have the value "{value}"')
