@@ -52,7 +52,7 @@ def i_clear_field(context, name):
 @multiplatform
 def i_type_to(context, name, value):
 
-    def browsewr(context, name, value):
+    def browser(context, name, value):
         for key in context.browser.type(name, value, slowly=True):
             assert key
 
