@@ -377,6 +377,8 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * Then I should not see an element with the css selector "``selector``"
     * Then I should see an element with the css selector "``selector``" within ``timeout`` seconds
     * Then I should not see an element with the css selector "``selector``" within ``timeout`` seconds
+    * Then I should see ``n`` elements with the css selector "``css``"
+    * Then I should see at least ``n`` elements with the css selector "``css``" within ``timeout`` seconds
     * Then I should see an element with xpath "``xpath``"
     * Then I should not see an element with xpath "``xpath``"
     * Then I should see an element with xpath "``xpath``" within ``timeout`` seconds
@@ -474,6 +476,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 
 * Given "``name``" as the persona
 * When I set "``key``" to "``value``"
+* When I clone persona "``source``" to "``target``"
 * Then "``key``" is set to "``value``"
 
 Contributing to behaving

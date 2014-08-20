@@ -45,6 +45,7 @@ def send_email(context, to, subject, body):
     s.sendmail('test@localhost', [to], msg.as_string())
     s.quit()
 
+
 @step('"{key}" has property "{propname}"')
 @persona_vars
 def persona_var_has_property(context, key, propname):
