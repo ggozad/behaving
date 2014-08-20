@@ -424,6 +424,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * Given an iOS simulator running "``app``"
     * Given an android simulator running "``app``"
     * When I lock the device
+    * When I go back
     * When I install the app "``name``"
     * When I remove the app "``uid``"
     * When I launch the app

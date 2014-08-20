@@ -56,8 +56,13 @@ def reload(context):
 
 
 @step(u'I go back')
+@multiplatform
 def go_back(context):
-    context.browser.back()
+    def browser(context):
+        context.browser.back()
+
+    def mobile(context):
+        context.device.back()
 
 
 @step(u'I go forward')
