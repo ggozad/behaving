@@ -7,6 +7,9 @@ Changelog
 - First implementation of iOS/Android/FFOS capabilities
   [ggozad, erlendfh, leosobral]
 
+- Clone persona step, n elements with css selector steps
+  [zeveshe]
+
 0.8 - 2014-08-18
 ----------------
 
