@@ -236,7 +236,7 @@ def should_see_at_least_n_elements_with_css_within_timeout_seconds(context, n, c
         list_length = len(element_list)
         return list_length >= n
 
-    assert _retry(_check, timeout), 'Timeout'
+    assert _retry(_check, timeout), 'Did not find %s elements within %s seconds' % (n, timeout)
 
 
 @step(u'I should see an element with xpath "{xpath}"')
