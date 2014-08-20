@@ -48,6 +48,6 @@ Feature: Use Personas
     Scenario: Clone persona
         Given "Foo" as the persona
         When I set "bar" to "Hello world"
-        Given "FooClone" is the clone of "Foo"
+        When I clone persona "Foo" to "FooClone"
         Given "FooClone" as the persona
         Then "bar" is set to "Hello world"

@@ -473,8 +473,8 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 
 * Given "``name``" as the persona
 * When I set "``key``" to "``value``"
+* When I clone persona "``source``" to "``target``"
 * Then "``key``" is set to "``value``"
-* Given "``name``" is the clone of "``source_name``"
 
 Contributing to behaving
 ------------------------

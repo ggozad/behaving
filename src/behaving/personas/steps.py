@@ -41,7 +41,8 @@ def key_is_dict(context, key):
     assert type(context.persona.get_value(key)) == dict, u'%s is not a dictionary' % type(key)
 
 
-@step(u'"{name}" is the clone of "{source_name}"')
-def persona_is_a_clone(context, name, source_name):
-    if name not in context.personas:
-        context.personas[name] = Persona(context.personas.get(source_name, {}))
+@step(u'I clone persona "{source}" to "{target}"')
+def clone_persona(context, source, target):
+    assert source in context.personas, u'Persona %s does not exist' % source
+    if target not in context.personas:
+        context.personas[target] = Persona(context.personas.get(source))
