@@ -43,3 +43,11 @@ Feature: Use Personas
         And I note browser session
         Then "foo" is set to "Hello world"
         And I only used one browser session
+
+    @personas
+    Scenario: Clone persona
+        Given "Foo" as the persona
+        When I set "bar" to "Hello world"
+        Given "FooClone" is the clone of "Foo"
+        Given "FooClone" as the persona
+        Then "bar" is set to "Hello world"

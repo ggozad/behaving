@@ -33,8 +33,15 @@ def key_is_val(context, key, val):
     assert context.persona is not None, u'no persona is setup'
     assert context.persona.get_value(key) == val, u'%s != %s, values do not match' % (context.persona[key], val)
 
+
 @step(u'"{key}" is a dictionary')
 @persona_vars
-def key_is_val(context, key):
+def key_is_dict(context, key):
     assert context.persona is not None, u'no persona is setup'
     assert type(context.persona.get_value(key)) == dict, u'%s is not a dictionary' % type(key)
+
+
+@step(u'"{name}" is the clone of "{source_name}"')
+def persona_is_a_clone(context, name, source_name):
+    if name not in context.personas:
+        context.personas[name] = Persona(context.personas.get(source_name, {}))

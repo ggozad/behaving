@@ -221,6 +221,24 @@ def should_not_see_element_with_css_within_timeout(context, css, timeout):
     assert context.browser.is_element_not_present_by_css(css, wait_time=timeout), u'Element is present'
 
 
+@step(u'I should see {n:d} elements with the css selector "{css}"')
+def should_see_n_elements_with_css(context, n, css):
+    element_list = context.browser.find_by_css(css)
+    list_length = len(element_list)
+    assert list_length == n, u'Found {list_length} elements, expected {n}'.format(**locals())
+
+
+@step(u'I should see at least {n:d} elements with the css selector "{css}" within {timeout:d} seconds')
+def should_see_at_least_n_elements_with_css_within_timeout_seconds(context, n, css, timeout):
+
+    def _check():
+        element_list = context.browser.find_by_css(css)
+        list_length = len(element_list)
+        return list_length >= n
+
+    assert _retry(_check, timeout), 'Timeout'
+
+
 @step(u'I should see an element with xpath "{xpath}"')
 @persona_vars
 @multiplatform

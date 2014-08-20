@@ -27,6 +27,9 @@ Feature: Text presence
         When I reload
         Then I should see an element with xpath "//span[@id='late']" within 2 seconds
         And I should not see an element with xpath "//span[@id='very-late']" within 2 seconds
+        When I reload
+        Then I should see at least 4 elements with the css selector "div" within 2 seconds
+        And I should see 5 elements with the css selector "div"
 
     @web
     Scenario: JS interaction
