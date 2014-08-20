@@ -10,6 +10,7 @@ from behave import step
 from behaving.personas.persona import persona_vars
 from behaving.mobile.multiplatform import multiplatform
 
+
 def find_device_element_by_name_or_id(context, id):
     try:
         return context.device.find_element_by_id(id)
@@ -19,6 +20,7 @@ def find_device_element_by_name_or_id(context, id):
         except NoSuchElementException:
             pass
     return None
+
 
 def given_a_simulator_running_with_caps(context, caps):
     if hasattr(context, 'device'):
@@ -58,6 +60,7 @@ def given_an_android_simulator_running_app(context, name):
     app_path = os.path.join(context.app_dir, name)
     context.android_app_name = name
     given_a_simulator_running_with_caps(context, dict(context.android_caps, app=app_path, noReset=False))
+
 
 @step('a dirty android simulator running "{name}"')
 def given_a_dirty_android_simulator_running_app(context, name):
