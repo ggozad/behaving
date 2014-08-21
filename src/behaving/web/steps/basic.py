@@ -175,7 +175,7 @@ def should_not_see_element_with_id_within_timeout(context, id, timeout):
         assert context.browser.is_element_not_present_by_id(id, wait_time=timeout), u'Element was found'
 
     def mobile(context, id, timeout):
-        assert not _retry(lambda: find_device_element_by_name_or_id(context, id), timeout), u'Element was found'
+        assert _retry(lambda: not find_device_element_by_name_or_id(context, id), timeout), u'Element was found'
 
 
 @step(u'I should see an element with the css selector "{css}"')
@@ -268,8 +268,7 @@ def should_not_see_element_with_xpath_within_timeout(context, xpath, timeout):
         assert context.browser.is_element_not_present_by_xpath(xpath, wait_time=timeout), u'Element was found'
 
     def mobile(context, xpath, timeout):
-        el = _retry(lambda: context.device.find_element_by_xpath(xpath), timeout)
-        assert not el, u'Element was found'
+        assert _retry(lambda: not context.device.find_element_by_xpath(xpath), timeout), u'Element was found'
 
 
 @step(u'I execute the script "{script}"')
