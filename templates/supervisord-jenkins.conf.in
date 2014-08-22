@@ -57,7 +57,7 @@ autorestart = true
 priority = 400
 
 [program:jenkins]
-command = java -jar ${supervisor-conf:jenkins_path}
+command = java -jar ${supervisor-conf:jenkins_path} --httpPort=${supervisor-conf:jenkins_port}
 startretries = 5
 autostart = true
 autorestart = true
