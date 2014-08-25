@@ -422,7 +422,11 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 * Devices/apps
 
     * Given an iOS simulator running "``app``"
+    * Given a dirty iOS simulator running "``app``"
+      [does not reset the state of the app]
     * Given an android simulator running "``app``"
+    * Given a dirty android simulator running "``app``"
+      [does not reset the state of the app]
     * When I lock the device
     * When I go back
     * When I install the app "``name``"
@@ -436,15 +440,19 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I pull the file "``load_path``" from the app and set it to "``key``"
     * When I push the file "``load_path``" to the device at "``save_path``"
     * When I tap "``name``" and drag to "``coords``"
-    [``coords`` is a list of points, say [(0,100), (100,100)], relative to the element you tap.]
+      [``coords`` is a list of points, say [(0,100), (100,100)], relative to the element you tap.]
     * When I fill in "``name``" with "``value``"
     * When I type "``value``" to "``name``"
       [same as fill, but happens slowly triggering keyboard events]
     * When I select "``value``" from "``name``""
     * When I press "``name|text``"
+    * When I press the element with xpath "``xpath``"
     * When I check "``name``"
     * When I slide "``name``" to ``percent``% [iOS only]
     * When I uncheck "``name``"
+    * When I clear field "``name``"
+    * When I go back
+    * When I take a screenshot
     * Then I should see "``text``"
     * Then I should not see "``text``"
     * Then I should see an element with id "``id``"
@@ -455,6 +463,8 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * Then I should not see an element with xpath "``xpath``"
     * Then I should see an element with xpath "``xpath``" within ``timeout`` seconds
     * Then I should not see an element with xpath "``xpath``" within ``timeout`` seconds
+    * Then field "``name``" should have the value "``value``"
+    * Then attribute "``attr``" of field "``name``" should have the value "``value``"
 
 ``behaving.mail`` Supported matchers/steps
 ------------------------------------------
