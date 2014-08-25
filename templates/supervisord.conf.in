@@ -1,0 +1,57 @@
+[unix_http_server]
+file=${buildout:directory}/var/supervisor.sock
+chmod=0600
+
+[supervisorctl]
+serverurl=unix://${buildout:directory}/var/supervisor.sock
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory=supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisord]
+logfile=${buildout:directory}/var/log/supervisord.log
+logfile_maxbytes=5MB
+logfile_backups=10
+loglevel=info
+pidfile=${buildout:directory}/var/supervisord.pid ;
+childlogdir=${buildout:directory}/var/log
+nodaemon=false              ; (start in foreground if true;default false)
+minfds=1024                 ; (min. avail startup file descriptors;default 1024)
+minprocs=200                ; (min. avail process descriptors;default 200)
+directory=%(here)s
+
+[program:appium]
+command = ${buildout:bin-directory}/appium
+startretries = 5
+autostart = true
+autorestart = true
+priority = 100
+
+[program:android]
+command = ${supervisor-conf:android_home}/tools/emulator @${supervisor-conf:android_virtual_device}
+startretries = 5
+autostart = true
+autorestart = true
+priority = 150
+
+[program:http]
+command = python -m SimpleHTTPServer 8080
+directory = ${buildout:directory}/src/behaving/tests/www
+startretries = 5
+autostart = true
+autorestart = true
+priority = 100
+
+[program:sms]
+command = ${buildout:bin-directory}/smsmock -o ${buildout:directory}/var/sms
+startretries = 5
+autostart = true
+autorestart = true
+priority = 300
+
+[program:mail]
+command = ${buildout:bin-directory}/mailmock -o ${buildout:directory}/var/mail
+startretries = 5
+autostart = true
+autorestart = true
+priority = 400

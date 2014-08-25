@@ -5,6 +5,8 @@ from behave import step
 from splinter.browser import Browser
 from selenium.common.exceptions import WebDriverException
 
+from behaving.mobile.multiplatform import multiplatform
+
 
 @step(u'a browser')
 def given_a_browser(context):
@@ -14,7 +16,7 @@ def given_a_browser(context):
 @step(u'browser "{name}"')
 def named_browser(context, name):
     single_browser = hasattr(context, 'single_browser')
-    if single_browser and context.browser == name:
+    if single_browser and hasattr(context, 'browser') and context.browser == name:
         #  don't start up multiple browsers
         return
     if name not in context.browsers:
@@ -54,8 +56,13 @@ def reload(context):
 
 
 @step(u'I go back')
+@multiplatform
 def go_back(context):
-    context.browser.back()
+    def browser(context):
+        context.browser.back()
+
+    def mobile(context):
+        context.device.back()
 
 
 @step(u'I go forward')
@@ -100,12 +107,22 @@ def resize_viewport(context, width, height):
 
 
 @step(u'I take a screenshot')
+@multiplatform
 def take_screenshot(context):
-    assert context.browser is not None, u'need a browser to take a screenshot'
-    assert context.screenshots_dir != '', u'no screenshots_dir specified'
 
-    filename = context.scenario.feature.name + u'-' + \
-        context.scenario.name + u'-' + \
-        time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
-    filename = os.path.join(context.screenshots_dir, filename)
-    context.browser.screenshot(filename)
+    def _get_filename():
+        assert context.screenshots_dir != '', u'no screenshots_dir specified'
+
+        filename = context.scenario.feature.name + u'-' + \
+            context.scenario.name + u'-' + \
+            time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
+        filename = os.path.join(context.screenshots_dir, filename)
+        return filename
+
+    def browser(context):
+        filename = _get_filename()
+        context.browser.screenshot(filename)
+
+    def mobile(context):
+        filename = _get_filename() + '.png'
+        assert context.device.save_screenshot(filename), u'Could not save screenshot'

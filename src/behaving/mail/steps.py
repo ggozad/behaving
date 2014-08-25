@@ -7,6 +7,7 @@ from behaving.personas.persona import persona_vars
 MAIL_TIMEOUT = 5
 URL_RE = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', re.I|re.S|re.U)
 
+
 @step(u'I should receive an email at "{address}" containing "{text}"')
 @persona_vars
 def should_receive_email_containing_text(context, address, text):

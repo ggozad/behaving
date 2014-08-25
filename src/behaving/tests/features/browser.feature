@@ -39,6 +39,7 @@ Feature: Browser handling
 
     @web
     Scenario: Browser cookies
+        Given a browser
         Given "Foo" as the persona
         When I visit "http://localhost:8080"
         And I set the cookie "foo" to "bar"

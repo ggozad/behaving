@@ -1,9 +1,14 @@
 Changelog
 =========
 
-0.9 - Unreleased
+1.0 - Unreleased
 ----------------
 
+- First implementation of iOS/Android/FFOS capabilities
+  [ggozad, erlendfh, leosobral]
+
+- Clone persona step, n elements with css selector steps
+  [zeveshe]
 
 0.8 - 2014-08-18
 ----------------
