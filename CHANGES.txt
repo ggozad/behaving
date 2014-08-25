@@ -7,6 +7,9 @@ Changelog
 - First implementation of iOS/Android/FFOS capabilities
   [ggozad, erlendfh, leosobral]
 
+- @multiplatform decorator to handle seperately devices and the browser
+  [ggozad]
+
 - Clone persona step, n elements with css selector steps
   [zeveshe]
 
