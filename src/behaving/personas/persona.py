@@ -56,7 +56,8 @@ class PersonaVarMatcher(object):
                         kwargs[kwname] = kwargs[kwname].replace('$' + var, value)
                     else:
                         kwargs[kwname] = value
-                kwargs[kwname].replace('\$', '$')
+                if type(kwvalue) == str or type(kwvalue) == unicode:
+                    kwargs[kwname] = kwvalue.replace('\$', '$')
 
         self.func.__call__(*args, **kwargs)
 

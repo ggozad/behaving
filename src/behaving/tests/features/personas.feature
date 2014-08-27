@@ -33,7 +33,7 @@ Feature: Use Personas
         When I set "bar" to "\$1.00 Dollars"
         Then "bar" is set to "\$1.00 Dollars"
         And "bar" is set to "$foo Dollars"
-        
+
 
     @personas
     Scenario: Don't start up multiple browsers
