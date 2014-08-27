@@ -37,8 +37,7 @@ class Persona(dict):
             setattr(current, prop, value)
 
 
-var_exp = re.compile('\$(\w+(?:\.\w+)*)')
-
+var_exp = re.compile(r'(?<!\\)\$(\w+(?:\.\w+)*)')
 
 class PersonaVarMatcher(object):
 
@@ -57,6 +56,7 @@ class PersonaVarMatcher(object):
                         kwargs[kwname] = kwargs[kwname].replace('$' + var, value)
                     else:
                         kwargs[kwname] = value
+                kwargs[kwname].replace('\$', '$')
 
         self.func.__call__(*args, **kwargs)
 

@@ -24,6 +24,18 @@ Feature: Use Personas
         And "mydict.bar" is set to "bbb"
 
     @personas
+    Scenario: Escaped persona variables
+        Given "Foo" as the persona
+        When I set "foo" to "\$1.00"
+        And I set "bar" to "$foo Dollars"
+        Then "bar" is set to "\$1.00 Dollars"
+        And "bar" is set to "$foo Dollars"
+        When I set "bar" to "\$1.00 Dollars"
+        Then "bar" is set to "\$1.00 Dollars"
+        And "bar" is set to "$foo Dollars"
+        
+
+    @personas
     Scenario: Don't start up multiple browsers
         Given I enable single browser mode
         And browser "foobar"
