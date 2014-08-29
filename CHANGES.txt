@@ -7,6 +7,9 @@ Changelog
 - Jenkins CI integration.
   [ggozad]
 
+- Escaping of persona vars, for testing dollar amounts
+  [kageurufu]
+
 1.0-rc1 - 2014-08-25
 --------------------
 
