@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.0rc2-dev'
+version = '1.0rc3-dev'
 
 setup(name='behaving',
       version=version,
@@ -22,7 +22,7 @@ setup(name='behaving',
       namespace_packages=['behaving'],
       include_package_data=True,
       zip_safe=False,
-      install_requires=['setuptools', 'parse', 'behave', 'splinter', 'Appium-Python-Client'],
+      install_requires=['setuptools', 'parse', 'behave', 'splinter==0.6.0', 'Appium-Python-Client'],
       entry_points="""
       [console_scripts]
       mailmock = behaving.mail.mock:main
