@@ -1,5 +1,6 @@
 import email
 import re
+import quopri
 from behave import step
 from behaving.personas.persona import persona_vars
 
@@ -14,7 +15,7 @@ def should_receive_email_containing_text(context, address, text):
 
     def filter_contents(mail):
         mail = email.message_from_string(mail)
-        return text in mail.get_payload()
+        return text in quopri.decodestring(mail.get_payload()).decode('utf-8')
 
     assert context.mail.user_messages(address, filter_contents)
 

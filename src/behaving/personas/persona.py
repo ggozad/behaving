@@ -39,6 +39,7 @@ class Persona(dict):
 
 var_exp = re.compile(r'(?<!\\)\$(\w+(?:\.\w+)*)')
 
+
 class PersonaVarMatcher(object):
 
     def __init__(self, func, *args):
@@ -48,15 +49,17 @@ class PersonaVarMatcher(object):
         context = args[0]
         if hasattr(context, 'persona'):
             for kwname, kwvalue in kwargs.items():
+                if isinstance(kwvalue, unicode):
+                    kwvalue = kwvalue.encode('utf-8')
                 variables = var_exp.findall(str(kwvalue))
                 for var in variables:
                     value = context.persona.get_value(var)
 
-                    if type(value) == str or type(value) == unicode:
+                    if isinstance(value, basestring):
                         kwargs[kwname] = kwargs[kwname].replace('$' + var, value)
                     else:
                         kwargs[kwname] = value
-                if type(kwargs[kwname]) == str or type(kwargs[kwname]) == unicode:
+                if isinstance(kwargs[kwname], basestring):
                     kwargs[kwname] = kwargs[kwname].replace('\$', '$')
 
         self.func.__call__(*args, **kwargs)
