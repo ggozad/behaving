@@ -106,6 +106,11 @@ def resize_viewport(context, width, height):
         b_height + height - v_height)
 
 
+@step(u"I maximize the browser's window")
+def maximize_window(context):
+    context.browser.driver.maximize_window()
+
+
 @step(u'I take a screenshot')
 @multiplatform
 def take_screenshot(context):

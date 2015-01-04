@@ -7,6 +7,9 @@ Changelog
 - Jenkins CI integration.
   [ggozad]
 
+- Maximize browser window.
+  [ggozad]
+
 - Escaping of persona vars, for testing dollar amounts
   [kageurufu]
 
