@@ -316,7 +316,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 ::
 
     ./bin/smsmock -p 8081 -o ./var/sms
-    ./bin/mailmock -p 8082 -o ./var/mail
+    ./bin/mailmock -p 8082 -o ./var/mail [--no-stdout]
 
 
 ``behaving.web`` Supported matchers/steps
@@ -473,6 +473,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 * Then I should receive an email at "``address``"
 * Then I should receive an email at "``address``" with subject "``subject``"
 * Then I should receive an email at "``address``" containing "``text``"
+* Then I should receive an email at "``address``" with attachment "``filename``"
 
 ``behaving.sms`` Supported matchers/steps
 -----------------------------------------

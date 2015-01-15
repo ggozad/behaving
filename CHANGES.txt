@@ -11,6 +11,7 @@ Changelog
   [ggozad]
 
 - Escaping of persona vars, for testing dollar amounts
+- Receive email with attachments step
   [kageurufu]
 
 1.0-rc1 - 2014-08-25

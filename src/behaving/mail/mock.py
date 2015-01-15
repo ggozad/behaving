@@ -10,18 +10,20 @@ output_dir = None
 
 
 class DebuggingServer(smtpd.DebuggingServer):
-    def __init__(self, localaddr, remoteaddr):
+    def __init__(self, localaddr, remoteaddr, log_to_stdout=True):
         global output_dir
         self.path = output_dir
+        self.log_to_stdout = log_to_stdout
         smtpd.DebuggingServer.__init__(self, localaddr, remoteaddr)
 
     def process_message(self, peer, mailfrom, rcpttos, data):
-        smtpd.DebuggingServer.process_message(self,
-                                              peer,
-                                              mailfrom,
-                                              rcpttos,
-                                              data)
-        sys.stdout.flush()
+        if self.log_to_stdout:
+            smtpd.DebuggingServer.process_message(self,
+                                                  peer,
+                                                  mailfrom,
+                                                  rcpttos,
+                                                  data)
+            sys.stdout.flush()
         if self.path is None:
             return
         filename = time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
@@ -53,7 +55,12 @@ def main(args=sys.argv[1:]):
                         default=None,
                         required=True,
                         help='Directory where to dump the mail.')
-
+    parser.add_argument('-n', '--no-stdout',
+                        dest="log_to_stdout",
+                        default=True,
+                        action="store_false",
+                        required=False,
+                        help="Don't log received mail to stdout")
     options = parser.parse_args(args=args)
 
     if not os.path.exists(options.output_dir):
@@ -64,11 +71,12 @@ def main(args=sys.argv[1:]):
     global output_dir
     output_dir = options.output_dir
 
-    smtpd = DebuggingServer(('localhost', int(options.port)), None)
+    smtpd = DebuggingServer(('localhost', int(options.port)), None, options.log_to_stdout)
     try:
         asyncore.loop()
     except KeyboardInterrupt:
         smtpd.close()
+
 
 if __name__ == '__main__':
     main()

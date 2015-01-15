@@ -1,3 +1,6 @@
+from email.mime.base import MIMEBase
+from os.path import basename
+
 try:
     from urllib import urlencode
     from urllib2 import Request, urlopen, HTTPError
@@ -7,6 +10,7 @@ except ImportError:
     from urllib.error import HTTPError
 import smtplib
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from behave import when
 from behave import step
 
@@ -34,8 +38,24 @@ def send_sms(context, to, body):
         assert False
 
 
+@when('I send an email to "{to}" with subject "{subject}" and body "{body}" and attachment "{filename}"')
+def send_email_attachment(context, to, subject, body, filename):
+    msg = MIMEMultipart(From='test@localhost',
+                        To=to,
+                        Subject=subject)
+    msg.attach(MIMEText(body))
+    with open(filename, 'rb') as fil:
+        attachment = MIMEBase('application', 'octet-stream')
+        attachment.set_payload(fil.read())
+        attachment.add_header("Content-Disposition", "attachment", filename=basename(filename))
+        msg.attach(attachment)
+
+    s = smtplib.SMTP('localhost', 8025)
+    s.sendmail('test@localhost', [to], msg.as_string())
+    s.close()
+
+
 @when('I send an email to "{to}" with subject "{subject}" and body "{body}"')
-@persona_vars
 def send_email(context, to, subject, body):
     msg = MIMEText(body)
     msg['Subject'] = subject
@@ -49,4 +69,5 @@ def send_email(context, to, subject, body):
 @step('"{key}" has property "{propname}"')
 @persona_vars
 def persona_var_has_property(context, key, propname):
-    assert hasattr(context.persona, key) or context.persona.has_key(key), "context.persona[%s] does not have property %s" % (key, propname)
+    assert hasattr(context.persona, key) or context.persona.has_key(
+        key), "context.persona[%s] does not have property %s" % (key, propname)
