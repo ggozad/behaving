@@ -9,7 +9,7 @@ Feature: Email steps
 
     @email
     Scenario: Receive email with attachment
-        When I send an email to "foo@bar.com" with subject "Hello world" and body "Greetings from a BDD world!" and attachment "data/test.txt"
+        When I send an email to "foo@bar.com" with subject "Hello world" and body "Greetings from a BDD world!" and attachment "test.txt"
         Then I should receive an email at "foo@bar.com" with attachment "test.txt"
 
     @email

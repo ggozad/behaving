@@ -1,5 +1,5 @@
 from email.mime.base import MIMEBase
-from os.path import basename
+import os.path
 
 try:
     from urllib import urlencode
@@ -42,10 +42,11 @@ def send_email_attachment(context, to, subject, body, filename):
                         To=to,
                         Subject=subject)
     msg.attach(MIMEText(body))
-    with open(filename, 'rb') as fil:
+    path = os.path.join(context.attachment_dir, filename)
+    with open(path, 'rb') as fil:
         attachment = MIMEBase('application', 'octet-stream')
         attachment.set_payload(fil.read())
-        attachment.add_header("Content-Disposition", "attachment", filename=basename(filename))
+        attachment.add_header("Content-Disposition", "attachment", filename=os.path.basename(filename))
         msg.attach(attachment)
 
     s = smtplib.SMTP('localhost', 8025)
