@@ -1,9 +1,9 @@
 behaving
 ========
 
-*behaving* is a web & mobile application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/mobile/email/sms interactions.
+*behaving* is a web application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
 
-*behaving* is written in python and is based on `behave`_, `splinter`_ and `appium`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*. The *appium* docs are a good starting point if you want to extend the mobile testing functionality.
+*behaving* is written in python and is based on `behave`_, `splinter`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
 
 Hello world
 -----------
@@ -22,26 +22,6 @@ Starting to use *behaving* is pretty easy. Inside some python module, add your *
             And I fill in "search" with "BDD"
             And I press "go"
             Then I should see "Behavior-driven development" within 5 seconds
-
-Mobile apps
------------
-
-Since version 1.0 you can use *behaving* to test your mobile apps, native or not, provided you have set up your development environment properly. We aim to support iOS, Android as well as Firefox OS, but this is still very experimental so your mileage may vary.
-
-Android
------------
-To run the android tests, you need the android simulator installed and configured correctly. First, you need to run
-
-::
-    android avd
-
-and set up a virtual device. Then run
-
-
-::
-    emulator -avd <AVD Name>
-
-To launch the simulator. Now you can run the android tests through Behaving and Appium.
 
 
 Email & SMS
@@ -416,55 +396,6 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I set "``key``" to the attribute "``attr``" of the element with xpath "``xpath``"
     * When I evaluate the script "``script``" and assign the result to "``key``"
 
-``behaving.mobile`` Supported matchers/steps
---------------------------------------------
-
-* Devices/apps
-
-    * Given an iOS simulator running "``app``"
-    * Given a dirty iOS simulator running "``app``"
-      [does not reset the state of the app]
-    * Given an android simulator running "``app``"
-    * Given a dirty android simulator running "``app``"
-      [does not reset the state of the app]
-    * When I lock the device
-    * When I go back
-    * When I install the app "``name``"
-    * When I remove the app "``uid``"
-    * When I launch the app
-    * When I close the app
-    * Then the application "``uid``" is installed
-
-* Interactions
-
-    * When I pull the file "``load_path``" from the app and set it to "``key``"
-    * When I push the file "``load_path``" to the device at "``save_path``"
-    * When I tap "``name``" and drag to "``coords``"
-      [``coords`` is a list of points, say [(0,100), (100,100)], relative to the element you tap.]
-    * When I fill in "``name``" with "``value``"
-    * When I type "``value``" to "``name``"
-      [same as fill, but happens slowly triggering keyboard events]
-    * When I select "``value``" from "``name``""
-    * When I press "``name|text``"
-    * When I press the element with xpath "``xpath``"
-    * When I check "``name``"
-    * When I slide "``name``" to ``percent``% [iOS only]
-    * When I uncheck "``name``"
-    * When I clear field "``name``"
-    * When I go back
-    * When I take a screenshot
-    * Then I should see "``text``"
-    * Then I should not see "``text``"
-    * Then I should see an element with id "``id``"
-    * Then I should see an element with id "``id``" within ``timeout`` seconds
-    * Then I should not see an element with id "``id``"
-    * Then I should not see an element with id "``id``" within ``timeout`` seconds
-    * Then I should see an element with xpath "``xpath``"
-    * Then I should not see an element with xpath "``xpath``"
-    * Then I should see an element with xpath "``xpath``" within ``timeout`` seconds
-    * Then I should not see an element with xpath "``xpath``" within ``timeout`` seconds
-    * Then field "``name``" should have the value "``value``"
-    * Then attribute "``attr``" of field "``name``" should have the value "``value``"
 
 ``behaving.mail`` Supported matchers/steps
 ------------------------------------------
@@ -499,7 +430,6 @@ Please see the `Contribution Guidelines`_
 .. _`lettuce`: http://lettuce.it/
 .. _`behave`: http://pypi.python.org/pypi/behave
 .. _`splinter`: http://splinter.cobrateam.info/
-.. _`appium`: http://appium.io/
 .. _`Crypho`: http://crypho.com
 .. _`Contribution Guidelines`: https://github.com/ggozad/behaving/blob/master/CONTRIBUTING.rst
 

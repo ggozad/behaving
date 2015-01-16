@@ -5,8 +5,6 @@ from behave import step
 from splinter.browser import Browser
 from selenium.common.exceptions import WebDriverException
 
-from behaving.mobile.multiplatform import multiplatform
-
 
 @step(u'a browser')
 def given_a_browser(context):
@@ -56,13 +54,9 @@ def reload(context):
 
 
 @step(u'I go back')
-@multiplatform
 def go_back(context):
-    def browser(context):
-        context.browser.back()
 
-    def mobile(context):
-        context.device.back()
+    context.browser.back()
 
 
 @step(u'I go forward')
@@ -112,22 +106,12 @@ def maximize_window(context):
 
 
 @step(u'I take a screenshot')
-@multiplatform
 def take_screenshot(context):
 
-    def _get_filename():
-        assert context.screenshots_dir != '', u'no screenshots_dir specified'
+    assert context.screenshots_dir != '', u'no screenshots_dir specified'
 
-        filename = context.scenario.feature.name + u'-' + \
-            context.scenario.name + u'-' + \
-            time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
-        filename = os.path.join(context.screenshots_dir, filename)
-        return filename
-
-    def browser(context):
-        filename = _get_filename()
-        context.browser.screenshot(filename)
-
-    def mobile(context):
-        filename = _get_filename() + '.png'
-        assert context.device.save_screenshot(filename), u'Could not save screenshot'
+    filename = context.scenario.feature.name + u'-' + \
+        context.scenario.name + u'-' + \
+        time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
+    filename = os.path.join(context.screenshots_dir, filename)
+    context.browser.screenshot(filename)
