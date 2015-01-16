@@ -4,6 +4,9 @@ Changelog
 1.0 - Unreleased
 -----------------
 
+- Remove all mobile.
+  [ggozad]
+
 - Jenkins CI integration.
   [ggozad]
 
