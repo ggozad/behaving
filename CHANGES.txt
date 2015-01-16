@@ -4,6 +4,9 @@ Changelog
 1.0 - Unreleased
 -----------------
 
+- Make personas simple dicts again.
+  [ggozad]
+
 - Remove all mobile.
   [ggozad]
 

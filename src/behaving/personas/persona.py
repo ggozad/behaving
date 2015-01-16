@@ -5,37 +5,7 @@ class Persona(dict):
     """
     A dictionary holding variables.
     """
-    def get_value(self, path):
-        current = self
-        components = path.split(".")
-        for component in components:
-            if hasattr(current, component):
-                current = getattr(current, component)
-                if type(current) == type(self.get_value):
-                    current = current()
-            else:
-                current = current[component]
-        return current
-
-    def set_value(self, path, value):
-        current = self
-        components = path.split(".")
-        prop = components.pop()
-        for component in components:
-            if hasattr(current, component):
-                current = getattr(current, component)
-            else:
-                try:
-                    current = current[component]
-                except KeyError:
-                    current[component] = {}
-                    current = current[component]
-
-        if isinstance(current, dict):
-            current[prop] = value
-        else:
-            setattr(current, prop, value)
-
+    pass
 
 var_exp = re.compile(r'(?<!\\)\$(\w+(?:\.\w+)*)')
 
@@ -53,7 +23,7 @@ class PersonaVarMatcher(object):
                     kwvalue = kwvalue.encode('utf-8')
                 variables = var_exp.findall(str(kwvalue))
                 for var in variables:
-                    value = context.persona.get_value(var)
+                    value = context.persona[var]
 
                     if isinstance(value, basestring):
                         kwargs[kwname] = kwargs[kwname].replace('$' + var, value)

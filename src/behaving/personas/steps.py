@@ -24,21 +24,21 @@ def given_a_persona(context, name):
 @persona_vars
 def set_variable(context, key, val):
     assert context.persona is not None, u'no persona is setup'
-    context.persona.set_value(key, val)
+    context.persona[key] = val
 
 
 @step(u'"{key}" is set to "{val}"')
 @persona_vars
 def key_is_val(context, key, val):
     assert context.persona is not None, u'no persona is setup'
-    assert context.persona.get_value(key) == val, u'%s != %s, values do not match' % (context.persona[key], val)
+    assert context.persona[key] == val, u'%s != %s, values do not match' % (context.persona[key], val)
 
 
 @step(u'"{key}" is a dictionary')
 @persona_vars
 def key_is_dict(context, key):
     assert context.persona is not None, u'no persona is setup'
-    assert type(context.persona.get_value(key)) == dict, u'%s is not a dictionary' % type(key)
+    assert type(context.persona[key]) == dict, u'%s is not a dictionary' % type(key)
 
 
 @step(u'I clone persona "{source}" to "{target}"')
