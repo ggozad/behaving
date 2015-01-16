@@ -13,11 +13,9 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from behave import when
 from behave import step
-
 from behaving.web.steps import *
 from behaving.sms.steps import *
 from behaving.mail.steps import *
-from behaving.mobile.steps import *
 from behaving.personas.steps import *
 from behaving.personas.persona import persona_vars
 
@@ -69,5 +67,4 @@ def send_email(context, to, subject, body):
 @step('"{key}" has property "{propname}"')
 @persona_vars
 def persona_var_has_property(context, key, propname):
-    assert hasattr(context.persona, key) or context.persona.has_key(
-        key), "context.persona[%s] does not have property %s" % (key, propname)
+    assert hasattr(context.persona, key) or key in context.persona, "context.persona[%s] does not have property %s" % (key, propname)
