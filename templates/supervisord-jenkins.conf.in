@@ -20,20 +20,6 @@ minfds=1024                 ; (min. avail startup file descriptors;default 1024)
 minprocs=200                ; (min. avail process descriptors;default 200)
 directory=%(here)s
 
-[program:appium]
-command = ${buildout:bin-directory}/appium
-startretries = 5
-autostart = true
-autorestart = true
-priority = 100
-
-[program:android]
-command = ${supervisor-conf:android_home}/tools/emulator @${supervisor-conf:android_virtual_device}
-startretries = 5
-autostart = true
-autorestart = true
-priority = 150
-
 [program:http]
 command = python -m SimpleHTTPServer 8080
 directory = ${buildout:directory}/src/behaving/tests/www
