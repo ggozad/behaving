@@ -180,3 +180,27 @@ def field_is_not_required(context, name):
     assert context.browser.find_by_name(name), u'Element not found'
     assert not context.browser.evaluate_script("document.getElementsByName('%s')[0].getAttribute('required')" % name), \
         'Field is required'
+
+
+@step(u'I enter "{text}" to the alert')
+@persona_vars
+def set_alert_text(context, text):
+    alert = context.browser.driver.switch_to_alert()
+    assert alert, u'Alert not found'
+    alert.send_keys(text)
+
+
+@step(u'I accept the alert')
+@persona_vars
+def accept_alert(context):
+    alert = context.browser.driver.switch_to_alert()
+    assert alert, u'Alert not found'
+    alert.accept()
+
+
+@step(u'I dismiss the alert')
+@persona_vars
+def dimiss_alert(context):
+    alert = context.browser.driver.switch_to_alert()
+    assert alert, u'Alert not found'
+    alert.dismiss()
