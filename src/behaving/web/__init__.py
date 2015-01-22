@@ -4,9 +4,9 @@ try:
 except ImportError:
     from urllib.error import URLError
 
+from behaving.web import cordova
+
 # Generic setup/teardown for compatibility with pytest et al.
-
-
 def setup(context):
     if not hasattr(context, 'default_browser'):
         context.default_browser = ''
