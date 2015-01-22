@@ -14,7 +14,10 @@ class WebDriver(BaseWebDriver):
 
     driver_name = "Cordova"
 
-    def __init__(self, user_agent=None, wait_time=2, fullscreen=False,
+    def __init__(self, user_agent=None,
+                 wait_time=2,
+                 fullscreen=False,
+                 persistent_session=False,
                  **kwargs):
         options = Options()
 
@@ -24,9 +27,11 @@ class WebDriver(BaseWebDriver):
         if fullscreen:
             options.add_argument('--kiosk')
 
+        options.add_argument('-F')
         options.add_argument('--args')
         options.add_argument('--disable-web-security')
-        options.add_argument('--user-data-dir=/tmp/temp_chrome_user_data_dir_for_cordova_browser')
+        if persistent_session:
+            options.add_argument('--user-data-dir=/tmp/temp_chrome_user_data_dir_for_cordova_browser')
 
         self.driver = Chrome(chrome_options=options, **kwargs)
         self.element_class = WebDriverElement
