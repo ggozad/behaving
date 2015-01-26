@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1 - Unreleased
+1.1 - 2015-01-26
 ----------------
 
 - Support for the cordova-specific chrome.

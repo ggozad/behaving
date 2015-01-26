@@ -380,6 +380,9 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
       [Sets html on a ``contenteditable`` element with id ``id`` to ``contents``]
     * When I set the innner HTML of the element with class "``class``" to "``contents``"
     * When I set the innner HTML of the element with class "``class``" to "``contents``"
+    * When I enter "``text``" to the alert
+    * When I accept the alert
+    * When I dismiss the alert
     * Then field "``name``" should have the value "``value``"
     * Then "``name``" should be enabled
     * Then "``name``" should be disabled
