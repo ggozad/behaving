@@ -1,6 +1,7 @@
 import email
 import re
 import quopri
+import parse
 from behave import step
 from behaving.personas.persona import persona_vars
 
@@ -61,3 +62,25 @@ def click_link_in_email(context, address):
     assert links, u'link not found'
     url = links[0]
     context.browser.visit(url)
+
+
+@step(u'I parse the email I received at "{address}" and set "{expression}"')
+@persona_vars
+def parse_email_set_var(context, address, expression):
+    assert context.persona is not None, u'no persona is setup'
+    msgs = context.mail.user_messages(address)
+    assert msgs, u'no email received'
+
+    parser = parse.compile(expression)
+    res = parser.parse(msgs[-1])
+
+    # Make an implicit assumption that there might be something before/after the expression
+    if res is None:
+        expression = '{}' + expression + '{}'
+        parser = parse.compile(expression)
+        res = parser.parse(msgs[-1])
+
+    assert res, u'expression not found'
+    assert res.named, u'expression not found'
+    for key, val in res.named.items():
+        context.persona[key] = val

@@ -404,6 +404,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 ------------------------------------------
 
 * When I click the link in the email I received at "``address``"
+* When I parse the email I received at "``address``" and set "``expression``"
 * Then I should receive an email at "``address``"
 * Then I should receive an email at "``address``" with subject "``subject``"
 * Then I should receive an email at "``address``" containing "``text``"
@@ -413,7 +414,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 -----------------------------------------
 
 * When I set "``key``" to the body of the sms I received at "``number``"
-* When I parse the sms I received at "``number``" and set "``expressions``"
+* When I parse the sms I received at "``number``" and set "``expression``"
 * Then I should receive an sms at "``number``"
 * Then I should receive an sms at "``number``" containing "``text``"
 

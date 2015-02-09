@@ -20,3 +20,9 @@ Feature: Email steps
         And I click the link in the email I received at "foo@bar.com"
         Then the browser's URL should be "http://www.crypho.com/"
 
+    @email
+    Scenario: Parse email and set persona variable
+        Given "Foo" as the persona
+        When I send an email to "foo@bar.com" with subject "Hello world" and body "You password is: 'hax0r'. Click here"
+        And I parse the email I received at "foo@bar.com" and set "password is: '{password}'"
+        Then "password" is set to "hax0r"

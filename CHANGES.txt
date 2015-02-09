@@ -4,6 +4,8 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Step to parse expressions in emails.
+  [ggozad]
 
 1.1 - 2015-01-26
 ----------------
