@@ -78,30 +78,29 @@ Feature: Browser handling
         When I resize the viewport to 499x800
         Then I should not see "Hidden in mobile"
 
-	@web
-	Scenario: Create Named Browser visit a site and close by name.
-
+    @web
+    Scenario: Create Named Browser visit a site and close by name.
         Given Browser "aBrowser"
         When I visit "http://localhost:8080"
             Then I wait for 4 seconds
-            And I close browser "aBrowser"
+            And I close the browser "aBrowser"
         Given Browser "anotherBrowser"
         When I visit "http://localhost:8080"
             Then I wait for 4 seconds
-            And I close browser "anotherBrowser"
+            And I close the browser "anotherBrowser"
 
     @web
-	Scenario: Create Personas and Close their respective browsers.
+    Scenario: Create Personas and Close their respective browsers.
 
         Given a Browser
         Given "Foo" as the persona
         When I visit "http://localhost:8080"
         Then I wait for 4 seconds
-            
-        	Given "Bar" as the persona
+
+            Given "Bar" as the persona
             When I visit "http://localhost:8080"
             Then I wait for 4 seconds
             And I close browser "Bar"
-		
+
         Then I wait for 4 seconds
-		And I close browser "Foo"
+        And I close browser "Foo"

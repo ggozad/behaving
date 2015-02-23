@@ -40,9 +40,11 @@ def named_browser(context, name):
     if context.default_browser_size:
         context.browser.driver.set_window_size(*context.default_browser_size)
 
-@step(u'I close browser "{name}"')
-def close_browser (context, name):
+
+@step(u'I close the browser "{name}"')
+def close_browser(context, name):
     context.browsers[name].driver.close()
+
 
 @step(u'{brand} as the default browser')
 def given_some_browser(context, brand):
