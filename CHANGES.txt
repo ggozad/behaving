@@ -7,6 +7,9 @@ Changelog
 - Step to parse expressions in emails.
   [ggozad]
 
+- Step to close a named browser
+  [demetris-manikas]
+
 1.1 - 2015-01-26
 ----------------
 

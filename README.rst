@@ -321,6 +321,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I set the cookie "``key``" to "``value``"
     * When I delete the cookie "``key``"
     * When I delete all cookies
+    * When I close the browser "``name``"
 
 * URLs
 
