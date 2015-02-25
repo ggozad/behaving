@@ -32,6 +32,8 @@ class WebDriver(BaseWebDriver):
         options.add_argument('--disable-web-security')
         if persistent_session:
             options.add_argument('--user-data-dir=/tmp/temp_chrome_user_data_dir_for_cordova_browser')
+        else:
+            options.add_argument('--incognito')
 
         self.driver = Chrome(chrome_options=options, **kwargs)
         self.element_class = WebDriverElement
