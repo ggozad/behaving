@@ -26,7 +26,7 @@ def should_receive_email_containing_text(context, address, text):
 def should_receive_email_with_subject(context, address, subject):
     def filter_contents(mail):
         mail = email.message_from_string(mail)
-        return subject == mail.get('Subject')
+        return subject.encode('utf-8') == mail.get('Subject')
 
     assert context.mail.user_messages(address, filter_contents), u'message not found'
 
@@ -67,6 +67,7 @@ def click_link_in_email(context, address):
 @step(u'I parse the email I received at "{address}" and set "{expression}"')
 @persona_vars
 def parse_email_set_var(context, address, expression):
+    expression = expression.encode('utf-8')
     assert context.persona is not None, u'no persona is setup'
     msgs = context.mail.user_messages(address)
     assert msgs, u'no email received'

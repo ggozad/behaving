@@ -26,3 +26,13 @@ Feature: Email steps
         When I send an email to "foo@bar.com" with subject "Hello world" and body "You password is: 'hax0r'. Click here"
         And I parse the email I received at "foo@bar.com" and set "password is: '{password}'"
         Then "password" is set to "hax0r"
+
+    @email
+    Scenario: International friendly
+        Given "Foo" as the persona
+        When I send an email to "foo@bar.com" with subject "Καλημέρα" and body "Έλα ρε, τί γίνεται; Ο κωδικός είναι: 'hax0r'."
+        Then I should receive an email at "foo@bar.com"
+        And I should receive an email at "foo@bar.com" with subject "Καλημέρα"
+        And I should receive an email at "foo@bar.com" containing "Έλα ρε"
+        When I parse the email I received at "foo@bar.com" and set "κωδικός είναι: '{password}'"
+        Then "password" is set to "hax0r"
