@@ -12,7 +12,6 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from behave import when
-from behave import step
 from behaving.web.steps import *
 from behaving.sms.steps import *
 from behaving.mail.steps import *
@@ -40,8 +39,8 @@ def send_sms(context, to, body):
 def send_email_attachment(context, to, subject, body, filename):
     msg = MIMEMultipart(From='test@localhost',
                         To=to,
-                        Subject=subject)
-    msg.attach(MIMEText(body))
+                        Subject=subject.encode('utf-8'))
+    msg.attach(MIMEText(body.encode('utf-8')))
     path = os.path.join(context.attachment_dir, filename)
     with open(path, 'rb') as fil:
         attachment = MIMEBase('application', 'octet-stream')
@@ -56,8 +55,9 @@ def send_email_attachment(context, to, subject, body, filename):
 
 @when('I send an email to "{to}" with subject "{subject}" and body "{body}"')
 def send_email(context, to, subject, body):
-    msg = MIMEText(body)
-    msg['Subject'] = subject
+
+    msg = MIMEText(body.encode('utf-8'))
+    msg['Subject'] = subject.encode('utf-8')
     msg['To'] = to
     msg['From'] = 'test@localhost'
     s = smtplib.SMTP('localhost', 8025)
