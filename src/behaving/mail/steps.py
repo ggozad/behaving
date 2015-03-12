@@ -1,4 +1,5 @@
 import email
+from email.header import decode_header
 import re
 import quopri
 import parse
@@ -24,9 +25,18 @@ def should_receive_email_containing_text(context, address, text):
 @step(u'I should receive an email at "{address}" with subject "{subject}"')
 @persona_vars
 def should_receive_email_with_subject(context, address, subject):
+    def get_subject_from_mail(mail):
+        decoded_subject = decode_header(mail.get('Subject'))[0]
+        decoded_subject_text = decoded_subject[0]
+        decoded_subject_encoding = decoded_subject[1]
+        if decoded_subject_encoding:
+            return decoded_subject_text.decode(decoded_subject_encoding)
+        else:
+            return decoded_subject_text
+
     def filter_contents(mail):
-        mail = email.message_from_string(mail)
-        return subject == mail.get('Subject')
+        mail = email.message_from_string(mail) 
+        return subject == get_subject_from_mail(mail)
 
     assert context.mail.user_messages(address, filter_contents), u'message not found'
 
