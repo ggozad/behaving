@@ -8,8 +8,8 @@ from behaving.personas.persona import persona_vars
 
 
 MAIL_TIMEOUT = 5
-URL_RE = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
-                    re.I | re.S | re.U)
+URL_RE = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|\
+                    (?:%[0-9a-fA-F][0-9a-fA-F]))+', re.I | re.S | re.U)
 
 
 @step(u'I should receive an email at "{address}" containing "{text}"')
@@ -26,16 +26,11 @@ def should_receive_email_containing_text(context, address, text):
 @persona_vars
 def should_receive_email_with_subject(context, address, subject):
     def get_subject_from_mail(mail):
-        decoded_subject = decode_header(mail.get('Subject'))[0]
-        decoded_subject_text = decoded_subject[0]
-        decoded_subject_encoding = decoded_subject[1]
-        if decoded_subject_encoding:
-            return decoded_subject_text.decode(decoded_subject_encoding)
-        else:
-            return decoded_subject_text
+        text, encoding = decode_header(mail.get('Subject'))[0]
+        return text.decode(encoding) if encoding else text
 
     def filter_contents(mail):
-        mail = email.message_from_string(mail) 
+        mail = email.message_from_string(mail)
         return subject == get_subject_from_mail(mail)
 
     assert context.mail.user_messages(address, filter_contents), u'message not found'
