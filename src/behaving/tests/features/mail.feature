@@ -7,7 +7,7 @@ Feature: Email steps
         And I should receive an email at "foo@bar.com" with subject "Hello world"
         And I should receive an email at "foo@bar.com" containing "BDD"
 
-    @email @runme
+    @email 
     Scenario: Send Receive email with non ANSII subject
         When I send an email to "foo@bar.com" with encoded in "iso8859_7" subject "Γειά σου και χαρά σου"  and body "Χαιρετίσματα απο τη Σίφνο"
         Then I should receive an email at "foo@bar.com"
