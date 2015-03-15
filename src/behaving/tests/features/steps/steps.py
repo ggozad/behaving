@@ -1,4 +1,5 @@
 from email.mime.base import MIMEBase
+from email.header import Header
 import os.path
 
 try:
@@ -57,7 +58,17 @@ def send_email_attachment(context, to, subject, body, filename):
 @when('I send an email to "{to}" with subject "{subject}" and body "{body}"')
 def send_email(context, to, subject, body):
     msg = MIMEText(body)
-    msg['Subject'] = subject
+    msg['Subject'] = Header(subject, 'utf-8')
+    msg['To'] = to
+    msg['From'] = 'test@localhost'
+    s = smtplib.SMTP('localhost', 8025)
+    s.sendmail('test@localhost', [to], msg.as_string())
+    s.quit()
+
+@when('I send an email to "{to}" with encoded in "{encoding}" subject "{subject}"  and body "{body}"')
+def send_email_with_non_ascii_subject(context, to, subject, encoding, body):
+    msg = MIMEText(body)
+    msg['Subject'] = Header(subject.encode(encoding), encoding)
     msg['To'] = to
     msg['From'] = 'test@localhost'
     s = smtplib.SMTP('localhost', 8025)
