@@ -1,4 +1,4 @@
-/behaving
+behaving
 ========
 
 *behaving* is a web application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
