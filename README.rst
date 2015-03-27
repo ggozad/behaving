@@ -1,4 +1,4 @@
-behaving
+/behaving
 ========
 
 *behaving* is a web application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
@@ -330,9 +330,9 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I visit "``url``"
     * When I go to "``url``"
     * When I parse the url path and set "``{expression}``"
-    * Then the browser's url should be "``url``"
-    * Then the browser's url should contain "``text``"
-    * Then the browser's url should not contain "``text``"
+    * Then the browser's URL should be "``url``"
+    * Then the browser's URL should contain "``text``"
+    * Then the browser's URL should not contain "``text``"
 
 * Links
 
