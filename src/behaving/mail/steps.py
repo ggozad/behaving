@@ -71,15 +71,17 @@ def parse_email_set_var(context, address, expression):
     assert context.persona is not None, u'no persona is setup'
     msgs = context.mail.user_messages(address)
     assert msgs, u'no email received'
-
+    mail = email.message_from_string(msgs[-1])
+    mail = quopri.decodestring(mail.get_payload()).decode('utf-8')
+    import pdb; pdb.set_trace()
     parser = parse.compile(expression)
-    res = parser.parse(msgs[-1])
+    res = parser.parse(mail)
 
     # Make an implicit assumption that there might be something before/after the expression
     if res is None:
         expression = '{}' + expression + '{}'
         parser = parse.compile(expression)
-        res = parser.parse(msgs[-1])
+        res = parser.parse(mail)
 
     assert res, u'expression not found'
     assert res.named, u'expression not found'

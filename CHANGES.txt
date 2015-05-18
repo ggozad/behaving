@@ -4,6 +4,9 @@ Changelog
 1.2 - Unreleased
 ----------------
 
+- Unquote when parsing emails.
+  [ggozad]
+
 - Allow for international characters in email.
   [ggozad]
 
