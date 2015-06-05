@@ -52,7 +52,7 @@ def i_uncheck(context, name):
 @step(u'I toggle "{name}"')
 def i_toggle(context, name):
 
-    el = context.browser.find_by_name('digest')
+    el = context.browser.find_by_name(name)
     assert el, u'Element not found'
     el = el.first
     if el.checked:
