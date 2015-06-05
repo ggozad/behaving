@@ -8,6 +8,18 @@ Feature: Email steps
         And I should receive an email at "foo@bar.com" containing "BDD"
 
     @email
+    Scenario: Send Receive email with non ANSII subject
+        When I send an email to "foo@bar.com" with encoded "iso8859_7" subject "Γειά σου και χαρά σου" and body "Χαιρετίσματα απο τη Σίφνο"
+        Then I should receive an email at "foo@bar.com"
+        And I should receive an email at "foo@bar.com" with subject "Γειά σου και χαρά σου"
+        And I should receive an email at "foo@bar.com" containing "Χαιρετίσματα απο τη Σίφνο"
+
+        When I send an email to "foo@bar.com" with encoded "iso8859_10" subject "Korleis har du det?/Korleis går det?" and body "Det er bedre å dø stående enn å leve på knærne."
+        Then I should receive an email at "foo@bar.com"
+        And I should receive an email at "foo@bar.com" with subject "Korleis har du det?/Korleis går det?"
+        And I should receive an email at "foo@bar.com" containing "Det er bedre å dø stående enn å leve på knærne."
+
+    @email @runme
     Scenario: Receive email with attachment
         When I send an email to "foo@bar.com" with subject "Hello world" and body "Greetings from a BDD world!" and attachment "test.txt"
         Then I should receive an email at "foo@bar.com" with attachment "test.txt"

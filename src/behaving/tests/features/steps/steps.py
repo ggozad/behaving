@@ -1,4 +1,5 @@
 from email.mime.base import MIMEBase
+from email.header import Header
 import os.path
 
 try:
@@ -38,9 +39,9 @@ def send_sms(context, to, body):
 @when('I send an email to "{to}" with subject "{subject}" and body "{body}" and attachment "{filename}"')
 def send_email_attachment(context, to, subject, body, filename):
     msg = MIMEMultipart(From='test@localhost',
-                        To=to,
-                        Subject=subject.encode('utf-8'))
-    msg.attach(MIMEText(body.encode('utf-8')))
+                        To=to)
+    msg['Subject'] = Header(subject, 'utf-8')
+    msg.attach(MIMEText(body))
     path = os.path.join(context.attachment_dir, filename)
     with open(path, 'rb') as fil:
         attachment = MIMEBase('application', 'octet-stream')
@@ -50,14 +51,23 @@ def send_email_attachment(context, to, subject, body, filename):
 
     s = smtplib.SMTP('localhost', 8025)
     s.sendmail('test@localhost', [to], msg.as_string())
-    s.close()
+    s.quit()
 
 
 @when('I send an email to "{to}" with subject "{subject}" and body "{body}"')
 def send_email(context, to, subject, body):
-
     msg = MIMEText(body.encode('utf-8'))
-    msg['Subject'] = subject.encode('utf-8')
+    msg['Subject'] = Header(subject, 'utf-8')
+    msg['To'] = to
+    msg['From'] = 'test@localhost'
+    s = smtplib.SMTP('localhost', 8025)
+    s.sendmail('test@localhost', [to], msg.as_string())
+    s.quit()
+
+@when('I send an email to "{to}" with encoded "{encoding}" subject "{subject}" and body "{body}"')
+def send_email_with_non_ascii_subject(context, to, encoding, subject, body):
+    msg = MIMEText(body.encode('utf-8'))
+    msg['Subject'] = Header(subject.encode(encoding), encoding)
     msg['To'] = to
     msg['From'] = 'test@localhost'
     s = smtplib.SMTP('localhost', 8025)

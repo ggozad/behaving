@@ -100,7 +100,7 @@ Feature: Browser handling
             Given "Bar" as the persona
             When I visit "http://localhost:8080"
             Then I wait for 4 seconds
-            And I close browser "Bar"
+            And I close the browser "Bar"
 
         Then I wait for 4 seconds
-        And I close browser "Foo"
+        And I close the browser "Foo"
