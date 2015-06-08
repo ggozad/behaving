@@ -2,7 +2,6 @@ import email
 from email.header import decode_header
 import re
 import quopri
-import parse
 from behave import step
 from behaving.personas.persona import persona_vars
 
@@ -76,27 +75,31 @@ def parse_email_set_var(context, address, expression):
     msgs = context.mail.user_messages(address)
     assert msgs, u'no email received'
     mail = email.message_from_string(msgs[-1])
-    mail = quopri.decodestring(mail.get_payload()).decode("utf-8")
+    text = quopri.decodestring(mail.get_payload()).decode("utf-8")
+    parse_text(context, text, expression)
+
+def parse_text(context, text, expression):
+    import parse
     parser = parse.compile(expression)
-    res = parser.parse(mail)
+    res = parser.parse(text)
 
     # Make an implicit assumption that there might be something before the expression
     if res is None:
         expr = '{}' + expression
         parser = parse.compile(expr)
-        res = parser.parse(mail)
+        res = parser.parse(text)
 
     # Make an implicit assumption that there might be something after the expression
     if res is None:
         expr = expression + '{}'
         parser = parse.compile(expr)
-        res = parser.parse(mail)
+        res = parser.parse(text)
 
     # Make an implicit assumption that there might be something before/after the expression
     if res is None:
         expr = '{}' + expression + '{}'
         parser = parse.compile(expr)
-        res = parser.parse(mail)
+        res = parser.parse(text)
 
     assert res, u'expression not found'
     assert res.named, u'expression not found'

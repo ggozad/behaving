@@ -9,17 +9,17 @@ Feature: Email steps
 
     @email
     Scenario: Send Receive email with non ANSII subject
-        When I send an email to "foo@bar.com" with encoded "iso8859_7" subject "Γειά σου και χαρά σου" and body "Χαιρετίσματα απο τη Σίφνο"
+        When I send an email to "foo@bar.com" with encoded "iso8859_7" subject "φοο βαρ" and body "βαρ φοο"
         Then I should receive an email at "foo@bar.com"
-        And I should receive an email at "foo@bar.com" with subject "Γειά σου και χαρά σου"
-        And I should receive an email at "foo@bar.com" containing "Χαιρετίσματα απο τη Σίφνο"
+        And I should receive an email at "foo@bar.com" with subject "φοο βαρ"
+        And I should receive an email at "foo@bar.com" containing "βαρ φοο"
 
-        When I send an email to "foo@bar.com" with encoded "iso8859_10" subject "Korleis har du det?/Korleis går det?" and body "Det er bedre å dø stående enn å leve på knærne."
+        When I send an email to "foo@bar.com" with encoded "iso8859_10" subject "få bår" and body "bår få"
         Then I should receive an email at "foo@bar.com"
-        And I should receive an email at "foo@bar.com" with subject "Korleis har du det?/Korleis går det?"
-        And I should receive an email at "foo@bar.com" containing "Det er bedre å dø stående enn å leve på knærne."
+        And I should receive an email at "foo@bar.com" with subject "få bår"
+        And I should receive an email at "foo@bar.com" containing "bår få"
 
-    @email @runme
+    @email
     Scenario: Receive email with attachment
         When I send an email to "foo@bar.com" with subject "Hello world" and body "Greetings from a BDD world!" and attachment "test.txt"
         Then I should receive an email at "foo@bar.com" with attachment "test.txt"
@@ -42,9 +42,9 @@ Feature: Email steps
     @email
     Scenario: International friendly
         Given "Foo" as the persona
-        When I send an email to "foo@bar.com" with subject "Καλημέρα" and body "Έλα ρε, τί γίνεται; Ο κωδικός είναι: 'hax0r'."
+        When I send an email to "foo@bar.com" with subject "få bår" and body "bår få: 'hax0r'."
         Then I should receive an email at "foo@bar.com"
-        And I should receive an email at "foo@bar.com" with subject "Καλημέρα"
-        And I should receive an email at "foo@bar.com" containing "Έλα ρε"
-        When I parse the email I received at "foo@bar.com" and set "κωδικός είναι: '{password}'"
+        And I should receive an email at "foo@bar.com" with subject "få bår"
+        And I should receive an email at "foo@bar.com" containing "bår få"
+        When I parse the email I received at "foo@bar.com" and set "få: '{password}'"
         Then "password" is set to "hax0r"

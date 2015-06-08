@@ -1,7 +1,6 @@
-import parse
 from behave import step
 from behaving.personas.persona import persona_vars
-
+from behaving.mail.steps import parse_text
 
 @step(u'I set "{key}" to the body of the sms I received at "{tel}"')
 @persona_vars
@@ -19,20 +18,8 @@ def parse_sms_set_var(context, tel, expression):
     msgs = context.sms.user_messages(tel)
     assert msgs, u'no sms received'
 
-    parser = parse.compile(expression)
-    res = parser.parse(msgs[-1])
-
-    # Make an implicit assumption that there might be something before/after the expression
-    if res is None:
-        expression = '{}' + expression + '{}'
-        parser = parse.compile(expression)
-        res = parser.parse(msgs[-1])
-
-    assert res, u'expression not found'
-    assert res.named, u'expression not found'
-    for key, val in res.named.items():
-        context.persona[key] = val
-
+    msg = msgs[-1]
+    parse_text(context, msg, expression)
 
 @step(u'I should receive an sms at "{tel}" containing "{text}"')
 @persona_vars
