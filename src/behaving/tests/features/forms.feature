@@ -13,7 +13,7 @@ Feature: Forms
         And I choose "male" from "sex"
         And I check "subscribe"
         And I uncheck "digest"
-        And I toggle "diggest"
+        And I toggle "digest"
         And I select "no" from "countries"
         And I select "gr" from "countries"
         And I attach the file "test.txt" to "file"

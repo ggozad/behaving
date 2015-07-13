@@ -3,7 +3,7 @@ try:
 except ImportError:
     from urllib.parse import urljoin, urlparse
 from behave import step
-import parse
+from behaving.mail.steps import parse_text
 
 from behaving.personas.persona import persona_vars
 
@@ -42,12 +42,7 @@ def the_browser_url_should_not_contain(context, text):
 
 @step(u'I parse the url path and set "{expression}"')
 @persona_vars
-def parse_sms_set_var(context, expression):
+def parse_url_set_var(context, expression):
     assert context.persona is not None, u'no persona is setup'
     url = urlparse(context.browser.url).path
-    parser = parse.compile(expression)
-    res = parser.parse(url)
-    assert res, u'expression not found'
-    assert res.named, u'expression not found'
-    for key, val in res.named.items():
-        context.persona[key] = val
+    parse_text(context, url, expression)

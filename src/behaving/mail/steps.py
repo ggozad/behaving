@@ -1,14 +1,14 @@
 import email
+from email.header import decode_header
 import re
 import quopri
-import parse
 from behave import step
 from behaving.personas.persona import persona_vars
 
 
 MAIL_TIMEOUT = 5
-URL_RE = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',
-                    re.I | re.S | re.U)
+URL_RE = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|\
+                    (?:%[0-9a-fA-F][0-9a-fA-F]))+', re.I | re.S | re.U)
 
 
 @step(u'I should receive an email at "{address}" containing "{text}"')
@@ -24,9 +24,13 @@ def should_receive_email_containing_text(context, address, text):
 @step(u'I should receive an email at "{address}" with subject "{subject}"')
 @persona_vars
 def should_receive_email_with_subject(context, address, subject):
+    def get_subject_from_mail(mail):
+        text, encoding = decode_header(mail.get('Subject'))[0]
+        return text.decode(encoding) if encoding else text
+
     def filter_contents(mail):
         mail = email.message_from_string(mail)
-        return subject.encode('utf-8') == mail.get('Subject')
+        return subject == get_subject_from_mail(mail)
 
     assert context.mail.user_messages(address, filter_contents), u'message not found'
 
@@ -67,21 +71,35 @@ def click_link_in_email(context, address):
 @step(u'I parse the email I received at "{address}" and set "{expression}"')
 @persona_vars
 def parse_email_set_var(context, address, expression):
-    expression = expression.encode('utf-8')
     assert context.persona is not None, u'no persona is setup'
     msgs = context.mail.user_messages(address)
     assert msgs, u'no email received'
     mail = email.message_from_string(msgs[-1])
-    mail = quopri.decodestring(mail.get_payload()).decode('utf-8')
-    import pdb; pdb.set_trace()
+    text = quopri.decodestring(mail.get_payload()).decode("utf-8")
+    parse_text(context, text, expression)
+
+def parse_text(context, text, expression):
+    import parse
     parser = parse.compile(expression)
-    res = parser.parse(mail)
+    res = parser.parse(text)
+
+    # Make an implicit assumption that there might be something before the expression
+    if res is None:
+        expr = '{}' + expression
+        parser = parse.compile(expr)
+        res = parser.parse(text)
+
+    # Make an implicit assumption that there might be something after the expression
+    if res is None:
+        expr = expression + '{}'
+        parser = parse.compile(expr)
+        res = parser.parse(text)
 
     # Make an implicit assumption that there might be something before/after the expression
     if res is None:
-        expression = '{}' + expression + '{}'
-        parser = parse.compile(expression)
-        res = parser.parse(mail)
+        expr = '{}' + expression + '{}'
+        parser = parse.compile(expr)
+        res = parser.parse(text)
 
     assert res, u'expression not found'
     assert res.named, u'expression not found'
