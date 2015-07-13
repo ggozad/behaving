@@ -6,6 +6,7 @@
 
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
 from splinter.driver.webdriver.cookie_manager import CookieManager
 
@@ -35,7 +36,10 @@ class WebDriver(BaseWebDriver):
         else:
             options.add_argument('--incognito')
 
-        self.driver = Chrome(chrome_options=options, **kwargs)
+        dc = DesiredCapabilities.CHROME
+        dc['loggingPrefs'] = {'browser': 'ALL'}
+
+        self.driver = Chrome(chrome_options=options, desired_capabilities=dc, **kwargs)
         self.element_class = WebDriverElement
 
         self._cookie_manager = CookieManager(self.driver)
