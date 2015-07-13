@@ -18,8 +18,7 @@ def after_feature(context, feature):
 
 
 def after_scenario(context, scenario):
-	pass
-#    context.gcm.clear()
+    context.gcm.clear()
 
 
 def after_all(context):

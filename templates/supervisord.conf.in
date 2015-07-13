@@ -47,4 +47,4 @@ command = ${buildout:bin-directory}/gcmmock -o ${buildout:directory}/var/gcm
 startretries = 5
 autostart = true
 autorestart = true
-priority = 400
+priority = 500
