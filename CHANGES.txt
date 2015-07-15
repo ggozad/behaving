@@ -3,7 +3,12 @@ Changelog
 
 1.3 - Unreleased
 ----------------
-- Added step to select an option by visible text
+
+- Updates to "When I press..." step to include more cases.
+  [demetris-manikas]
+
+- Added step to select an option by visible text.
+  [demetris-manikas]
 
 1.2 - 2015-04-18
 ----------------
