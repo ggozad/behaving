@@ -87,8 +87,10 @@ def i_press(context, name):
     element = context.browser.find_by_xpath(
         ("//*[@id='%(name)s']|"
          "//*[@name='%(name)s']|"
-         "//button[contains(text(), '%(name)s')]|"
-         "//a[contains(text(), '%(name)s')]") % {'name': name})
+         "//button[contains(string(), '%(name)s')]|"
+         "//input[@type='button' and contains(string(), '%(name)s')]|"
+         "//input[@type='button' and contains(@value, '%(name)s')]|"
+         "//a[contains(string(), '%(name)s')]") % {'name': name})
     assert element, u'Element not found'
     element.first.click()
 
