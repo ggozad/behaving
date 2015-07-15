@@ -15,7 +15,7 @@ Feature: Forms
         And I uncheck "digest"
         And I toggle "digest"
         And I select "no" from "countries"
-        And I select "gr" from "countries"
+        And I select by text "Greece" from "countries"
         And I attach the file "test.txt" to "file"
         And I press "register"
         Then the browser's URL should contain "name=Foo+Bar"

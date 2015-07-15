@@ -374,6 +374,7 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
     * When I check "``name``"
     * When I uncheck "``name``"
     * When I select "``value``" from "``name``""
+    * When I select by text "``text``" from "``name``""
     * When I press "``name|id|text|innerText``"
     * When I press the element with xpath "``xpath``"
     * When I attach the file "``path``" to "``name``"

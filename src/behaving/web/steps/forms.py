@@ -1,7 +1,7 @@
 import os
 from behave import step
 from splinter.exceptions import ElementDoesNotExist
-
+from selenium.webdriver.support.ui import Select
 from behaving.personas.persona import persona_vars
 
 
@@ -70,6 +70,14 @@ def i_select(context, value, name):
         inp = context.browser.find_by_xpath("//input[@name='%s'][@value='%s']" % (name, value))
         assert inp, u'Element not found'
         inp.first.check()
+
+@step(u'I select by text "{text}" from "{name}"')
+@persona_vars
+def i_select(context, text, name):
+    elem = context.browser.driver.find_element_by_name(name)
+    assert elem, u'Element not found'
+    select = Select(elem)
+    select.select_by_visible_text(text)
 
 
 @step(u'I press "{name}"')
