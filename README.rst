@@ -24,10 +24,10 @@ Starting to use *behaving* is pretty easy. Inside some python module, add your *
             Then I should see "Behavior-driven development" within 5 seconds
 
 
-Email & SMS
------------
+Email, SMS & GCM (Google Cloud Messaging)
+-----------------------------------------
 
-While the web is the focus of *behaving*, it also includes simple mocks for a mail and an SMS server. These come with a small collection of steps allowing you to do things like:
+While the web is the focus of *behaving*, it also includes simple mocks for a mail, SMS and a GCM server. These come with a small collection of steps allowing you to do things like:
 
 ::
 
@@ -43,22 +43,11 @@ While the web is the focus of *behaving*, it also includes simple mocks for a ma
             When I send an sms to "+4745690001" with body "Hello world"
             Then I should receive an sms at "+4745690001" containing "world"
 
-Typically, it will be your web application that sends email/sms and testing it comes down to configuring the application to send email/sms to the mock servers.
-
-GCM
-----
-
-*behaving* also includes a simple mock GCM server.
-
-::
-
-    Feature: GCM
-
         Scenario: Receive GCM Notification
             When I send a gcm message "{"to":"deviceID", "data": {"message": "Foo Bar", "badge": 6}}"
             Then I should receive a gcm notification at "deviceID" containing "{'data': {'message': 'Foo Bar'}}"
 
-Typically, it will be your web application that sends GCM notifications and testing it comes down to configuring the application to send notifications to the mock server.
+Typically, it will be your web application that sends email/sms/notifications and testing it comes down to configuring the application to send email/sms/notifications to the mock servers.
 
 
 Personas & state
@@ -440,7 +429,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 * Then I should receive an sms at "``number``"
 * Then I should receive an sms at "``number``" containing "``text``"
 
-``behaving.gcm`` Supported matchers/steps
+``behaving.notifications.gcm`` Supported matchers/steps
 -----------------------------------------
 
 * When I send a gcm message "{"to":"deviceID", "data": {"message": "Foo Bar", "badge": 6}}"
