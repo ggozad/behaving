@@ -3,6 +3,8 @@ Changelog
 
 1.3 - Unreleased
 ----------------
+- Added gcm mock server.
+  [demetris-manikas]
 
 - Updates to "When I press..." step to include more cases.
   [demetris-manikas]

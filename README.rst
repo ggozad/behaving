@@ -1,7 +1,7 @@
 behaving
 ========
 
-*behaving* is a web application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms interactions.
+*behaving* is a web application testing framework for Behavior-Driven-Development, similar to `Cucumber`_ or `lettuce`_. It differs from these by focusing on multi-user web/email/sms/gcm interactions.
 
 *behaving* is written in python and is based on `behave`_, `splinter`_. Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
 
@@ -44,6 +44,22 @@ While the web is the focus of *behaving*, it also includes simple mocks for a ma
             Then I should receive an sms at "+4745690001" containing "world"
 
 Typically, it will be your web application that sends email/sms and testing it comes down to configuring the application to send email/sms to the mock servers.
+
+GCM
+----
+
+*behaving* also includes a simple mock GCM server.
+
+::
+
+    Feature: GCM
+
+        Scenario: Receive GCM Notification
+            When I send a gcm message "{"to":"deviceID", "data": {"message": "Foo Bar", "badge": 6}}"
+            Then I should receive a gcm notification at "deviceID" containing "{'data': {'message': 'Foo Bar'}}"
+
+Typically, it will be your web application that sends GCM notifications and testing it comes down to configuring the application to send notifications to the mock server.
+
 
 Personas & state
 ----------------
@@ -223,6 +239,7 @@ In the steps directory you will need to import the *behaving* steps you need. Yo
     from behaving.web.steps import *
     from behaving.sms.steps import *
     from behaving.mail.steps import *
+    from behaving.notifications.gcm.steps import *
     from behaving.personas.steps import *
 
     @when('I go to home')
@@ -246,6 +263,7 @@ An example of an environment that does simply set some variables and then rely o
         import mypackage
         context.attachment_dir = os.path.join(os.path.dirname(mypackage.__file__), 'tests/data')
         context.sms_path = os.path.join(os.path.dirname(mypackage.__file__), '../../var/sms/')
+        context.gcm_path = os.path.join(os.path.dirname(mypackage.__file__), '../../var/gcm/')
         context.mail_path = os.path.join(os.path.dirname(mypackage.__file__), '../../var/mail/')
         benv.before_all(context)
 
@@ -274,6 +292,7 @@ The following variables are supported and can be set to override defaults:
 * ``screenshots_dir`` (the path where screenshots will be saved. If it is set, any failure in a scenario will result in a screenshot of the browser at the time when the failure happened.)
 * ``attachment_dir`` (the path where file attachments can be found)
 * ``sms_path`` (the path to be used by ``smsmock`` to save sms. Defaults to ``current_dir/sms`` )
+* ``gcm_path`` (the path to be used by ``gcmmock`` to save gcm notifications. Defaults to ``current_dir/gcm`` )
 * ``mail_path`` (the path to be used by ``mailmock`` to save mail. Defaults to ``current_dir/mail`` )
 * ``default_browser``
 * ``default_browser_size`` (tuple (width, height), applied to each browser as it's created)
@@ -288,15 +307,16 @@ You can run the tests simply by issuing
 
     ./bin/behave ./features
 
-Mail and SMS mock servers
+Mail, GCM and SMS mock servers
 -------------------------
 
-When *behaving* is installed, it creates two scripts to help you test mail and sms, ``mailmock`` and ``smsmock`` respectively. You can directly invoke them before running your tests, they both take a port as well as the directory to output data as parameters. For example,
+When *behaving* is installed, it creates three scripts to help you test mail, gcm and sms, ``mailmock``, ``gcmmock` and ``smsmock`` respectively. You can directly invoke them before running your tests, they all take a port as well as the directory to output data as parameters. For example,
 
 ::
 
     ./bin/smsmock -p 8081 -o ./var/sms
-    ./bin/mailmock -p 8082 -o ./var/mail [--no-stdout]
+    ./bin/gcmmock -p 8082 -o ./var/notifications/gcm
+    ./bin/mailmock -p 8083 -o ./var/mail [--no-stdout]
 
 
 ``behaving.web`` Supported matchers/steps
@@ -419,6 +439,12 @@ When *behaving* is installed, it creates two scripts to help you test mail and s
 * When I parse the sms I received at "``number``" and set "``expression``"
 * Then I should receive an sms at "``number``"
 * Then I should receive an sms at "``number``" containing "``text``"
+
+``behaving.gcm`` Supported matchers/steps
+-----------------------------------------
+
+* When I send a gcm message "{"to":"deviceID", "data": {"message": "Foo Bar", "badge": 6}}"
+* Then I should receive a gcm notification at "deviceID" containing "{'data': {'message': 'Foo Bar'}}"
 
 ``behaving.personas`` Supported matchers/steps
 ----------------------------------------------
