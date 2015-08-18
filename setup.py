@@ -27,5 +27,6 @@ setup(name='behaving',
       [console_scripts]
       mailmock = behaving.mail.mock:main
       smsmock = behaving.sms.mock:main
+      gcmmock = behaving.notifications.gcm.mock:main
       """
       )
