@@ -2,7 +2,9 @@ import os
 from behave import step
 from splinter.exceptions import ElementDoesNotExist
 from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoAlertPresentException
 from behaving.personas.persona import persona_vars
+from behaving.web.steps.basic import _retry
 
 
 @step(u'I fill in "{name}" with "{value}"')
@@ -191,6 +193,25 @@ def field_is_not_required(context, name):
     assert context.browser.find_by_name(name), u'Element not found'
     assert not context.browser.evaluate_script("document.getElementsByName('%s')[0].getAttribute('required')" % name), \
         'Field is required'
+
+
+@step(u'I should see an alert')
+def alert_is_present(context):
+    try:
+        assert context.browser.get_alert(), u'Alert not found'
+    except NoAlertPresentException:
+        assert False, u'Alert not found'
+
+
+@step(u'I should see an alert within {timeout:d} seconds')
+def alert_is_present_timeout(context, timeout):
+    def check():
+        try:
+            alert = context.browser.get_alert(), u'Alert not found'
+            return alert is not None
+        except NoAlertPresentException:
+            return False
+    assert _retry(check, timeout), u'Alert not found'
 
 
 @step(u'I enter "{text}" to the alert')
