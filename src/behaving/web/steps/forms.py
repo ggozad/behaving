@@ -71,9 +71,10 @@ def i_select(context, value, name):
         assert inp, u'Element not found'
         inp.first.check()
 
+
 @step(u'I select by text "{text}" from "{name}"')
 @persona_vars
-def i_select(context, text, name):
+def i_select_text(context, text, name):
     elem = context.browser.driver.find_element_by_name(name)
     assert elem, u'Element not found'
     select = Select(elem)
