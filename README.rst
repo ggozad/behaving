@@ -403,6 +403,8 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * Then "``name``" should not be valid
     * Then "``name``" should be required
     * Then "``name``" should not be required
+    * Then I should see an alert
+    * Then I should see an alert within ``timeout`` seconds
 
 * Persona interaction & variables
 
