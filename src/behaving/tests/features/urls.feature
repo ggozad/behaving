@@ -1,15 +1,14 @@
 Feature: Url handling
 
-    Background:
-        Given a browser
-
     @web
     Scenario: Visit a url
+        Given a browser
         When I visit "http://localhost:8080"
         Then the browser's URL should be "http://localhost:8080/"
 
     @web
     Scenario: Go to a url
+        Given a browser
         When I go to "http://localhost:8080/"
         Then the browser's URL should be "http://localhost:8080/"
         And the browser's URL should contain "localhost"
@@ -17,6 +16,7 @@ Feature: Url handling
 
     @web
     Scenario: Base url
+        Given a browser
         Given the base url "http://localhost:8080/"
         When I go to "/page2.html"
         Then the browser's URL should be "http://localhost:8080/page2.html"

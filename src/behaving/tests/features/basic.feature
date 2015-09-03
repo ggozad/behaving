@@ -1,10 +1,9 @@
 Feature: Text presence
 
-    Background:
-        Given a browser
 
     @web
     Scenario: Text presence
+        Given a browser
         When I visit "http://localhost:8080"
         Then I should see "Hello world"
         And I should not see "hidden"
@@ -14,6 +13,7 @@ Feature: Text presence
 
     @web
     Scenario: Element presence
+        Given a browser
         When I visit "http://localhost:8080"
         Then I should see an element with id "content"
         And I should see an element with the css selector "div#content"

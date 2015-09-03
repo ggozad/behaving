@@ -1,9 +1,5 @@
 Feature: Grab contents of a DOM node, save it as a variable.
 
-    Background:
-        Given a browser
-
-
     @web
     Scenario: Setting variable to the text of a node
         Given "Foo" as the persona

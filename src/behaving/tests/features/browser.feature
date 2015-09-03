@@ -91,8 +91,6 @@ Feature: Browser handling
 
     @web
     Scenario: Create Personas and Close their respective browsers.
-
-        Given a Browser
         Given "Foo" as the persona
         When I visit "http://localhost:8080"
         Then I wait for 4 seconds
