@@ -1,5 +1,11 @@
 import re
+import sys
 
+# unicode and basestring was removed from Python 3
+is_python3 = sys.version_info.major == 3
+if is_python3:
+    unicode = str
+    basestring = str
 
 class Persona(dict):
     """
