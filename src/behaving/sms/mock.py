@@ -12,6 +12,12 @@ except ImportError:
     from urllib.parse import parse_qs
 import time
 
+try:
+    from pync import Notifier
+    notifier = Notifier
+except ImportError:
+    notifier = None
+
 output_dir = None
 
 
@@ -54,6 +60,9 @@ class SMSServer(SimpleHTTPRequestHandler):
         dest = os.path.join(phone_dir, "%s.sms" % filename)
         with open(dest, "w") as f:
             f.write(body)
+
+        if notifier:
+            notifier.notify(body, title=to)
 
 
 def main(args=sys.argv[1:]):
