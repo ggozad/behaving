@@ -386,6 +386,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * When I select by text "``text``" from "``name``""
     * When I press "``name|id|text|innerText``"
     * When I press the element with xpath "``xpath``"
+    * When I send Enter to "``{name}``"
     * When I attach the file "``path``" to "``name``"
     * When I set the innner HTML of the element with id "``id``" to "``contents``"
       [Sets html on a ``contenteditable`` element with id ``id`` to ``contents``]
@@ -394,6 +395,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * When I enter "``text``" to the alert
     * When I accept the alert
     * When I dismiss the alert
+    * Wnen I send "``KEY``" to "``name``"
     * Then field "``name``" should have the value "``value``"
     * Then "``name``" should be enabled
     * Then "``name``" should be disabled

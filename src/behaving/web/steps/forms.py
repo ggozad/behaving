@@ -3,6 +3,7 @@ from behave import step
 from splinter.exceptions import ElementDoesNotExist
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.common.keys import Keys
 from behaving.personas.persona import persona_vars
 from behaving.web.steps.basic import _retry
 
@@ -223,7 +224,6 @@ def set_alert_text(context, text):
 
 
 @step(u'I accept the alert')
-@persona_vars
 def accept_alert(context):
     alert = context.browser.driver.switch_to_alert()
     assert alert, u'Alert not found'
@@ -231,8 +231,17 @@ def accept_alert(context):
 
 
 @step(u'I dismiss the alert')
-@persona_vars
 def dimiss_alert(context):
     alert = context.browser.driver.switch_to_alert()
     assert alert, u'Alert not found'
     alert.dismiss()
+
+
+@step(u'I send "{key}" to "{name}"')
+@persona_vars
+def press_enter(context, key, name):
+    element = context.browser.driver.find_element_by_name(name)
+    key = getattr(Keys, key, None)
+    assert element, u'Element not found'
+    assert key, u'Key not in selenium.webdriver.common.keys.Keys'
+    element.send_keys(key)
