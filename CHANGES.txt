@@ -1,10 +1,10 @@
 Changelog
 =========
 
-1.5.0 - Unreleased
+1.4.2 - Unreleased
 ------------------
-- Added I send Enter to "{name}"
-  [demetris-manikas]
+- When I send "{key}" to "{name}"
+  [demetris-manikas, ggozad]
 
 1.4.1 2015-09-09
 ----------------

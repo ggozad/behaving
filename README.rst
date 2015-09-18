@@ -395,6 +395,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * When I enter "``text``" to the alert
     * When I accept the alert
     * When I dismiss the alert
+    * Wnen I send "``KEY``" to "``name``"
     * Then field "``name``" should have the value "``value``"
     * Then "``name``" should be enabled
     * Then "``name``" should be disabled
