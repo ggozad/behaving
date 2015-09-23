@@ -407,6 +407,11 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * Then I should see an alert
     * Then I should see an alert within ``timeout`` seconds
 
+* Mouse
+
+    * When I mouse over the element with xpath "``xpath``"
+    * When I mouse out of the element with xpath "``xpath``"
+
 * Persona interaction & variables
 
     * When I set "``key``" to the text of "``id|name``"

@@ -5,3 +5,4 @@ from .links import *
 from .url import *
 from .variables import *
 from .testing import *
+from .mouse import *
