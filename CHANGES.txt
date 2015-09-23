@@ -3,6 +3,10 @@ Changelog
 
 1.4.2 - Unreleased
 ------------------
+
+- When I mouse over/out the element with xpath
+  [ggozad]
+
 - When I send "{key}" to "{name}"
   [demetris-manikas, ggozad]
 
