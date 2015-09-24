@@ -1,0 +1,14 @@
+{
+    "folders":
+    [
+        {
+            "follow_symlinks": true,
+            "path": "../",
+            "folder_exclude_patterns": ["dist", "develop-eggs", "bin", "downloads",
+                                        "eggs", "parts", "scripts", "var",
+                                        "extras", "node_modules",
+                                        "behaving.egg-info",],
+            "file_exclude_patterns": [".installed.cfg", ".mr.developer.cfg",".travis.yml", "ghostdriver.log"]
+        }
+    ]
+}
