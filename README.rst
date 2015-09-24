@@ -391,9 +391,6 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
       [Sets html on a ``contenteditable`` element with id ``id`` to ``contents``]
     * When I set the innner HTML of the element with class "``class``" to "``contents``"
     * When I set the innner HTML of the element with class "``class``" to "``contents``"
-    * When I enter "``text``" to the alert
-    * When I accept the alert
-    * When I dismiss the alert
     * Wnen I send "``KEY``" to "``name``"
     * Then field "``name``" should have the value "``value``"
     * Then "``name``" should be enabled
@@ -404,8 +401,15 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * Then "``name``" should not be valid
     * Then "``name``" should be required
     * Then "``name``" should not be required
+
+* Alerts & prompts
+    * When I enter "``text``" to the alert
+    * When I accept the alert
+    * When I dismiss the alert
     * Then I should see an alert
     * Then I should see an alert within ``timeout`` seconds
+    * Then I should see an alert containing "``text``"
+    * Then I should see an alert containing "``text``" within ``timeout`` seconds
 
 * Mouse
 

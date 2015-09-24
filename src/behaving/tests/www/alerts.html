@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Alerts test</title>
+</head>
+<body>
+    <button id="alert" onclick="alert('foo');">Alert me</span>
+    <button id="alert-delayed" onclick="setTimeout(function () { alert('bar');}, 4000); ">Alert me delayed</span>
+
+    <button id="confirmation" onclick="
+        var r = confirm('You sure?');
+        if (r) {
+            document.getElementById('msg').textContent='You are sure';
+        } else {
+            document.getElementById('msg').textContent='You are not sure';
+        }">confirm</button>
+
+    <button id="prompt" onclick="var r = prompt('Say something'); document.getElementById('msg').textContent=r;">prompt</button>
+
+    <span id="msg"/>
+
+
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+
+    };
+</script>
+</html>

@@ -4,6 +4,9 @@ Changelog
 1.4.2 - Unreleased
 ------------------
 
+- Alerts containing text steps, tests for alerts.
+  [ggozad]
+
 - When I mouse over/out the element with xpath
   [ggozad]
 
