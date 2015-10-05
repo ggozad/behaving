@@ -5,6 +5,7 @@ from behave import step
 def enable_single_browser_mode(context):
     context.single_browser = True
 
+
 @step(u'I note browser session')
 def record_browser_session(context):
     if hasattr(context, 'current_sessions'):
@@ -14,8 +15,8 @@ def record_browser_session(context):
     current_sessions.add(context.browser.driver)
     context.current_sessions = current_sessions
 
+
 @step(u'I only used one browser session')
 def only_used_one_browser_session(context):
     sessions = len(context.current_sessions)
     assert sessions == 1, 'Oops, I used %s browsers sessions!' % sessions
-
