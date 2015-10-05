@@ -20,3 +20,14 @@ def record_browser_session(context):
 def only_used_one_browser_session(context):
     sessions = len(context.current_sessions)
     assert sessions == 1, 'Oops, I used %s browsers sessions!' % sessions
+
+
+@step(u'I pause the tests')
+def pause_tests(context):
+    context._runner.stop_capture()
+    print('\tPress ENTER to continue')
+    try:
+        input()
+    except SyntaxError:
+        pass
+    context._runner.start_capture()

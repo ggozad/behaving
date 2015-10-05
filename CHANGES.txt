@@ -13,6 +13,9 @@ Changelog
 - When I send "{key}" to "{name}"
   [demetris-manikas, ggozad]
 
+- When I pause the tests
+  [ggozad]
+
 1.4.1 2015-09-09
 ----------------
 
