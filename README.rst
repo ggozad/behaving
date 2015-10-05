@@ -455,6 +455,11 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 * When I clone persona "``source``" to "``target``"
 * Then "``key``" is set to "``value``"
 
+Debugging
+---------
+
+* When I pause the tests
+
 Contributing to behaving
 ------------------------
 Please see the `Contribution Guidelines`_
