@@ -4,6 +4,9 @@ Changelog
 1.4.2 - Unreleased
 ------------------
 
+- Make persona variables usable in steps that receive a body of text.
+  [MihaiBalint]
+
 - Alerts containing text steps, tests for alerts.
   [ggozad]
 

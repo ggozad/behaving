@@ -106,8 +106,14 @@ Within a test and given a persona, you can now use ``$var_name`` to access a var
     And I set "title" to the text of "document-title"
     And I fill in "delete" with "$title"
     And I set "address.country" to the text of "country"
+    And I set "postaddress" to:
+    """
+    $fullname
+    $address.street, $address.zip, $address.country
+    """
 
 would fill in the field with id ``name`` with ``Gandalf the Grey``, ``street`` with ``Rivendell street 1`` set the variable ``title`` to the text of the element with id ``document-title`` and reuse the variable ``title`` to fill in the field with id ``delete``. It would also store the value of the field with id "country" in address[``country``].
+The ``$var_name`` pattern is also usable in the text received by steps that expect a body of text, which means that the ``postaddress`` persona variable will contain Gandalf's complete snail-mail postage address nicely formatted on multiple lines.
 
 Hello Persona example
 ---------------------
@@ -452,6 +458,11 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 
 * Given "``name``" as the persona
 * When I set "``key``" to "``value``"
+* When I set "``key``" to:
+  """
+  ``some longer body of text``
+  ``usually multiline``
+  """
 * When I clone persona "``source``" to "``target``"
 * Then "``key``" is set to "``value``"
 
