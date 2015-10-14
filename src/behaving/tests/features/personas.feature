@@ -18,6 +18,22 @@ Feature: Use Personas
         When I set "mydict.foo" to "aaa"
 
     @personas
+    Scenario: Set variables text
+        Given "Foo" as the persona
+        When I set "foo" to:
+        """
+        Hello world
+        """
+        And I set "bar" to "Hello world"
+        Then "foo" is set to "$bar"
+        When I set "foo" to "world"
+        And I set "bar" to:
+        """
+        Hello $foo
+        """
+        Then "bar" is set to "Hello world"
+
+    @personas
     Scenario: Escaped persona variables
         Given "Foo" as the persona
         When I set "foo" to "\$1.00"
