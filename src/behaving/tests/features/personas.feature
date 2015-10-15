@@ -22,16 +22,18 @@ Feature: Use Personas
         Given "Foo" as the persona
         When I set "foo" to:
         """
-        Hello world
+        Hello wørld
         """
-        And I set "bar" to "Hello world"
+        And I set "bar" to "Hello wørld"
         Then "foo" is set to "$bar"
-        When I set "foo" to "world"
+        When I set "foo" to "wørld"
         And I set "bar" to:
         """
         Hello $foo
         """
-        Then "bar" is set to "Hello world"
+        Then "bar" is set to "Hello wørld"
+
+
 
     @personas
     Scenario: Escaped persona variables
