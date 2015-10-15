@@ -26,7 +26,7 @@ This will download and setup everything you need and also build the mobile test 
 Running tests
 -------------
 
-Run *supervisord* which will make manage running the SMS & mail mock servers, an HTTP server for testing, *appium*, and the android emulator.
+Run *supervisord* which will make manage running the SMS, mail & GCM mock servers and an HTTP server for testing.
 
 ::
 

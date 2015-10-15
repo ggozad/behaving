@@ -18,7 +18,6 @@ ghostdriver.log
 .long-description.html
 build/
 xcuserdata/
-src/appium/
 src/behaving/tests/apps/android_test_app/bin
 src/behaving/tests/apps/android_test_app/.*
 src/behaving/tests/apps/android_test_app/gen
