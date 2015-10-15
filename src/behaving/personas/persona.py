@@ -21,22 +21,32 @@ class PersonaVarMatcher(object):
     def __init__(self, func, *args):
         self.func = func
 
+    def _get_variables(self, target):
+        if isinstance(target, unicode):
+            target = target.encode('utf-8')
+        return var_exp.findall(str(target))
+
+    def _replace_variables(self, context, target):
+        for var in self._get_variables(target):
+            value = context.persona[var]
+
+            if isinstance(value, basestring):
+                target = target.replace('$' + var, value)
+            else:
+                target = value
+        if isinstance(target, basestring):
+            target = target.replace('\$', '$')
+
+        return target
+
     def replace(self, *args, **kwargs):
         context = args[0]
         if hasattr(context, 'persona'):
             for kwname, kwvalue in kwargs.items():
-                if isinstance(kwvalue, unicode):
-                    kwvalue = kwvalue.encode('utf-8')
-                variables = var_exp.findall(str(kwvalue))
-                for var in variables:
-                    value = context.persona[var]
-
-                    if isinstance(value, basestring):
-                        kwargs[kwname] = kwargs[kwname].replace('$' + var, value)
-                    else:
-                        kwargs[kwname] = value
-                if isinstance(kwargs[kwname], basestring):
-                    kwargs[kwname] = kwargs[kwname].replace('\$', '$')
+                kwargs[kwname] = self._replace_variables(
+                    context, kwargs[kwname])
+            if hasattr(context, 'text') and context.text:
+                context.text = self._replace_variables(context, context.text)
 
         self.func.__call__(*args, **kwargs)
 

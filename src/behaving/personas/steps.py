@@ -27,6 +27,13 @@ def set_variable(context, key, val):
     context.persona[key] = val
 
 
+@step(u'I set "{key}" to')
+@persona_vars
+def set_variable_text(context, key):
+    assert context.persona is not None, u'no persona is setup'
+    context.persona[key] = context.text
+
+
 @step(u'"{key}" is set to "{val}"')
 @persona_vars
 def key_is_val(context, key, val):
