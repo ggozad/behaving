@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Copyright 2012 splinter authors. All rights reserved.
-# Use of this source code is governed by a BSD-style
-# license that can be found in the LICENSE file.
-
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -11,7 +5,7 @@ from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
 from splinter.driver.webdriver.cookie_manager import CookieManager
 
 
-class WebDriver(BaseWebDriver):
+class CordovaWebDriver(BaseWebDriver):
 
     driver_name = "Cordova"
 
@@ -44,8 +38,7 @@ class WebDriver(BaseWebDriver):
 
         self._cookie_manager = CookieManager(self.driver)
 
-        super(WebDriver, self).__init__(wait_time)
-
+        super(CordovaWebDriver, self).__init__(wait_time)
 
 from splinter.browser import _DRIVERS
-_DRIVERS['cordova'] = WebDriver
+_DRIVERS['cordova'] = CordovaWebDriver
