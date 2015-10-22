@@ -14,22 +14,9 @@ except ImportError:
     from urllib.parse import parse_qs
 import time
 
+from behaving.mail.mock import getUniqueFilename
+
 output_dir = None
-
-
-def getUniqueFilename(recipient_dir, ext='tmp'):
-    filename = (
-        time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time())))
-    dest = os.path.join(recipient_dir, "%s.%s" % (filename, ext))
-    i = 0
-    while os.path.isfile(dest):
-        i += 1
-        if i > 1000:
-            raise IOError("Tried too many filenames like: %s" % dest)
-        filename = filename + "_" + str(i)
-        dest = os.path.join(recipient_dir, "%s.%s" % (filename, ext))
-
-    return dest
 
 
 class GCMServer(SimpleHTTPRequestHandler):
