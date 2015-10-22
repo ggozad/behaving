@@ -17,6 +17,21 @@ import time
 output_dir = None
 
 
+def getUniqueFilename(recipient_dir, ext='tmp'):
+    filename = (
+        time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time())))
+    dest = os.path.join(recipient_dir, "%s.%s" % (filename, ext))
+    i = 0
+    while os.path.isfile(dest):
+        i += 1
+        if i > 1000:
+            raise IOError("Tried too many filenames like: %s" % dest)
+        filename = filename + "_" + str(i)
+        dest = os.path.join(recipient_dir, "%s.%s" % (filename, ext))
+
+    return dest
+
+
 class GCMServer(SimpleHTTPRequestHandler):
 
     def do_POST(self):
@@ -26,7 +41,7 @@ class GCMServer(SimpleHTTPRequestHandler):
         try:
             message = json.loads(body)
         except:
-            self.send_response(400)
+            self.send_error(400, "JSON not parsable")
             return
 
         if 'registration_ids' in message:
@@ -39,7 +54,7 @@ class GCMServer(SimpleHTTPRequestHandler):
             recipients = [to]
 
         if not recipients:
-            self.send_response(400)
+            self.send_error(400, "No recipients")
             return
 
         global output_dir
@@ -54,10 +69,14 @@ class GCMServer(SimpleHTTPRequestHandler):
                         400,
                         "Device directory [%s] could not be created"
                         % recipient_dir)
+                    return
 
-            filename = (
-                time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time())))
-            dest = os.path.join(recipient_dir, "%s.gcm" % filename)
+            try:
+                dest = getUniqueFilename(recipient_dir, 'gcm')
+            except IOError, e:
+                self.send_error(400, e.message)
+                return
+
             with codecs.open(dest, "w", encoding='utf-8') as f:
                 f.write(json.dumps(message, ensure_ascii=False))
 
