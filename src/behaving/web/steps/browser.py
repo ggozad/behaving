@@ -93,6 +93,11 @@ def clear_session_storage(context):
     context.browser.execute_script('sessionStorage.clear();')
 
 
+@step(u'I clear the browser storage')
+def clear_browser_storage(context):
+    context.browser.execute_script('localStorage.clear();sessionStorage.clear();')
+
+
 @step(u'I resize the browser to {width}x{height}')
 def resize_browser(context, width, height):
     context.browser.driver.set_window_size(int(width), int(height))
