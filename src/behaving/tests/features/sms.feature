@@ -8,7 +8,9 @@ Feature: Send an SMS
     @sms
     Scenario: Receive SMS with body
         When I send an sms to "222" with body "Hello world"
+        And I send an sms to "222" with body "foo"
         Then I should receive an sms at "222" containing "world"
+        And I should receive an sms at "222" containing "foo"
 
     @sms
     @personas

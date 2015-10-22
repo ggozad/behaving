@@ -14,6 +14,8 @@ except ImportError:
     from urllib.parse import parse_qs
 import time
 
+from behaving.mail.mock import getUniqueFilename
+
 output_dir = None
 
 
@@ -26,7 +28,7 @@ class GCMServer(SimpleHTTPRequestHandler):
         try:
             message = json.loads(body)
         except:
-            self.send_response(400)
+            self.send_error(400, "JSON not parsable")
             return
 
         if 'registration_ids' in message:
@@ -39,7 +41,7 @@ class GCMServer(SimpleHTTPRequestHandler):
             recipients = [to]
 
         if not recipients:
-            self.send_response(400)
+            self.send_error(400, "No recipients")
             return
 
         global output_dir
@@ -54,10 +56,14 @@ class GCMServer(SimpleHTTPRequestHandler):
                         400,
                         "Device directory [%s] could not be created"
                         % recipient_dir)
+                    return
 
-            filename = (
-                time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time())))
-            dest = os.path.join(recipient_dir, "%s.gcm" % filename)
+            try:
+                dest = getUniqueFilename(recipient_dir, 'gcm')
+            except IOError, e:
+                self.send_error(400, e.message)
+                return
+
             with codecs.open(dest, "w", encoding='utf-8') as f:
                 f.write(json.dumps(message, ensure_ascii=False))
 

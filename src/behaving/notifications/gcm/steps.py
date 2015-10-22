@@ -12,11 +12,13 @@ def extract(dict_in, dict_out):
             dict_out[key] = value
     return dict_out
 
+
 def match(data, query):
     for key, value in query.iteritems():
         if not key in data or data[key] != value:
             return False
     return True
+
 
 @step(u'I should receive a gcm notification at "{device_id}" containing "{message}"')
 @persona_vars
@@ -27,6 +29,6 @@ def should_receive_gcm_with_message(context, device_id, message):
     for notification in notifications:
         data = json.loads(notification, 'utf-8')
         d_items = extract(data, {})
-        if not match(d_items, q_items):
-            assert False, "Message not Found"
-        assert True
+        if match(d_items, q_items):
+            return
+    assert False, "Message not Found"

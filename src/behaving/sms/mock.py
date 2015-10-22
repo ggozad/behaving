@@ -18,6 +18,8 @@ try:
 except ImportError:
     notifier = None
 
+from behaving.mail.mock import getUniqueFilename
+
 output_dir = None
 
 
@@ -56,8 +58,7 @@ class SMSServer(SimpleHTTPRequestHandler):
                 logging.error('Phone directory could not be created')
                 return
 
-        filename = time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
-        dest = os.path.join(phone_dir, "%s.sms" % filename)
+        dest = getUniqueFilename(phone_dir, "sms")
         with open(dest, "w") as f:
             f.write(body)
 

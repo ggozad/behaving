@@ -85,5 +85,5 @@ def send_gcm_notification(context, message):
 
     try:
         urlopen(req)
-    except HTTPError:
-        assert False, "Server returned error"
+    except HTTPError, e:
+        assert False, str(e)
