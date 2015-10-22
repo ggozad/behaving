@@ -6,6 +6,12 @@ from splinter.browser import Browser
 from selenium.common.exceptions import WebDriverException
 
 
+@step(u'{brand} as the default browser')
+def given_some_browser(context, brand):
+    brand = brand.lower()
+    context.default_browser = brand
+
+
 @step(u'a browser')
 def given_a_browser(context):
     named_browser(context, '')
@@ -25,6 +31,9 @@ def named_browser(context, name):
                 args['browser'] = context.default_browser
         elif context.default_browser:
             args['driver_name'] = context.default_browser
+        if context.default_browser == 'electron':
+            assert context.electron_app, u'You need to set the electron app path'
+            args['binary'] = context.electron_app
         browser_attempts = 0
         while browser_attempts < context.max_browser_attempts:
             try:
@@ -41,15 +50,16 @@ def named_browser(context, name):
         context.browser.driver.set_window_size(*context.default_browser_size)
 
 
+@step(u'the electron app "{app_path}"')
+def given_an_electron_app(context, app_path):
+    assert os.path.isfile(app_path), u'Electron app not found'
+    app_path = os.path.abspath(app_path)
+    context.electron_app = app_path
+
+
 @step(u'I close the browser "{name}"')
 def close_browser(context, name):
     context.browsers[name].driver.close()
-
-
-@step(u'{brand} as the default browser')
-def given_some_browser(context, brand):
-    brand = brand.lower()
-    context.default_browser = brand
 
 
 @step(u'I reload')

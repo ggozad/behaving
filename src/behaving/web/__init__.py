@@ -5,6 +5,8 @@ except ImportError:
     from urllib.error import URLError
 
 from behaving.web import cordova
+from behaving.web import electron
+
 
 # Generic setup/teardown for compatibility with pytest et al.
 def setup(context):
