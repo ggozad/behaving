@@ -39,28 +39,28 @@ def should_find_at_least_n_elements_with_css_within_timeout_seconds(context, n, 
     assert _retry(_check, timeout), 'Did not find %s elements within %s seconds' % (n, timeout)
 
 
+###
+# The following steps take element visibility into consideration (useful for testing SPAs).
+###
 
-# my new steps
-
-
-def elements_visible_css(context, css):
+def find_visible_by_css(context, css):
     ''' Finds visible elements using a CSS selector and wait_time. '''
     return [elem for elem in context.browser.find_by_css(css) if elem.visible]
 
 def _should_see_element_visible(context, css, timeout):
-    check = lambda: len(elements_visible_css(context, css)) > 0
+    check = lambda: len(find_visible_by_css(context, css)) > 0
     assert _retry(check, timeout), u"Element not visible"
 
 def _should_not_see_element_visible(context, css, timeout):
-    check = lambda: len(elements_visible_css(context, css)) == 0
+    check = lambda: len(find_visible_by_css(context, css)) == 0
     assert _retry(check, timeout), u"Unexpectedly found visible element(s)"
 
 def _should_see_n_elements_visible(context, expected, css, timeout):
-    check = lambda: len(elements_visible_css(context, css)) == expected
+    check = lambda: len(find_visible_by_css(context, css)) == expected
     assert _retry(check, timeout), u"Didn't find exactly %d visible elements" % (expected,)
 
 def _should_see_gte_n_elements_visible(context, expected, css, timeout):
-    check = lambda: len(elements_visible_css(context, css)) >= expected
+    check = lambda: len(find_visible_by_css(context, css)) >= expected
     assert _retry(check, timeout), u"Didn't find at least %d visible elements" % (expected,)
 
 
