@@ -68,7 +68,7 @@ def should_see_at_least_n_elements_with_css_within_timeout_seconds(context, n, c
 
 
 def find_visible_by_css(context, css):
-    ''' Finds visible elements using a CSS selector and wait_time. '''
+    ''' Finds visible elements using a CSS selector. '''
     return [elem for elem in context.browser.find_by_css(css) if elem.visible]
 
 def _should_see_element_visible(context, css, timeout):
