@@ -343,6 +343,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * When I close the browser "``name``"
 
 * Frames
+
     * When I switch to frame with css "``css``"
     * When I switch back to the main page
 
