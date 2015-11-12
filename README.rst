@@ -342,6 +342,11 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * When I delete all cookies
     * When I close the browser "``name``"
 
+* Windows
+    * When I open a new window named "``name``" at "``url``"
+    * When I name the current window "``name``"
+    * When I switch to window named "``name``"
+
 * URLs
 
     * Given the base url "``url``"
