@@ -7,3 +7,4 @@ from .variables import *
 from .testing import *
 from .mouse import *
 from .alerts import *
+from .frames import *
