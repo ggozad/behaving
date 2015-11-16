@@ -8,3 +8,4 @@ from .testing import *
 from .mouse import *
 from .alerts import *
 from .frames import *
+from .windows import *

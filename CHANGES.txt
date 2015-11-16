@@ -7,6 +7,9 @@ Changelog
 - Frame switching.
   [day-me-an]
 
+- Window switching.
+  [day-me-an]
+
 - Make persona variables usable in steps that receive a body of text.
   [MihaiBalint]
 
