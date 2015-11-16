@@ -1,5 +1,6 @@
 from behave import when
 
+
 @when(u'I switch to frame with css "{css}"')
 def switch_to_frame(context, css):
     driver = context.browser.driver
