@@ -351,7 +351,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 
     * When I open a new window named "``name``" at "``url``"
     * When I name the current window "``name``"
-    * When I switch to window named "``name``"
+    * When I switch to the window named "``name``"
 
 * URLs
 
