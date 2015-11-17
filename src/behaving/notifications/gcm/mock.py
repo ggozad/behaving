@@ -67,7 +67,10 @@ class GCMServer(SimpleHTTPRequestHandler):
             with codecs.open(dest, "w", encoding='utf-8') as f:
                 f.write(json.dumps(message, ensure_ascii=False))
 
+        response = json.dumps({"failure": 0, "canonical_ids": 0})
         self.send_response(200)
+        self.end_headers()
+        self.wfile.write(bytes(response))
 
 
 def main(args=sys.argv[1:]):
