@@ -54,11 +54,11 @@ def _should_not_see_element_visible(context, css, timeout):
 
 def _should_see_n_elements_visible(context, expected, css, timeout):
     check = lambda: len(find_visible_by_css(context, css)) == expected
-    assert _retry(check, timeout), u"Didn't find exactly %d visible elements" % (expected,)
+    assert _retry(check, timeout), u"Didn't find exactly {:d} visible elements".format(expected)
 
 def _should_see_gte_n_elements_visible(context, expected, css, timeout):
     check = lambda: len(find_visible_by_css(context, css)) >= expected
-    assert _retry(check, timeout), u"Didn't find at least %d visible elements" % (expected,)
+    assert _retry(check, timeout), u"Didn't find at least {:d} visible elements".format(expected)
 
 
 @step(u'I should see an element visible with css "{css}"')
