@@ -22,7 +22,7 @@ def should_not_see_element_with_css_within_timeout(context, css, timeout):
 def should_see_n_elements_with_css(context, n, css):
     element_list = context.browser.find_by_css(css)
     list_length = len(element_list)
-    assert list_length == n, u'Found {list_length} elements, expected {n}'.format(**locals())
+    assert list_length == n, u'Found {list_length} elements, expected {n}'.format(list_length, n)
 
 @step(u'I should see at least {n:d} elements with the css selector "{css}" within {timeout:d} seconds')
 def should_see_at_least_n_elements_with_css_within_timeout_seconds(context, n, css, timeout):
