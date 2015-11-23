@@ -384,7 +384,6 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
         * Then I should see "``text``" within ``timeout`` seconds
         * Then I should not see "``text``" within ``timeout`` seconds
 
-
     * ID
 
         * Then I should see an element with id "``id``"
@@ -396,12 +395,12 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 
         * Existence
 
-            * Then I should find an element with css "``css``"
-            * Then I should find an element with css "``css``" within ``timeout`` seconds
-            * Then I should not find an element with css "``css``"
-            * Then I should not find an element with css "``css``" within ``timeout`` seconds
-            * Then I should find ``n`` elements with css "``css``"
-            * Then I should find at least ``n`` elements with css "``css``"
+            * Then I should see an element with the css selector "``selector``"
+            * Then I should not see an element with the css selector "``selector``"
+            * Then I should see an element with the css selector "``selector``" within ``timeout`` seconds
+            * Then I should not see an element with the css selector "``selector``" within ``timeout`` seconds
+            * Then I should see ``n`` elements with the css selector "``css``"
+            * Then I should see at least ``n`` elements with the css selector "``css``" within ``timeout`` seconds
 
         * Visibility
 
@@ -413,15 +412,6 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
             * Then I should see {n:d} elements visible with css "``css``" within ``timeout`` seconds
             * Then I should see at least {n:d} elements visible with css "``css``"
             * Then I should see at least {n:d} elements visible with css "``css``" within ``timeout`` seconds
-
-        * Deprecated
-
-            * Then I should see an element with the css selector "``selector``"
-            * Then I should not see an element with the css selector "``selector``"
-            * Then I should see an element with the css selector "``selector``" within ``timeout`` seconds
-            * Then I should not see an element with the css selector "``selector``" within ``timeout`` seconds
-            * Then I should see ``n`` elements with the css selector "``css``"
-            * Then I should see at least ``n`` elements with the css selector "``css``" within ``timeout`` seconds    
 
     * XPath
 
