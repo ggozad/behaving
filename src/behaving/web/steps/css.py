@@ -61,34 +61,34 @@ def _should_see_gte_n_elements_visible(context, expected, css, timeout):
     assert _retry(check, timeout), u"Didn't find at least {:d} visible elements".format(expected)
 
 
-@step(u'I should see an element visible with css "{css}"')
+@step(u'I should see an element visible with the css selector "{css}"')
 def should_see_element_visible_with_css(context, css):
     _should_see_element_visible(context, css, context.browser.wait_time)
 
-@step(u'I should see an element visible with css "{css}" within {timeout:d} seconds')
+@step(u'I should see an element visible with the css selector "{css}" within {timeout:d} seconds')
 def should_see_element_visible_with_css_within_timeout(context, css, timeout):
     _should_see_element_visible(context, css, timeout)
 
-@step(u'I should not see an element visible with css "{css}"')
+@step(u'I should not see an element visible with the css selector "{css}"')
 def should_not_see_element_visible_with_css(context, css):
     _should_not_see_element_visible(context, css, context.browser.wait_time)
     
-@step(u'I should not see an element visible with css "{css}" within {timeout:d} seconds')
+@step(u'I should not see an element visible with the css selector "{css}" within {timeout:d} seconds')
 def should_not_see_element_visible_with_css_within_timeout(context, css, timeout):
     _should_not_see_element_visible(context, css, timeout)
 
-@step(u'I should see {n:d} elements visible with css "{css}"')
+@step(u'I should see {n:d} elements visible with the css selector "{css}"')
 def should_see_n_elements_visible_with_css(context, n, css):
     _should_see_n_elements_visible(context, n, css, context.browser.wait_time)
 
-@step(u'I should see {n:d} elements visible with css "{css}" within {timeout:d} seconds')
+@step(u'I should see {n:d} elements visible with the css selector "{css}" within {timeout:d} seconds')
 def should_see_n_elements_visible_with_css_within_timeout(context, n, css, timeout):
     _should_see_n_elements_visible(context, n, css, timeout)
 
-@step(u'I should see at least {n:d} elements visible with css "{css}"')
+@step(u'I should see at least {n:d} elements visible with the css selector "{css}"')
 def should_see_gte_n_elements_visible_with_css(context, n, css):
     _should_see_gte_n_elements_visible(context, n, css, context.browser.wait_time)
 
-@step(u'I should see at least {n:d} elements visible with css "{css}" within {timeout:d} seconds')
+@step(u'I should see at least {n:d} elements visible with the css selector "{css}" within {timeout:d} seconds')
 def should_see_gte_n_elements_visible_with_css_within_timeout(context, n, css, timeout):
     _should_see_gte_n_elements_visible(context, n, css, timeout)
