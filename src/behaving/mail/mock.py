@@ -18,8 +18,8 @@ def getUniqueFilename(recipient_dir, ext='tmp'):
         i += 1
         if i > 1000:
             raise IOError("Tried too many filenames like: %s" % dest)
-        filename = filename + "_" + str(i)
-        dest = os.path.join(recipient_dir, "%s.%s" % (filename, ext))
+        fname = filename + "_" + str(i)
+        dest = os.path.join(recipient_dir, "%s.%s" % (fname, ext))
 
     return dest
 
