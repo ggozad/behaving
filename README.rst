@@ -404,14 +404,14 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 
         * Visibility
 
-            * Then I should see an element visible with the css selector "``css``"
-            * Then I should see an element visible with the css selector "``css``" within ``timeout`` seconds
-            * Then I should not see an element visible with the css selector "``css``"
-            * Then I should not see an element visible with the css selector "``css``" within ``timeout`` seconds
-            * Then I should see {n:d} elements visible with the css selector "``css``"
-            * Then I should see {n:d} elements visible with the css selector "``css``" within ``timeout`` seconds
-            * Then I should see at least {n:d} elements visible with the css selector "``css``"
-            * Then I should see at least {n:d} elements visible with the css selector "``css``" within ``timeout`` seconds
+            * Then the element with the css selector "``css``" should be visible
+            * Then the element with the css selector "``css``" should be visible within ``timeout`` seconds
+            * Then the element with the css selector "``css``" should not be visible
+            * Then the element with the css selector "``css``" should be visible within ``timeout`` seconds
+            * Then {n:d} elements with the css selector "``css``" should be visible
+            * Then {n:d} elements with the css selector "``css``" should be visible within ``timeout`` seconds
+            * Then at least {n:d} elements with the css selector "``css``" should be visible
+            * Then at least {n:d} elements with the css selector "``css``" should be visible within ``timeout`` seconds
 
     * XPath
 
