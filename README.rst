@@ -376,24 +376,50 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * When I wait for ``timeout`` seconds
     * When I show the element with id "``id``"
     * When I hide the element with id "``id``"
-    * Then I should see "``text``"
-    * Then I should not see "``text``"
-    * Then I should see "``text``" within ``timeout`` seconds
-    * Then I should not see "``text``" within ``timeout`` seconds
-    * Then I should see an element with id "``id``"
-    * Then I should not see an element with id "``id``"
-    * Then I should see an element with id "``id``" within ``timeout`` seconds
-    * Then I should not see an element with id "``id``" within ``timeout`` seconds
-    * Then I should see an element with the css selector "``selector``"
-    * Then I should not see an element with the css selector "``selector``"
-    * Then I should see an element with the css selector "``selector``" within ``timeout`` seconds
-    * Then I should not see an element with the css selector "``selector``" within ``timeout`` seconds
-    * Then I should see ``n`` elements with the css selector "``css``"
-    * Then I should see at least ``n`` elements with the css selector "``css``" within ``timeout`` seconds
-    * Then I should see an element with xpath "``xpath``"
-    * Then I should not see an element with xpath "``xpath``"
-    * Then I should see an element with xpath "``xpath``" within ``timeout`` seconds
-    * Then I should not see an element with xpath "``xpath``" within ``timeout`` seconds
+
+    * Text
+
+        * Then I should see "``text``"
+        * Then I should not see "``text``"
+        * Then I should see "``text``" within ``timeout`` seconds
+        * Then I should not see "``text``" within ``timeout`` seconds
+
+    * ID
+
+        * Then I should see an element with id "``id``"
+        * Then I should not see an element with id "``id``"
+        * Then I should see an element with id "``id``" within ``timeout`` seconds
+        * Then I should not see an element with id "``id``" within ``timeout`` seconds
+
+    * CSS
+
+        * Existence
+
+            * Then I should see an element with the css selector "``selector``"
+            * Then I should not see an element with the css selector "``selector``"
+            * Then I should see an element with the css selector "``selector``" within ``timeout`` seconds
+            * Then I should not see an element with the css selector "``selector``" within ``timeout`` seconds
+            * Then I should see ``n`` elements with the css selector "``css``"
+            * Then I should see at least ``n`` elements with the css selector "``css``" within ``timeout`` seconds
+
+        * Visibility
+
+            * Then the element with the css selector "``css``" should be visible
+            * Then the element with the css selector "``css``" should be visible within ``timeout`` seconds
+            * Then the element with the css selector "``css``" should not be visible
+            * Then the element with the css selector "``css``" should be visible within ``timeout`` seconds
+            * Then {n:d} elements with the css selector "``css``" should be visible
+            * Then {n:d} elements with the css selector "``css``" should be visible within ``timeout`` seconds
+            * Then at least {n:d} elements with the css selector "``css``" should be visible
+            * Then at least {n:d} elements with the css selector "``css``" should be visible within ``timeout`` seconds
+
+    * XPath
+
+        * Then I should see an element with xpath "``xpath``"
+        * Then I should not see an element with xpath "``xpath``"
+        * Then I should see an element with xpath "``xpath``" within ``timeout`` seconds
+        * Then I should not see an element with xpath "``xpath``" within ``timeout`` seconds
+
 
 * Forms
 

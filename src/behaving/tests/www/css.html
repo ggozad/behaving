@@ -1,0 +1,43 @@
+<html>
+<head>
+  <title>CSS step testing</title>
+</head>
+<body>
+
+<div id="always-visible-div">
+I'm always visible
+</div>
+
+<div id="always-invisible-div" style="visibility: hidden">
+I'm always invisible
+</div>
+
+<ul id="always-visible-list">
+  <li>dog</li>
+  <li>cat</li>
+  <li>rat</li>
+</ul>
+
+<section id="slowly-visible" style="visibility: hidden">
+  <div id="slowly-visible-div">I should become visible after 2 seconds</div>
+  
+  <ul id="slowly-visible-list">
+    <li>dog</li>
+    <li>cat</li>
+    <li>rat</li>
+  </ul>
+</section>
+
+<div id="slowly-invisible">
+I should become invisible
+</div>
+
+<script type="text/javascript">
+window.setTimeout(function() {
+  document.querySelector('#slowly-visible').style.visibility = 'visible';
+  document.querySelector('#slowly-invisible').style.visibility = 'hidden';
+}, 1000);
+</script>
+
+</body>
+</html>
