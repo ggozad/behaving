@@ -113,7 +113,7 @@ def i_attach(context, name, path):
     if not os.path.exists(path):
         path = os.path.join(context.attachment_dir, path)
         if not os.path.exists(path):
-            assert False
+            assert False, u'File not found'
     context.browser.attach_file(name, path)
 
 
