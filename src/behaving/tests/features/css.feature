@@ -50,3 +50,48 @@ Feature: CSS steps
         When I visit "http://localhost:8080/css.html"
         Then the element with the css selector "#slowly-visible-list" should not be visible within 0 seconds
         But at least 2 elements with the css selector "#slowly-visible-list > li" should be visible within 2 seconds
+
+    @web @runme
+    Scenario: Element has (not) class
+        Given a browser
+        When I visit "http://localhost:8080/css.html"
+        Then "always-visible-list" should have class "foo"
+        And "always-visible-list" should not have class "bar"
+
+    @web @runme
+    Scenario: Element has class within timeout
+        Given a browser
+        When I visit "http://localhost:8080/css.html"
+        Then "always-visible-list" should have class "foo"
+        But "always-visible-list" should have class "bar" within 2 seconds
+
+    @web @runme
+    Scenario: Element does not have class within timeout
+        Given a browser
+        When I visit "http://localhost:8080/css.html"
+        Then "always-visible-list" should have class "foo"
+        But "always-visible-list" should not have class "foo" within 2 seconds
+
+    @web @runme
+    Scenario: Element by xpath has (not) class
+        Given a browser
+        When I visit "http://localhost:8080/css.html"
+
+        Then the element with xpath "//*[@id='always-visible-list']/li[contains(string(), 'cat')]" should have class "bar"
+        And the element with xpath "//*[@id='always-visible-list']/li[contains(string(), 'cat')]" should not have class "foo"
+
+    @web @runme
+    Scenario: Element by xpath has class within timeout
+        Given a browser
+        When I visit "http://localhost:8080/css.html"
+
+        Then the element with xpath "//*[@id='always-visible-list']/li[contains(string(), 'cat')]" should have class "bar"
+        But the element with xpath "//*[@id='always-visible-list']/li[contains(string(), 'cat')]" should have class "foo" within 2 seconds
+
+    @web @runme
+    Scenario: Element by xpath does not have class within timeout
+        Given a browser
+        When I visit "http://localhost:8080/css.html"
+
+        Then the element with xpath "//*[@id='always-visible-list']/li[contains(string(), 'cat')]" should have class "bar"
+        But the element with xpath "//*[@id='always-visible-list']/li[contains(string(), 'cat')]" should not have class "bar" within 2 seconds
