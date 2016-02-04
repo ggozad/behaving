@@ -27,6 +27,16 @@ def should_receive_email_containing_text(context, address, text):
     assert context.mail.user_messages(address, filter_contents)
 
 
+@step(u'I should not receive an email at "{address}" containing "{text}"')
+@persona_vars
+def should_not_receive_email_containing_text(context, address, text):
+    def filter_contents(mail):
+        mail = email.message_from_string(mail)
+        return text in quopri.decodestring(mail.get_payload()).decode('utf-8')
+
+    assert not context.mail.user_messages(address, filter_contents)
+
+
 @step(u'I should receive an email at "{address}" with subject "{subject}"')
 @persona_vars
 def should_receive_email_with_subject(context, address, subject):

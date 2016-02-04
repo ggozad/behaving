@@ -502,6 +502,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 * Then I should receive an email at "``address``"
 * Then I should receive an email at "``address``" with subject "``subject``"
 * Then I should receive an email at "``address``" containing "``text``"
+* Then I should not receive an email at "``address``" containing "``text``"
 * Then I should receive an email at "``address``" with attachment "``filename``"
 * Then I should not have received any emails at "``address``"
 
