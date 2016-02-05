@@ -2,14 +2,14 @@ from behave import step
 from .basic import _retry
 
 
-@step(u'the element with xpath "{xpath}" should have class "{cls}"')
+@step(u'the element with xpath "{xpath}" should have the class "{cls}"')
 def element_with_xpath_should_have_class(context, xpath, cls):
     element = context.browser.find_by_xpath(xpath)
     assert element, u'Element not found'
     assert element.first.has_class(cls), u'Class is not present on element'
 
 
-@step(u'the element with xpath "{xpath}" should have class "{cls}" within {timeout:d} seconds')
+@step(u'the element with xpath "{xpath}" should have the class "{cls}" within {timeout:d} seconds')
 def element_by_xpath_should_have_class_within_timeout(context, xpath, cls, timeout):
     element = context.browser.find_by_xpath(xpath)
     assert element, u'Element not found'
@@ -17,13 +17,15 @@ def element_by_xpath_should_have_class_within_timeout(context, xpath, cls, timeo
     check = lambda: element.has_class(cls)
     assert _retry(check, timeout), u'Class is not present on element'
 
-@step(u'the element with xpath "{xpath}" should not have class "{cls}"')
+
+@step(u'the element with xpath "{xpath}" should not have the class "{cls}"')
 def element_with_xpath_should_not_have_class(context, xpath, cls):
     element = context.browser.find_by_xpath(xpath)
     assert element, u'Element not found'
     assert not element.first.has_class(cls), u'Class is present on element'
 
-@step(u'the element with xpath "{xpath}" should not have class "{cls}" within {timeout:d} seconds')
+
+@step(u'the element with xpath "{xpath}" should not have the class "{cls}" within {timeout:d} seconds')
 def element_by_xpath_should_not_have_class_within_timeout(context, xpath, cls, timeout):
     element = context.browser.find_by_xpath(xpath)
     assert element, u'Element not found'
@@ -31,7 +33,8 @@ def element_by_xpath_should_not_have_class_within_timeout(context, xpath, cls, t
     check = lambda: not element.has_class(cls)
     assert _retry(check, timeout), u'Class is present on element'
 
-@step(u'"{name}" should have class "{cls}"')
+
+@step(u'"{name}" should have the class "{cls}"')
 def element_should_have_class(context, name, cls):
     element = context.browser.find_by_xpath(
         ("//*[@id='%(name)s']|"
@@ -40,7 +43,7 @@ def element_should_have_class(context, name, cls):
     assert element.first.has_class(cls), u'Class is not present on element'
 
 
-@step(u'"{name}" should have class "{cls}" within {timeout:d} seconds')
+@step(u'"{name}" should have the class "{cls}" within {timeout:d} seconds')
 def element_should_have_class_within_timeout(context, name, cls, timeout):
     element = context.browser.find_by_xpath(
         ("//*[@id='%(name)s']|"
@@ -51,7 +54,7 @@ def element_should_have_class_within_timeout(context, name, cls, timeout):
     assert _retry(check, timeout), u'Class is not present on element'
 
 
-@step(u'"{name}" should not have class "{cls}"')
+@step(u'"{name}" should not have the class "{cls}"')
 def element_should_not_have_class(context, name, cls):
     element = context.browser.find_by_xpath(
         ("//*[@id='%(name)s']|"
@@ -60,7 +63,7 @@ def element_should_not_have_class(context, name, cls):
     assert not element.first.has_class(cls), u'Class is present on element'
 
 
-@step(u'"{name}" should not have class "{cls}" within {timeout:d} seconds')
+@step(u'"{name}" should not have the class "{cls}" within {timeout:d} seconds')
 def element_should_have_class_within_timeout(context, name, cls, timeout):
     element = context.browser.find_by_xpath(
         ("//*[@id='%(name)s']|"
