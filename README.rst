@@ -371,7 +371,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * When I click the link with text "``text``"
     * When I click the link with text that contains "``text``"
 
-* Text & element presence
+* Text, element & class presence
 
     * When I wait for ``timeout`` seconds
     * When I show the element with id "``id``"
@@ -412,6 +412,17 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
             * Then {n:d} elements with the css selector "``css``" should be visible within ``timeout`` seconds
             * Then at least {n:d} elements with the css selector "``css``" should be visible
             * Then at least {n:d} elements with the css selector "``css``" should be visible within ``timeout`` seconds
+
+        * Existence of a class on an element
+
+            * Then the element with xpath "``xpath``" should have the class "``cls``"
+            * Then the element with xpath "``xpath``" should not have the class "``cls``"
+            * Then the element with xpath "``xpath``" should have the class "``cls``" within ``timeout`` seconds
+            * Then the element with xpath "``xpath``" should not have the class "``cls``" within ``timeout`` seconds
+            * Then "``name``" should have the class "``cls``"
+            * Then "``name``" should not have the class "``cls``"
+            * Then "``name``" should have the class "``cls``" within ``timeout`` seconds
+            * Then "``name``" should not have the class "``cls``" within ``timeout:d`` seconds
 
     * XPath
 
