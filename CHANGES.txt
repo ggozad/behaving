@@ -3,6 +3,7 @@ Changelog
 
 1.5.1 - Unreleased
 ------------------
+- Element has the class steps
 
 1.5.0 - 2016-01-04
 ------------------
