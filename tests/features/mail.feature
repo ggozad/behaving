@@ -5,7 +5,9 @@ Feature: Email steps
         When I send an email to "foo@bar.com" with subject "Hello world" and body "Greetings from a BDD world!"
         Then I should receive an email at "foo@bar.com"
         And I should receive an email at "foo@bar.com" with subject "Hello world"
+        But I should not receive an email at "foo@bar.com" with subject "Hello world and universe"
         And I should receive an email at "foo@bar.com" containing "BDD"
+        But I should not receive an email at "foo@bar.com" containing "BDDE"
 
     @email
     Scenario: Send Receive email with non ANSII subject
@@ -23,6 +25,34 @@ Feature: Email steps
     Scenario: Receive email with attachment
         When I send an email to "foo@bar.com" with subject "Hello world" and body "Greetings from a BDD world!" and attachment "test.txt"
         Then I should receive an email at "foo@bar.com" with attachment "test.txt"
+        And I should not receive an email at "foo@bar.com" with attachment "test_2.txt"
+
+    @email
+    Scenario: Receive email with subject within timeout
+        When I send an email to "foo@bar.com" with subject "Hello world" and body "Greetings from a BDD world!"
+        Then I should receive an email at "foo@bar.com" with subject "Hello world" within 2 seconds
+
+    @email
+    Scenario: Receive email containing text within timeout
+        When I send an email to "foo@bar.com" with subject "Hello world" and body "Greetings from a BDD world!"
+        Then I should receive an email at "foo@bar.com" containing "BDD" within 2 seconds
+
+    @email
+    Scenario: Receive email with attachment within timeout
+        When I send an email to "foo@bar.com" with subject "Hello world" and body "Greetings from a BDD world!" and attachment "test.txt"
+        Then I should receive an email at "foo@bar.com" with attachment "test.txt" within 2 seconds
+
+    @email
+    Scenario: Not receive email with subject within timeout
+        When I should not receive an email at "foo@bar.com" with subject "Hello world" within 2 seconds
+
+    @email
+    Scenario: Not receive email containing text within timeout
+        When I should not receive an email at "foo@bar.com" containing "BDD" within 2 seconds
+
+    @email
+    Scenario: Not receive email with attachment within timeout
+        When I should not receive an email at "foo@bar.com" with attachment "test.txt" within 2 seconds
 
     @email
     @web

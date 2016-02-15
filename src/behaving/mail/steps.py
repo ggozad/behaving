@@ -10,7 +10,7 @@ import os.path
 import quopri
 from behave import step
 from behaving.personas.persona import persona_vars
-
+from behaving.web.steps.basic import _retry
 
 MAIL_TIMEOUT = 5
 URL_RE = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|\
@@ -20,50 +20,79 @@ URL_RE = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|\
 @step(u'I should receive an email at "{address}" containing "{text}"')
 @persona_vars
 def should_receive_email_containing_text(context, address, text):
-    def filter_contents(mail):
-        mail = email.message_from_string(mail)
-        return text in quopri.decodestring(mail.get_payload()).decode('utf-8')
+    assert received_email_containg_text(context, address, text), u'message not found'
 
-    assert context.mail.user_messages(address, filter_contents)
+
+@step(u'I should receive an email at "{address}" containing "{text}" within {timeout:d} seconds')
+@persona_vars
+def should_receive_email_containing_text(context, address, text, timeout):
+    check = lambda: received_email_containg_text(context, address, text)
+    assert _retry(check, timeout), u'message not found'
 
 
 @step(u'I should not receive an email at "{address}" containing "{text}"')
 @persona_vars
 def should_not_receive_email_containing_text(context, address, text):
-    def filter_contents(mail):
-        mail = email.message_from_string(mail)
-        return text in quopri.decodestring(mail.get_payload()).decode('utf-8')
+    assert not received_email_containg_text(context, address, text), u'message found'
 
-    assert not context.mail.user_messages(address, filter_contents)
+
+@step(u'I should not receive an email at "{address}" containing "{text}" within {timeout:d} seconds')
+@persona_vars
+def should_not_receive_email_containing_text(context, address, text, timeout):
+    check = lambda: not received_email_containg_text(context, address, text)
+    assert _retry(check, timeout), u'message found'
 
 
 @step(u'I should receive an email at "{address}" with subject "{subject}"')
 @persona_vars
 def should_receive_email_with_subject(context, address, subject):
-    def get_subject_from_mail(mail):
-        text, encoding = decode_header(mail.get('Subject'))[0]
-        return text.decode(encoding) if encoding else text
+    assert received_email_with_subject(context, address, subject), u'message not found'
 
-    def filter_contents(mail):
-        mail = email.message_from_string(mail)
-        return subject == get_subject_from_mail(mail)
 
-    assert context.mail.user_messages(address, filter_contents), u'message not found'
+@step(u'I should receive an email at "{address}" with subject "{subject}" within {timeout:d} seconds')
+@persona_vars
+def should_receive_email_with_subject(context, address, subject, timeout):
+    check = lambda: received_email_with_subject(context, address, subject)
+    assert _retry(check, timeout), u'message not found'
+
+
+@step(u'I should not receive an email at "{address}" with subject "{subject}"')
+@persona_vars
+def should_not_receive_email_with_subject(context, address, subject):
+    assert not received_email_with_subject(context, address, subject), u'message found'
+
+
+@step(u'I should not receive an email at "{address}" with subject "{subject}" within {timeout:d} seconds')
+@persona_vars
+def should_not_receive_email_with_subject(context, address, subject, timeout):
+    check = lambda: not received_email_with_subject(context, address, subject)
+    assert _retry(check, timeout), u'message found'
 
 
 @step(u'I should receive an email at "{address}" with attachment "{filename}"')
 @persona_vars
 def should_receive_email_with_attachment(context, address, filename):
-    def filter_contents(mail):
-        mail = email.message_from_string(mail)
-        if len(mail.get_payload()) > 1:
-            attachments = mail.get_payload()
-            for attachment in attachments:
-                if filename == attachment.get_filename():
-                    return True
-            return False
+    assert received_email_with_attachment(context, address, filename), u'message not found'
 
-    assert context.mail.user_messages(address, filter_contents), u'message not found'
+
+@step(u'I should receive an email at "{address}" with attachment "{filename}" within {timeout:d} seconds')
+@persona_vars
+def should_receive_email_with_attachment(context, address, filename, timeout):
+    check = lambda: received_email_with_attachment(context, address, filename)
+    assert _retry(check, timeout), u'message not found'
+
+
+@step(u'I should not receive an email at "{address}" with attachment "{filename}"')
+@persona_vars
+def should_not_receive_email_with_attachment(context, address, filename):
+    assert not received_email_with_attachment(context, address, filename), u'message found'
+
+
+@step(u'I should not receive an email at "{address}" with attachment "{filename}" within {timeout:d} seconds')
+@persona_vars
+def should_not_receive_email_with_attachment(context, address, filename, timeout):
+    check = lambda: not received_email_with_attachment(context, address, filename)
+    assert _retry(check, timeout), u'message found'
 
 
 @step(u'I should receive an email at "{address}"')
@@ -98,6 +127,39 @@ def parse_email_set_var(context, address, expression):
     mail = email.message_from_string(msgs[-1])
     text = quopri.decodestring(mail.get_payload()).decode("utf-8")
     parse_text(context, text, expression)
+
+
+def received_email_containg_text(context, address, text):
+    def filter_contents(mail):
+        mail = email.message_from_string(mail)
+        return text in quopri.decodestring(mail.get_payload()).decode('utf-8')
+
+    return context.mail.user_messages(address, filter_contents)
+
+
+def received_email_with_subject(context, address, subject):
+    def get_subject_from_mail(mail):
+        text, encoding = decode_header(mail.get('Subject'))[0]
+        return text.decode(encoding) if encoding else text
+
+    def filter_contents(mail):
+        mail = email.message_from_string(mail)
+        return subject == get_subject_from_mail(mail)
+
+    return context.mail.user_messages(address, filter_contents)
+
+
+def received_email_with_attachment(context, address, filename):
+    def filter_contents(mail):
+        mail = email.message_from_string(mail)
+        if len(mail.get_payload()) > 1:
+            attachments = mail.get_payload()
+            for attachment in attachments:
+                if filename == attachment.get_filename():
+                    return True
+            return False
+
+    return context.mail.user_messages(address, filter_contents)
 
 
 def parse_text(context, text, expression):
