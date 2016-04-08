@@ -10,3 +10,4 @@ from .alerts import *
 from .frames import *
 from .windows import *
 from .css import *
+from .downloads import *

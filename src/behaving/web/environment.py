@@ -15,12 +15,12 @@ def before_feature(context, feature):
     pass
 
 
-def before_scenario(context, scenario):
-    setup(context)
-
-
 def after_feature(context, feature):
     pass
+
+
+def before_scenario(context, scenario):
+    setup(context)
 
 
 def after_scenario(context, scenario):

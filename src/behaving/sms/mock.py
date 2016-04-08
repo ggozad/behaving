@@ -10,7 +10,6 @@ except ImportError:
     from http.server import SimpleHTTPRequestHandler
     import socketserver as SocketServer
     from urllib.parse import parse_qs
-import time
 
 try:
     from pync import Notifier
