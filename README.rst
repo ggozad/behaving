@@ -474,6 +474,11 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * When I mouse over the element with xpath "``xpath``"
     * When I mouse out of the element with xpath "``xpath``"
 
+* Downloads
+
+    * Then the file "``filename``" with contents "``text``" should have been downloaded within ``timeout`` seconds
+    * Then the file "``filename``" should have been downloaded within ``timeout`` seconds
+
 * Persona interaction & variables
 
     * When I set "``key``" to the text of "``id|name``"
