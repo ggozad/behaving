@@ -1,4 +1,6 @@
 import os
+import tempfile
+
 try:
     from urllib2 import URLError
 except ImportError:
@@ -6,6 +8,7 @@ except ImportError:
 
 from behaving.web import cordova
 from behaving.web import electron
+from behaving.web import chrome
 
 
 # Generic setup/teardown for compatibility with pytest et al.
@@ -32,6 +35,11 @@ def setup(context):
                 context.screenshots_dir = ''
     else:
         context.screenshots_dir = ''
+
+    # Setup download path
+    if not hasattr(context, 'download_dir'):
+        context.download_dir = tempfile.mkdtemp()
+        chrome._DOWNLOAD_PATH = context.download_dir
 
     context.browsers = {}
 

@@ -22,7 +22,7 @@ setup(name='behaving',
       namespace_packages=['behaving'],
       include_package_data=True,
       zip_safe=False,
-      install_requires=['setuptools', 'parse', 'behave', 'splinter'],
+      install_requires=['setuptools', 'parse', 'behave', 'splinter', 'ipdb'],
       entry_points="""
       [console_scripts]
       mailmock = behaving.mail.mock:main
