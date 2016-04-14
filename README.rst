@@ -305,7 +305,7 @@ You can run the tests simply by issuing
 Mail, GCM and SMS mock servers
 -------------------------
 
-When *behaving* is installed, it creates three scripts to help you test mail, gcm and sms, ``mailmock``, ``gcmmock` and ``smsmock`` respectively. You can directly invoke them before running your tests, they all take a port as well as the directory to output data as parameters. For example,
+When *behaving* is installed, it creates three scripts to help you test mail, gcm and sms, ``mailmock``, ``gcmmock`` and ``smsmock`` respectively. You can directly invoke them before running your tests, they all take a port as well as the directory to output data as parameters. For example,
 
 ::
 
@@ -538,4 +538,3 @@ Please see the `Contribution Guidelines`_
 .. _`splinter`: http://splinter.cobrateam.info/
 .. _`Crypho`: http://crypho.com
 .. _`Contribution Guidelines`: https://github.com/ggozad/behaving/blob/master/CONTRIBUTING.rst
-
