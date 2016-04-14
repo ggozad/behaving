@@ -1,9 +1,13 @@
 Changelog
 =========
 
-1.5.1 - Unreleased
+1.5.1 - 2016-04-15
 ------------------
-- Element has the class steps
+- Class steps.
+
+- File downloads.
+  [ggozad]
+
 
 1.5.0 - 2016-01-04
 ------------------
