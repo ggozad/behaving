@@ -435,6 +435,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 * Forms
 
     * When I fill in "``name``" with "``value``"
+    * When I clear field "``name``"
     * When I type "``value``" to "``name``"
       [same as fill, but happens slowly triggering keyboard events]
     * When I choose "``value``" from "``name``"
