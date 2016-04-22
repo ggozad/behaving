@@ -22,7 +22,7 @@ directory=%(here)s
 
 [program:http]
 command = python -m SimpleHTTPServer 8080
-directory = ${buildout:directory}/src/behaving/tests/www
+directory = ${buildout:directory}/tests/www
 startretries = 5
 autostart = true
 autorestart = true
