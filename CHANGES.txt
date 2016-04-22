@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.5.2 - Unreleased
+------------------
+
+- Move tests outside of package.
+  [lampantech]
+
 1.5.1 - 2016-04-15
 ------------------
 - Class steps.
