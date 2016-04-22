@@ -1,8 +1,6 @@
 from email.mime.base import MIMEBase
 from email.header import Header
 import os.path
-import json
-
 try:
     from urllib import urlencode
     from urllib2 import Request, urlopen, HTTPError
@@ -18,7 +16,6 @@ from behaving.web.steps import *
 from behaving.sms.steps import *
 from behaving.mail.steps import *
 from behaving.notifications.gcm.steps import *
-
 from behaving.personas.steps import *
 from behaving.personas.persona import persona_vars
 
@@ -67,6 +64,7 @@ def send_email(context, to, subject, body):
     s.sendmail('test@localhost', [to], msg.as_string())
     s.quit()
 
+
 @when('I send an email to "{to}" with encoded "{encoding}" subject "{subject}" and body "{body}"')
 def send_email_with_non_ascii_subject(context, to, encoding, subject, body):
     msg = MIMEText(body.encode('utf-8'))
@@ -77,6 +75,7 @@ def send_email_with_non_ascii_subject(context, to, encoding, subject, body):
     s.sendmail('test@localhost', [to], msg.as_string())
     s.quit()
 
+
 @when('I send a gcm message "{message}"')
 def send_gcm_notification(context, message):
 
@@ -85,5 +84,5 @@ def send_gcm_notification(context, message):
 
     try:
         urlopen(req)
-    except HTTPError, e:
+    except (HTTPError, e):
         assert False, str(e)
