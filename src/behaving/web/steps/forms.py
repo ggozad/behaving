@@ -93,6 +93,8 @@ def i_press(context, name):
          "//button[contains(string(), '%(name)s')]|"
          "//input[@type='button' and contains(string(), '%(name)s')]|"
          "//input[@type='button' and contains(@value, '%(name)s')]|"
+         "//input[@type='submit' and contains(string(), '%(name)s')]|"
+         "//input[@type='submit' and contains(@value, '%(name)s')]|"
          "//a[contains(string(), '%(name)s')]") % {'name': name})
     assert element, u'Element not found'
     element.first.click()
