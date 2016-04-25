@@ -57,18 +57,7 @@ def send_email_attachment(context, to, subject, body, filename):
 @when('I send an email to "{to}" with subject "{subject}" and body "{body}"')
 def send_email(context, to, subject, body):
     msg = MIMEText(body.encode('utf-8'))
-    msg['Subject'] = Header(subject, 'utf-8')
-    msg['To'] = to
-    msg['From'] = 'test@localhost'
-    s = smtplib.SMTP('localhost', 8025)
-    s.sendmail('test@localhost', [to], msg.as_string())
-    s.quit()
-
-
-@when('I send an email to "{to}" with encoded "{encoding}" subject "{subject}" and body "{body}"')
-def send_email_with_non_ascii_subject(context, to, encoding, subject, body):
-    msg = MIMEText(body.encode('utf-8'))
-    msg['Subject'] = Header(subject.encode(encoding), encoding)
+    msg['Subject'] = Header(subject.encode('utf-8'), 'utf-8')
     msg['To'] = to
     msg['From'] = 'test@localhost'
     s = smtplib.SMTP('localhost', 8025)
