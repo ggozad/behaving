@@ -1,6 +1,15 @@
+try:
+    from urllib import urlencode
+    from urllib2 import Request, urlopen, HTTPError
+except ImportError:
+    from urllib.parse import urlencode
+    from urllib.request import Request, urlopen
+    from urllib.error import HTTPError
+
 from behave import step
 from behaving.personas.persona import persona_vars
 from behaving.mail.steps import parse_text
+
 
 @step(u'I set "{key}" to the body of the sms I received at "{tel}"')
 @persona_vars
@@ -21,6 +30,7 @@ def parse_sms_set_var(context, tel, expression):
     msg = msgs[-1]
     parse_text(context, msg, expression)
 
+
 @step(u'I should receive an sms at "{tel}" containing "{text}"')
 @persona_vars
 def should_receive_sms_with_text(context, tel, text):
@@ -35,3 +45,19 @@ def should_receive_sms_with_text(context, tel, text):
 @persona_vars
 def should_receive_sms(context, tel):
     assert context.sms.user_messages(tel), u'sms not received'
+
+
+@step('I send an sms to "{to}" with body "{body}"')
+@persona_vars
+def send_sms(context, to, body):
+    url = 'http://localhost:8199'
+    values = {'from': 'TEST',
+              'to': to,
+              'text': body}
+
+    data = urlencode(values)
+    req = Request(url, data.encode('utf-8'))
+    try:
+        urlopen(req)
+    except HTTPError:
+        assert False
