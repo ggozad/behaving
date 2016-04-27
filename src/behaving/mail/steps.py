@@ -1,6 +1,12 @@
 import email
 from email.header import decode_header
+from email.mime.base import MIMEBase
+from email.header import Header
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import re
+import os.path
 import quopri
 from behave import step
 from behaving.personas.persona import persona_vars
@@ -78,6 +84,7 @@ def parse_email_set_var(context, address, expression):
     text = quopri.decodestring(mail.get_payload()).decode("utf-8")
     parse_text(context, text, expression)
 
+
 def parse_text(context, text, expression):
     import parse
     parser = parse.compile(expression)
@@ -105,3 +112,32 @@ def parse_text(context, text, expression):
     assert res.named, u'expression not found'
     for key, val in res.named.items():
         context.persona[key] = val
+
+
+@step('I send an email to "{to}" with subject "{subject}" and body "{body}" and attachment "{filename}"')
+def send_email_attachment(context, to, subject, body, filename):
+    msg = MIMEMultipart(From='test@localhost',
+                        To=to)
+    msg['Subject'] = Header(subject, 'utf-8')
+    msg.attach(MIMEText(body))
+    path = os.path.join(context.attachment_dir, filename)
+    with open(path, 'rb') as fil:
+        attachment = MIMEBase('application', 'octet-stream')
+        attachment.set_payload(fil.read())
+        attachment.add_header("Content-Disposition", "attachment", filename=os.path.basename(filename))
+        msg.attach(attachment)
+
+    s = smtplib.SMTP('localhost', 8025)
+    s.sendmail('test@localhost', [to], msg.as_string())
+    s.quit()
+
+
+@step('I send an email to "{to}" with subject "{subject}" and body "{body}"')
+def send_email(context, to, subject, body):
+    msg = MIMEText(body.encode('utf-8'))
+    msg['Subject'] = Header(subject.encode('utf-8'), 'utf-8')
+    msg['To'] = to
+    msg['From'] = 'test@localhost'
+    s = smtplib.SMTP('localhost', 8025)
+    s.sendmail('test@localhost', [to], msg.as_string())
+    s.quit()

@@ -9,12 +9,12 @@ Feature: Email steps
 
     @email
     Scenario: Send Receive email with non ANSII subject
-        When I send an email to "foo@bar.com" with encoded "iso8859_7" subject "φοο βαρ" and body "βαρ φοο"
+        When I send an email to "foo@bar.com" with subject "φοο βαρ" and body "βαρ φοο"
         Then I should receive an email at "foo@bar.com"
         And I should receive an email at "foo@bar.com" with subject "φοο βαρ"
         And I should receive an email at "foo@bar.com" containing "βαρ φοο"
 
-        When I send an email to "foo@bar.com" with encoded "iso8859_10" subject "få bår" and body "bår få"
+        When I send an email to "foo@bar.com" with subject "få bår" and body "bår få"
         Then I should receive an email at "foo@bar.com"
         And I should receive an email at "foo@bar.com" with subject "få bår"
         And I should receive an email at "foo@bar.com" containing "bår få"
