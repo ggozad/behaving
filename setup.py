@@ -9,7 +9,13 @@ setup(name='behaving',
       classifiers=[
           "Development Status :: 5 - Production/Stable",
           "Intended Audience :: Developers",
+          "Topic :: Software Development :: Testing",
+          "Topic :: Software Development :: Libraries",
+          "Topic :: Software Development :: Libraries :: Python Modules"
+          "Topic :: Software Development :: Quality Assurance",
+          "Topic :: Software Development :: Testing",
           "Programming Language :: Python",
+          "Programming Language :: Python :: 2",
           "Programming Language :: Python :: 3",
       ],
       keywords='BDD Behavior-Driven-Development testing',
@@ -22,7 +28,8 @@ setup(name='behaving',
       namespace_packages=['behaving'],
       include_package_data=True,
       zip_safe=False,
-      install_requires=['setuptools', 'parse', 'behave', 'splinter', 'ipdb'],
+      install_requires=['parse', 'behave', 'splinter'],
+      tests_require=['mr.developer', 'zc.buildout'],
       entry_points="""
       [console_scripts]
       mailmock = behaving.mail.mock:main
