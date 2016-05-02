@@ -1,14 +1,18 @@
 Changelog
 =========
 
-1.5.2 - Unreleased
+1.5.2 - 2016-05-02
 ------------------
 
 - Move tests outside of package.
   [lampantech]
 
+- Add input[@type='submit'] as targets to "When I press ...".
+  [AndreasHeiberg]
+
 1.5.1 - 2016-04-15
 ------------------
+
 - Class steps.
 
 - File downloads.
