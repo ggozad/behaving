@@ -11,7 +11,7 @@ setup(name='behaving',
           "Intended Audience :: Developers",
           "Topic :: Software Development :: Testing",
           "Topic :: Software Development :: Libraries",
-          "Topic :: Software Development :: Libraries :: Python Modules"
+          "Topic :: Software Development :: Libraries :: Python Modules",
           "Topic :: Software Development :: Quality Assurance",
           "Programming Language :: Python",
           "Programming Language :: Python :: 2",
