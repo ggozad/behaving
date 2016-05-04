@@ -79,7 +79,7 @@ def main(args=sys.argv[1:]):
     global output_dir
     output_dir = options.output_dir
 
-    smtpd = DebuggingServer(('localhost', int(options.port)), None, options.log_to_stdout)
+    smtpd = DebuggingServer(('0.0.0.0', int(options.port)), None, options.log_to_stdout)
     try:
         asyncore.loop()
     except KeyboardInterrupt:
