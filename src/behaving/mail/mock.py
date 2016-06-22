@@ -6,6 +6,12 @@ import argparse
 import logging
 import asyncore
 
+try:
+    from pync import Notifier
+    notifier = Notifier
+except ImportError:
+    notifier = None
+
 output_dir = None
 
 
@@ -48,6 +54,9 @@ class DebuggingServer(smtpd.DebuggingServer):
             dest = getUniqueFilename(path, "eml")
             with open(dest, "w") as f:
                 f.write(data)
+
+        if notifier:
+            notifier.notify(data, title=rcpttos, execute="open -a TextEdit " + dest)
 
 
 def main(args=sys.argv[1:]):

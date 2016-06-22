@@ -4,6 +4,9 @@ Changelog
 1.5.5 -
 ------------------
 
+- Use pync when available to output mail messages on mock smtp.
+  [ggozad]
+
 1.5.4 - 2016-05-04
 ------------------
 
