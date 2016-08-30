@@ -141,3 +141,9 @@ def send_email(context, to, subject, body):
     s = smtplib.SMTP('localhost', 8025)
     s.sendmail('test@localhost', [to], msg.as_string())
     s.quit()
+
+
+@step('I should not have received any emails at "{address}"')
+@persona_vars
+def should_receive_no_messages(context, address):
+    assert context.mail.messages_for_user(address) == [], u'Messages have been received'

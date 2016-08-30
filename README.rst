@@ -2,12 +2,12 @@ behaving
 ========
 
 *behaving* is a web application testing framework for
-Behavior-Driven-Development, based on `behave`_ and `splinter`_. 
+Behavior-Driven-Development, based on `behave`_ and `splinter`_.
 
-*behave* is written in Python and is similar to `Cucumber`_ or `lettuce`_.  
+*behave* is written in Python and is similar to `Cucumber`_ or `lettuce`_.
 *behaving* adds the step-libraries for multi-user web/email/sms/gcm
 interactions, and provides the Python *behaving* namespace so that
-independent step-libraries can work together. 
+independent step-libraries can work together.
 
 Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
 
@@ -502,6 +502,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 * Then I should receive an email at "``address``" with subject "``subject``"
 * Then I should receive an email at "``address``" containing "``text``"
 * Then I should receive an email at "``address``" with attachment "``filename``"
+* Then I should not have received any emails at "``address``"
 
 ``behaving.sms`` Supported matchers/steps
 -----------------------------------------

@@ -48,3 +48,8 @@ Feature: Email steps
         And I should receive an email at "foo@bar.com" containing "bår få"
         When I parse the email I received at "foo@bar.com" and set "få: '{password}'"
         Then "password" is set to "hax0r"
+
+    @email
+    Scenario: No messages received
+        When I send an email to "foo@bar.com" with subject "foo" and body "bar"
+        Then I should not have received any emails at "bar@foo.com"
