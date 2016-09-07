@@ -10,6 +10,9 @@ Changelog
 - I should not have received any emails at "{address}" step.
   [ggozad]
 
+- When I focus on "{name}".
+  [ggozad]
+
 1.5.4 - 2016-05-04
 ------------------
 

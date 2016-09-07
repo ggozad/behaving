@@ -456,7 +456,8 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
       [Sets html on a ``contenteditable`` element with id ``id`` to ``contents``]
     * When I set the innner HTML of the element with class "``class``" to "``contents``"
     * When I set the innner HTML of the element with class "``class``" to "``contents``"
-    * Wnen I send "``KEY``" to "``name``"
+    * When I send "``KEY``" to "``name``"
+    * When I focus on "``name``"
     * Then field "``name``" should have the value "``value``"
     * Then "``name``" should be enabled
     * Then "``name``" should be disabled

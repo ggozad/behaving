@@ -18,7 +18,7 @@ def i_fill_in_field(context, name, value):
 @persona_vars
 def i_clear_field(context, name):
 
-    el = context.browser.find_element_by_name(name)
+    el = context.browser.driver.find_element_by_name(name)
     assert el, 'Element not found'
     el.clear()
 
@@ -81,6 +81,14 @@ def i_select_text(context, text, name):
     assert elem, u'Element not found'
     select = Select(elem)
     select.select_by_visible_text(text)
+
+
+@step(u'I focus on "{name}"')
+@persona_vars
+def i_focus(context, name):
+    elem = context.browser.driver.find_element_by_name(name)
+    assert elem, u'Element not found'
+    context.browser.execute_script('document.getElementsByName("%s")[0].focus();' % name)
 
 
 @step(u'I press "{name}"')
