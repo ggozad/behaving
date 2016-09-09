@@ -2,7 +2,7 @@
 Changelog
 =========
 
-1.5.5 -
+1.5.5 - 2016-09-09
 ------------------
 
 - Use pync when available to output mail messages on mock smtp.
