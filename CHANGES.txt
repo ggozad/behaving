@@ -13,6 +13,9 @@ Changelog
 - When I focus on "{name}".
   [ggozad]
 
+- Ignore headers when finding links in emails.
+  [kageurufu]
+
 1.5.4 - 2016-05-04
 ------------------
 
