@@ -68,7 +68,12 @@ def click_link_in_email(context, address):
     mails = context.mail.user_messages(address)
     assert mails, u'message not found'
     mail = email.message_from_string(mails[-1])
-    links = URL_RE.findall(str(mail).replace('=\n', ''))
+    links = []
+    payloads = mail.get_payload()
+    if isinstance(payloads, str):
+        payloads = [payloads]
+    for payload in payloads:
+        links.extend(URL_RE.findall(str(payload).replace('=\n', '')))
     assert links, u'link not found'
     url = links[0]
     context.browser.visit(url)
