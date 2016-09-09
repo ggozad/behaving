@@ -23,7 +23,13 @@ def click_link_with_text(context, text):
 @step(u'I click the link with text that contains "{text}"')
 @persona_vars
 def click_link_with_text_that_contains(context, text):
-    anchors = context.browser.find_by_xpath("//a[contains(string(), '%s')]" % text)
+    text = text.replace('"', '\\"')  # Escape all double quotes
+    text = text.replace("'", """', "'", '""")  # Escape all single quotes
+    if "'" in text:
+        xpath = "//a[contains(string(), concat('%s'))]" % text
+    else:
+        xpath = "//a[contains(string(), '%s')]" % text
+    anchors = context.browser.find_by_xpath(xpath)
     assert anchors, 'Link not found'
     anchors[0].click()
 
