@@ -39,6 +39,13 @@ def should_receive_gcm_with_message(context, device_id, message):
     assert False, "Message not Found"
 
 
+@step(u'I should not have received any gcm notifications at "{device_id}"')
+@persona_vars
+def should_not_have_received_gcm(context, device_id):
+    notifications = context.gcm.user_messages(device_id)
+    assert len(notifications) == 0, "Have received notifications"
+
+
 @step('I send a gcm message "{message}"')
 def send_gcm_notification(context, message):
 

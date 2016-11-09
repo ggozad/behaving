@@ -518,6 +518,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 
 * When I send a gcm message "{"to":"deviceID", "data": {"message": "Foo Bar", "badge": 6}}"
 * Then I should receive a gcm notification at "deviceID" containing "{'data': {'message': 'Foo Bar'}}"
+* Then I should have received any gcm notifications at "deviceID"
 
 ``behaving.personas`` Supported matchers/steps
 ----------------------------------------------
