@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.5.6.dev'
+version = '1.5.6'
 
 setup(name='behaving',
       version=version,
