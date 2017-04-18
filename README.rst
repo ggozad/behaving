@@ -308,6 +308,17 @@ You can run the tests simply by issuing
 
     ./bin/behave ./features
 
+For chrome and docker issues, the code below is useful
+
+::
+
+    from selenium.webdriver.chrome.options import Options
+    chrome_options = Options()
+    chrome_options.add_argument('--no-sandbox')
+    context.browser_args = {
+        'options': chrome_options
+    }
+
 Mail, GCM and SMS mock servers
 -------------------------
 
