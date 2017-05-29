@@ -45,25 +45,25 @@ def hide_element_by_id(context, id):
 @step(u'I should see "{text}"')
 @persona_vars
 def should_see(context, text):
-    assert context.browser.is_text_present(text), u'Text not found'
+    assert context.browser.is_text_present(text), u'Text "%s" not found' % text
 
 
 @step(u'I should not see "{text}"')
 @persona_vars
 def should_not_see(context, text):
-    assert context.browser.is_text_not_present(text), u'Text was found'
+    assert context.browser.is_text_not_present(text), u'Text "%s" was found' % text
 
 
 @step(u'I should see "{text}" within {timeout:d} seconds')
 @persona_vars
 def should_see_within_timeout(context, text, timeout):
-    assert context.browser.is_text_present(text, wait_time=timeout), u'Text not found'
+    assert context.browser.is_text_present(text, wait_time=timeout), u'Text "%s" not found' % text
 
 
 @step(u'I should not see "{text}" within {timeout:d} seconds')
 @persona_vars
 def should_not_see_within_timeout(context, text, timeout):
-    assert context.browser.is_text_not_present(text, wait_time=timeout), u'Text was found'
+    assert context.browser.is_text_not_present(text, wait_time=timeout), u'Text "%s" was found' % text
 
 
 @step(u'I should see an element with id "{id}"')
