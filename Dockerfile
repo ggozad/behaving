@@ -9,8 +9,6 @@ ARG CHROME_DRIVER_VERSION=2.30
 
 ARG PHANTOMJS_VERSION=1.9.8
 
-ARG CORDOVA_VERSION=4.3.0
-
 # Following line fixes https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 
