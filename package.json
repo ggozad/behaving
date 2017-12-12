@@ -1,0 +1,18 @@
+{
+  "name": "behaving-helpers",
+  "version": "1.0.0",
+  "private": false,
+  "scripts": {
+    "appium": "node node_modules/.bin/appium"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "appium": "^1.7.1"
+  },
+  "jest": {
+    "globals": {
+      "__DEV__": true
+    },
+    "preset": "react-native"
+  }
+}
