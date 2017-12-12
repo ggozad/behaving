@@ -1,31 +1,3 @@
-.installed.cfg
-.mr.developer.cfg
-/bin/
-/develop-eggs/
-/downloads/
-/eggs/
-/extends/
-/parts/
-/var/
-/dist/
-/apps/
-/etc/
-/node_modules/
-*.DS_Store
-*.egg-info
-*.pyc
-chromedriver.log
-ghostdriver.log
-.long-description.html
-build/
-xcuserdata/
-src/behaving/tests/apps/android_test_app/bin
-src/behaving/tests/apps/android_test_app/.*
-src/behaving/tests/apps/android_test_app/gen
-*.sublime-workspace
-
-
-# React native stuff
 # OSX
 #
 .DS_Store
@@ -68,3 +40,14 @@ yarn-error.log
 buck-out/
 \.buckd/
 *.keystore
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+*/fastlane/report.xml
+*/fastlane/Preview.html
+*/fastlane/screenshots
