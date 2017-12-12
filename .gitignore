@@ -10,6 +10,7 @@
 /dist/
 /apps/
 /etc/
+/node_modules/
 *.DS_Store
 *.egg-info
 *.pyc
