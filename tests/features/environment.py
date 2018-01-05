@@ -9,6 +9,7 @@ def before_all(context):
     context.mail_path = os.path.join(os.path.dirname(behaving.__file__), '../../var/mail/')
     context.gcm_path = os.path.join(os.path.dirname(behaving.__file__), '../../var/gcm/')
     context.screenshots_dir = os.path.join(os.path.dirname(behaving.__file__), '../../var/screenshots/')
+    context.mobile_app_dir = os.path.join(os.path.dirname(behaving.__file__), '../../tests/rntest/')
     benv.before_all(context)
 
 
