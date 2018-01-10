@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 from behaving.personas.persona import persona_vars
 from behaving.web.steps.basic import _retry
-
+from behaving.mobile.ios import IOSWebDriver
 
 @step(u'I fill in "{name}" with "{value}"')
 @persona_vars
@@ -95,17 +95,27 @@ def i_focus(context, name):
 @persona_vars
 def i_press(context, name):
 
-    element = context.browser.find_by_xpath(
-        ("//*[@id='%(name)s']|"
-         "//*[@name='%(name)s']|"
-         "//button[contains(string(), '%(name)s')]|"
-         "//input[@type='button' and contains(string(), '%(name)s')]|"
-         "//input[@type='button' and contains(@value, '%(name)s')]|"
-         "//input[@type='submit' and contains(@value, '%(name)s')]|"
-         "//a[contains(string(), '%(name)s')]") % {'name': name})
-    assert element, u'Element not found'
-    element.first.click()
-
+    if isinstance(context.browser, IOSWebDriver):
+        buttons = [
+            el for el in
+            context.browser.driver.find_elements_by_class_name('XCUIElementTypeButton')
+            if name in el.get_attribute('label')
+        ]
+        accessibility = context.browser.driver.find_elements_by_accessibility_id(name)
+        elements = buttons + accessibility
+        assert elements, u'Element not found'
+        elements[0].click()
+    else:
+        element = context.browser.find_by_xpath(
+            ("//*[@id='%(name)s']|"
+             "//*[@name='%(name)s']|"
+             "//button[contains(string(), '%(name)s')]|"
+             "//input[@type='button' and contains(string(), '%(name)s')]|"
+             "//input[@type='button' and contains(@value, '%(name)s')]|"
+             "//input[@type='submit' and contains(@value, '%(name)s')]|"
+             "//a[contains(string(), '%(name)s')]") % {'name': name})
+        assert element, u'Element not found'
+        element.first.click()
 
 @step(u'I press the element with xpath "{xpath}"')
 @persona_vars

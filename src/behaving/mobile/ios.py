@@ -1,5 +1,7 @@
 import time
 import os
+import xml.dom.minidom
+
 from appium import webdriver
 from splinter.driver.webdriver import BaseWebDriver
 
@@ -19,11 +21,16 @@ class IOSWebDriver(BaseWebDriver):
             desired_capabilities={
                 'app': os.path.expanduser(app_path),
                 'platformName': 'iOS',
+                'platformVersion': '11.2',
                 'deviceName': 'iPhone 6',
                 'automationName': 'XCUITest'
             }
         )
         super(IOSWebDriver, self).__init__(wait_time)
+
+    def page_source(self):
+        x = xml.dom.minidom.parseString(self.driver.page_source)
+        return x.toprettyxml()
 
     def is_text_present(self, text, wait_time=None):
         wait_time = wait_time or self.wait_time
