@@ -11,7 +11,8 @@ import {
   Text,
   View,
   Button,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput
 } from "react-native";
 
 const instructions = Platform.select({
@@ -31,6 +32,12 @@ export default class App extends Component<{}> {
       <View style={styles.container}>
         <Text style={styles.welcome}>Behaving mobile tests</Text>
         <Text>{this.state.feedback}</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={v => this.setState({ feedback: `You typed: ${v}` })}
+          accessibilityLabel="Text Input"
+        />
+
         <Button
           title="Normal button"
           onPress={() => {
@@ -56,6 +63,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#F5FCFF"
+  },
+  input: {
+    borderColor: "gray",
+    borderBottomWidth: 1,
+    width: "80%"
   },
   welcome: {
     fontSize: 20,
