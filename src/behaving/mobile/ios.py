@@ -45,3 +45,9 @@ class IOSWebDriver(BaseWebDriver):
                 except ValueError:
                     continue
         return False
+
+    def fill(self, name, value):
+        field = self.driver.find_elements_by_accessibility_id(name)
+        assert field, u'No elements found with accessibility id %s' % name
+        field = field[0]
+        field.set_value(value)
