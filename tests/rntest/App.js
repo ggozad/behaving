@@ -37,7 +37,6 @@ export default class App extends Component<{}> {
           onChangeText={v => this.setState({ feedback: `You typed: ${v}` })}
           accessibilityLabel="Text Input"
         />
-
         <Button
           title="Normal button"
           onPress={() => {
