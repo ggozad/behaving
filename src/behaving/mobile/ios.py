@@ -17,6 +17,7 @@ class IOSWebDriver(BaseWebDriver):
                  wait_time=2,
                  **kwargs):
 
+        self.app_path = app_path
         self.driver = webdriver.Remote(
             command_executor=appium_url,
             desired_capabilities={
@@ -29,8 +30,6 @@ class IOSWebDriver(BaseWebDriver):
         )
         super(IOSWebDriver, self).__init__(wait_time)
 
-
-
     def page_source(self):
         x = xml.dom.minidom.parseString(self.driver.page_source)
         return x.toprettyxml()
@@ -40,12 +39,9 @@ class IOSWebDriver(BaseWebDriver):
         end_time = time.time() + self.wait_time
 
         while time.time() < end_time:
-            try:
-                elements = finder(selector)
-                if not isinstance(elements, list):
-                    elements = [elements]
-            except NoSuchElementException:
-                pass
+            elements = finder(selector)
+            if not isinstance(elements, list):
+                elements = [elements]
 
             if elements:
                 return ElementList(elements)
