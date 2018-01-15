@@ -1,7 +1,9 @@
 from . import setup
 
+
 def before_all(context):
     setup(context)
+
 
 def before_feature(context, feature):
     pass
