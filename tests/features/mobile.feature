@@ -7,6 +7,7 @@ Feature: Mobile
     @mobile
     Scenario: Pressing buttons and opacities
         Then I should see "Behaving mobile tests"
+        And I should not see "Inexistent text"
         And I should see an element with accessibility id "Touchable opacity"
 
     @mobile
