@@ -53,18 +53,32 @@ class IOSWebDriver(BaseWebDriver):
     def find_by_accessibility_id(self, id):
         return self.find_by(self.driver.find_elements_by_accessibility_id, id)
 
+    def _is_text_present(self, text):
+        text_elements = self.driver.find_elements_by_class_name('XCUIElementTypeStaticText')
+        for el in text_elements:
+            try:
+                el.text.index(text)
+                return True
+            except ValueError:
+                continue
+        return False
+
     def is_text_present(self, text, wait_time=None):
         wait_time = wait_time or self.wait_time
         end_time = time.time() + wait_time
 
         while time.time() < end_time:
-            text_elements = self.driver.find_elements_by_class_name('XCUIElementTypeStaticText')
-            for el in text_elements:
-                try:
-                    el.text.index(text)
-                    return True
-                except ValueError:
-                    continue
+            if self._is_text_present(text):
+                return True
+        return False
+
+    def is_text_not_present(self, text, wait_time=None):
+        wait_time = wait_time or self.wait_time
+        end_time = time.time() + wait_time
+
+        while time.time() < end_time:
+            if not self._is_text_present(text):
+                return True
         return False
 
     def fill(self, name, value):
