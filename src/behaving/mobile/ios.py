@@ -15,18 +15,21 @@ class IOSWebDriver(BaseWebDriver):
                  app_path,
                  appium_url='http://127.0.0.1:4723/wd/hub',
                  wait_time=2,
+                 caps={},
                  **kwargs):
 
         self.app_path = app_path
+        desired_capabilities = {
+            'app': os.path.expanduser(app_path),
+            'platformName': 'iOS',
+            'platformVersion': '11.2',
+            'deviceName': 'iPhone 6',
+            'automationName': 'XCUITest'
+        }
+        desired_capabilities.update(caps)
         self.driver = webdriver.Remote(
             command_executor=appium_url,
-            desired_capabilities={
-                'app': os.path.expanduser(app_path),
-                'platformName': 'iOS',
-                'platformVersion': '11.2',
-                'deviceName': 'iPhone 6',
-                'automationName': 'XCUITest'
-            }
+            desired_capabilities=desired_capabilities
         )
         super(IOSWebDriver, self).__init__(wait_time)
 
