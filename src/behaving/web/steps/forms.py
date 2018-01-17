@@ -99,12 +99,14 @@ def i_press(context, name):
         buttons = [
             el for el in
             context.browser.driver.find_elements_by_class_name('XCUIElementTypeButton')
-            if name in el.get_attribute('label')
+            if el.get_attribute('label') and name in el.get_attribute('label')
         ]
-        accessibility = context.browser.driver.find_elements_by_accessibility_id(name)
-        elements = buttons + accessibility
-        assert elements, u'Element not found'
-        elements[0].click()
+        if buttons:
+            buttons[0].click()
+        else:
+            accessibility = context.browser.driver.find_elements_by_accessibility_id(name)
+            assert accessibility, u'Element not found'
+            accessibility[-1].click()
     else:
         element = context.browser.find_by_xpath(
             ("//*[@id='%(name)s']|"
@@ -116,6 +118,7 @@ def i_press(context, name):
              "//a[contains(string(), '%(name)s')]") % {'name': name})
         assert element, u'Element not found'
         element.first.click()
+
 
 @step(u'I press the element with xpath "{xpath}"')
 @persona_vars
