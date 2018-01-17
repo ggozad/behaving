@@ -5,6 +5,7 @@ import xml.dom.minidom
 from appium import webdriver
 from splinter.driver.webdriver import BaseWebDriver
 from splinter.element_list import ElementList
+from selenium.common.exceptions import WebDriverException
 
 
 class IOSWebDriver(BaseWebDriver):
@@ -58,9 +59,16 @@ class IOSWebDriver(BaseWebDriver):
         for el in text_elements:
             try:
                 el.text.index(text)
-                return True
-            except ValueError:
+                if el.get_attribute('visible') == 'true':
+                    return True
+            except (ValueError, AttributeError,):
                 continue
+        try:
+            self.driver.find_element_by_ios_class_chain(
+                '**/XCUIElementTypeOther[`label CONTAINS "%s" AND visible==true`]' % text)
+            return True
+        except WebDriverException:
+            return False
         return False
 
     def is_text_present(self, text, wait_time=None):
