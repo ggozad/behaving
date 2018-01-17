@@ -85,3 +85,6 @@ class IOSWebDriver(BaseWebDriver):
         field = self.find_by_accessibility_id(name).first
         assert field, u'No elements found with accessibility id %s' % name
         field.set_value(value)
+
+from splinter.browser import _DRIVERS
+_DRIVERS['ios'] = IOSWebDriver

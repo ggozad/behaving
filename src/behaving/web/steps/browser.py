@@ -34,15 +34,21 @@ def named_browser(context, name):
         if context.default_browser == 'electron':
             assert context.electron_app, u'You need to set the electron app path'
             args['binary'] = context.electron_app
-        browser_attempts = 0
-        while browser_attempts < context.max_browser_attempts:
-            try:
-                context.browsers[name] = Browser(**args)
-                break
-            except WebDriverException:
-                browser_attempts += 1
+        if context.default_browser == 'ios':
+            assert context.ios_app, u'You need to specify the iOS app'
+            app_path = context.ios_app
+            args['app_path'] = app_path
+            context.browsers[name] = Browser(**args)
         else:
-            raise WebDriverException("Failed to initialize browser")
+            browser_attempts = 0
+            while browser_attempts < context.max_browser_attempts:
+                try:
+                    context.browsers[name] = Browser(**args)
+                    break
+                except WebDriverException:
+                    browser_attempts += 1
+            else:
+                raise WebDriverException("Failed to initialize browser")
     context.browser = context.browsers[name]
     if single_browser:
         context.is_connected = True
