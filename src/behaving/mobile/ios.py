@@ -25,7 +25,6 @@ class IOSWebDriver(BaseWebDriver):
             'platformName': 'iOS',
             'platformVersion': '11.2',
             'deviceName': 'iPhone 6',
-            'automationName': 'XCUITest',
         }
         desired_capabilities.update(caps)
         self.driver = webdriver.Remote(
@@ -65,7 +64,7 @@ class IOSWebDriver(BaseWebDriver):
                 continue
         try:
             self.driver.find_element_by_ios_class_chain(
-                '**/XCUIElementTypeOther[`label CONTAINS "%s" AND visible==true`]' % text)
+                '**/XCUIElementTypeOther[`name CONTAINS "%s" AND visible==true`]' % text)
             return True
         except WebDriverException:
             return False
