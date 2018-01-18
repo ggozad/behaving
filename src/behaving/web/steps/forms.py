@@ -4,8 +4,8 @@ from splinter.exceptions import ElementDoesNotExist
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 from behaving.personas.persona import persona_vars
-from behaving.web.steps.basic import _retry
 from behaving.mobile.ios import IOSWebDriver
+
 
 @step(u'I fill in "{name}" with "{value}"')
 @persona_vars
