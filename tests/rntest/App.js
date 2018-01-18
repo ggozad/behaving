@@ -47,9 +47,9 @@ export default class App extends Component<{}> {
           onPress={() => {
             this.setState({ feedback: "Touchable opacity pressed" });
           }}
-          accessibilityLabel="Touchable opacity"
+          accessibilityLabel="TouchableOpacity"
         >
-          <Text>Touchable Opacity</Text>
+          <Text>Touchable opacity with accessibilityLabel</Text>
         </TouchableOpacity>
       </View>
     );
