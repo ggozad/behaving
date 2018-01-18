@@ -25,7 +25,7 @@ class IOSWebDriver(BaseWebDriver):
             'platformName': 'iOS',
             'platformVersion': '11.2',
             'deviceName': 'iPhone 6',
-            'automationName': 'XCUITest'
+            'automationName': 'XCUITest',
         }
         desired_capabilities.update(caps)
         self.driver = webdriver.Remote(
@@ -35,7 +35,7 @@ class IOSWebDriver(BaseWebDriver):
         super(IOSWebDriver, self).__init__(wait_time)
 
     def page_source(self):
-        x = xml.dom.minidom.parseString(self.driver.page_source)
+        x = xml.dom.minidom.parseString(self.driver.page_source.encode('utf-8'))
         return x.toprettyxml()
 
     def find_by(self, finder, selector):

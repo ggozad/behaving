@@ -1,4 +1,5 @@
 import os
+import json
 
 from behave import step
 
@@ -10,3 +11,8 @@ def given_an_ios_app(context, app_path):
     assert os.path.isdir(app_path), u'iOS app not found'
     app_path = os.path.abspath(app_path)
     context.ios_app = app_path
+
+
+@step(u'I set the iOS capabilities to "{caps}"')
+def set_ios_capabilities(context, caps):
+    context.ios_capabilities = json.loads(caps)
