@@ -36,6 +36,10 @@ def named_browser(context, name):
             args['binary'] = context.electron_app
         if context.default_browser == 'ios':
             assert context.ios_app, u'You need to specify the iOS app'
+            try:
+                args['caps'] = context.ios_capabilities
+            except AttributeError:
+                pass
             app_path = context.ios_app
             args['app_path'] = app_path
             context.browsers[name] = Browser(**args)
