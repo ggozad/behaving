@@ -5,7 +5,7 @@ Feature: Mobile
         Given iOS as the default browser
 
     @mobile
-    Scenario: Pressing buttons and opacities
+    Scenario: Element visibility
         Given a browser
         Then I should see "Behaving mobile tests"
         And I should not see "Inexistent text"
@@ -18,6 +18,8 @@ Feature: Mobile
         Then I should see "Normal button pressed"
         When I press "TouchableOpacity"
         Then I should see "Touchable opacity pressed"
+        When I press the element with iOS class chain "**/XCUIElementTypeButton[`name ENDSWITH "button"`]"
+        Then I should see "Normal button pressed"
 
     @mobile
     Scenario: Text inputs
