@@ -25,6 +25,7 @@ class IOSWebDriver(BaseWebDriver):
             'platformName': 'iOS',
             'platformVersion': '11.2',
             'deviceName': 'iPhone 6',
+            'noReset': 'true',
         }
         desired_capabilities.update(caps)
         self.driver = webdriver.Remote(
