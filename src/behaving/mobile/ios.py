@@ -42,7 +42,10 @@ class IOSWebDriver(BaseWebDriver):
         end_time = time.time() + self.wait_time
 
         while time.time() < end_time:
-            elements = finder(selector)
+            try:
+                elements = finder(selector)
+            except WebDriverException:
+                elements = []
             if not isinstance(elements, list):
                 elements = [elements]
 
@@ -52,6 +55,9 @@ class IOSWebDriver(BaseWebDriver):
 
     def find_by_accessibility_id(self, id):
         return self.find_by(self.driver.find_elements_by_accessibility_id, id)
+
+    def find_by_ios_class_chain(self, query):
+        return self.find_by(self.driver.find_element_by_ios_class_chain, query)
 
     def _is_text_present(self, text):
         text_elements = self.driver.find_elements_by_class_name('XCUIElementTypeStaticText')
