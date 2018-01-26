@@ -11,3 +11,8 @@ def press_class_chain(context, chain):
     el = context.browser.find_by_ios_class_chain(chain)
     assert el, u'Element not found'
     el.first.click()
+
+
+@step(u'I tap at {x:d} {y:d}')
+def tap_at_coords(context, x, y):
+    context.browser.driver.tap([(x, y)])
