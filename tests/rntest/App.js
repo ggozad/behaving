@@ -30,6 +30,16 @@ export default class App extends Component<{}> {
   render() {
     return (
       <View style={styles.container}>
+        <TouchableOpacity
+          onPress={ev => {
+            this.setState({
+              feedback: `Tap at ${ev.nativeEvent.locationX}, ${
+                ev.nativeEvent.locationY
+              }`
+            });
+          }}
+          style={styles.touchableBox}
+        />
         <Text style={styles.welcome}>Behaving mobile tests</Text>
         <Text>{this.state.feedback}</Text>
         <TextInput
@@ -62,6 +72,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#F5FCFF"
+  },
+  touchableBox: {
+    position: "absolute",
+    top: 100,
+    width: 100,
+    height: 100,
+    backgroundColor: "red"
   },
   input: {
     borderColor: "gray",
