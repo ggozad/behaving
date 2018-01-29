@@ -212,7 +212,7 @@ appium-espresso-driver@^1.0.0-beta.3:
     teen_process "^1.8.2"
     yargs "^8.0.1"
 
-appium-fake-driver@0.x:
+appium-fake-driver@^0.2.x:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/appium-fake-driver/-/appium-fake-driver-0.2.0.tgz#1b08f8a88944bac125b73166fc2d7f0bb1ac22b0"
   dependencies:
@@ -392,9 +392,9 @@ appium-unlock@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/appium-unlock/-/appium-unlock-2.0.0.tgz#cce93347e665ac381046f17df3e9d768b29a9bcd"
 
-appium-windows-driver@0.x:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/appium-windows-driver/-/appium-windows-driver-0.5.3.tgz#3b4c9a5796c8263a6687f3ec35d3ffadd6c5ba17"
+appium-windows-driver@1.x:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/appium-windows-driver/-/appium-windows-driver-1.0.0.tgz#5f5a61ff6acb4a6b54d9cc215928028383a4f79f"
   dependencies:
     appium-base-driver "^2.0.1"
     appium-support "^2.5.0"
@@ -457,20 +457,20 @@ appium-youiengine-driver@1.x:
     bluebird "2.x"
     lodash "4.x"
 
-appium@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/appium/-/appium-1.7.1.tgz#e3d685660d22c026bb816377c786ff84a9a00408"
+appium@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/appium/-/appium-1.7.2.tgz#fc1dc10aab044e2356542b16886e41c764935507"
   dependencies:
     appium-android-driver "1.x"
     appium-base-driver "2.x"
     appium-espresso-driver "^1.0.0-beta.3"
-    appium-fake-driver "0.x"
+    appium-fake-driver "^0.2.x"
     appium-ios-driver "1.x"
     appium-mac-driver "1.x"
     appium-selendroid-driver "1.x"
     appium-support "2.x"
     appium-uiautomator2-driver "0.x"
-    appium-windows-driver "0.x"
+    appium-windows-driver "1.x"
     appium-xcuitest-driver "2.x"
     appium-youiengine-driver "1.x"
     argparse "1.x"
@@ -480,6 +480,7 @@ appium@^1.7.1:
     bluebird "2.x"
     continuation-local-storage "3.x"
     dateformat "^2.0.0"
+    fkill "^5.2.0"
     lodash "4.x"
     npmlog "2.x"
     request "^2.81.0"
@@ -1205,6 +1206,15 @@ find-up@^2.0.0:
 fkill@^5.0.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/fkill/-/fkill-5.1.0.tgz#d07c20a6bee698b02ae727fdcad61fbcdec198b8"
+  dependencies:
+    aggregate-error "^1.0.0"
+    arrify "^1.0.0"
+    execa "^0.8.0"
+    taskkill "^2.0.0"
+
+fkill@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/fkill/-/fkill-5.2.0.tgz#68abea133b950963170dcf5af3ae2da78b71794e"
   dependencies:
     aggregate-error "^1.0.0"
     arrify "^1.0.0"
