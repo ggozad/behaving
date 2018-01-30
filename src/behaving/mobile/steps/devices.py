@@ -16,3 +16,13 @@ def given_an_ios_app(context, app_path):
 @step(u'I set the iOS capabilities to "{caps}"')
 def set_ios_capabilities(context, caps):
     context.ios_capabilities = json.loads(caps)
+
+
+@step(u'I launch the app')
+def launch_app(context):
+    context.browser.driver.launch_app()
+
+
+@step(u'I close the app')
+def close_app(context):
+    context.browser.driver.close_app()
