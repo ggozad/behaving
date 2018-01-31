@@ -35,13 +35,16 @@ def named_browser(context, name):
             assert context.electron_app, u'You need to set the electron app path'
             args['binary'] = context.electron_app
         if context.default_browser == 'ios':
+            caps = {}
             assert context.ios_app, u'You need to specify the iOS app'
             try:
-                args['caps'] = context.ios_capabilities
-            except AttributeError:
+                caps = context.ios_capabilities
+                caps.update(context.personas[name]['ios_capabilities'])
+            except (AttributeError, KeyError,):
                 pass
             app_path = context.ios_app
             args['app_path'] = app_path
+            args['caps'] = caps
             context.browsers[name] = Browser(**args)
         else:
             browser_attempts = 0
