@@ -96,17 +96,21 @@ def i_focus(context, name):
 def i_press(context, name):
 
     if isinstance(context.browser, IOSWebDriver):
-        buttons = [
-            el for el in
-            context.browser.driver.find_elements_by_class_name('XCUIElementTypeButton')
-            if el.get_attribute('name') and name in el.get_attribute('name')
-        ]
-        if buttons:
-            buttons[0].click()
-        else:
-            accessibility = context.browser.driver.find_elements_by_accessibility_id(name)
-            assert accessibility, u'Element not found'
-            accessibility[-1].click()
+        try:
+            buttons = [
+                el for el in
+                context.browser.driver.find_elements_by_class_name('XCUIElementTypeButton')
+                if el.get_attribute('name') and name in el.get_attribute('name')
+            ]
+            if buttons:
+                buttons[0].click()
+                return
+        except TypeError:
+            pass
+
+        accessibility = context.browser.driver.find_elements_by_accessibility_id(name)
+        assert accessibility, u'Element not found'
+        accessibility[-1].click()
     else:
         element = context.browser.find_by_xpath(
             ("//*[@id='%(name)s']|"
