@@ -23,7 +23,6 @@ Feature: Mobile
         When I tap at 150 150
         Then I should see "Tap at 12.5, 50"
 
-
     @mobile
     Scenario: Text inputs
         Given a browser

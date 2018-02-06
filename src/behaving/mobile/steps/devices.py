@@ -29,6 +29,16 @@ def close_app(context):
     context.browser.driver.close_app()
 
 
+@step(u'I background the app')
+def background_app(context):
+    context.browser.driver.background_app(-1)
+
+
+@step(u'I background the app for {timeout:d} seconds')
+def background_app_with_timeout(context, timeout):
+    context.browser.driver.background_app(timeout)
+
+
 @step(u'I add "{path}" to the photo library')
 def add_media(context, path):
     path = os.path.join(context.attachment_dir, path)
