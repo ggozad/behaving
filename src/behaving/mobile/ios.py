@@ -34,6 +34,9 @@ class IOSWebDriver(BaseWebDriver):
         )
         super(IOSWebDriver, self).__init__(wait_time)
 
+    def udid(self):
+        return self.driver.capabilities.get('udid')
+
     def page_source(self):
         x = xml.dom.minidom.parseString(self.driver.page_source.encode('utf-8'))
         return x.toprettyxml()

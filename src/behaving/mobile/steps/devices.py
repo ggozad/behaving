@@ -1,5 +1,6 @@
 import os
 import json
+import subprocess
 
 from behave import step
 
@@ -26,3 +27,9 @@ def launch_app(context):
 @step(u'I close the app')
 def close_app(context):
     context.browser.driver.close_app()
+
+
+@step(u'I add "{path}" to the photo library')
+def add_media(context, path):
+    path = os.path.join(context.attachment_dir, path)
+    subprocess.call(['xcrun', 'simctl', 'addmedia', context.browser.udid(), path])
