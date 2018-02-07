@@ -46,6 +46,19 @@ def named_browser(context, name):
             args['app_path'] = app_path
             args['caps'] = caps
             context.browsers[name] = Browser(**args)
+        elif context.default_browser == 'android':
+            caps = {}
+            assert context.android_app, u'You need to specify the android app'
+            try:
+                caps = context.android_capabilities
+                caps.update(context.personas[name]['android_capabilities'])
+            except (AttributeError, KeyError,):
+                pass
+            app_path = context.android_app
+            args['app_path'] = app_path
+            args['caps'] = caps
+            context.browsers[name] = Browser(**args)
+
         else:
             browser_attempts = 0
             while browser_attempts < context.max_browser_attempts:

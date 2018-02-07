@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 from behaving.personas.persona import persona_vars
 from behaving.mobile.ios import IOSWebDriver
+from behaving.mobile.android import AndroidWebDriver
 
 
 @step(u'I fill in "{name}" with "{value}"')
@@ -111,6 +112,21 @@ def i_press(context, name):
         accessibility = context.browser.driver.find_elements_by_accessibility_id(name)
         assert accessibility, u'Element not found'
         accessibility[-1].click()
+    elif isinstance(context.browser, AndroidWebDriver):
+        try:
+            buttons = context.browser.driver.find_elements_by_class_name('android.widget.Button')
+            for button in buttons:
+                textElement = button.find_element_by_class_name('android.widget.TextView')
+                if textElement and textElement.text == name:
+                    button.click()
+                    return
+        except TypeError:
+            pass
+
+        accessibility = context.browser.driver.find_elements_by_accessibility_id(name)
+        assert accessibility, u'Element not found'
+        accessibility[-1].click()
+
     else:
         element = context.browser.find_by_xpath(
             ("//*[@id='%(name)s']|"
