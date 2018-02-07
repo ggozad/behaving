@@ -23,7 +23,7 @@ src/behaving/tests/apps/android_test_app/bin
 src/behaving/tests/apps/android_test_app/.*
 src/behaving/tests/apps/android_test_app/gen
 *.sublime-workspace
-
+.vscode/
 
 # React native stuff
 # OSX
