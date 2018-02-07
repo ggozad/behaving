@@ -9,7 +9,7 @@ from selenium.common.exceptions import WebDriverException
 from splinter.browser import _DRIVERS
 
 
-class IOSWebDriver(BaseWebDriver):
+class AndroidWebDriver(BaseWebDriver):
 
     driver_name = "ios"
 
@@ -23,9 +23,8 @@ class IOSWebDriver(BaseWebDriver):
         self.app_path = app_path
         desired_capabilities = {
             'app': os.path.expanduser(app_path),
-            'platformName': 'iOS',
-            'platformVersion': '11.2',
-            'deviceName': 'iPhone 6',
+            'platformName': 'Android',
+            'automationName': 'appium',
             'noReset': 'true',
             'newCommandTimeout': 50000,
         }
@@ -34,10 +33,7 @@ class IOSWebDriver(BaseWebDriver):
             command_executor=appium_url,
             desired_capabilities=desired_capabilities
         )
-        super(IOSWebDriver, self).__init__(wait_time)
-
-    def udid(self):
-        return self.driver.capabilities.get('udid')
+        super(AndroidWebDriver, self).__init__(wait_time)
 
     def page_source(self):
         x = xml.dom.minidom.parseString(self.driver.page_source.encode('utf-8'))
@@ -59,30 +55,20 @@ class IOSWebDriver(BaseWebDriver):
                 return ElementList(elements)
         return ElementList([])
 
-    def find_by_xpath(self, xpath):
-        return self.find_by(self.driver.find_element_by_xpath, xpath)
-
     def find_by_accessibility_id(self, id):
         return self.find_by(self.driver.find_elements_by_accessibility_id, id)
 
-    def find_by_ios_class_chain(self, query):
-        return self.find_by(self.driver.find_element_by_ios_class_chain, query)
+    def find_by_xpath(self, xpath):
+        return self.find_by(self.driver.find_element_by_xpath, xpath)
 
     def _is_text_present(self, text):
-        text_elements = self.driver.find_elements_by_class_name('XCUIElementTypeStaticText')
+        text_elements = self.driver.find_elements_by_class_name('android.widget.TextView')
         for el in text_elements:
             try:
                 el.text.index(text)
-                if el.get_attribute('visible') == 'true':
-                    return True
+                return True
             except (ValueError, AttributeError,):
                 continue
-        try:
-            self.driver.find_element_by_ios_class_chain(
-                '**/XCUIElementTypeOther[`name CONTAINS "%s" AND visible==true`]' % text)
-            return True
-        except WebDriverException:
-            return False
         return False
 
     def is_text_present(self, text, wait_time=None):
@@ -109,4 +95,4 @@ class IOSWebDriver(BaseWebDriver):
         field.set_value(value)
 
 
-_DRIVERS['ios'] = IOSWebDriver
+_DRIVERS['android'] = AndroidWebDriver

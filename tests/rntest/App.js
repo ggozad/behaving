@@ -46,6 +46,7 @@ export default class App extends Component<{}> {
           style={styles.input}
           onChangeText={v => this.setState({ feedback: `You typed: ${v}` })}
           accessibilityLabel="Text Input"
+          underlineColorAndroid="transparent"
         />
         <Button
           title="Normal button"
@@ -83,7 +84,8 @@ const styles = StyleSheet.create({
   input: {
     borderColor: "gray",
     borderBottomWidth: 1,
-    width: "80%"
+    width: "80%",
+    marginBottom: 10
   },
   welcome: {
     fontSize: 20,

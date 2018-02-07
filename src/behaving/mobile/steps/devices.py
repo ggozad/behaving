@@ -14,9 +14,23 @@ def given_an_ios_app(context, app_path):
     context.ios_app = app_path
 
 
+@step(u'the android app at "{app_path}"')
+def given_an_android_app(context, app_path):
+    # If the simulator exists
+    app_path = os.path.join(context.mobile_app_dir, app_path)
+    assert os.path.isfile(app_path), u'Android app not found'
+    app_path = os.path.abspath(app_path)
+    context.android_app = app_path
+
+
 @step(u'I set the iOS capabilities to "{caps}"')
 def set_ios_capabilities(context, caps):
     context.ios_capabilities = json.loads(caps)
+
+
+@step(u'I set the android capabilities to "{caps}"')
+def set_android_capabilities(context, caps):
+    context.android_capabilities = json.loads(caps)
 
 
 @step(u'I launch the app')
