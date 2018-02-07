@@ -6,6 +6,7 @@ from appium import webdriver
 from splinter.driver.webdriver import BaseWebDriver
 from splinter.element_list import ElementList
 from selenium.common.exceptions import WebDriverException
+from splinter.browser import _DRIVERS
 
 
 class IOSWebDriver(BaseWebDriver):
@@ -103,5 +104,5 @@ class IOSWebDriver(BaseWebDriver):
         assert field, u'No elements found with accessibility id %s' % name
         field.set_value(value)
 
-from splinter.browser import _DRIVERS
+
 _DRIVERS['ios'] = IOSWebDriver
