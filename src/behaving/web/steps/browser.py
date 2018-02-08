@@ -39,8 +39,11 @@ def named_browser(context, name):
             assert context.ios_app, u'You need to specify the iOS app'
             try:
                 caps = context.ios_capabilities
+            except AttributeError:
+                pass
+            try:
                 caps.update(context.personas[name]['ios_capabilities'])
-            except (AttributeError, KeyError,):
+            except KeyError:
                 pass
             app_path = context.ios_app
             args['app_path'] = app_path
@@ -51,8 +54,11 @@ def named_browser(context, name):
             assert context.android_app, u'You need to specify the android app'
             try:
                 caps = context.android_capabilities
+            except AttributeError:
+                pass
+            try:
                 caps.update(context.personas[name]['android_capabilities'])
-            except (AttributeError, KeyError,):
+            except KeyError:
                 pass
             app_path = context.android_app
             args['app_path'] = app_path
