@@ -54,14 +54,18 @@ def i_uncheck(context, name):
 
 @step(u'I toggle "{name}"')
 def i_toggle(context, name):
-
-    el = context.browser.find_by_name(name)
-    assert el, u'Element not found'
-    el = el.first
-    if el.checked:
-        el.uncheck()
+    if isinstance(context.browser, IOSWebDriver):
+        toggle = context.browser.driver.find_elements_by_accessibility_id(name)
+        assert toggle, u'Element not found'
+        toggle[-1].click()
     else:
-        el.check()
+        el = context.browser.find_by_name(name)
+        assert el, u'Element not found'
+        el = el.first
+        if el.checked:
+            el.uncheck()
+        else:
+            el.check()
 
 
 @step(u'I select "{value}" from "{name}"')
