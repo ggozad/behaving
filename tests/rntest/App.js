@@ -12,6 +12,7 @@ import {
   View,
   Button,
   TouchableOpacity,
+  Switch,
   TextInput
 } from "react-native";
 
@@ -62,6 +63,13 @@ export default class App extends Component<{}> {
         >
           <Text>Touchable opacity with accessibilityLabel</Text>
         </TouchableOpacity>
+        <Switch
+          value={false}
+          accessibilityLabel="switch"
+          onValueChange={val => {
+            this.setState({ feedback: "Switch pressed" });
+          }}
+        />
       </View>
     );
   }
