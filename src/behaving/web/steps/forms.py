@@ -149,6 +149,15 @@ def field_has_value(context, name, value):
     assert el, u'Element not found'
     assert el.first.value == value, "Values do not match, expected %s but got %s" % (value, el.first.value)
 
+@step(u'field "{name}" should be empty')
+@persona_vars
+def field_is_empty(context, name):
+    el = context.browser.find_by_xpath(
+        ("//*[@id='%(name)s']|"
+         "//*[@name='%(name)s']") % {'name': name})
+    assert el, u'Element not found'
+    assert el.first.value == '', u'Field is not empty'
+
 
 @step(u'"{name}" should be enabled')
 @persona_vars
