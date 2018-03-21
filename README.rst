@@ -556,6 +556,6 @@ Please see the `Contribution Guidelines`_
 .. _`Cucumber`: http://cukes.info/
 .. _`lettuce`: http://lettuce.it/
 .. _`behave`: http://pypi.python.org/pypi/behave
-.. _`splinter`: http://splinter.cobrateam.info/
+.. _`splinter`: https://github.com/cobrateam/splinter
 .. _`Crypho`: http://crypho.com
 .. _`Contribution Guidelines`: https://github.com/ggozad/behaving/blob/master/CONTRIBUTING.rst
