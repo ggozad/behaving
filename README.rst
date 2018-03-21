@@ -9,7 +9,7 @@ Behavior-Driven-Development, based on `behave`_ and `splinter`_.
 interactions, and provides the Python *behaving* namespace so that
 independent step-libraries can work together.
 
-Please refer to *behave*'s excellent `documentation <http://pythonhosted.org/behave/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
+Please refer to *behave*'s excellent `documentation <http://behave.readthedocs.io/en/latest/>`_ for a guide on how to use it, how to write your custom steps and make it possible to extend *behaving*.
 
 Hello world
 -----------
