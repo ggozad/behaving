@@ -7,7 +7,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "appium": "^1.7.2"
+    "appium": "^1.10.0"
   },
   "jest": {
     "globals": {
