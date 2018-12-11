@@ -1,9 +1,9 @@
 Feature: Android emulator support
 
     Background:
-        Given the android app at "android/app/build/outputs/apk/app-debug.apk"
+        Given the android app at "android/app/build/outputs/apk/debug/app-debug.apk"
         Given Android as the default browser
-        When I set the android capabilities to "{"deviceName": "Nexus_5X_API_26"}"
+        When I set the android capabilities to "{"deviceName": "Nexus_5X_API_28"}"
 
     @mobile
     Scenario: Element visibility
