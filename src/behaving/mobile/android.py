@@ -25,7 +25,7 @@ class AndroidWebDriver(BaseWebDriver):
             'app': os.path.expanduser(app_path),
             'platformName': 'Android',
             'automationName': 'appium',
-            'noReset': 'true',
+            'noReset': True,
             'newCommandTimeout': 50000,
         }
         desired_capabilities.update(caps)
