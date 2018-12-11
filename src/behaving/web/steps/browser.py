@@ -75,12 +75,12 @@ def named_browser(context, name):
                     browser_attempts += 1
             else:
                 raise WebDriverException("Failed to initialize browser")
+            if context.default_browser_size:
+                context.browsers[name].driver.set_window_size(*context.default_browser_size)
+
     context.browser = context.browsers[name]
     if single_browser:
         context.is_connected = True
-    if context.default_browser_size:
-        context.browser.driver.set_window_size(*context.default_browser_size)
-
 
 @step(u'the electron app "{app_path}"')
 def given_an_electron_app(context, app_path):
