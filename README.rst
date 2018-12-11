@@ -549,8 +549,22 @@ Debugging
 
 * When I pause the tests
 
+Mobile Development
+------------------
+
+We use `Appium`_ for interfacing with mobile devices and simulators.
+Currently this is in development, quite fragile and only works on MacOS.
+You will need to
+
+::
+
+  brew install carthage
+  brew install libimobiledevice
+  brew install ios-deploy
+
 .. _`Cucumber`: http://cukes.info/
 .. _`lettuce`: http://lettuce.it/
 .. _`behave`: http://pypi.python.org/pypi/behave
 .. _`splinter`: https://github.com/cobrateam/splinter
-.. _`Crypho`: http://crypho.com
+.. _`Crypho`: https://crypho.com
+.. _`Appium`: http://appium.io
