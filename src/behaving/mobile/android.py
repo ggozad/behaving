@@ -11,7 +11,7 @@ from splinter.browser import _DRIVERS
 
 class AndroidWebDriver(BaseWebDriver):
 
-    driver_name = "ios"
+    driver_name = "android"
 
     def __init__(self,
                  app_path,
@@ -82,7 +82,7 @@ class AndroidWebDriver(BaseWebDriver):
                 if self._is_text_present(text):
                     return True
             except StaleElementReferenceException:
-                pass
+                continue
         return False
 
     def is_text_not_present(self, text, wait_time=None):
@@ -94,7 +94,7 @@ class AndroidWebDriver(BaseWebDriver):
                 if not self._is_text_present(text):
                     return True
             except StaleElementReferenceException:
-                pass
+                continue
         return False
 
     def fill(self, name, value):
