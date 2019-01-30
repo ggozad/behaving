@@ -5,7 +5,7 @@ import xml.dom.minidom
 from appium import webdriver
 from splinter.driver.webdriver import BaseWebDriver
 from splinter.element_list import ElementList
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException, StaleElementReferenceException
 from splinter.browser import _DRIVERS
 
 
@@ -36,7 +36,8 @@ class AndroidWebDriver(BaseWebDriver):
         super(AndroidWebDriver, self).__init__(wait_time)
 
     def page_source(self):
-        x = xml.dom.minidom.parseString(self.driver.page_source.encode('utf-8'))
+        x = xml.dom.minidom.parseString(
+            self.driver.page_source.encode('utf-8'))
         return x.toprettyxml()
 
     def find_by(self, finder, selector):
@@ -62,7 +63,8 @@ class AndroidWebDriver(BaseWebDriver):
         return self.find_by(self.driver.find_element_by_xpath, xpath)
 
     def _is_text_present(self, text):
-        text_elements = self.driver.find_elements_by_class_name('android.widget.TextView')
+        text_elements = self.driver.find_elements_by_class_name(
+            'android.widget.TextView')
         for el in text_elements:
             try:
                 el.text.index(text)
@@ -76,8 +78,11 @@ class AndroidWebDriver(BaseWebDriver):
         end_time = time.time() + wait_time
 
         while time.time() < end_time:
-            if self._is_text_present(text):
-                return True
+            try:
+                if self._is_text_present(text):
+                    return True
+            except StaleElementReferenceException:
+                pass
         return False
 
     def is_text_not_present(self, text, wait_time=None):
@@ -85,8 +90,11 @@ class AndroidWebDriver(BaseWebDriver):
         end_time = time.time() + wait_time
 
         while time.time() < end_time:
-            if not self._is_text_present(text):
-                return True
+            try:
+                if not self._is_text_present(text):
+                    return True
+            except StaleElementReferenceException:
+                pass
         return False
 
     def fill(self, name, value):
