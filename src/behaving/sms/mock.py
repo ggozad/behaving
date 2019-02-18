@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+import subprocess
 import sys
 try:
     from SimpleHTTPServer import SimpleHTTPRequestHandler
@@ -23,7 +24,6 @@ output_dir = None
 
 
 class SMSServer(SimpleHTTPRequestHandler):
-
     def do_POST(self):
         content_length = int(self.headers.get('content-length'))
         post_body = self.rfile.read(content_length)
@@ -61,6 +61,11 @@ class SMSServer(SimpleHTTPRequestHandler):
         with open(dest, "w") as f:
             f.write(body)
 
+        if sys.platform == 'darwin':
+            code = body.split(None)[-1]
+            p = subprocess.Popen('pbcopy', stdin=subprocess.PIPE)
+            p.communicate(code.encode('utf-8'))
+            body = '%s and has been copied to the clipboard' % body
         if notifier:
             notifier.notify(body, title=to)
 
@@ -69,14 +74,14 @@ def main(args=sys.argv[1:]):
     """Main function called by `smsmock` command.
     """
     parser = argparse.ArgumentParser(description='SMS mock server')
-    parser.add_argument('-p', '--port',
-                        default='8199',
-                        help='The port to use')
+    parser.add_argument('-p', '--port', default='8199', help='The port to use')
 
-    parser.add_argument('-o', '--output_dir',
-                        default=None,
-                        required=True,
-                        help='Directory where to dump the SMSs')
+    parser.add_argument(
+        '-o',
+        '--output_dir',
+        default=None,
+        required=True,
+        help='Directory where to dump the SMSs')
 
     options = parser.parse_args(args=args)
 
