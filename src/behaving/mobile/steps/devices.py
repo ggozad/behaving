@@ -56,4 +56,19 @@ def background_app_with_timeout(context, timeout):
 @step(u'I add "{path}" to the photo library')
 def add_media(context, path):
     path = os.path.join(context.attachment_dir, path)
-    subprocess.call(['xcrun', 'simctl', 'addmedia', context.browser.udid(), path])
+    subprocess.call(
+        ['xcrun', 'simctl', 'addmedia',
+         context.browser.udid(), path])
+
+
+@step(u'I install the app')
+def install_app(context):
+    if context.browser.driver_name == 'ios':
+        assert context.ios_app, u'No app specified'
+        context.browser.driver.install_app(context.ios_app)
+        return
+    elif context.browser.driver_name == 'android':
+        assert context.android_app, u'No app specified'
+        context.browser.driver.install_app(context.android_app)
+        return
+    assert False, u'Not using a mobile device'
