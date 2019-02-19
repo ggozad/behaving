@@ -3,6 +3,7 @@ from behave import step
 from splinter.exceptions import ElementDoesNotExist
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import StaleElementReferenceException
 from behaving.personas.persona import persona_vars
 from behaving.mobile.ios import IOSWebDriver
 from behaving.mobile.android import AndroidWebDriver
@@ -12,7 +13,7 @@ from behaving.mobile.android import AndroidWebDriver
 @persona_vars
 def i_fill_in_field(context, name, value):
 
-        context.browser.fill(name, value)
+    context.browser.fill(name, value)
 
 
 @step(u'I clear field "{name}"')
@@ -74,7 +75,8 @@ def i_select(context, value, name):
     try:
         context.browser.select(name, value)
     except ElementDoesNotExist:
-        inp = context.browser.find_by_xpath("//input[@name='%s'][@value='%s']" % (name, value))
+        inp = context.browser.find_by_xpath(
+            "//input[@name='%s'][@value='%s']" % (name, value))
         assert inp, u'Element not found'
         inp.first.check()
 
@@ -93,7 +95,8 @@ def i_select_text(context, text, name):
 def i_focus(context, name):
     elem = context.browser.driver.find_element_by_name(name)
     assert elem, u'Element not found'
-    context.browser.execute_script('document.getElementsByName("%s")[0].focus();' % name)
+    context.browser.execute_script(
+        'document.getElementsByName("%s")[0].focus();' % name)
 
 
 @step(u'I press "{name}"')
@@ -103,9 +106,10 @@ def i_press(context, name):
     if isinstance(context.browser, IOSWebDriver):
         try:
             buttons = [
-                el for el in
-                context.browser.driver.find_elements_by_class_name('XCUIElementTypeButton')
-                if el.get_attribute('name') and name in el.get_attribute('name')
+                el
+                for el in context.browser.driver.find_elements_by_class_name(
+                    'XCUIElementTypeButton') if el.get_attribute('name')
+                and name in el.get_attribute('name')
             ]
             if buttons:
                 buttons[0].click()
@@ -113,21 +117,29 @@ def i_press(context, name):
         except TypeError:
             pass
 
-        accessibility = context.browser.driver.find_elements_by_accessibility_id(name)
+        accessibility = context.browser.driver.find_elements_by_accessibility_id(
+            name)
         assert accessibility, u'Element not found'
         accessibility[-1].click()
     elif isinstance(context.browser, AndroidWebDriver):
         try:
-            buttons = context.browser.driver.find_elements_by_class_name('android.widget.Button')
+            buttons = context.browser.driver.find_elements_by_class_name(
+                'android.widget.Button')
             for button in buttons:
-                textElement = button.find_element_by_class_name('android.widget.TextView')
-                if textElement and textElement.text == name:
+                if button.text == name or button.text == name.upper():
                     button.click()
                     return
-        except TypeError:
+                textElement = button.find_element_by_class_name(
+                    'android.widget.TextView')
+                if textElement and (textElement.text == name
+                                    or textElement.text == name.upper()):
+                    button.click()
+                    return
+        except (TypeError, StaleElementReferenceException):
             pass
 
-        accessibility = context.browser.driver.find_elements_by_accessibility_id(name)
+        accessibility = context.browser.driver.find_elements_by_accessibility_id(
+            name)
         assert accessibility, u'Element not found'
         accessibility[-1].click()
 
@@ -170,7 +182,8 @@ def set_html_content_to_element_with_id(context, id, contents):
         u'Element not found or could not set HTML content'
 
 
-@step('I set the inner HTML of the element with class "{klass}" to "{contents}"')
+@step(
+    'I set the inner HTML of the element with class "{klass}" to "{contents}"')
 @persona_vars
 def set_html_content_to_element_with_class(context, klass, contents):
     assert context.browser.evaluate_script("document.getElementsByClassName('%s')[0].innerHTML = '%s'" % (klass, contents)), \
@@ -184,7 +197,9 @@ def field_has_value(context, name, value):
         ("//*[@id='%(name)s']|"
          "//*[@name='%(name)s']") % {'name': name})
     assert el, u'Element not found'
-    assert el.first.value == value, "Values do not match, expected %s but got %s" % (value, el.first.value)
+    assert el.first.value == value, "Values do not match, expected %s but got %s" % (
+        value, el.first.value)
+
 
 @step(u'field "{name}" should be empty')
 @persona_vars
