@@ -5,6 +5,31 @@ import subprocess
 from behave import step
 
 
+def get_running_android_emulators():
+    return [
+        e.split('\t')[0]
+        for e in subprocess.check_output(['adb', 'devices']).split('\n')
+        if e.startswith('emulator-')
+    ]
+
+
+def get_name_from_android_emulator_id(emulator_id):
+    try:
+        return subprocess.check_output(
+            ['adb', '-s', emulator_id, 'emu', 'avd', 'name']).split('\r')[0]
+    except:
+        assert False, u'Emulator not found'
+
+
+def get_android_emulator_id_from_name(name):
+    emulators = get_running_android_emulators()
+    for emulator in emulators:
+        if name in subprocess.check_output(
+            ['adb', '-s', emulator, 'emu', 'avd', 'name']):
+            return emulator
+    assert False, u'Emulator not found'
+
+
 @step(u'the iOS app at "{app_path}"')
 def given_an_ios_app(context, app_path):
     # If the simulator exists
