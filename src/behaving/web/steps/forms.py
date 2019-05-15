@@ -12,15 +12,22 @@ from behaving.mobile.android import AndroidWebDriver
 @step(u'I fill in "{name}" with "{value}"')
 @persona_vars
 def i_fill_in_field(context, name, value):
-
+    # Chrome does not clear, so we need to do manually
+    if context.browser.driver_name == 'Chrome':
+        context.execute_steps('When I clear field "%s"' % name)
     context.browser.fill(name, value)
 
 
 @step(u'I clear field "{name}"')
 @persona_vars
 def i_clear_field(context, name):
+    el = context.browser.find_by_name(name).first
+    # Chrome does not clear, so we need to do manually
+    if context.browser.driver_name == 'Chrome':
+        chars = len(el.value)
+        for i in range(0, chars):
+            el._element.send_keys(Keys.BACKSPACE)
 
-    el = context.browser.driver.find_element_by_name(name)
     assert el, 'Element not found'
     el.clear()
 
