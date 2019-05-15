@@ -23,7 +23,14 @@ def i_fill_in_field(context, name, value):
 def i_clear_field(context, name):
     el = context.browser.find_by_name(name).first
     # Chrome does not clear, so we need to do manually
-    if context.browser.driver_name == 'Chrome':
+    if context.browser.driver_name == 'Chrome' and el._element.get_attribute(
+            "type") in [
+                "email",
+                "textarea",
+                "text",
+                "password",
+                "tel",
+            ]:
         chars = len(el.value)
         for i in range(0, chars):
             el._element.send_keys(Keys.BACKSPACE)
