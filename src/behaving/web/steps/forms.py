@@ -3,7 +3,7 @@ from behave import step
 from splinter.exceptions import ElementDoesNotExist
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 from behaving.personas.persona import persona_vars
 from behaving.mobile.ios import IOSWebDriver
 from behaving.mobile.android import AndroidWebDriver
@@ -143,8 +143,11 @@ def i_press(context, name):
                 if button.text == name or button.text == name.upper():
                     button.click()
                     return
-                textElement = button.find_element_by_class_name(
-                    'android.widget.TextView')
+                try:
+                    textElement = button.find_element_by_class_name(
+                        'android.widget.TextView')
+                except NoSuchElementException:
+                    continue
                 if textElement and (textElement.text == name
                                     or textElement.text == name.upper()):
                     button.click()
