@@ -144,14 +144,15 @@ def i_press(context, name):
                     button.click()
                     return
                 try:
+
                     textElement = button.find_element_by_class_name(
                         'android.widget.TextView')
+                    if textElement and (textElement.text == name
+                                        or textElement.text == name.upper()):
+                        button.click()
+                        return
                 except NoSuchElementException:
                     continue
-                if textElement and (textElement.text == name
-                                    or textElement.text == name.upper()):
-                    button.click()
-                    return
         except (TypeError, StaleElementReferenceException):
             pass
 
