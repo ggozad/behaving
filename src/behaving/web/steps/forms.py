@@ -123,7 +123,7 @@ def i_press(context, name):
                 el
                 for el in context.browser.driver.find_elements_by_class_name(
                     'XCUIElementTypeButton') if el.get_attribute('name')
-                and name in el.get_attribute('name')
+                and name == el.get_attribute('name')
             ]
             if buttons:
                 buttons[0].click()
