@@ -97,3 +97,13 @@ def install_app(context):
         context.browser.driver.install_app(context.android_app)
         return
     assert False, u'Not using a mobile device'
+
+
+@step(u'I match the TouchID fingerprint')
+def match_touch_id(context):
+    context.browser.driver.touch_id(True)
+
+
+@step(u'I mismatch the TouchID fingerprint')
+def mismatch_touch_id(context):
+    context.browser.driver.touch_id(False)
