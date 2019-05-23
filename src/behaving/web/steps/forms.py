@@ -1,3 +1,4 @@
+# vi: fileencoding=utf-8
 import os
 from behave import step
 from splinter.exceptions import ElementDoesNotExist
@@ -113,10 +114,28 @@ def i_focus(context, name):
         'document.getElementsByName("%s")[0].focus();' % name)
 
 
+@step(u'I choose photo "{number}"')
+@persona_vars
+def i_choose_photo(context, number):
+    if isinstance(context.browser, IOSWebDriver):
+        pass
+    elif isinstance(context.browser, AndroidWebDriver):
+        try:
+            layouts = context.browser.driver.find_elements_by_class_name(
+                'android.view.ViewGroup')
+            index = int(number) - 1
+            if index >= len(layouts):
+                assert number, u'photo choosed is out of range'
+            layouts[index].click()
+            return
+        except (TypeError, StaleElementReferenceException):
+            pass
+        assert False, u'Element not found'
+
+
 @step(u'I press "{name}"')
 @persona_vars
 def i_press(context, name):
-
     if isinstance(context.browser, IOSWebDriver):
         try:
             buttons = [
@@ -144,12 +163,43 @@ def i_press(context, name):
                     button.click()
                     return
                 try:
-
                     textElement = button.find_element_by_class_name(
                         'android.widget.TextView')
                     if textElement and (textElement.text == name
                                         or textElement.text == name.upper()):
                         button.click()
+                        return
+                except NoSuchElementException:
+                    continue
+        except (TypeError, StaleElementReferenceException):
+            pass
+
+        try:
+            layouts = context.browser.driver.find_elements_by_class_name(
+                'android.widget.LinearLayout')
+            for layout in layouts:
+                try:
+                    textElement = layout.find_element_by_class_name(
+                        'android.widget.TextView')
+                    if textElement and (textElement.text == name
+                                        or textElement.text == name.upper()):
+                        layout.click()
+                        return
+                except NoSuchElementException:
+                    continue
+        except (TypeError, StaleElementReferenceException):
+            pass
+
+        try:
+            layouts = context.browser.driver.find_elements_by_class_name(
+                'android.widget.RelativeLayout')
+            for layout in layouts:
+                try:
+                    textElement = layout.find_element_by_class_name(
+                        'android.widget.TextView')
+                    if textElement and (textElement.text == name
+                                        or textElement.text == name.upper()):
+                        layout.click()
                         return
                 except NoSuchElementException:
                     continue
