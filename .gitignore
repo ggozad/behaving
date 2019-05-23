@@ -24,7 +24,7 @@ src/behaving/tests/apps/android_test_app/.*
 src/behaving/tests/apps/android_test_app/gen
 *.sublime-workspace
 .vscode/
-
+geckodriver.log
 # React native stuff
 # OSX
 #
