@@ -118,43 +118,20 @@ def i_focus(context, name):
 def i_press(context, name):
 
     if isinstance(context.browser, IOSWebDriver):
-        try:
-            buttons = [
-                el
-                for el in context.browser.driver.find_elements_by_class_name(
-                    'XCUIElementTypeButton') if el.get_attribute('name')
-                and name == el.get_attribute('name')
-            ]
-            if buttons:
-                buttons[0].click()
-                return
-        except TypeError:
-            pass
+        button = context.browser.find_by_xpath('//*[@name="%s"]' % name)
+        if button:
+            button.first.click()
+            return
 
         accessibility = context.browser.driver.find_elements_by_accessibility_id(
             name)
         assert accessibility, u'Element not found'
         accessibility[-1].click()
     elif isinstance(context.browser, AndroidWebDriver):
-        try:
-            buttons = context.browser.driver.find_elements_by_class_name(
-                'android.widget.Button')
-            for button in buttons:
-                if button.text == name or button.text == name.upper():
-                    button.click()
-                    return
-                try:
-
-                    textElement = button.find_element_by_class_name(
-                        'android.widget.TextView')
-                    if textElement and (textElement.text == name
-                                        or textElement.text == name.upper()):
-                        button.click()
-                        return
-                except NoSuchElementException:
-                    continue
-        except (TypeError, StaleElementReferenceException):
-            pass
+        button = context.browser.find_by_xpath('//*[@text="%s"]' % name)
+        if button:
+            button.first.click()
+            return
 
         accessibility = context.browser.driver.find_elements_by_accessibility_id(
             name)
