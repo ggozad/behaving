@@ -6,7 +6,7 @@
     "appium": "node node_modules/.bin/appium"
   },
   "dependencies": {
-    "appium": "^1.10.0"
+    "appium": "^1.13.0"
   },
   "devDependencies": {},
   "jest": {

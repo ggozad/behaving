@@ -32,15 +32,15 @@ class IOSWebDriver(BaseWebDriver):
         desired_capabilities.update(caps)
         self.driver = webdriver.Remote(
             command_executor=appium_url,
-            desired_capabilities=desired_capabilities
-        )
+            desired_capabilities=desired_capabilities)
         super(IOSWebDriver, self).__init__(wait_time)
 
     def udid(self):
         return self.driver.capabilities.get('udid')
 
     def page_source(self):
-        x = xml.dom.minidom.parseString(self.driver.page_source.encode('utf-8'))
+        x = xml.dom.minidom.parseString(
+            self.driver.page_source.encode('utf-8'))
         return x.toprettyxml()
 
     def find_by(self, finder, selector):
@@ -69,17 +69,22 @@ class IOSWebDriver(BaseWebDriver):
         return self.find_by(self.driver.find_element_by_ios_class_chain, query)
 
     def _is_text_present(self, text):
-        text_elements = self.driver.find_elements_by_class_name('XCUIElementTypeStaticText')
+        text_elements = self.driver.find_elements_by_class_name(
+            'XCUIElementTypeStaticText')
         for el in text_elements:
             try:
                 el.text.index(text)
                 if el.get_attribute('visible') == 'true':
                     return True
-            except (ValueError, AttributeError,):
+            except (
+                    ValueError,
+                    AttributeError,
+            ):
                 continue
         try:
             self.driver.find_element_by_ios_class_chain(
-                '**/XCUIElementTypeOther[`name CONTAINS "%s" AND visible==true`]' % text)
+                '**/XCUIElementTypeOther[`name CONTAINS "%s" AND visible==true`]'
+                % text)
             return True
         except WebDriverException:
             return False

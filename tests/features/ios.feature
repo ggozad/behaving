@@ -1,7 +1,7 @@
 Feature: Mobile
 
     Background:
-        Given the iOS app at "ios/build/Build/Products/Debug-iphonesimulator/rntest.app"
+        Given the iOS app at "ios/build/rntest/Build/Products/Debug-iphonesimulator/rntest.app"
         Given iOS as the default browser
 
     @mobile
