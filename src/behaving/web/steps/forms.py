@@ -117,17 +117,24 @@ def i_focus(context, name):
 @persona_vars
 def i_press(context, name):
     if isinstance(context.browser, IOSWebDriver):
+        accessibility = context.browser.find_by_accessibility_id(name)
+        if accessibility:
+            accessibility[-1].click()
+            return
+
         button = context.browser.find_by_ios_class_chain(
             '**/*[`name=="%s"`]' % name)
         if button:
             button.first.click()
             return
 
-        accessibility = context.browser.driver.find_elements_by_accessibility_id(
-            name)
-        assert accessibility, u'Element not found'
-        accessibility[-1].click()
+        assert False, u'Element not found'
     elif isinstance(context.browser, AndroidWebDriver):
+        accessibility = context.browser.find_by_accessibility_id(name)
+        if accessibility:
+            accessibility[-1].click()
+            return
+
         try:
             button = context.browser.driver.find_element_by_android_uiautomator(
                 'new UiSelector().text("%s")' % name)
@@ -136,12 +143,7 @@ def i_press(context, name):
                 return
         except NoSuchElementException:
             pass
-
-        accessibility = context.browser.driver.find_elements_by_accessibility_id(
-            name)
-        assert accessibility, u'Element not found'
-        accessibility[-1].click()
-
+        assert False, u'Element not found'
     else:
         element = context.browser.find_by_xpath(
             ("//*[@id='%(name)s']|"
