@@ -109,9 +109,12 @@ class IOSWebDriver(BaseWebDriver):
         return False
 
     def fill(self, name, value):
-        field = self.find_by_accessibility_id(name).first
-        assert field, u'No elements found with accessibility id %s' % name
-        field.set_value(value)
+        field = self.find_by_accessibility_id(name)
+        if not field:
+            field = self.find_by_ios_class_chain(
+                '**/XCUIElementTypeTextView[`name CONTAINS "%s"`]' % name)
+        assert field, u'No elements found with accessibility id or name %s' % name
+        field.first.set_value(value)
 
 
 _DRIVERS['ios'] = IOSWebDriver
