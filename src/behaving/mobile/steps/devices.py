@@ -3,6 +3,7 @@ import json
 import subprocess
 
 from behave import step
+from subprocess import check_output
 
 
 def get_running_android_emulators():
@@ -81,9 +82,15 @@ def background_app_with_timeout(context, timeout):
 @step(u'I add "{path}" to the photo library')
 def add_media(context, path):
     path = os.path.join(context.attachment_dir, path)
-    subprocess.call(
-        ['xcrun', 'simctl', 'addmedia',
-         context.browser.udid(), path])
+    if context.browser.driver_name == 'ios':
+        subprocess.call(
+            ['xcrun', 'simctl', 'addmedia',
+             context.browser.udid(), path])
+    elif context.browser.driver_name == 'android':
+        name = context.persona['id']
+        emulator_id = get_android_emulator_id_from_name(name)
+        check_output(
+            ["adb", "-s", emulator_id, "push", path, "/sdcard/Pictures"])
 
 
 @step(u'I install the app')
