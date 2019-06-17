@@ -91,6 +91,11 @@ def add_media(context, path):
         emulator_id = get_android_emulator_id_from_name(name)
         check_output(
             ["adb", "-s", emulator_id, "push", path, "/sdcard/Pictures"])
+        check_output([
+            "adb", "-s", emulator_id, "shell", "am", "broadcast", "-a",
+            "android.intent.action.MEDIA_MOUNTED", "-d",
+            "file:///mnt/sdcard/Pictures"
+        ])
 
 
 @step(u'I install the app')
