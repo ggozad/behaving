@@ -95,6 +95,7 @@ def given_an_electron_app(context, app_path):
 @step(u'I close the browser "{name}"')
 def close_browser(context, name):
     context.browsers[name].driver.close()
+    del context.browsers[name]
 
 
 @step(u'I reload')
