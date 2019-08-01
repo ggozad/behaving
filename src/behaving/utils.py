@@ -1,5 +1,6 @@
+import parse
+
 def parse_text(context, text, expression):
-    import parse
     parser = parse.compile(expression)
     res = parser.parse(text)
 
