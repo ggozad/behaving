@@ -12,22 +12,30 @@ class WebDriver(BaseWebDriver):
 
     driver_name = "Chrome"
 
-    def __init__(self, user_agent=None, wait_time=2, fullscreen=False,
-                 options=None, **kwargs):
+    def __init__(self,
+                 user_agent=None,
+                 wait_time=2,
+                 fullscreen=False,
+                 options=None,
+                 **kwargs):
 
         options = Options() if options is None else options
 
         if user_agent is not None:
             options.add_argument("--user-agent=" + user_agent)
 
+        options.add_argument("--use-fake-device-for-media-stream")
+        options.add_argument("--use-fake-ui-for-media-stream")
         if fullscreen:
             options.add_argument('--kiosk')
 
-        prefs = {"download": {
-            "default_directory": _DOWNLOAD_PATH,
-            "directory_upgrade": True,
-            "extensions_to_open": ""
-        }}
+        prefs = {
+            "download": {
+                "default_directory": _DOWNLOAD_PATH,
+                "directory_upgrade": True,
+                "extensions_to_open": ""
+            }
+        }
 
         options.add_experimental_option("prefs", prefs)
 
