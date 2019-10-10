@@ -15,6 +15,7 @@ def i_fill_in_field(context, name, value):
     # Chrome does not clear, so we need to do manually
     if context.browser.driver_name == 'Chrome':
         context.execute_steps('When I clear field "%s"' % name)
+    context.execute_steps('When I press "%s"' % name)
     context.browser.fill(name, value)
 
 
@@ -122,8 +123,8 @@ def i_press(context, name):
             accessibility[-1].click()
             return
 
-        button = context.browser.find_by_ios_class_chain(
-            '**/*[`name=="%s"`]' % name)
+        button = context.browser.find_by_ios_class_chain('**/*[`name=="%s"`]' %
+                                                         name)
         if button:
             button.first.click()
             return
