@@ -79,6 +79,16 @@ def background_app_with_timeout(context, timeout):
     context.browser.driver.background_app(timeout)
 
 
+@step(u'I quit the simulator')
+def quit_simulator(context):
+    if context.browser.driver_name == 'ios':
+        subprocess.call(
+            ['xcrun', 'simctl', 'shutdown',
+             context.browser.udid()])
+    elif context.browser.driver_name == 'android':
+        subprocess.call(['adb', 'emu', 'kill'])
+
+
 @step(u'I add "{path}" to the photo library')
 def add_media(context, path):
     path = os.path.join(context.attachment_dir, path)
@@ -96,6 +106,15 @@ def add_media(context, path):
             "android.intent.action.MEDIA_MOUNTED", "-d",
             "file:///mnt/sdcard/Pictures"
         ])
+
+
+@step(u'I add vcard "{path}" to my contact')
+def add_contact(context, path):
+    path = os.path.join(context.attachment_dir, path)
+    if context.browser.driver_name == 'ios':
+        subprocess.call(
+            ['xcrun', 'simctl', 'addmedia',
+             context.browser.udid(), path])
 
 
 @step(u'I install the app')
