@@ -88,6 +88,9 @@ def quit_simulator(context):
     elif context.browser.driver_name == 'android':
         subprocess.call(['adb', 'emu', 'kill'])
 
+    name = context.persona['id']
+    del context.browsers[name]
+
 
 @step(u'I add "{path}" to the photo library')
 def add_media(context, path):
