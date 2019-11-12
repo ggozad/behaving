@@ -108,13 +108,15 @@ def add_media(context, path):
         ])
 
 
-@step(u'I add vcard "{path}" to my contact')
+@step(u'I add vcard "{path}" to my contact list')
 def add_contact(context, path):
     path = os.path.join(context.attachment_dir, path)
     if context.browser.driver_name == 'ios':
         subprocess.call(
             ['xcrun', 'simctl', 'addmedia',
              context.browser.udid(), path])
+    else:
+        assert False, u'Only iOS supported'
 
 
 @step(u'I install the app')
