@@ -113,13 +113,27 @@ def add_media(context, path):
 
 @step(u'I add vcard "{path}" to my contact list')
 def add_contact(context, path):
-    path = os.path.join(context.attachment_dir, path)
+    vcard_path = os.path.join(context.attachment_dir, path)
     if context.browser.driver_name == 'ios':
-        subprocess.call(
-            ['xcrun', 'simctl', 'addmedia',
-             context.browser.udid(), path])
+        subprocess.call([
+            'xcrun', 'simctl', 'addmedia',
+            context.browser.udid(), vcard_path
+        ])
     else:
-        assert False, u'Only iOS supported'
+        name = context.persona['id']
+        emulator_id = get_android_emulator_id_from_name(name)
+        check_output([
+            'adb', "-s", emulator_id, 'push', vcard_path, '/sdcard/Download/'
+        ])
+        vcard_name = path.split('/')[1]
+        check_output([
+            'adb', "-s", emulator_id, 'shell', 'am', 'start', '-t',
+            "text/x-vcard", '-d', "file:///sdcard/Download/" + vcard_name,
+            '-a', "android.intent.action.VIEW", 'com.android.contacts'
+        ])
+        if context.browser.is_text_present('Allow Contacts to access',
+                                           wait_time=2):
+            context.execute_steps(u'When I press "Allow"')
 
 
 @step(u'I install the app')
