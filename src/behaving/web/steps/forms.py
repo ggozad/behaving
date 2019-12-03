@@ -124,8 +124,8 @@ def i_press(context, name):
             accessibility[-1].click()
             return
 
-        button = context.browser.find_by_ios_class_chain('**/*[`name=="%s"`]' %
-                                                         name)
+        button = context.browser.find_by_ios_class_chain(
+            '**/*[`name CONTAINS "%s"`]' % name)
         if button:
             button.first.click()
             return
