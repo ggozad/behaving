@@ -146,10 +146,9 @@ def send_email_attachment(context, to, subject, body, filename):
     with open(path, 'rb') as fil:
         attachment = MIMEBase('application', 'octet-stream')
         attachment.set_payload(fil.read())
-        attachment.add_header(
-            "Content-Disposition",
-            "attachment",
-            filename=os.path.basename(filename))
+        attachment.add_header("Content-Disposition",
+                              "attachment",
+                              filename=os.path.basename(filename))
         msg.attach(attachment)
 
     s = smtplib.SMTP('localhost', 8025)
@@ -173,3 +172,9 @@ def send_email(context, to, subject, body):
 def should_receive_no_messages(context, address):
     assert context.mail.messages_for_user(
         address) == [], u'Messages have been received'
+
+
+@step("I clear the email messages")
+@persona_vars
+def clear_messages(context):
+    context.mail.clear()

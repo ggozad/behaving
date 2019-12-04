@@ -510,6 +510,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 
 * When I click the link in the email I received at "``address``"
 * When I parse the email I received at "``address``" and set "``expression``"
+* When I clear the email messages
 * Then I should receive an email at "``address``"
 * Then I should receive an email at "``address``" with subject "``subject``"
 * Then I should receive an email at "``address``" containing "``text``"
