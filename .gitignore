@@ -49,7 +49,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
-
+xcshareddata/
 # Android/IntelliJ
 #
 build/

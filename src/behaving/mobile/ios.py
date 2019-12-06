@@ -24,8 +24,8 @@ class IOSWebDriver(BaseWebDriver):
         desired_capabilities = {
             'app': os.path.expanduser(app_path),
             'platformName': 'iOS',
-            'platformVersion': '11.4',
-            'deviceName': 'iPhone 6',
+            'platformVersion': '13.2',
+            'deviceName': 'iPhone SE',
             'noReset': True,
             'newCommandTimeout': 50000,
         }
