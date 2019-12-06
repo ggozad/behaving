@@ -4,29 +4,21 @@
  * @flow
  */
 
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
   Button,
   TouchableOpacity,
   Switch,
-  TextInput
-} from "react-native";
-
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu"
-});
+  TextInput,
+} from 'react-native'
 
 export default class App extends Component<{}> {
   constructor(props) {
-    super(props);
-    this.state = { feedback: "" };
+    super(props)
+    this.state = { feedback: '' }
   }
   render() {
     return (
@@ -34,10 +26,8 @@ export default class App extends Component<{}> {
         <TouchableOpacity
           onPress={ev => {
             this.setState({
-              feedback: `Tap at ${ev.nativeEvent.locationX}, ${
-                ev.nativeEvent.locationY
-              }`
-            });
+              feedback: `Tap at ${ev.nativeEvent.locationX}, ${ev.nativeEvent.locationY}`,
+            })
           }}
           style={styles.touchableBox}
         />
@@ -52,12 +42,12 @@ export default class App extends Component<{}> {
         <Button
           title="Normal button"
           onPress={() => {
-            this.setState({ feedback: "Normal button pressed" });
+            this.setState({ feedback: 'Normal button pressed' })
           }}
         />
         <TouchableOpacity
           onPress={() => {
-            this.setState({ feedback: "Touchable opacity pressed" });
+            this.setState({ feedback: 'Touchable opacity pressed' })
           }}
           accessibilityLabel="TouchableOpacity"
         >
@@ -67,42 +57,37 @@ export default class App extends Component<{}> {
           value={false}
           accessibilityLabel="switch"
           onValueChange={val => {
-            this.setState({ feedback: "Switch pressed" });
+            this.setState({ feedback: 'Switch pressed' })
           }}
         />
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
   touchableBox: {
-    position: "absolute",
+    position: 'absolute',
     top: 100,
     width: 100,
     height: 100,
-    backgroundColor: "red"
+    backgroundColor: 'red',
   },
   input: {
-    borderColor: "gray",
+    borderColor: 'gray',
     borderBottomWidth: 1,
-    width: "80%",
-    marginBottom: 10
+    width: '80%',
+    marginBottom: 10,
   },
   welcome: {
     fontSize: 20,
-    textAlign: "center",
-    margin: 10
+    textAlign: 'center',
+    margin: 10,
   },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
-  }
-});
+})
