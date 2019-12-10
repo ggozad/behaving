@@ -21,8 +21,8 @@ Feature: Android emulator support
         Then I should see "Touchable opacity pressed"
         When I press the element with xpath "//android.widget.Button"
         Then I should see "Normal button pressed"
-        When I tap at 0 500
-        Then I should see "Tap at"
+        When I tap at 360 400
+        Then I should see "Tap at 38, 76"
 
     @mobile
     Scenario: Text inputs
