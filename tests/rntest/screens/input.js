@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TextInput } from 'react-native'
 export default class App extends Component<{}> {
   constructor(props) {
     super(props)
-    this.state = { feedback: '' }
+    this.state = { feedback: '', inputValue: 'Default value' }
   }
   render() {
     return (
@@ -15,6 +15,15 @@ export default class App extends Component<{}> {
           style={styles.input}
           onChangeText={v => this.setState({ feedback: `You typed: ${v}` })}
           accessibilityLabel="Text Input"
+          underlineColorAndroid="transparent"
+        />
+        <TextInput
+          style={styles.input}
+          value={this.state.inputValue}
+          onChangeText={v =>
+            this.setState({ feedback: `You typed: ${v}`, inputValue: v })
+          }
+          accessibilityLabel="Prefilled Input"
           underlineColorAndroid="transparent"
         />
       </View>

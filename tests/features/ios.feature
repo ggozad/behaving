@@ -39,3 +39,6 @@ Feature: Mobile
         Then I should not see "Testing 123..."
         When I fill in "Text Input" with "Testing 456..."
         Then I should see "You typed: Testing 456..."
+        When I clear field "Prefilled Input"
+        When I fill in "Prefilled Input" with "Testing prefilled..."
+        Then I should see "You typed: Testing prefilled..."
