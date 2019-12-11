@@ -7,26 +7,31 @@ Feature: Mobile
     @mobile
     Scenario: Element visibility
         Given a browser
-        Then I should see "Behaving mobile tests"
+        When I press "Visibility"
+        Then I should see "Visibility mobile tests" within 2 seconds
         And I should not see "Inexistent text"
         And I should see an element with accessibility id "TouchableOpacity"
 
     @mobile
     Scenario: Pressing buttons and opacities
         Given a browser
-        When I press "Normal button"
+        When I press "Touches"
+        Then I should see "Touch mobile tests" within 2 seconds
+        And I press "Normal button"
         Then I should see "Normal button pressed"
         When I press "TouchableOpacity"
         Then I should see "Touchable opacity pressed"
         When I press the element with iOS class chain "**/XCUIElementTypeButton[`name ENDSWITH "button"`]"
         Then I should see "Normal button pressed"
-        When I tap at 150 150
-        Then I should see "Tap at 40, 50"
+        When I tap at 150 300
+        Then I should see "Tap at 40, 46"
         When I toggle "switch"
         Then I should see "Switch pressed"
 
     @mobile
     Scenario: Text inputs
         Given a browser
+        When I press "Input"
+        Then I should see "Input mobile tests" within 2 seconds
         When I fill in "Text Input" with "Testing 123..."
         Then I should see "You typed: Testing 123..."

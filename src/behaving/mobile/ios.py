@@ -113,8 +113,14 @@ class IOSWebDriver(BaseWebDriver):
         if not field:
             field = self.find_by_ios_class_chain(
                 '**/XCUIElementTypeTextView[`name CONTAINS "%s"`]' % name)
+
         assert field, u'No elements found with accessibility id or name %s' % name
-        field.first.set_value(value)
+        try:
+            field.first.set_value(value)
+        except WebDriverException:
+            # For some reason Appium fails on first try
+            # If you first don't succeed, try again is what they say
+            field.first.set_value(value)
 
 
 _DRIVERS['ios'] = IOSWebDriver

@@ -2,8 +2,18 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
-import App from './App';
-import {name as appName} from './app.json';
+import { AppRegistry } from 'react-native'
+import { Home, Touches, Visibility, Input } from './screens'
+import { name as appName } from './app.json'
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
 
-AppRegistry.registerComponent(appName, () => App);
+const MainNavigator = createStackNavigator({
+  Home: { screen: Home },
+  Touches: { screen: Touches },
+  Visibility: { screen: Visibility },
+  Input: { screen: Input },
+})
+
+const App = createAppContainer(MainNavigator)
+AppRegistry.registerComponent(appName, () => App)

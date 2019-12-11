@@ -23,6 +23,9 @@ export default class App extends Component<{}> {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.welcome}>Touch mobile tests</Text>
+        <Text>{this.state.feedback}</Text>
+
         <TouchableOpacity
           onPress={ev => {
             this.setState({
@@ -30,14 +33,6 @@ export default class App extends Component<{}> {
             })
           }}
           style={styles.touchableBox}
-        />
-        <Text style={styles.welcome}>Behaving mobile tests</Text>
-        <Text>{this.state.feedback}</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={v => this.setState({ feedback: `You typed: ${v}` })}
-          accessibilityLabel="Text Input"
-          underlineColorAndroid="transparent"
         />
         <Button
           title="Normal button"
@@ -73,8 +68,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   touchableBox: {
-    position: 'absolute',
-    top: 100,
     width: 100,
     height: 100,
     backgroundColor: 'red',
