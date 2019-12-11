@@ -35,3 +35,7 @@ Feature: Mobile
         Then I should see "Input mobile tests" within 2 seconds
         When I fill in "Text Input" with "Testing 123..."
         Then I should see "You typed: Testing 123..."
+        When I clear field "Text Input"
+        Then I should not see "Testing 123..."
+        When I fill in "Text Input" with "Testing 456..."
+        Then I should see "You typed: Testing 456..."

@@ -31,8 +31,7 @@ class AndroidWebDriver(BaseWebDriver):
         desired_capabilities.update(caps)
         self.driver = webdriver.Remote(
             command_executor=appium_url,
-            desired_capabilities=desired_capabilities
-        )
+            desired_capabilities=desired_capabilities)
         super(AndroidWebDriver, self).__init__(wait_time)
 
     def page_source(self):
@@ -62,6 +61,13 @@ class AndroidWebDriver(BaseWebDriver):
     def find_by_xpath(self, xpath):
         return self.find_by(self.driver.find_element_by_xpath, xpath)
 
+    def find_by_name(self, name):
+        by_name = self.find_by(self.driver.find_element_by_name, name)
+        if by_name:
+            return by_name
+        return self.find_by(self.driver.find_elements_by_accessibility_id,
+                            name)
+
     def _is_text_present(self, text):
         text_elements = self.driver.find_elements_by_class_name(
             'android.widget.TextView')
@@ -69,7 +75,10 @@ class AndroidWebDriver(BaseWebDriver):
             try:
                 el.text.index(text)
                 return True
-            except (ValueError, AttributeError,):
+            except (
+                    ValueError,
+                    AttributeError,
+            ):
                 continue
         return False
 

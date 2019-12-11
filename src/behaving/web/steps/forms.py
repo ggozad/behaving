@@ -35,6 +35,14 @@ def i_clear_field(context, name):
         for i in range(0, chars):
             el._element.send_keys(Keys.BACKSPACE)
 
+    if isinstance(context.browser, IOSWebDriver):
+        el.click()
+        select_all = context.browser.driver.find_element_by_xpath(
+            '//XCUIElementTypeMenuItem[@name="Select All"]')
+        select_all.click()
+        cut = context.browser.driver.find_element_by_xpath(
+            '//XCUIElementTypeMenuItem[@name="Cut"]')
+        cut.click()
     assert el, 'Element not found'
     el.clear()
 
