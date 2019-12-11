@@ -40,11 +40,14 @@ class FSInspector(object):
         return messages
 
     def clear(self):
-
         dirs = os.listdir(self.path)
         for dir_path in dirs:
+            fn = os.path.join(self.path, dir_path)
             try:
-                rmtree(os.path.join(self.path, dir_path))
+                if os.path.isdir(fn):
+                    rmtree(os.path.join(self.path, dir_path))
+                else:
+                    os.unlink(path)
             except:
-                logger.error('Could not clear folder %s' % self.path)
+                logger.error('Could not delete %s' % fn)
                 exit(1)
