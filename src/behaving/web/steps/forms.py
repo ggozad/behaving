@@ -48,9 +48,15 @@ def i_clear_field(context, name):
         if not select_all:
             assert False, 'Could not clear the field'
         select_all.click()
-        cut = context.browser.driver.find_element_by_xpath(
-            '//XCUIElementTypeMenuItem[@name="Cut"]')
-        cut.click()
+        # Some field like password field doesn't have Cut menu after select all press
+        # So it is better to use Paste option with always be there (of course, we will set empty clipboard first)
+        save_clipboard = context.browser.driver.get_clipboard_text()
+        context.browser.driver.set_clipboard("")
+        paste = context.browser.driver.find_element_by_xpath(
+            '//XCUIElementTypeMenuItem[@name="Paste"]')
+        paste.click()
+        context.execute_steps(u'When I wait for 1 seconds')
+        context.browser.driver.set_clipboard(save_clipboard)
 
     assert el, 'Element not found'
     el.clear()
