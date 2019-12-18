@@ -149,7 +149,7 @@ def install_app(context):
     assert False, u'Not using a mobile device'
 
 
-@step(u'I toggle TouchId enrollment')
+@step(u'I toggle the TouchId enrollment')
 def enroll_touch_id(context):
     context.browser.driver.toggle_touch_id_enrollment()
 

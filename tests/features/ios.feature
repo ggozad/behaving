@@ -42,3 +42,20 @@ Feature: Mobile
         When I clear field "Prefilled Input"
         When I fill in "Prefilled Input" with "Testing prefilled..."
         Then I should see "You typed: Testing prefilled..."
+
+    @mobile
+    Scenario: TouchId/FaceId
+        Given a browser
+        When I toggle the TouchId enrollment
+        And I press "Auth"
+        Then I should see "TouchId/FaceId mobile tests" within 2 seconds
+        When I press "Request TouchId"
+        Then I should see "to test TouchId"
+        When I match the TouchId fingerprint
+        Then I should see "TouchId success"
+        When I press "Request TouchId"
+        Then I should see "to test TouchId"
+        When I mismatch the TouchId fingerprint
+        Then I should see "to test TouchId"
+        When I press "Cancel"
+        Then I should see "TouchId failure"

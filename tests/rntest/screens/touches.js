@@ -15,7 +15,7 @@ import {
   TextInput,
 } from 'react-native'
 
-export default class App extends Component<{}> {
+export default class Touches extends Component<{}> {
   constructor(props) {
     super(props)
     this.state = { feedback: '' }
