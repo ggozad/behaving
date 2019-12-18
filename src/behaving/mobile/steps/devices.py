@@ -156,9 +156,19 @@ def enroll_touch_id(context):
 
 @step(u'I match the TouchID fingerprint')
 def match_touch_id(context):
-    context.browser.driver.touch_id(True)
+    if context.browser.driver_name == 'ios':
+        context.browser.driver.touch_id(True)
+    elif context.browser.driver_name == 'android':
+        context.browser.driver.finger_print(1)
+    else:
+        assert False, u'Not using a mobile device'
 
 
 @step(u'I mismatch the TouchID fingerprint')
 def mismatch_touch_id(context):
-    context.browser.driver.touch_id(False)
+    if context.browser.driver_name == 'ios':
+        context.browser.driver.touch_id(False)
+    elif context.browser.driver_name == 'android':
+        assert False, u'Fingerprint mismatch not supported on android'
+    else:
+        assert False, u'Not using a mobile device'

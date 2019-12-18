@@ -41,3 +41,23 @@ Feature: Android emulator support
         When I clear field "Prefilled Input"
         When I fill in "Prefilled Input" with "Testing prefilled..."
         Then I should see "You typed: Testing prefilled..."
+
+    @mobile
+    Scenario: TouchId/FaceId
+        # To have this test pass on android you need to set up
+        # the fingerprint on the emulator first.
+        # Navigate to Settings/Security and start setting up fingerprints.
+        # When requested to add a fingerprint run
+        # adb -e emu finger touch 1
+        # to simulate touches
+        Given a browser
+        And I press "Auth"
+        Then I should see "TouchId/FaceId mobile tests" within 2 seconds
+        When I press "Request TouchId"
+        Then I should see "to test TouchId"
+        When I match the TouchId fingerprint
+        Then I should see "TouchId success"
+        When I press "Request TouchId"
+        Then I should see "to test TouchId"
+        When I press "CANCEL"
+        Then I should see "TouchId failure"

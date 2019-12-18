@@ -30,7 +30,11 @@ export default class Auth extends Component<{}> {
         <Text style={styles.welcome}>TouchId/FaceId mobile tests</Text>
         <Text>{this.state.feedback}</Text>
 
-        <Button title="Request TouchId" onPress={() => this.requestTouchId()} />
+        <Button
+          accessibilityLabel="Request TouchId"
+          title="Request TouchId"
+          onPress={() => this.requestTouchId()}
+        />
       </View>
     )
   }
