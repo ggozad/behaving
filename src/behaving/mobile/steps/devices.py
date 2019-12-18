@@ -149,6 +149,11 @@ def install_app(context):
     assert False, u'Not using a mobile device'
 
 
+@step(u'I toggle TouchId enrollment')
+def enroll_touch_id(context):
+    context.browser.driver.toggle_touch_id_enrollment()
+
+
 @step(u'I match the TouchID fingerprint')
 def match_touch_id(context):
     context.browser.driver.touch_id(True)
