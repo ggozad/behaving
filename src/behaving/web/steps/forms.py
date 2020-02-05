@@ -3,7 +3,7 @@ from behave import step
 from splinter.exceptions import ElementDoesNotExist
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException, ElementNotInteractableException
 from behaving.personas.persona import persona_vars
 from behaving.mobile.ios import IOSWebDriver
 from behaving.mobile.android import AndroidWebDriver
@@ -195,7 +195,10 @@ def i_attach(context, name, path):
         path = os.path.join(context.attachment_dir, path)
         if not os.path.exists(path):
             assert False, u'File not found'
-    context.browser.find_by_name(name).first._element.clear()
+    try:
+        context.browser.find_by_name(name).first._element.clear()
+    except ElementNotInteractableException:
+        pass
     context.browser.attach_file(name, path)
 
 
