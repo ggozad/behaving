@@ -36,7 +36,7 @@ def parse_sms_set_var(context, tel, expression):
 def should_receive_sms_with_text(context, tel, text):
     msgs = context.sms.user_messages(tel)
     for msg in msgs:
-        if text in msg:
+        if text in msg.decode('utf-8'):
             return
     assert False, u'Text not found in sms'
 
