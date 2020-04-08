@@ -30,6 +30,7 @@ def i_clear_field(context, name):
                 "text",
                 "password",
                 "tel",
+                "number",
             ]:
         chars = len(el.value)
         for i in range(0, chars):
