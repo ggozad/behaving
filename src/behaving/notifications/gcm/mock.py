@@ -60,7 +60,7 @@ class GCMServer(SimpleHTTPRequestHandler):
 
             try:
                 dest = getUniqueFilename(recipient_dir, 'gcm')
-            except IOError, e:
+            except IOError as e:
                 self.send_error(400, e.message)
                 return
 

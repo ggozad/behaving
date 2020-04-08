@@ -37,13 +37,16 @@ class DebuggingServer(smtpd.DebuggingServer):
         self.log_to_stdout = log_to_stdout
         smtpd.DebuggingServer.__init__(self, localaddr, remoteaddr)
 
-    def process_message(self, peer, mailfrom, rcpttos, data):
+    def process_message(self,
+                        peer,
+                        mailfrom,
+                        rcpttos,
+                        data,
+                        mail_options=[],
+                        rcpt_options=[]):
         if self.log_to_stdout:
-            smtpd.DebuggingServer.process_message(self,
-                                                  peer,
-                                                  mailfrom,
-                                                  rcpttos,
-                                                  data)
+            smtpd.DebuggingServer.process_message(self, peer, mailfrom,
+                                                  rcpttos, data)
             sys.stdout.flush()
         if self.path is None:
             return
@@ -52,7 +55,7 @@ class DebuggingServer(smtpd.DebuggingServer):
             if not os.path.exists(path):
                 os.makedirs(path)
             dest = getUniqueFilename(path, "eml")
-            with open(dest, "w") as f:
+            with open(dest, "wb") as f:
                 f.write(data)
 
         if notifier:
