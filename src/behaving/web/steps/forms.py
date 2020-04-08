@@ -3,22 +3,60 @@ from behave import step
 from splinter.exceptions import ElementDoesNotExist
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException, ElementNotInteractableException
 from behaving.personas.persona import persona_vars
-from behaving.web.steps.basic import _retry
+from behaving.mobile.ios import IOSWebDriver
+from behaving.mobile.android import AndroidWebDriver
 
 
 @step(u'I fill in "{name}" with "{value}"')
 @persona_vars
 def i_fill_in_field(context, name, value):
-
-        context.browser.fill(name, value)
+    # Chrome does not clear, so we need to do manually
+    if context.browser.driver_name == 'Chrome':
+        context.execute_steps('When I clear field "%s"' % name)
+    context.browser.fill(name, value)
 
 
 @step(u'I clear field "{name}"')
 @persona_vars
 def i_clear_field(context, name):
+    el = context.browser.find_by_name(name).first
+    # Chrome does not clear, so we need to do manually
+    if context.browser.driver_name == 'Chrome' and el._element.get_attribute(
+            "type") in [
+                "email",
+                "textarea",
+                "text",
+                "password",
+                "tel",
+            ]:
+        chars = len(el.value)
+        for i in range(0, chars):
+            el._element.send_keys(Keys.BACKSPACE)
 
-    el = context.browser.driver.find_element_by_name(name)
+    if isinstance(context.browser, IOSWebDriver):
+        # For iOS we need to bring up the Select All/Cut
+        # This depends on whether the field was focused or
+        # not, so we just click away until we invoke them.
+        for _ in range(5):
+            select_all = context.browser.find_by_xpath(
+                '//XCUIElementTypeMenuItem[@name="Select All"]')
+            if select_all:
+                break
+            el.click()
+        if not select_all:
+            assert False, 'Could not clear the field'
+        select_all.click()
+
+        clipboard = context.browser.driver.get_clipboard_text()
+        context.browser.driver.set_clipboard("")
+        paste = context.browser.driver.find_element_by_xpath(
+            '//XCUIElementTypeMenuItem[@name="Paste"]')
+        paste.click()
+        context.execute_steps(u'When I wait for 1 seconds')
+        context.browser.driver.set_clipboard(clipboard)
+
     assert el, 'Element not found'
     el.clear()
 
@@ -53,14 +91,18 @@ def i_uncheck(context, name):
 
 @step(u'I toggle "{name}"')
 def i_toggle(context, name):
-
-    el = context.browser.find_by_name(name)
-    assert el, u'Element not found'
-    el = el.first
-    if el.checked:
-        el.uncheck()
+    if isinstance(context.browser, IOSWebDriver):
+        toggle = context.browser.driver.find_elements_by_accessibility_id(name)
+        assert toggle, u'Element not found'
+        toggle[-1].click()
     else:
-        el.check()
+        el = context.browser.find_by_name(name)
+        assert el, u'Element not found'
+        el = el.first
+        if el.checked:
+            el.uncheck()
+        else:
+            el.check()
 
 
 @step(u'I select "{value}" from "{name}"')
@@ -69,7 +111,8 @@ def i_select(context, value, name):
     try:
         context.browser.select(name, value)
     except ElementDoesNotExist:
-        inp = context.browser.find_by_xpath("//input[@name='%s'][@value='%s']" % (name, value))
+        inp = context.browser.find_by_xpath(
+            "//input[@name='%s'][@value='%s']" % (name, value))
         assert inp, u'Element not found'
         inp.first.check()
 
@@ -88,23 +131,52 @@ def i_select_text(context, text, name):
 def i_focus(context, name):
     elem = context.browser.driver.find_element_by_name(name)
     assert elem, u'Element not found'
-    context.browser.execute_script('document.getElementsByName("%s")[0].focus();' % name)
+    context.browser.execute_script(
+        'document.getElementsByName("%s")[0].focus();' % name)
 
 
 @step(u'I press "{name}"')
 @persona_vars
 def i_press(context, name):
+    if isinstance(context.browser, IOSWebDriver):
+        accessibility = context.browser.find_by_accessibility_id(name)
+        if accessibility:
+            accessibility[-1].click()
+            return
 
-    element = context.browser.find_by_xpath(
-        ("//*[@id='%(name)s']|"
-         "//*[@name='%(name)s']|"
-         "//button[contains(string(), '%(name)s')]|"
-         "//input[@type='button' and contains(string(), '%(name)s')]|"
-         "//input[@type='button' and contains(@value, '%(name)s')]|"
-         "//input[@type='submit' and contains(@value, '%(name)s')]|"
-         "//a[contains(string(), '%(name)s')]") % {'name': name})
-    assert element, u'Element not found'
-    element.first.click()
+        button = context.browser.find_by_ios_class_chain(
+            '**/*[`name CONTAINS "%s"`]' % name)
+        if button:
+            button.first.click()
+            return
+
+        assert False, u'Element not found'
+    elif isinstance(context.browser, AndroidWebDriver):
+        accessibility = context.browser.find_by_accessibility_id(name)
+        if accessibility:
+            accessibility[-1].click()
+            return
+
+        try:
+            button = context.browser.driver.find_element_by_android_uiautomator(
+                'new UiSelector().text("%s")' % name)
+            if button:
+                button.click()
+                return
+        except NoSuchElementException:
+            pass
+        assert False, u'Element not found'
+    else:
+        element = context.browser.find_by_xpath(
+            ("//*[@id='%(name)s']|"
+             "//*[@name='%(name)s']|"
+             "//button[contains(string(), '%(name)s')]|"
+             "//input[@type='button' and contains(string(), '%(name)s')]|"
+             "//input[@type='button' and contains(@value, '%(name)s')]|"
+             "//input[@type='submit' and contains(@value, '%(name)s')]|"
+             "//a[contains(string(), '%(name)s')]") % {'name': name})
+        assert element, u'Element not found'
+        element.first.click()
 
 
 @step(u'I press the element with xpath "{xpath}"')
@@ -123,7 +195,10 @@ def i_attach(context, name, path):
         path = os.path.join(context.attachment_dir, path)
         if not os.path.exists(path):
             assert False, u'File not found'
-    context.browser.find_by_name(name).first.clear()
+    try:
+        context.browser.find_by_name(name).first._element.clear()
+    except ElementNotInteractableException:
+        pass
     context.browser.attach_file(name, path)
 
 
@@ -134,7 +209,8 @@ def set_html_content_to_element_with_id(context, id, contents):
         u'Element not found or could not set HTML content'
 
 
-@step('I set the inner HTML of the element with class "{klass}" to "{contents}"')
+@step(
+    'I set the inner HTML of the element with class "{klass}" to "{contents}"')
 @persona_vars
 def set_html_content_to_element_with_class(context, klass, contents):
     assert context.browser.evaluate_script("document.getElementsByClassName('%s')[0].innerHTML = '%s'" % (klass, contents)), \
@@ -148,7 +224,9 @@ def field_has_value(context, name, value):
         ("//*[@id='%(name)s']|"
          "//*[@name='%(name)s']") % {'name': name})
     assert el, u'Element not found'
-    assert el.first.value == value, "Values do not match, expected %s but got %s" % (value, el.first.value)
+    assert el.first.value == value, "Values do not match, expected %s but got %s" % (
+        value, el.first.value)
+
 
 @step(u'field "{name}" should be empty')
 @persona_vars

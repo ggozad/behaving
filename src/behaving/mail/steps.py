@@ -8,12 +8,15 @@ from email.mime.multipart import MIMEMultipart
 import re
 import os.path
 import quopri
+from subprocess import check_output
+
 from behave import step
 from behaving.personas.persona import persona_vars
-
+from behaving.mobile.steps import get_android_emulator_id_from_name
 
 MAIL_TIMEOUT = 5
-URL_RE = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|\
+URL_RE = re.compile(
+    r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|\
                     (?:%[0-9a-fA-F][0-9a-fA-F]))+', re.I | re.S | re.U)
 
 
@@ -38,7 +41,8 @@ def should_receive_email_with_subject(context, address, subject):
         mail = email.message_from_string(mail)
         return subject == get_subject_from_mail(mail)
 
-    assert context.mail.user_messages(address, filter_contents), u'message not found'
+    assert context.mail.user_messages(address,
+                                      filter_contents), u'message not found'
 
 
 @step(u'I should receive an email at "{address}" with attachment "{filename}"')
@@ -53,7 +57,8 @@ def should_receive_email_with_attachment(context, address, filename):
                     return True
             return False
 
-    assert context.mail.user_messages(address, filter_contents), u'message not found'
+    assert context.mail.user_messages(address,
+                                      filter_contents), u'message not found'
 
 
 @step(u'I should receive an email at "{address}"')
@@ -76,7 +81,18 @@ def click_link_in_email(context, address):
         links.extend(URL_RE.findall(str(payload).replace('=\n', '')))
     assert links, u'link not found'
     url = links[0]
-    context.browser.visit(url)
+    if context.default_browser == 'android':
+        name = context.persona['id']
+        emulator_id = get_android_emulator_id_from_name(name)
+        try:
+            check_output([
+                "adb", "-s", emulator_id, "shell", "am", "start", "-a",
+                "android.intent.action.VIEW", "-d", url
+            ])
+        except OSError:
+            assert False, u'adb failed to open link in android'
+    else:
+        context.browser.visit(url)
 
 
 @step(u'I parse the email I received at "{address}" and set "{expression}"')
@@ -119,17 +135,20 @@ def parse_text(context, text, expression):
         context.persona[key] = val
 
 
-@step('I send an email to "{to}" with subject "{subject}" and body "{body}" and attachment "{filename}"')
+@step(
+    'I send an email to "{to}" with subject "{subject}" and body "{body}" and attachment "{filename}"'
+)
 def send_email_attachment(context, to, subject, body, filename):
-    msg = MIMEMultipart(From='test@localhost',
-                        To=to)
+    msg = MIMEMultipart(From='test@localhost', To=to)
     msg['Subject'] = Header(subject, 'utf-8')
     msg.attach(MIMEText(body))
     path = os.path.join(context.attachment_dir, filename)
     with open(path, 'rb') as fil:
         attachment = MIMEBase('application', 'octet-stream')
         attachment.set_payload(fil.read())
-        attachment.add_header("Content-Disposition", "attachment", filename=os.path.basename(filename))
+        attachment.add_header("Content-Disposition",
+                              "attachment",
+                              filename=os.path.basename(filename))
         msg.attach(attachment)
 
     s = smtplib.SMTP('localhost', 8025)
@@ -151,4 +170,11 @@ def send_email(context, to, subject, body):
 @step('I should not have received any emails at "{address}"')
 @persona_vars
 def should_receive_no_messages(context, address):
-    assert context.mail.messages_for_user(address) == [], u'Messages have been received'
+    assert context.mail.messages_for_user(
+        address) == [], u'Messages have been received'
+
+
+@step("I clear the email messages")
+@persona_vars
+def clear_messages(context):
+    context.mail.clear()

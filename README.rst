@@ -510,6 +510,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 
 * When I click the link in the email I received at "``address``"
 * When I parse the email I received at "``address``" and set "``expression``"
+* When I clear the email messages
 * Then I should receive an email at "``address``"
 * Then I should receive an email at "``address``" with subject "``subject``"
 * Then I should receive an email at "``address``" containing "``text``"
@@ -549,8 +550,22 @@ Debugging
 
 * When I pause the tests
 
+Mobile Development
+------------------
+
+We use `Appium`_ for interfacing with mobile devices and simulators.
+Currently this is in development, quite fragile and only works on MacOS.
+You will need to
+
+::
+
+  brew install carthage
+  brew install libimobiledevice
+  brew install ios-deploy
+
 .. _`Cucumber`: http://cukes.info/
 .. _`lettuce`: http://lettuce.it/
 .. _`behave`: http://pypi.python.org/pypi/behave
 .. _`splinter`: https://github.com/cobrateam/splinter
-.. _`Crypho`: http://crypho.com
+.. _`Crypho`: https://crypho.com
+.. _`Appium`: http://appium.io

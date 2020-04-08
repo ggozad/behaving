@@ -20,7 +20,8 @@ def given_a_browser(context):
 @step(u'browser "{name}"')
 def named_browser(context, name):
     single_browser = hasattr(context, 'single_browser')
-    if single_browser and hasattr(context, 'browser') and context.browser == name:
+    if single_browser and hasattr(context,
+                                  'browser') and context.browser == name:
         #  don't start up multiple browsers
         return
     if name not in context.browsers:
@@ -34,20 +35,54 @@ def named_browser(context, name):
         if context.default_browser == 'electron':
             assert context.electron_app, u'You need to set the electron app path'
             args['binary'] = context.electron_app
-        browser_attempts = 0
-        while browser_attempts < context.max_browser_attempts:
+        if context.default_browser == 'ios':
+            caps = {}
+            assert context.ios_app, u'You need to specify the iOS app'
             try:
-                context.browsers[name] = Browser(**args)
-                break
-            except WebDriverException:
-                browser_attempts += 1
+                caps = context.ios_capabilities
+            except AttributeError:
+                pass
+            try:
+                caps.update(context.personas[name]['ios_capabilities'])
+            except KeyError:
+                pass
+            app_path = context.ios_app
+            args['app_path'] = app_path
+            args['caps'] = caps
+            context.browsers[name] = Browser(**args)
+        elif context.default_browser == 'android':
+            caps = {}
+            assert context.android_app, u'You need to specify the android app'
+            try:
+                caps = context.android_capabilities
+            except AttributeError:
+                pass
+            try:
+                caps.update(context.personas[name]['android_capabilities'])
+            except KeyError:
+                pass
+            app_path = context.android_app
+            args['app_path'] = app_path
+            args['caps'] = caps
+            context.browsers[name] = Browser(**args)
+
         else:
-            raise WebDriverException("Failed to initialize browser")
+            browser_attempts = 0
+            while browser_attempts < context.max_browser_attempts:
+                try:
+                    context.browsers[name] = Browser(**args)
+                    break
+                except WebDriverException:
+                    browser_attempts += 1
+            else:
+                raise WebDriverException("Failed to initialize browser")
+            if context.default_browser_size:
+                context.browsers[name].driver.set_window_size(
+                    *context.default_browser_size)
+
     context.browser = context.browsers[name]
     if single_browser:
         context.is_connected = True
-    if context.default_browser_size:
-        context.browser.driver.set_window_size(*context.default_browser_size)
 
 
 @step(u'the electron app "{app_path}"')
@@ -60,6 +95,7 @@ def given_an_electron_app(context, app_path):
 @step(u'I close the browser "{name}"')
 def close_browser(context, name):
     context.browsers[name].driver.close()
+    del context.browsers[name]
 
 
 @step(u'I reload')
@@ -105,7 +141,8 @@ def clear_session_storage(context):
 
 @step(u'I clear the browser storage')
 def clear_browser_storage(context):
-    context.browser.execute_script('localStorage.clear();sessionStorage.clear();')
+    context.browser.execute_script(
+        'localStorage.clear();sessionStorage.clear();')
 
 
 @step(u'I resize the browser to {width}x{height}')
@@ -121,12 +158,13 @@ def resize_viewport(context, width, height):
     b_size = context.browser.driver.get_window_size()
     b_width = b_size['width']
     b_height = b_size['height']
-    v_width = context.browser.evaluate_script("document.documentElement.clientWidth")
-    v_height = context.browser.evaluate_script("document.documentElement.clientHeight")
+    v_width = context.browser.evaluate_script(
+        "document.documentElement.clientWidth")
+    v_height = context.browser.evaluate_script(
+        "document.documentElement.clientHeight")
 
-    context.browser.driver.set_window_size(
-        b_width + width - v_width,
-        b_height + height - v_height)
+    context.browser.driver.set_window_size(b_width + width - v_width,
+                                           b_height + height - v_height)
 
 
 @step(u"I maximize the browser's window")

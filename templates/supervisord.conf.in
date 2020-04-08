@@ -28,6 +28,21 @@ autostart = true
 autorestart = true
 priority = 100
 
+[program:appium]
+command = yarn appium
+startretries = 5
+autostart = true
+autorestart = true
+priority = 200
+
+[program:react-native]
+command = yarn start
+directory = ${buildout:directory}/tests/rntest
+startretries = 5
+autostart = true
+autorestart = true
+priority = 200
+
 [program:sms]
 command = ${buildout:bin-directory}/smsmock -o ${buildout:directory}/var/sms
 startretries = 5
