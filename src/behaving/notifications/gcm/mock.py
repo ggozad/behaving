@@ -3,7 +3,6 @@ import logging
 import os
 import sys
 import json
-import codecs
 try:
     from SimpleHTTPServer import SimpleHTTPRequestHandler
     import SocketServer
@@ -64,13 +63,13 @@ class GCMServer(SimpleHTTPRequestHandler):
                 self.send_error(400, e.message)
                 return
 
-            with codecs.open(dest, "w", encoding='utf-8') as f:
-                f.write(json.dumps(message, ensure_ascii=False))
+            with open(dest, "w") as f:
+                json.dump(message, f, ensure_ascii=False)
 
         response = json.dumps({"failure": 0, "canonical_ids": 0})
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(bytes(response))
+        self.wfile.write(response.encode('utf8'))
 
 
 def main(args=sys.argv[1:]):
