@@ -27,19 +27,22 @@ class SMSServer(SimpleHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers.get('content-length'))
         post_body = self.rfile.read(content_length)
-        if isinstance(post_body, bytes):
-            post_body = post_body.decode('utf-8')
         params = parse_qs(post_body)
-        fr = params.get('from')
-        to = params.get('to')
-        body = params.get('text')
+        fr = params.get(b'from')
+        to = params.get(b'to')
+        body = params.get(b'text')
         if not (fr and to and body):
             self.send_response(400)
             self.end_headers()
             return
-        fr = fr[0]
-        to = to[0]
-        body = body[0]
+        if sys.version_info[0] >= 3:
+            fr = fr[0].decode('utf-8')
+            to = to[0].decode('utf-8')
+            body = body[0].decode('utf-8')
+        else:
+            fr = fr[0]
+            to = to[0]
+            body = body[0]
 
         self.send_response(200)
         self.send_header("Content-type:", "text/json")
