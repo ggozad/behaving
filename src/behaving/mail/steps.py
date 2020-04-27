@@ -138,6 +138,7 @@ def parse_text(context, text, expression):
 @step(
     'I send an email to "{to}" with subject "{subject}" and body "{body}" and attachment "{filename}"'
 )
+@persona_vars
 def send_email_attachment(context, to, subject, body, filename):
     msg = MIMEMultipart(From='test@localhost', To=to)
     msg['Subject'] = Header(subject, 'utf-8')
@@ -157,6 +158,7 @@ def send_email_attachment(context, to, subject, body, filename):
 
 
 @step('I send an email to "{to}" with subject "{subject}" and body "{body}"')
+@persona_vars
 def send_email(context, to, subject, body):
     msg = MIMEText(body.encode('utf-8'))
     msg['Subject'] = Header(subject.encode('utf-8'), 'utf-8')
