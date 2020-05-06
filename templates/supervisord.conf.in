@@ -21,7 +21,7 @@ minprocs=200                ; (min. avail process descriptors;default 200)
 directory=%(here)s
 
 [program:http]
-command = python -m SimpleHTTPServer 8080
+command = python -m http.server 8080
 directory = ${buildout:directory}/tests/www
 startretries = 5
 autostart = true
@@ -36,7 +36,7 @@ autorestart = true
 priority = 200
 
 [program:react-native]
-command = yarn start
+command = ${buildout:directory}/tests/rntest/node_modules/.bin/react-native start
 directory = ${buildout:directory}/tests/rntest
 startretries = 5
 autostart = true
