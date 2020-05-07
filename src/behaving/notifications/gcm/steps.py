@@ -32,7 +32,7 @@ def should_receive_gcm_with_message(context, device_id, message):
     q_items = extract(query, {})
     notifications = context.gcm.user_messages(device_id)
     for notification in notifications:
-        data = json.loads(notification, 'utf-8')
+        data = json.loads(notification)
         d_items = extract(data, {})
         if match(d_items, q_items):
             return
