@@ -10,7 +10,7 @@ except ImportError:
 
 
 def extract(dict_in, dict_out):
-    for key, value in dict_in.iteritems():
+    for key, value in dict_in.items():
         if isinstance(value, dict):
             extract(value, dict_out)
         else:
@@ -19,7 +19,7 @@ def extract(dict_in, dict_out):
 
 
 def match(data, query):
-    for key, value in query.iteritems():
+    for key, value in query.items():
         if key not in data or data[key] != value:
             return False
     return True
