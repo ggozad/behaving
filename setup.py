@@ -27,7 +27,7 @@ setup(name='behaving',
       namespace_packages=['behaving'],
       include_package_data=True,
       zip_safe=False,
-      install_requires=['parse', 'behave', 'splinter', 'Appium-Python-Client'],
+      install_requires=['parse', 'behave', 'splinter', 'Appium-Python-Client<1.0.0'],
       tests_require=['mr.developer', 'zc.buildout'],
       entry_points="""
       [console_scripts]
