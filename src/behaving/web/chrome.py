@@ -17,6 +17,7 @@ class WebDriver(BaseWebDriver):
                  wait_time=2,
                  fullscreen=False,
                  options=None,
+                 headless=False,
                  **kwargs):
 
         options = Options() if options is None else options
@@ -28,6 +29,11 @@ class WebDriver(BaseWebDriver):
         options.add_argument("--use-fake-ui-for-media-stream")
         if fullscreen:
             options.add_argument('--kiosk')
+
+        if headless:
+            # noinspection PyDeprecation
+            # windows: chrome version >= 60
+            options.set_headless()
 
         prefs = {
             "download": {
