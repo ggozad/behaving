@@ -7,7 +7,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import re
 import os.path
-import quopri
 from subprocess import check_output
 
 from behave import step
@@ -25,9 +24,8 @@ URL_RE = re.compile(
 def should_receive_email_containing_text(context, address, text):
     def filter_contents(mail):
         mail = email.message_from_string(mail)
-        return text in quopri.decodestring(mail.get_payload()).decode('utf-8')
-
-    assert context.mail.user_messages(address, filter_contents)
+        return text in mail.get_payload(decode=True).decode('utf-8')
+    assert context.mail.user_messages(address, filter_contents), u"Text not found in email"
 
 
 @step(u'I should receive an email at "{address}" with subject "{subject}"')
@@ -102,7 +100,7 @@ def parse_email_set_var(context, address, expression):
     msgs = context.mail.user_messages(address)
     assert msgs, u'no email received'
     mail = email.message_from_string(msgs[-1])
-    text = quopri.decodestring(mail.get_payload()).decode("utf-8")
+    text = mail.get_payload(decode=True).decode("utf-8")
     parse_text(context, text, expression)
 
 
@@ -160,12 +158,10 @@ def send_email_attachment(context, to, subject, body, filename):
 @step('I send an email to "{to}" with subject "{subject}" and body "{body}"')
 @persona_vars
 def send_email(context, to, subject, body):
-    msg['To'] = to
-    msg['From'] = 'test@localhost'
-    s = smtplib.SMTP('localhost', 8025)
-    s.sendmail('test@localhost', [to], msg.as_string())
     msg = MIMEText(body)
     msg["Subject"] = Header(subject)
+    s = smtplib.SMTP('localhost', 8025)
+    s.sendmail('test@localhost', [to], msg.as_string())
     s.quit()
 
 
