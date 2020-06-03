@@ -1,5 +1,5 @@
 import email
-from email.header import decode_header
+from email.header import decode_header, make_header
 from email.mime.base import MIMEBase
 from email.header import Header
 import smtplib
@@ -32,8 +32,8 @@ def should_receive_email_containing_text(context, address, text):
 @persona_vars
 def should_receive_email_with_subject(context, address, subject):
     def get_subject_from_mail(mail):
-        text, encoding = decode_header(mail.get('Subject'))[0]
-        return text.decode(encoding) if encoding else text
+        text = make_header(decode_header(mail.get('Subject')))
+        return str(text)
 
     def filter_contents(mail):
         mail = email.message_from_string(mail)
@@ -159,9 +159,9 @@ def send_email_attachment(context, to, subject, body, filename):
 @persona_vars
 def send_email(context, to, subject, body):
     msg = MIMEText(body)
-    msg["Subject"] = Header(subject)
-    s = smtplib.SMTP('localhost', 8025)
-    s.sendmail('test@localhost', [to], msg.as_string())
+    msg["Subject"] = Header(subject, "utf-8")
+    s = smtplib.SMTP("localhost", 8025)
+    s.sendmail("test@localhost", [to], msg.as_string())
     s.quit()
 
 
@@ -169,7 +169,7 @@ def send_email(context, to, subject, body):
 @persona_vars
 def should_receive_no_messages(context, address):
     assert context.mail.messages_for_user(
-        address) == [], u'Messages have been received'
+        address) == [], u"Messages have been received"
 
 
 @step("I clear the email messages")
