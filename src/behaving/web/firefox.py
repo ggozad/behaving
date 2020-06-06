@@ -1,6 +1,7 @@
 import mimetypes
 
 from selenium.webdriver import Firefox
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from splinter.driver.webdriver import (
     BaseWebDriver,
@@ -25,6 +26,8 @@ class WebDriver(BaseWebDriver):
         user_agent=None,
         profile_preferences=None,
         fullscreen=False,
+        options=None,
+        headless=False,
         wait_time=2,
     ):
 
@@ -56,7 +59,13 @@ class WebDriver(BaseWebDriver):
             for extension in extensions:
                 firefox_profile.add_extension(extension)
 
-        self.driver = Firefox(firefox_profile)
+        options = Options() if options is None else options
+
+        if headless:
+            # noinspection PyDeprecation
+            options.set_headless()
+
+        self.driver = Firefox(firefox_profile, firefox_options=options)
 
         if fullscreen:
             ActionChains(self.driver).send_keys(Keys.F11).perform()

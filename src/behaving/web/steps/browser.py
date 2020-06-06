@@ -17,6 +17,12 @@ def given_a_browser(context):
     named_browser(context, "")
 
 
+@step(u'a headless browser')
+def given_a_headless_browser(context):
+    context.browser_args['headless'] = True
+    named_browser(context, '')
+
+
 @step(u'browser "{name}"')
 def named_browser(context, name):
     single_browser = hasattr(context, "single_browser")
