@@ -2,6 +2,7 @@ from behave import step
 from behaving.personas.persona import persona_vars
 import ast
 import json
+
 try:
     from urllib2 import Request, urlopen, HTTPError
 except ImportError:
@@ -10,7 +11,7 @@ except ImportError:
 
 
 def extract(dict_in, dict_out):
-    for key, value in dict_in.iteritems():
+    for key, value in dict_in.items():
         if isinstance(value, dict):
             extract(value, dict_out)
         else:
@@ -19,7 +20,7 @@ def extract(dict_in, dict_out):
 
 
 def match(data, query):
-    for key, value in query.iteritems():
+    for key, value in query.items():
         if key not in data or data[key] != value:
             return False
     return True
@@ -32,7 +33,7 @@ def should_receive_gcm_with_message(context, device_id, message):
     q_items = extract(query, {})
     notifications = context.gcm.user_messages(device_id)
     for notification in notifications:
-        data = json.loads(notification, 'utf-8')
+        data = json.loads(notification)
         d_items = extract(data, {})
         if match(d_items, q_items):
             return
@@ -49,10 +50,10 @@ def should_not_have_received_gcm(context, device_id):
 @step('I send a gcm message "{message}"')
 def send_gcm_notification(context, message):
 
-    url = 'http://localhost:8200'
-    req = Request(url, message.encode('utf-8'))
+    url = "http://localhost:8200"
+    req = Request(url, message.encode("utf-8"))
 
     try:
         urlopen(req)
     except (HTTPError,):
-        assert False, u'Unable to send gcm message'
+        assert False, u"Unable to send gcm message"

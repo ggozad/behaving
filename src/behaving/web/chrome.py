@@ -5,19 +5,16 @@ from selenium.webdriver.chrome.options import Options
 from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
 from splinter.driver.webdriver.cookie_manager import CookieManager
 
-_DOWNLOAD_PATH = '/tmp'
+_DOWNLOAD_PATH = "/tmp"
 
 
 class WebDriver(BaseWebDriver):
 
     driver_name = "Chrome"
 
-    def __init__(self,
-                 user_agent=None,
-                 wait_time=2,
-                 fullscreen=False,
-                 options=None,
-                 **kwargs):
+    def __init__(
+        self, user_agent=None, wait_time=2, fullscreen=False, options=None, **kwargs
+    ):
 
         options = Options() if options is None else options
 
@@ -27,13 +24,13 @@ class WebDriver(BaseWebDriver):
         options.add_argument("--use-fake-device-for-media-stream")
         options.add_argument("--use-fake-ui-for-media-stream")
         if fullscreen:
-            options.add_argument('--kiosk')
+            options.add_argument("--kiosk")
 
         prefs = {
             "download": {
                 "default_directory": _DOWNLOAD_PATH,
                 "directory_upgrade": True,
-                "extensions_to_open": ""
+                "extensions_to_open": "",
             }
         }
 
@@ -49,4 +46,5 @@ class WebDriver(BaseWebDriver):
 
 
 from splinter.browser import _DRIVERS
-_DRIVERS['chrome'] = WebDriver
+
+_DRIVERS["chrome"] = WebDriver

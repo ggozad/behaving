@@ -8,6 +8,6 @@ def switch_to_frame(context, css):
     driver.switch_to_frame(frame)
 
 
-@when(u'I switch back to the main page')
+@when(u"I switch back to the main page")
 def switch_to_main_page(context):
     context.browser.driver.switch_to_default_content()

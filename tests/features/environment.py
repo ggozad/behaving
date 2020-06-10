@@ -4,12 +4,25 @@ from behaving import environment as benv
 
 def before_all(context):
     import behaving
-    context.attachment_dir = os.path.join(os.path.dirname(behaving.__file__), '../../tests/data')
-    context.sms_path = os.path.join(os.path.dirname(behaving.__file__), '../../var/sms/')
-    context.mail_path = os.path.join(os.path.dirname(behaving.__file__), '../../var/mail/')
-    context.gcm_path = os.path.join(os.path.dirname(behaving.__file__), '../../var/gcm/')
-    context.screenshots_dir = os.path.join(os.path.dirname(behaving.__file__), '../../var/screenshots/')
-    context.mobile_app_dir = os.path.join(os.path.dirname(behaving.__file__), '../../tests/rntest/')
+
+    context.attachment_dir = os.path.join(
+        os.path.dirname(behaving.__file__), "../../tests/data"
+    )
+    context.sms_path = os.path.join(
+        os.path.dirname(behaving.__file__), "../../var/sms/"
+    )
+    context.mail_path = os.path.join(
+        os.path.dirname(behaving.__file__), "../../var/mail/"
+    )
+    context.gcm_path = os.path.join(
+        os.path.dirname(behaving.__file__), "../../var/gcm/"
+    )
+    context.screenshots_dir = os.path.join(
+        os.path.dirname(behaving.__file__), "../../var/screenshots/"
+    )
+    context.mobile_app_dir = os.path.join(
+        os.path.dirname(behaving.__file__), "../../tests/rntest/"
+    )
     benv.before_all(context)
 
 

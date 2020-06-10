@@ -24,13 +24,19 @@ def before_scenario(context, scenario):
 
 
 def after_scenario(context, scenario):
-    if scenario.status == 'failed' and \
-       context.screenshots_dir and \
-       hasattr(context, 'browser'):
+    if (
+        scenario.status == "failed"
+        and context.screenshots_dir
+        and hasattr(context, "browser")
+    ):
 
-        filename = scenario.feature.name + u'-' + \
-            scenario.name + u'-' + \
-            time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
+        filename = (
+            scenario.feature.name
+            + u"-"
+            + scenario.name
+            + u"-"
+            + time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
+        )
         filename = os.path.join(context.screenshots_dir, filename)
         try:
             context.browser.screenshot(filename)

@@ -30,6 +30,5 @@ def click_link_with_text_that_contains(context, text):
     else:
         xpath = "//a[contains(string(), '%s')]" % text
     anchors = context.browser.find_by_xpath(xpath)
-    assert anchors, 'Link not found'
+    assert anchors, "Link not found"
     anchors[0].click()
-

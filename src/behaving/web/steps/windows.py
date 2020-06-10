@@ -2,17 +2,19 @@ from behave import when
 
 
 def remember_window(context, window, name):
-    ''' Associates a name to a Selenium WebDriver
-    window handle to facilitate future lookup. '''
-    if not hasattr(context, '__name_to_window'):
+    """ Associates a name to a Selenium WebDriver
+    window handle to facilitate future lookup. """
+    if not hasattr(context, "__name_to_window"):
         context.__name_to_window = {}
     context.__name_to_window[name] = window
 
 
 def lookup_window(context, name):
-    ''' Finds a Selenium WebDriver window handle by name '''
-    assert hasattr(context, '__name_to_window'), "No saved windows"
-    assert name in context.__name_to_window, "{} not found in saved windows".format(name)
+    """ Finds a Selenium WebDriver window handle by name """
+    assert hasattr(context, "__name_to_window"), "No saved windows"
+    assert name in context.__name_to_window, "{} not found in saved windows".format(
+        name
+    )
     return context.__name_to_window[name]
 
 
@@ -34,12 +36,12 @@ def open_window(context, name, url):
 
 @when(u'I switch to the window named "{name}"')
 def switch_window(context, name):
-    '''
+    """
     Changes the window Selenium executes subsequent commands on.
 
     Note: this doesn't bring the window to the front within
     the OS window manager.
     I tried executing "window.focus()", but that didn't work either.
-    '''
+    """
     window = lookup_window(context, name)
     context.browser.driver.switch_to_window(window)
