@@ -2,6 +2,15 @@
 Changelog
 =========
 
+2.0.0 - 2020-06-10
+------------------
+
+- Massive amount of changes adding testing for iOS/Android.
+  [ggozad]
+
+- Py3 only.
+  [wichert, ggozad]
+
 1.5.6 - 2017-04-18
 ------------------
 
