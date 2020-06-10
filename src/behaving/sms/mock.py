@@ -3,6 +3,7 @@ import logging
 import os
 import subprocess
 import sys
+
 try:
     from SimpleHTTPServer import SimpleHTTPRequestHandler
     import SocketServer
@@ -14,6 +15,7 @@ except ImportError:
 
 try:
     from pync import Notifier
+
     notifier = Notifier
 except ImportError:
     notifier = None
@@ -25,14 +27,14 @@ output_dir = None
 
 class SMSServer(SimpleHTTPRequestHandler):
     def do_POST(self):
-        content_length = int(self.headers.get('content-length'))
+        content_length = int(self.headers.get("content-length"))
         post_body = self.rfile.read(content_length)
         if isinstance(post_body, bytes):
-            post_body = post_body.decode('utf-8')
+            post_body = post_body.decode("utf-8")
         params = parse_qs(post_body)
-        fr = params.get('from')
-        to = params.get('to')
-        body = params.get('text')
+        fr = params.get("from")
+        to = params.get("to")
+        body = params.get("text")
         if not (fr and to and body):
             self.send_response(400)
             self.end_headers()
@@ -51,18 +53,18 @@ class SMSServer(SimpleHTTPRequestHandler):
             try:
                 os.makedirs(phone_dir)
             except OSError:
-                logging.error('Phone directory could not be created')
+                logging.error("Phone directory could not be created")
                 return
 
         dest = getUniqueFilename(phone_dir, "sms")
         with open(dest, "w") as f:
             f.write(body)
 
-        if sys.platform == 'darwin':
+        if sys.platform == "darwin":
             code = body.split(None)[-1]
-            p = subprocess.Popen('pbcopy', stdin=subprocess.PIPE)
-            p.communicate(code.encode('utf-8'))
-            body = '%s and has been copied to the clipboard' % body
+            p = subprocess.Popen("pbcopy", stdin=subprocess.PIPE)
+            p.communicate(code.encode("utf-8"))
+            body = "%s and has been copied to the clipboard" % body
         if notifier:
             notifier.notify(body, title=to)
 
@@ -70,15 +72,16 @@ class SMSServer(SimpleHTTPRequestHandler):
 def main(args=sys.argv[1:]):
     """Main function called by `smsmock` command.
     """
-    parser = argparse.ArgumentParser(description='SMS mock server')
-    parser.add_argument('-p', '--port', default='8199', help='The port to use')
+    parser = argparse.ArgumentParser(description="SMS mock server")
+    parser.add_argument("-p", "--port", default="8199", help="The port to use")
 
     parser.add_argument(
-        '-o',
-        '--output_dir',
+        "-o",
+        "--output_dir",
         default=None,
         required=True,
-        help='Directory where to dump the SMSs')
+        help="Directory where to dump the SMSs",
+    )
 
     options = parser.parse_args(args=args)
 
@@ -86,7 +89,7 @@ def main(args=sys.argv[1:]):
         try:
             os.mkdir(options.output_dir)
         except OSError:
-            logging.error('Output directory could not be created')
+            logging.error("Output directory could not be created")
     global output_dir
     output_dir = options.output_dir
 
@@ -94,5 +97,5 @@ def main(args=sys.argv[1:]):
     httpd.serve_forever()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

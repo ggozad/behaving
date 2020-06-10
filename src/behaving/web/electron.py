@@ -7,15 +7,12 @@ class ElectronWebDriver(BaseWebDriver):
 
     driver_name = "Electron"
 
-    def __init__(self,
-                 wait_time=2,
-                 fullscreen=False,
-                 binary=''):
+    def __init__(self, wait_time=2, fullscreen=False, binary=""):
 
         dc = {}
-        dc['browserName'] = 'electron'
-        dc['chromeOptions'] = {
-            'binary': binary,
+        dc["browserName"] = "electron"
+        dc["chromeOptions"] = {
+            "binary": binary,
         }
         self.driver = Chrome(desired_capabilities=dc)
         self.element_class = WebDriverElement
@@ -24,5 +21,7 @@ class ElectronWebDriver(BaseWebDriver):
 
         super(ElectronWebDriver, self).__init__(wait_time)
 
+
 from splinter.browser import _DRIVERS
-_DRIVERS['electron'] = ElectronWebDriver
+
+_DRIVERS["electron"] = ElectronWebDriver

@@ -13,34 +13,35 @@ class IOSWebDriver(BaseWebDriver):
 
     driver_name = "ios"
 
-    def __init__(self,
-                 app_path,
-                 appium_url='http://127.0.0.1:4723/wd/hub',
-                 wait_time=2,
-                 caps={},
-                 **kwargs):
+    def __init__(
+        self,
+        app_path,
+        appium_url="http://127.0.0.1:4723/wd/hub",
+        wait_time=2,
+        caps={},
+        **kwargs
+    ):
 
         self.app_path = app_path
         desired_capabilities = {
-            'app': os.path.expanduser(app_path),
-            'platformName': 'iOS',
-            'platformVersion': '13.2',
-            'deviceName': 'iPhone SE',
-            'noReset': True,
-            'newCommandTimeout': 50000,
+            "app": os.path.expanduser(app_path),
+            "platformName": "iOS",
+            "platformVersion": "13.2",
+            "deviceName": "iPhone SE",
+            "noReset": True,
+            "newCommandTimeout": 50000,
         }
         desired_capabilities.update(caps)
         self.driver = webdriver.Remote(
-            command_executor=appium_url,
-            desired_capabilities=desired_capabilities)
+            command_executor=appium_url, desired_capabilities=desired_capabilities
+        )
         super(IOSWebDriver, self).__init__(wait_time)
 
     def udid(self):
-        return self.driver.capabilities.get('udid')
+        return self.driver.capabilities.get("udid")
 
     def page_source(self):
-        x = xml.dom.minidom.parseString(
-            self.driver.page_source.encode('utf-8'))
+        x = xml.dom.minidom.parseString(self.driver.page_source.encode("utf-8"))
         return x.toprettyxml()
 
     def find_by(self, finder, selector):
@@ -70,21 +71,22 @@ class IOSWebDriver(BaseWebDriver):
 
     def _is_text_present(self, text):
         text_elements = self.driver.find_elements_by_class_name(
-            'XCUIElementTypeStaticText')
+            "XCUIElementTypeStaticText"
+        )
         for el in text_elements:
             try:
                 el.text.index(text)
-                if el.get_attribute('visible') == 'true':
+                if el.get_attribute("visible") == "true":
                     return True
             except (
-                    ValueError,
-                    AttributeError,
+                ValueError,
+                AttributeError,
             ):
                 continue
         try:
             self.driver.find_element_by_ios_class_chain(
-                '**/XCUIElementTypeOther[`name CONTAINS "%s" AND visible==true`]'
-                % text)
+                '**/XCUIElementTypeOther[`name CONTAINS "%s" AND visible==true`]' % text
+            )
             return True
         except WebDriverException:
             return False
@@ -112,9 +114,10 @@ class IOSWebDriver(BaseWebDriver):
         field = self.find_by_accessibility_id(name)
         if not field:
             field = self.find_by_ios_class_chain(
-                '**/XCUIElementTypeTextView[`name CONTAINS "%s"`]' % name)
+                '**/XCUIElementTypeTextView[`name CONTAINS "%s"`]' % name
+            )
 
-        assert field, u'No elements found with accessibility id or name %s' % name
+        assert field, u"No elements found with accessibility id or name %s" % name
         try:
             field.first.set_value(value)
         except WebDriverException:
@@ -123,4 +126,4 @@ class IOSWebDriver(BaseWebDriver):
             field.first.set_value(value)
 
 
-_DRIVERS['ios'] = IOSWebDriver
+_DRIVERS["ios"] = IOSWebDriver

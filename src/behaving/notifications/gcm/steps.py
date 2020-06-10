@@ -2,6 +2,7 @@ from behave import step
 from behaving.personas.persona import persona_vars
 import ast
 import json
+
 try:
     from urllib2 import Request, urlopen, HTTPError
 except ImportError:
@@ -49,10 +50,10 @@ def should_not_have_received_gcm(context, device_id):
 @step('I send a gcm message "{message}"')
 def send_gcm_notification(context, message):
 
-    url = 'http://localhost:8200'
-    req = Request(url, message.encode('utf-8'))
+    url = "http://localhost:8200"
+    req = Request(url, message.encode("utf-8"))
 
     try:
         urlopen(req)
     except (HTTPError,):
-        assert False, u'Unable to send gcm message'
+        assert False, u"Unable to send gcm message"

@@ -5,7 +5,10 @@ import xml.dom.minidom
 from appium import webdriver
 from splinter.driver.webdriver import BaseWebDriver
 from splinter.element_list import ElementList
-from selenium.common.exceptions import WebDriverException, StaleElementReferenceException
+from selenium.common.exceptions import (
+    WebDriverException,
+    StaleElementReferenceException,
+)
 from splinter.browser import _DRIVERS
 
 
@@ -13,30 +16,31 @@ class AndroidWebDriver(BaseWebDriver):
 
     driver_name = "android"
 
-    def __init__(self,
-                 app_path,
-                 appium_url='http://127.0.0.1:4723/wd/hub',
-                 wait_time=2,
-                 caps={},
-                 **kwargs):
+    def __init__(
+        self,
+        app_path,
+        appium_url="http://127.0.0.1:4723/wd/hub",
+        wait_time=2,
+        caps={},
+        **kwargs
+    ):
 
         self.app_path = app_path
         desired_capabilities = {
-            'app': os.path.expanduser(app_path),
-            'platformName': 'Android',
-            'automationName': 'appium',
-            'noReset': True,
-            'newCommandTimeout': 50000,
+            "app": os.path.expanduser(app_path),
+            "platformName": "Android",
+            "automationName": "appium",
+            "noReset": True,
+            "newCommandTimeout": 50000,
         }
         desired_capabilities.update(caps)
         self.driver = webdriver.Remote(
-            command_executor=appium_url,
-            desired_capabilities=desired_capabilities)
+            command_executor=appium_url, desired_capabilities=desired_capabilities
+        )
         super(AndroidWebDriver, self).__init__(wait_time)
 
     def page_source(self):
-        x = xml.dom.minidom.parseString(
-            self.driver.page_source.encode('utf-8'))
+        x = xml.dom.minidom.parseString(self.driver.page_source.encode("utf-8"))
         return x.toprettyxml()
 
     def find_by(self, finder, selector):
@@ -65,19 +69,19 @@ class AndroidWebDriver(BaseWebDriver):
         by_name = self.find_by(self.driver.find_element_by_name, name)
         if by_name:
             return by_name
-        return self.find_by(self.driver.find_elements_by_accessibility_id,
-                            name)
+        return self.find_by(self.driver.find_elements_by_accessibility_id, name)
 
     def _is_text_present(self, text):
         text_elements = self.driver.find_elements_by_class_name(
-            'android.widget.TextView')
+            "android.widget.TextView"
+        )
         for el in text_elements:
             try:
                 el.text.index(text)
                 return True
             except (
-                    ValueError,
-                    AttributeError,
+                ValueError,
+                AttributeError,
             ):
                 continue
         return False
@@ -108,8 +112,8 @@ class AndroidWebDriver(BaseWebDriver):
 
     def fill(self, name, value):
         field = self.find_by_accessibility_id(name).first
-        assert field, u'No elements found with accessibility id %s' % name
+        assert field, u"No elements found with accessibility id %s" % name
         field.set_value(value)
 
 
-_DRIVERS['android'] = AndroidWebDriver
+_DRIVERS["android"] = AndroidWebDriver

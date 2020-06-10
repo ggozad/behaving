@@ -4,15 +4,17 @@ from behave import step
 from behaving.web.steps.basic import _retry
 
 
-@step(u'the file "{filename}" containing "{text}" should have been downloaded within {timeout:d} seconds')
+@step(
+    u'the file "{filename}" containing "{text}" should have been downloaded within {timeout:d} seconds'
+)
 def verify_download_contents(context, filename, text, timeout):
     path = os.path.join(context.download_dir, filename)
 
     def check():
         return os.path.exists(path)
 
-    assert _retry(check, timeout), u'File has not been downloaded'
-    with open(path, 'r') as f:
+    assert _retry(check, timeout), u"File has not been downloaded"
+    with open(path, "r") as f:
         contents = f.read()
 
     assert text in contents, u"Text not found in file"
@@ -25,4 +27,4 @@ def verify_download(context, filename, timeout):
     def check():
         return os.path.exists(path)
 
-    assert _retry(check, timeout), u'File has not been downloaded'
+    assert _retry(check, timeout), u"File has not been downloaded"

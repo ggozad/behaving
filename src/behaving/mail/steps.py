@@ -15,8 +15,10 @@ from behaving.mobile.steps import get_android_emulator_id_from_name
 
 MAIL_TIMEOUT = 5
 URL_RE = re.compile(
-    r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|\
-                    (?:%[0-9a-fA-F][0-9a-fA-F]))+', re.I | re.S | re.U)
+    r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|\
+                    (?:%[0-9a-fA-F][0-9a-fA-F]))+",
+    re.I | re.S | re.U,
+)
 
 
 @step(u'I should receive an email at "{address}" containing "{text}"')
@@ -24,23 +26,25 @@ URL_RE = re.compile(
 def should_receive_email_containing_text(context, address, text):
     def filter_contents(mail):
         mail = email.message_from_string(mail)
-        return text in mail.get_payload(decode=True).decode('utf-8')
-    assert context.mail.user_messages(address, filter_contents), u"Text not found in email"
+        return text in mail.get_payload(decode=True).decode("utf-8")
+
+    assert context.mail.user_messages(
+        address, filter_contents
+    ), u"Text not found in email"
 
 
 @step(u'I should receive an email at "{address}" with subject "{subject}"')
 @persona_vars
 def should_receive_email_with_subject(context, address, subject):
     def get_subject_from_mail(mail):
-        text = make_header(decode_header(mail.get('Subject')))
+        text = make_header(decode_header(mail.get("Subject")))
         return str(text)
 
     def filter_contents(mail):
         mail = email.message_from_string(mail)
         return subject == get_subject_from_mail(mail)
 
-    assert context.mail.user_messages(address,
-                                      filter_contents), u'message not found'
+    assert context.mail.user_messages(address, filter_contents), u"message not found"
 
 
 @step(u'I should receive an email at "{address}" with attachment "{filename}"')
@@ -55,40 +59,49 @@ def should_receive_email_with_attachment(context, address, filename):
                     return True
             return False
 
-    assert context.mail.user_messages(address,
-                                      filter_contents), u'message not found'
+    assert context.mail.user_messages(address, filter_contents), u"message not found"
 
 
 @step(u'I should receive an email at "{address}"')
 @persona_vars
 def should_receive_email(context, address):
-    assert context.mail.user_messages(address), u'message not found'
+    assert context.mail.user_messages(address), u"message not found"
 
 
 @step(u'I click the link in the email I received at "{address}"')
 @persona_vars
 def click_link_in_email(context, address):
     mails = context.mail.user_messages(address)
-    assert mails, u'message not found'
+    assert mails, u"message not found"
     mail = email.message_from_string(mails[-1])
     links = []
     payloads = mail.get_payload()
     if isinstance(payloads, str):
         payloads = [payloads]
     for payload in payloads:
-        links.extend(URL_RE.findall(str(payload).replace('=\n', '')))
-    assert links, u'link not found'
+        links.extend(URL_RE.findall(str(payload).replace("=\n", "")))
+    assert links, u"link not found"
     url = links[0]
-    if context.default_browser == 'android':
-        name = context.persona['id']
+    if context.default_browser == "android":
+        name = context.persona["id"]
         emulator_id = get_android_emulator_id_from_name(name)
         try:
-            check_output([
-                "adb", "-s", emulator_id, "shell", "am", "start", "-a",
-                "android.intent.action.VIEW", "-d", url
-            ])
+            check_output(
+                [
+                    "adb",
+                    "-s",
+                    emulator_id,
+                    "shell",
+                    "am",
+                    "start",
+                    "-a",
+                    "android.intent.action.VIEW",
+                    "-d",
+                    url,
+                ]
+            )
         except OSError:
-            assert False, u'adb failed to open link in android'
+            assert False, u"adb failed to open link in android"
     else:
         context.browser.visit(url)
 
@@ -96,9 +109,9 @@ def click_link_in_email(context, address):
 @step(u'I parse the email I received at "{address}" and set "{expression}"')
 @persona_vars
 def parse_email_set_var(context, address, expression):
-    assert context.persona is not None, u'no persona is setup'
+    assert context.persona is not None, u"no persona is setup"
     msgs = context.mail.user_messages(address)
-    assert msgs, u'no email received'
+    assert msgs, u"no email received"
     mail = email.message_from_string(msgs[-1])
     text = mail.get_payload(decode=True).decode("utf-8")
     parse_text(context, text, expression)
@@ -106,29 +119,30 @@ def parse_email_set_var(context, address, expression):
 
 def parse_text(context, text, expression):
     import parse
+
     parser = parse.compile(expression)
     res = parser.parse(text)
 
     # Make an implicit assumption that there might be something before the expression
     if res is None:
-        expr = '{}' + expression
+        expr = "{}" + expression
         parser = parse.compile(expr)
         res = parser.parse(text)
 
     # Make an implicit assumption that there might be something after the expression
     if res is None:
-        expr = expression + '{}'
+        expr = expression + "{}"
         parser = parse.compile(expr)
         res = parser.parse(text)
 
     # Make an implicit assumption that there might be something before/after the expression
     if res is None:
-        expr = '{}' + expression + '{}'
+        expr = "{}" + expression + "{}"
         parser = parse.compile(expr)
         res = parser.parse(text)
 
-    assert res, u'expression not found'
-    assert res.named, u'expression not found'
+    assert res, u"expression not found"
+    assert res.named, u"expression not found"
     for key, val in res.named.items():
         context.persona[key] = val
 
@@ -138,20 +152,20 @@ def parse_text(context, text, expression):
 )
 @persona_vars
 def send_email_attachment(context, to, subject, body, filename):
-    msg = MIMEMultipart(From='test@localhost', To=to)
+    msg = MIMEMultipart(From="test@localhost", To=to)
     msg["Subject"] = Header(subject, "utf-8")
     msg.attach(MIMEText(body))
     path = os.path.join(context.attachment_dir, filename)
-    with open(path, 'rb') as fil:
-        attachment = MIMEBase('application', 'octet-stream')
+    with open(path, "rb") as fil:
+        attachment = MIMEBase("application", "octet-stream")
         attachment.set_payload(fil.read())
-        attachment.add_header("Content-Disposition",
-                              "attachment",
-                              filename=os.path.basename(filename))
+        attachment.add_header(
+            "Content-Disposition", "attachment", filename=os.path.basename(filename)
+        )
         msg.attach(attachment)
 
-    s = smtplib.SMTP('localhost', 8025)
-    s.sendmail('test@localhost', [to], msg.as_string())
+    s = smtplib.SMTP("localhost", 8025)
+    s.sendmail("test@localhost", [to], msg.as_string())
     s.quit()
 
 
@@ -168,8 +182,7 @@ def send_email(context, to, subject, body):
 @step('I should not have received any emails at "{address}"')
 @persona_vars
 def should_receive_no_messages(context, address):
-    assert context.mail.messages_for_user(
-        address) == [], u"Messages have been received"
+    assert context.mail.messages_for_user(address) == [], u"Messages have been received"
 
 
 @step("I clear the email messages")

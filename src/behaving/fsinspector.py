@@ -3,11 +3,10 @@ import os
 import time
 from shutil import rmtree
 
-logger = logging.getLogger('behaving')
+logger = logging.getLogger("behaving")
 
 
 class FSInspector(object):
-
     def __init__(self, path, timeout=5):
         self.path = path
         self.timeout = timeout
@@ -25,7 +24,7 @@ class FSInspector(object):
         messages = []
         for path in paths:
             path = os.path.join(user_path, path)
-            with open(path, 'r') as f:
+            with open(path, "r") as f:
                 messages.append(f.read())
         return messages
 
@@ -49,5 +48,5 @@ class FSInspector(object):
                 else:
                     os.unlink(path)
             except:
-                logger.error('Could not delete %s' % fn)
+                logger.error("Could not delete %s" % fn)
                 exit(1)
