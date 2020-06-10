@@ -11,11 +11,6 @@ Feature: Browser handling
         Given a browser
 
     @web
-    Scenario: Select PhantomJS browser
-        Given PhantomJS as the default browser
-        Given a browser
-
-    @web
     Scenario: Select the cordova Chrome browser
         Given Cordova as the default browser
         Given a browser
@@ -82,12 +77,12 @@ Feature: Browser handling
     Scenario: Create Named Browser visit a site and close by name.
         Given Browser "aBrowser"
         When I visit "http://localhost:8080"
-            Then I wait for 4 seconds
-            And I close the browser "aBrowser"
+        Then I wait for 4 seconds
+        And I close the browser "aBrowser"
         Given Browser "anotherBrowser"
         When I visit "http://localhost:8080"
-            Then I wait for 4 seconds
-            And I close the browser "anotherBrowser"
+        Then I wait for 4 seconds
+        And I close the browser "anotherBrowser"
 
     @web
     Scenario: Create Personas and Close their respective browsers.
@@ -95,10 +90,10 @@ Feature: Browser handling
         When I visit "http://localhost:8080"
         Then I wait for 4 seconds
 
-            Given "Bar" as the persona
-            When I visit "http://localhost:8080"
-            Then I wait for 4 seconds
-            And I close the browser "Bar"
+        Given "Bar" as the persona
+        When I visit "http://localhost:8080"
+        Then I wait for 4 seconds
+        And I close the browser "Bar"
 
         Then I wait for 4 seconds
         And I close the browser "Foo"

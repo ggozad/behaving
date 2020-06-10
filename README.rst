@@ -320,7 +320,7 @@ For chrome and docker issues, the code below is useful
     }
 
 Mail, GCM and SMS mock servers
--------------------------
+------------------------------
 
 When *behaving* is installed, it creates three scripts to help you test mail, gcm and sms, ``mailmock``, ``gcmmock`` and ``smsmock`` respectively. You can directly invoke them before running your tests, they all take a port as well as the directory to output data as parameters. For example,
 
@@ -339,7 +339,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
     * Given a browser
       [opens the default browser, i.e. Firefox]
     * Given ``brand`` as the default browser
-      [sets the default browser to be ``brand``, this is the browser name when using the remote webdriver or Firefox, Chrome, Safari, or PhantomJS]
+      [sets the default browser to be ``brand``, this is the browser name when using the remote webdriver or Firefox, Chrome, Safari]
     * Given Cordova as the default browser
       [for use with Cordova mobile apps]
     * Given the electron app "``app_path``"
@@ -526,7 +526,7 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
 * Then I should receive an sms at "``number``" containing "``text``"
 
 ``behaving.notifications.gcm`` Supported matchers/steps
------------------------------------------
+-------------------------------------------------------
 
 * When I send a gcm message "{"to":"deviceID", "data": {"message": "Foo Bar", "badge": 6}}"
 * Then I should receive a gcm notification at "deviceID" containing "{'data': {'message': 'Foo Bar'}}"
