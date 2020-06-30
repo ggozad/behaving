@@ -24,6 +24,8 @@ def after_feature(context, feature):
 def before_scenario(context, scenario):
     if "headless" in scenario.tags:
         context.headless = True
+    if "noheadless" in scenario.tags:
+        context.headless = False
     setup(context)
 
 
