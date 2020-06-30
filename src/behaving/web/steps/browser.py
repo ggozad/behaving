@@ -24,6 +24,11 @@ def given_a_browser(context):
 
 @step(u'browser "{name}"')
 def named_browser(context, name):
+    if getattr(context, "headless", None):
+        context.browser_args["headless"] = True
+    else:
+        context.browser_args["headless"] = False
+
     single_browser = hasattr(context, "single_browser")
     if single_browser and hasattr(context, "browser") and context.browser == name:
         #  don't start up multiple browsers
