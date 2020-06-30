@@ -43,9 +43,9 @@ class AndroidWebDriver(BaseWebDriver):
         x = xml.dom.minidom.parseString(self.driver.page_source.encode("utf-8"))
         return x.toprettyxml()
 
-    def find_by(self, finder, selector):
+    def find_by(self, finder, selector, wait_time=None):
         elements = None
-        end_time = time.time() + self.wait_time
+        end_time = time.time() + self.wait_time or wait_time
 
         while time.time() < end_time:
             try:
