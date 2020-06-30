@@ -340,8 +340,6 @@ When *behaving* is installed, it creates three scripts to help you test mail, gc
       [opens the default browser, i.e. Firefox]
     * Given ``brand`` as the default browser
       [sets the default browser to be ``brand``, this is the browser name when using the remote webdriver or Firefox, Chrome, Safari]
-    * Given Cordova as the default browser
-      [for use with Cordova mobile apps]
     * Given the electron app "``app_path``"
       [for use with electron-based desktop apps]
     * Given browser "``name``"

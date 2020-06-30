@@ -10,10 +10,6 @@ Feature: Browser handling
         Given Firefox as the default browser
         Given a browser
 
-    @web
-    Scenario: Select the cordova Chrome browser
-        Given Cordova as the default browser
-        Given a browser
 
     @web
     Scenario: History

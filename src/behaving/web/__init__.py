@@ -6,7 +6,6 @@ try:
 except ImportError:
     from urllib.error import URLError
 
-from behaving.web import cordova
 from behaving.web import electron
 from behaving.web import chrome
 from behaving.web import firefox
