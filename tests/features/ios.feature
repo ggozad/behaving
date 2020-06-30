@@ -23,8 +23,8 @@ Feature: Mobile
         Then I should see "Touchable opacity pressed"
         When I press the element with iOS class chain "**/XCUIElementTypeButton[`name ENDSWITH "button"`]"
         Then I should see "Normal button pressed"
-        When I tap at 150 300
-        Then I should see "Tap at 40, 46"
+        When I tap at 188 354
+        Then I should see "Tap at 50.5, 50.5"
         When I toggle "switch"
         Then I should see "Switch pressed"
 
