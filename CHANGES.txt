@@ -5,6 +5,9 @@ Changelog
 2.0.1 - 
 ------------------
 
+- Fix lots of py3 errors.
+  [ggozad]
+
 - Headless browsers
   [zmr_01, ggozad]
 

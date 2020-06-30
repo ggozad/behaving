@@ -4,18 +4,16 @@ from behave import when
 def remember_window(context, window, name):
     """ Associates a name to a Selenium WebDriver
     window handle to facilitate future lookup. """
-    if not hasattr(context, "__name_to_window"):
-        context.__name_to_window = {}
-    context.__name_to_window[name] = window
+    if not hasattr(context, "name_to_window_"):
+        context.name_to_window_ = {}
+    context.name_to_window_[name] = window
 
 
 def lookup_window(context, name):
     """ Finds a Selenium WebDriver window handle by name """
-    assert hasattr(context, "__name_to_window"), "No saved windows"
-    assert name in context.__name_to_window, "{} not found in saved windows".format(
-        name
-    )
-    return context.__name_to_window[name]
+    assert hasattr(context, "name_to_window_"), "No saved windows"
+    assert name in context.name_to_window_, "{} not found in saved windows".format(name)
+    return context.name_to_window_[name]
 
 
 @when(u'I name the current window "{name}"')
