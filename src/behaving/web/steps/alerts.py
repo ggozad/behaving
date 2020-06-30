@@ -16,7 +16,7 @@ def alert_is_present(context):
 def alert_is_present_timeout(context, timeout):
     def check():
         try:
-            alert = context.browser.get_alert(), u"Alert not found"
+            alert = context.browser.get_alert()
             return alert is not None
         except NoAlertPresentException:
             return False
@@ -27,8 +27,8 @@ def alert_is_present_timeout(context, timeout):
 @step(u'I should see an alert containing "{text}"')
 def alert_contains_text(context, text):
     try:
-        alert = context.browser.get_alert(), u"Alert not found"
-        assert text in alert[0].text, u"Text not found"
+        alert = context.browser.get_alert()
+        assert text in alert.text, u"Text not found"
     except NoAlertPresentException:
         assert False, u"Alert not found"
 
@@ -37,8 +37,8 @@ def alert_contains_text(context, text):
 def alert_contains_text_timeout(context, text, timeout):
     def check():
         try:
-            alert = context.browser.get_alert(), u"Alert not found"
-            return alert is not None and text in alert[0].text
+            alert = context.browser.get_alert()
+            return alert is not None and text in alert.text
         except NoAlertPresentException:
             return False
 
