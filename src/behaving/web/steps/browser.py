@@ -14,13 +14,12 @@ def given_some_browser(context, brand):
 
 @step(u"a browser")
 def given_a_browser(context):
+    if getattr(context, "headless", None):
+        context.browser_args["headless"] = True
+    else:
+        context.browser_args["headless"] = False
+
     named_browser(context, "")
-
-
-@step(u'a headless browser')
-def given_a_headless_browser(context):
-    context.browser_args['headless'] = True
-    named_browser(context, '')
 
 
 @step(u'browser "{name}"')

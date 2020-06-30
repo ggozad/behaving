@@ -12,18 +12,25 @@ def before_all(context):
 
 
 def before_feature(context, feature):
-    pass
+    if "headless" in feature.tags:
+        context.headless = True
 
 
 def after_feature(context, feature):
-    pass
+    if "headless" in feature.tags:
+        context.headless = False
 
 
 def before_scenario(context, scenario):
+    if "headless" in scenario.tags:
+        context.headless = True
     setup(context)
 
 
 def after_scenario(context, scenario):
+    if "headless" in scenario.tags:
+        context.headless = False
+
     if (
         scenario.status == "failed"
         and context.screenshots_dir
