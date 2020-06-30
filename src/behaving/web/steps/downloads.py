@@ -14,10 +14,10 @@ def verify_download_contents(context, filename, text, timeout):
         return os.path.exists(path)
 
     assert _retry(check, timeout), u"File has not been downloaded"
-    with open(path, "r") as f:
+    with open(path, "rb") as f:
         contents = f.read()
 
-    assert text in contents, u"Text not found in file"
+    assert text.encode() in contents, u"Text not found in file"
 
 
 @step(u'the file "{filename}" should have been downloaded within {timeout:d} seconds')
