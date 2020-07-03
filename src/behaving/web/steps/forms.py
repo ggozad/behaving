@@ -25,7 +25,13 @@ def i_fill_in_field(context, name, value):
 @step(u'I clear field "{name}"')
 @persona_vars
 def i_clear_field(context, name):
-    el = context.browser.find_by_name(name).first
+    if isinstance(context.browser, IOSWebDriver):
+        el = context.browser.find_by_ios_class_chain(
+            '**/XCUIElementTypeTextField[`name CONTAINS "%s" OR value CONTAINS "%s"`]'
+            % (name, name,)
+        ).first
+    else:
+        el = context.browser.find_by_name(name).first
     # Chrome does not clear, so we need to do manually
     if context.browser.driver_name == "Chrome" and el._element.get_attribute(
         "type"
