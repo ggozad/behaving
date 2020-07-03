@@ -34,29 +34,6 @@ def i_clear_field(context, name):
         for i in range(0, chars):
             el._element.send_keys(Keys.BACKSPACE)
 
-    if isinstance(context.browser, IOSWebDriver):
-        # For iOS we need to bring up the Select All/Cut
-        # This depends on whether the field was focused or
-        # not, so we just click away until we invoke them.
-        for _ in range(5):
-            select_all = context.browser.find_by_xpath(
-                '//XCUIElementTypeMenuItem[@name="Select All"]'
-            )
-            if select_all:
-                break
-            el.click()
-        if not select_all:
-            assert False, "Could not clear the field"
-        select_all.click()
-
-        clipboard = context.browser.driver.get_clipboard_text()
-        context.browser.driver.set_clipboard(b"")
-        paste = context.browser.find_by_xpath(
-            '//XCUIElementTypeMenuItem[@name="Paste"]'
-        )
-        paste.click()
-        context.browser.driver.set_clipboard(clipboard.encode())
-
     assert el, "Element not found"
     el.clear()
 
