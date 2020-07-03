@@ -50,13 +50,12 @@ def i_clear_field(context, name):
         select_all.click()
 
         clipboard = context.browser.driver.get_clipboard_text()
-        context.browser.driver.set_clipboard("")
-        paste = context.browser.driver.find_element_by_xpath(
+        context.browser.driver.set_clipboard(b"")
+        paste = context.browser.find_by_xpath(
             '//XCUIElementTypeMenuItem[@name="Paste"]'
         )
         paste.click()
-        context.execute_steps(u"When I wait for 1 seconds")
-        context.browser.driver.set_clipboard(clipboard)
+        context.browser.driver.set_clipboard(clipboard.encode())
 
     assert el, "Element not found"
     el.clear()
