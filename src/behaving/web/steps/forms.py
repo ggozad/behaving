@@ -30,6 +30,15 @@ def i_clear_field(context, name):
             '**/XCUIElementTypeTextField[`name CONTAINS "%s" OR value CONTAINS "%s"`]'
             % (name, name,)
         ).first
+    elif isinstance(context.browser, AndroidWebDriver):
+        el = context.browser.find_by_name(name)
+        if el.is_empty():
+            el = context.browser.driver.find_element_by_android_uiautomator(
+                'new UiSelector().className("android.widget.EditText").text("%s")'
+                % name
+            )
+        else:
+            el = el.first
     else:
         el = context.browser.find_by_name(name).first
     # Chrome does not clear, so we need to do manually
