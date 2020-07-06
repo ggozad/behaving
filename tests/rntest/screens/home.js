@@ -26,6 +26,12 @@ export default class Home extends Component {
           onPress={() => navigate('Input')}
         />
         <Button
+          accessibilityLabel="Scroll"
+          title="Scroll"
+          onPress={() => navigate('Scroll')}
+        />
+
+        <Button
           accessibilityLabel="Auth"
           title="Auth"
           onPress={() => navigate('Auth')}

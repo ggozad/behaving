@@ -1,5 +1,6 @@
 from behave import step
 from splinter.exceptions import ElementDoesNotExist
+from appium.webdriver.common.touch_action import TouchAction
 
 from behaving.personas.persona import persona_vars
 from behaving.mobile.ios import IOSWebDriver
@@ -8,12 +9,22 @@ from behaving.mobile.android import AndroidWebDriver
 
 @step(u'I should see an element with accessibility id "{id}"')
 def see_accessibility_id(context, id):
-    assert context.browser.find_by_accessibility_id(id), u"Element not found"
+    el = context.browser.find_by_accessibility_id(id)
+    assert el, u"Element not found"
+    assert el.is_displayed(), u"Element not in view"
+
+
+@step(u'I should not see an element with accessibility id "{id}"')
+def not_see_accessibility_id(context, id):
+    el = context.browser.find_by_accessibility_id(id)
+    assert el is None or el.is_displayed() == False, u"Element found"
 
 
 @step(u'I should see an element with iOS class chain "{chain}"')
 def see_ios_class_chain(context, chain):
-    assert context.browser.find_by_ios_class_chain(chain), u"Element not found"
+    el = context.browser.find_by_ios_class_chain(chain)
+    assert el, u"Element not found"
+    assert el.is_displayed(), u"Element not in view"
 
 
 @step(u'I press the element with iOS class chain "{chain}"')
@@ -54,3 +65,15 @@ def set_variable(context, key, chain):
         ).first.get_attribute("value")
     except ElementDoesNotExist:
         assert False, u"Element not found"
+
+
+@step(u'I scroll the element with accessibility id "{id}" by {x:d} {y:d}')
+def scroll_element(context, id, x, y):
+    el = context.browser.find_by_accessibility_id(id)
+    assert el, u"Element not found"
+    location = el.location
+    actions = TouchAction(context.browser.driver)
+    actions.tap(x=location["x"], y=location["y"]).wait(100).move_to(
+        x=location["x"] + x, y=location["y"] + y
+    ).wait(100).perform()
+

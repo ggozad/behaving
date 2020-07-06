@@ -15,7 +15,7 @@ import {
   TextInput,
 } from 'react-native'
 
-export default class Touches extends Component<{}> {
+export default class Touches extends Component {
   constructor(props) {
     super(props)
     this.state = { feedback: '' }
@@ -29,7 +29,9 @@ export default class Touches extends Component<{}> {
         <TouchableOpacity
           onPress={ev => {
             this.setState({
-              feedback: `Tap at ${ev.nativeEvent.locationX}, ${ev.nativeEvent.locationY}`,
+              feedback: `Tap at ${ev.nativeEvent.locationX}, ${
+                ev.nativeEvent.locationY
+              }`,
             })
           }}
           style={styles.touchableBox}

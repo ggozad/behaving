@@ -44,6 +44,15 @@ Feature: Mobile
         Then I should see "You typed: Testing prefilled..."
 
     @mobile
+    Scenario: Scroll
+        Given a browser
+        When I press "Scroll"
+        Then I should see an element with accessibility id "Mary"
+        And I should not see an element with accessibility id "Olivia"
+        When I scroll the element with accessibility id "Mary" by 0 -500
+        Then I should see an element with accessibility id "Olivia"
+
+    @mobile
     Scenario: TouchId/FaceId
         Given a browser
         When I toggle the TouchId enrollment

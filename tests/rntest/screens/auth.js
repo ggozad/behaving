@@ -8,7 +8,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native'
 import TouchID from 'react-native-touch-id'
 
-export default class Auth extends Component<{}> {
+export default class Auth extends Component {
   constructor(props) {
     super(props)
     this.state = { feedback: '' }
