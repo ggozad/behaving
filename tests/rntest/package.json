@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.5",
+    "react-native": "0.62.3",
     "react-native-gesture-handler": "^1.5.2",
     "react-native-touch-id": "^4.4.1",
     "react-navigation": "^4.0.10",
