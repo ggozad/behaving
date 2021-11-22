@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "behaving"
+version = "3.0.0"
+description = "BDD Behavior-Driven-Development testing"
+authors = ["Yiorgis Gozadinos <ggozadinos@gmail.com>"]
+license = "GPL"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3"
+]
+keywords = ["BDD", "Behavior-Driven-Development", "testing"]
+repository = "https://github.com/ggozad/behaving"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+parse = "^1.19.0"
+behave = "^1.2.6"
+splinter = "^0.16.0"
+
+[tool.poetry.dev-dependencies]
+black = "^21.11b1"
+flake8 = "^4.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
