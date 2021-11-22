@@ -37,6 +37,7 @@ def named_browser(context, name):
         args = context.browser_args.copy()
         if context.remote_webdriver:
             args["driver_name"] = "remote"
+            del args["headless"]
             if context.default_browser:
                 args["browser"] = context.default_browser
         elif context.default_browser:
