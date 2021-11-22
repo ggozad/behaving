@@ -1,70 +1,8 @@
-.installed.cfg
-.mr.developer.cfg
-/bin/
-/develop-eggs/
-/downloads/
-/eggs/
-/extends/
-/parts/
-/var/
-/dist/
-/apps/
-/etc/
-/node_modules/
 *.DS_Store
 *.egg-info
 *.pyc
 chromedriver.log
 ghostdriver.log
-.long-description.html
-build/
-xcuserdata/
-src/behaving/tests/apps/android_test_app/bin
-src/behaving/tests/apps/android_test_app/.*
-src/behaving/tests/apps/android_test_app/gen
-*.sublime-workspace
-.vscode/
 geckodriver.log
-# React native stuff
-# OSX
-#
-.DS_Store
-
-# Xcode
-#
-build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
-*.hmap
-*.ipa
-*.xcuserstate
-project.xcworkspace
-xcshareddata/
-# Android/IntelliJ
-#
-build/
-.idea
-.gradle
-local.properties
-*.iml
-
-# node.js
-#
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# BUCK
-buck-out/
-\.buckd/
-*.keystore
+.long-description.html
+__pycache__/
