@@ -44,51 +44,17 @@ def named_browser(context, name):
         if context.default_browser == "electron":
             assert context.electron_app, u"You need to set the electron app path"
             args["binary"] = context.electron_app
-        if context.default_browser == "ios":
-            caps = {}
-            assert context.ios_app, u"You need to specify the iOS app"
+        browser_attempts = 0
+        while browser_attempts < context.max_browser_attempts:
             try:
-                caps = context.ios_capabilities
-            except AttributeError:
-                pass
-            try:
-                caps.update(context.personas[name]["ios_capabilities"])
-            except KeyError:
-                pass
-            app_path = context.ios_app
-            args["app_path"] = app_path
-            args["caps"] = caps
-            context.browsers[name] = Browser(**args)
-        elif context.default_browser == "android":
-            caps = {}
-            assert context.android_app, u"You need to specify the android app"
-            try:
-                caps = context.android_capabilities
-            except AttributeError:
-                pass
-            try:
-                caps.update(context.personas[name]["android_capabilities"])
-            except KeyError:
-                pass
-            app_path = context.android_app
-            args["app_path"] = app_path
-            args["caps"] = caps
-            context.browsers[name] = Browser(**args)
-
+                context.browsers[name] = Browser(**args)
+                break
+            except WebDriverException:
+                browser_attempts += 1
         else:
-            browser_attempts = 0
-            while browser_attempts < context.max_browser_attempts:
-                try:
-                    context.browsers[name] = Browser(**args)
-                    break
-                except WebDriverException:
-                    browser_attempts += 1
-            else:
-                raise WebDriverException("Failed to initialize browser")
-            if context.default_browser_size:
-                context.browsers[name].driver.set_window_size(
-                    *context.default_browser_size
-                )
+            raise WebDriverException("Failed to initialize browser")
+        if context.default_browser_size:
+            context.browsers[name].driver.set_window_size(*context.default_browser_size)
 
     context.browser = context.browsers[name]
     if single_browser:

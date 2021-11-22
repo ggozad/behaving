@@ -20,9 +20,6 @@ def before_all(context):
     context.screenshots_dir = os.path.join(
         os.path.dirname(behaving.__file__), "../../var/screenshots/"
     )
-    context.mobile_app_dir = os.path.join(
-        os.path.dirname(behaving.__file__), "../../tests/rntest/"
-    )
     benv.before_all(context)
 
 

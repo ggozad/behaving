@@ -9,8 +9,6 @@ from selenium.common.exceptions import (
     ElementNotInteractableException,
 )
 from behaving.personas.persona import persona_vars
-from behaving.mobile.ios import IOSWebDriver
-from behaving.mobile.android import AndroidWebDriver
 
 
 @step(u'I fill in "{name}" with "{value}"')
@@ -25,26 +23,18 @@ def i_fill_in_field(context, name, value):
 @step(u'I clear field "{name}"')
 @persona_vars
 def i_clear_field(context, name):
-    if isinstance(context.browser, IOSWebDriver):
-        el = context.browser.find_by_ios_class_chain(
-            '**/XCUIElementTypeTextField[`name CONTAINS "%s" OR value CONTAINS "%s"`]'
-            % (name, name,)
-        ).first
-    elif isinstance(context.browser, AndroidWebDriver):
-        el = context.browser.find_by_name(name)
-        if el.is_empty():
-            el = context.browser.driver.find_element_by_android_uiautomator(
-                'new UiSelector().className("android.widget.EditText").text("%s")'
-                % name
-            )
-        else:
-            el = el.first
-    else:
-        el = context.browser.find_by_name(name).first
+    el = context.browser.find_by_name(name).first
     # Chrome does not clear, so we need to do manually
     if context.browser.driver_name == "Chrome" and el._element.get_attribute(
         "type"
-    ) in ["email", "textarea", "text", "password", "tel", "number",]:
+    ) in [
+        "email",
+        "textarea",
+        "text",
+        "password",
+        "tel",
+        "number",
+    ]:
         chars = len(el.value)
         for i in range(0, chars):
             el._element.send_keys(Keys.BACKSPACE)
@@ -83,18 +73,13 @@ def i_uncheck(context, name):
 
 @step(u'I toggle "{name}"')
 def i_toggle(context, name):
-    if isinstance(context.browser, IOSWebDriver):
-        toggle = context.browser.driver.find_elements_by_accessibility_id(name)
-        assert toggle, u"Element not found"
-        toggle[-1].click()
+    el = context.browser.find_by_name(name)
+    assert el, u"Element not found"
+    el = el.first
+    if el.checked:
+        el.uncheck()
     else:
-        el = context.browser.find_by_name(name)
-        assert el, u"Element not found"
-        el = el.first
-        if el.checked:
-            el.uncheck()
-        else:
-            el.check()
+        el.check()
 
 
 @step(u'I select "{value}" from "{name}"')
@@ -132,49 +117,20 @@ def i_focus(context, name):
 @step(u'I press "{name}"')
 @persona_vars
 def i_press(context, name):
-    if isinstance(context.browser, IOSWebDriver):
-        accessibility = context.browser.find_by_accessibility_id(name)
-        if accessibility:
-            accessibility[-1].click()
-            return
-
-        button = context.browser.find_by_ios_class_chain('**/*[`name = "%s"`]' % name)
-        if button:
-            button.first.click()
-            return
-
-        assert False, u"Element not found"
-    elif isinstance(context.browser, AndroidWebDriver):
-        accessibility = context.browser.find_by_accessibility_id(name)
-        if accessibility:
-            accessibility[-1].click()
-            return
-
-        try:
-            button = context.browser.driver.find_element_by_android_uiautomator(
-                'new UiSelector().text("%s")' % name
-            )
-            if button:
-                button.click()
-                return
-        except NoSuchElementException:
-            pass
-        assert False, u"Element not found"
-    else:
-        element = context.browser.find_by_xpath(
-            (
-                "//*[@id='%(name)s']|"
-                "//*[@name='%(name)s']|"
-                "//button[contains(string(), '%(name)s')]|"
-                "//input[@type='button' and contains(string(), '%(name)s')]|"
-                "//input[@type='button' and contains(@value, '%(name)s')]|"
-                "//input[@type='submit' and contains(@value, '%(name)s')]|"
-                "//a[contains(string(), '%(name)s')]"
-            )
-            % {"name": name}
+    element = context.browser.find_by_xpath(
+        (
+            "//*[@id='%(name)s']|"
+            "//*[@name='%(name)s']|"
+            "//button[contains(string(), '%(name)s')]|"
+            "//input[@type='button' and contains(string(), '%(name)s')]|"
+            "//input[@type='button' and contains(@value, '%(name)s')]|"
+            "//input[@type='submit' and contains(@value, '%(name)s')]|"
+            "//a[contains(string(), '%(name)s')]"
         )
-        assert element, u"Element not found"
-        element.first.click()
+        % {"name": name}
+    )
+    assert element, u"Element not found"
+    element.first.click()
 
 
 @step(u'I press the element with xpath "{xpath}"')

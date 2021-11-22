@@ -11,7 +11,6 @@ from subprocess import check_output
 
 from behave import step
 from behaving.personas.persona import persona_vars
-from behaving.mobile.steps import get_android_emulator_id_from_name
 
 MAIL_TIMEOUT = 5
 URL_RE = re.compile(
@@ -82,28 +81,7 @@ def click_link_in_email(context, address):
         links.extend(URL_RE.findall(str(payload).replace("=\n", "")))
     assert links, u"link not found"
     url = links[0]
-    if context.default_browser == "android":
-        name = context.persona["id"]
-        emulator_id = get_android_emulator_id_from_name(name)
-        try:
-            check_output(
-                [
-                    "adb",
-                    "-s",
-                    emulator_id,
-                    "shell",
-                    "am",
-                    "start",
-                    "-a",
-                    "android.intent.action.VIEW",
-                    "-d",
-                    url,
-                ]
-            )
-        except OSError:
-            assert False, u"adb failed to open link in android"
-    else:
-        context.browser.visit(url)
+    context.browser.visit(url)
 
 
 @step(u'I parse the email I received at "{address}" and set "{expression}"')
