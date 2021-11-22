@@ -10,6 +10,7 @@ from splinter.driver.webdriver import (
 from splinter.driver.webdriver.cookie_manager import CookieManager
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from splinter.browser import _DRIVERS
 
 _DOWNLOAD_PATH = "/tmp"
 _ALL_MIME_TYPES = ",".join(mimetypes.types_map.values())
@@ -76,7 +77,5 @@ class WebDriver(BaseWebDriver):
 
         super(WebDriver, self).__init__(wait_time)
 
-
-from splinter.browser import _DRIVERS
 
 _DRIVERS["firefox"] = WebDriver

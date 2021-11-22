@@ -3,11 +3,8 @@ from behave import step
 from splinter.exceptions import ElementDoesNotExist
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import (
-    StaleElementReferenceException,
-    NoSuchElementException,
-    ElementNotInteractableException,
-)
+from selenium.common.exceptions import ElementNotInteractableException
+
 from behaving.personas.persona import persona_vars
 
 

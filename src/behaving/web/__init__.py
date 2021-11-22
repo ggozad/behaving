@@ -1,14 +1,11 @@
 import os
 import tempfile
-
-try:
-    from urllib2 import URLError
-except ImportError:
-    from urllib.error import URLError
+from urllib.error import URLError
 
 from behaving.web import electron
 from behaving.web import chrome
 from behaving.web import firefox
+
 
 # Generic setup/teardown for compatibility with pytest et al.
 def setup(context):

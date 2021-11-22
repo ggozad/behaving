@@ -3,16 +3,8 @@ import logging
 import os
 import sys
 import json
-
-try:
-    from SimpleHTTPServer import SimpleHTTPRequestHandler
-    import SocketServer
-    from urlparse import parse_qs
-except ImportError:
-    from http.server import SimpleHTTPRequestHandler
-    import socketserver as SocketServer
-    from urllib.parse import parse_qs
-import time
+from http.server import SimpleHTTPRequestHandler
+import socketserver as SocketServer
 
 from behaving.mail.mock import getUniqueFilename
 
@@ -26,7 +18,7 @@ class GCMServer(SimpleHTTPRequestHandler):
 
         try:
             message = json.loads(body)
-        except:
+        except json.JSONDecodeError:
             self.send_error(400, "JSON not parsable")
             return
 
@@ -73,8 +65,7 @@ class GCMServer(SimpleHTTPRequestHandler):
 
 
 def main(args=sys.argv[1:]):
-    """Main function called by `gcmmock` command.
-    """
+    """Main function called by `gcmmock` command."""
     parser = argparse.ArgumentParser(description="GCM mock server")
     parser.add_argument("-p", "--port", default="8200", help="The port to use")
 

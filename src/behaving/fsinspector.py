@@ -46,7 +46,7 @@ class FSInspector(object):
                 if os.path.isdir(fn):
                     rmtree(os.path.join(self.path, dir_path))
                 else:
-                    os.unlink(path)
-            except:
+                    os.unlink(fn)
+            except OSError:
                 logger.error("Could not delete %s" % fn)
                 exit(1)

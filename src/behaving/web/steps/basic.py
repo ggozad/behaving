@@ -3,6 +3,7 @@ from behave import step
 
 from behaving.personas.persona import persona_vars
 
+
 # Accepts a lambda as first paramter, returns lambda result on success, or False on timeout
 def _retry(func, timeout=0, delay=1):
     assert isinstance(
@@ -17,7 +18,7 @@ def _retry(func, timeout=0, delay=1):
                 time.sleep(delay)
             else:
                 return res
-        except:
+        except Exception:
             time.sleep(delay)
 
         if time.time() - start > timeout:

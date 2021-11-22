@@ -49,7 +49,7 @@ def after_scenario(context, scenario):
         filename = os.path.join(context.screenshots_dir, filename)
         try:
             context.browser.screenshot(filename)
-        except:
+        except Exception:
             pass
     teardown(context)
 

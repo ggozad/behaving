@@ -37,7 +37,7 @@ class PersonaVarMatcher(object):
             else:
                 target = value
         if isinstance(target, basestring):
-            target = target.replace("\$", "$")
+            target = target.replace("\\$", "$")
 
         return target
 

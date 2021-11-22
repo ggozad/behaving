@@ -1,6 +1,7 @@
 from selenium.webdriver import Chrome
 from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
 from splinter.driver.webdriver.cookie_manager import CookieManager
+from splinter.browser import _DRIVERS
 
 
 class ElectronWebDriver(BaseWebDriver):
@@ -21,7 +22,5 @@ class ElectronWebDriver(BaseWebDriver):
 
         super(ElectronWebDriver, self).__init__(wait_time)
 
-
-from splinter.browser import _DRIVERS
 
 _DRIVERS["electron"] = ElectronWebDriver

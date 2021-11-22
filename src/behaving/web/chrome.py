@@ -4,6 +4,7 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
 from splinter.driver.webdriver.cookie_manager import CookieManager
+from splinter.browser import _DRIVERS
 
 _DOWNLOAD_PATH = "/tmp"
 
@@ -55,7 +56,5 @@ class WebDriver(BaseWebDriver):
 
         super(WebDriver, self).__init__(wait_time)
 
-
-from splinter.browser import _DRIVERS
 
 _DRIVERS["chrome"] = WebDriver
