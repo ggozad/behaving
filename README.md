@@ -7,7 +7,7 @@ Behavior-Driven-Development, based on
 [splinter](https://github.com/cobrateam/splinter).
 
 *behave* is written in Python and is similar to
-[Cucumber](http://cukes.info/) or [lettuce](http://lettuce.it/).
+[Cucumber](http://cucumber.io/).
 *behaving* adds the step-libraries for multi-user web/email/sms/gcm
 interactions, and provides the Python *behaving* namespace so that
 independent step-libraries can work together.
@@ -623,13 +623,8 @@ Debugging
 
 -   When I pause the tests
 
-Mobile Development
+Docker integration
 ------------------
 
-We use [Appium](http://appium.io) for interfacing with mobile devices
-and simulators. Currently this is in development, quite fragile and only
-works on MacOS. You will need to
-
-    brew install carthage
-    brew install libimobiledevice
-    brew install ios-deploy
+A `Dockerfile` as well as a complete setup using `docker-compose` are provided to help you
+create selenium grid configurations that run your tests.

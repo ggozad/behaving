@@ -1,8 +1,7 @@
-
 Changelog
 =========
 
-3.0.1 - 
+3.0.0 - 2021-11-23
 ------------------
 
 - VSCode devcontainer & docker integration.
