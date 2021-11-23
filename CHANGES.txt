@@ -5,6 +5,9 @@ Changelog
 3.0.1 - 
 ------------------
 
+- VSCode devcontainer & docker integration.
+  [oyvinev]
+
 - Remove obsolete python infra such as buildout and friends. Make a simple poetry setup
   and provide docker image.
 
