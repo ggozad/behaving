@@ -19,11 +19,16 @@ RUN mkdir /app/var && mkdir /app/var/log && mkdir /app/var/mail && mkdir /app/va
 
 WORKDIR /app
 RUN poetry config virtualenvs.create false
-RUN poetry install --no-dev
+RUN poetry install
 
-RUN \
-    adduser --disabled-password --disabled-login --system testuser
-RUN chown -R testuser /app
+RUN useradd -ms /bin/bash behaving
 
-USER testuser
-ENTRYPOINT ["supervisord"]
+RUN chown -R behaving /app
+
+USER behaving
+
+# Just wait forever
+# ENTRYPOINT ["tail"]
+# CMD ["sleep", "infinity"]
+
+ENTRYPOINT [ "supervisord" ]
