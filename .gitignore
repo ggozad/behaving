@@ -6,3 +6,4 @@ ghostdriver.log
 geckodriver.log
 .long-description.html
 __pycache__/
+/var/

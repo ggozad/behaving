@@ -11,7 +11,7 @@ Feature: Url handling
         Given a browser
         When I go to "http://web/"
         Then the browser's URL should be "http://web/"
-        And the browser's URL should contain "localhost"
+        And the browser's URL should contain "web"
         And the browser's URL should not contain "google"
 
     @web
@@ -21,7 +21,7 @@ Feature: Url handling
         When I go to "/page2.html"
         Then the browser's URL should be "http://web/page2.html"
         And the browser's URL should be "/page2.html"
-        And the browser's URL should contain "localhost"
+        And the browser's URL should contain "web"
 
     @web
     Scenario: Parse a url
