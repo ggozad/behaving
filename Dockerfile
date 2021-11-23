@@ -12,7 +12,7 @@ ENV PYTHONUNBUFFERED 1
 RUN pip install poetry
 RUN pip install supervisor
 
-COPY poetry.lock pyproject.toml /app/
+COPY poetry.lock pyproject.toml README.md /app/
 COPY src /app/src/
 COPY supervisord.conf /app
 RUN mkdir /app/var && mkdir /app/var/log && mkdir /app/var/mail && mkdir /app/var/sms && mkdir /app/var/gcm
