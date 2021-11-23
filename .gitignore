@@ -1,9 +1,7 @@
 *.DS_Store
 *.egg-info
 *.pyc
-chromedriver.log
-ghostdriver.log
-geckodriver.log
+*.log
 .long-description.html
 __pycache__/
 /var/

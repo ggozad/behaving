@@ -59,4 +59,8 @@ services:
       - edge
     volumes:
       - ./tests:/app/tests
-    
+      - ./var/log:/app/var/log
+      - ./var/screenshots:/app/var/screenshots
+      - ./var/mail:/app/var/mail
+      - ./var/sms:/app/var/sms
+      - ./var/gcm:/app/var/gcm
