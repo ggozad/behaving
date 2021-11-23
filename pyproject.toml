@@ -27,6 +27,11 @@ splinter = "^0.16.0"
 black = "^21.11b1"
 flake8 = "^4.0.1"
 
+[tool.poetry.scripts]
+mailmock = "behaving.mail.mock:main"
+smsmock = "behaving.sms.mock:main"
+gcmmock = "behaving.notifications.gcm.mock:main"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
