@@ -245,7 +245,7 @@ In the steps directory you will need to import the *behaving* steps you need. Yo
 
     @when('I go to home')
     def go_to_home(context):
-        context.browser.visit('https://localhost:8080/')
+        context.browser.visit('https://web/')
 
 In ``environment.py`` you specify settings as well the things that need to happen at various stages of testing, i.e. before and after everything, a feature run, or a scenario run. For convenience you can import and reuse ``behaving.environment`` which will perform default actions like closing all browsers after a scenario, clean the email folder etc.
 
@@ -298,7 +298,7 @@ The following variables are supported and can be set to override defaults:
 * ``default_browser``
 * ``default_browser_size`` (tuple (width, height), applied to each browser as it's created)
 * ``max_browser_attempts`` (how many times to retry creating the browser if it fails)
-* ``remote_webdriver`` (whether to use the remote webdriver. Defaults to ``False``)
+* ``remote_webdriver_url`` (points to your selenium hub url or remote webdriver. Defaults to ``None``)
 * ``browser_args`` (a dict of additional keyword arguments used when creating a browser)
 * ``base_url`` (the base url for a browser, allows you to use relative paths)
 

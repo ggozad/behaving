@@ -35,11 +35,12 @@ def named_browser(context, name):
         return
     if name not in context.browsers:
         args = context.browser_args.copy()
-        if context.remote_webdriver:
+        if context.remote_webdriver_url:
             args["driver_name"] = "remote"
             del args["headless"]
             if context.default_browser:
                 args["browser"] = context.default_browser
+                args["command_executor"] = context.remote_webdriver_url
         elif context.default_browser:
             args["driver_name"] = context.default_browser
         if context.default_browser == "electron":

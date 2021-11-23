@@ -13,8 +13,6 @@ def setup(context):
         context.default_browser = ""
     if not hasattr(context, "browser_args"):
         context.browser_args = {}
-    if not hasattr(context, "remote_webdriver"):
-        context.remote_webdriver = False
     if not hasattr(context, "attachment_dir"):
         context.attachment_dir = "/"
     if not hasattr(context, "base_url"):
