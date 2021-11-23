@@ -29,6 +29,8 @@ def setup(context):
                 context.screenshots_dir = ""
     else:
         context.screenshots_dir = ""
+    if not hasattr(context, "remote_webdriver_url"):
+        context.remote_webdriver_url = ""
 
     # Setup download path
     if not hasattr(context, "download_dir"):
