@@ -5,6 +5,9 @@ from behaving import environment as benv
 def before_all(context):
     import behaving
 
+    context.remote_webdriver_url = "http://selenium-hub:4444"
+    context.default_browser = "firefox"
+
     context.attachment_dir = os.path.join(
         os.path.dirname(behaving.__file__), "../../tests/data"
     )

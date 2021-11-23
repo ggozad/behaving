@@ -14,30 +14,30 @@ Feature: Browser handling
     @web
     Scenario: History
         Given a browser
-        When I visit "http://localhost:8080"
-        And I visit "http://localhost:8080/page2.html"
-        Then the browser's URL should be "http://localhost:8080/page2.html"
+        When I visit "http://web"
+        And I visit "http://web/page2.html"
+        Then the browser's URL should be "http://web/page2.html"
         When I go back
-        Then the browser's URL should be "http://localhost:8080/"
+        Then the browser's URL should be "http://web/"
         When I go forward
-        Then the browser's URL should be "http://localhost:8080/page2.html"
+        Then the browser's URL should be "http://web/page2.html"
 
     @web
     Scenario: Change between named browsers
         Given browser "Foo"
-        When I visit "http://localhost:8080"
-        Then the browser's URL should be "http://localhost:8080/"
+        When I visit "http://web"
+        Then the browser's URL should be "http://web/"
         Given browser "Bar"
-        When I visit "http://localhost:8080/page2.html"
-        Then the browser's URL should be "http://localhost:8080/page2.html"
+        When I visit "http://web/page2.html"
+        Then the browser's URL should be "http://web/page2.html"
         Given browser "Foo"
-        Then the browser's URL should be "http://localhost:8080/"
+        Then the browser's URL should be "http://web/"
 
     @web
     Scenario: Browser cookies
         Given a browser
         Given "Foo" as the persona
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         And I set the cookie "foo" to "bar"
         And I evaluate the script "document.cookie" and assign the result to "cookie"
         Then "cookie" is set to "foo=bar"
@@ -54,7 +54,7 @@ Feature: Browser handling
     @web
     Scenario: Change browser size
         Given a browser
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         And I resize the browser to 800x600
         Then I should see "Hidden in mobile"
         When I resize the browser to 300x200
@@ -63,7 +63,7 @@ Feature: Browser handling
     @web
     Scenario: Change viewport size
         Given a browser
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         And I resize the viewport to 501x800
         Then I should see "Hidden in mobile"
         When I resize the viewport to 499x800
@@ -72,22 +72,22 @@ Feature: Browser handling
     @web
     Scenario: Create Named Browser visit a site and close by name.
         Given Browser "aBrowser"
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         Then I wait for 4 seconds
         And I close the browser "aBrowser"
         Given Browser "anotherBrowser"
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         Then I wait for 4 seconds
         And I close the browser "anotherBrowser"
 
     @web
     Scenario: Create Personas and Close their respective browsers.
         Given "Foo" as the persona
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         Then I wait for 4 seconds
 
         Given "Bar" as the persona
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         Then I wait for 4 seconds
         And I close the browser "Bar"
 

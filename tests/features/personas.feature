@@ -21,16 +21,16 @@ Feature: Use Personas
     Scenario: Set variables text
         Given "Foo" as the persona
         When I set "foo" to:
-        """
-        Hello wørld
-        """
+            """
+            Hello wørld
+            """
         And I set "bar" to "Hello wørld"
         Then "foo" is set to "$bar"
         When I set "foo" to "wørld"
         And I set "bar" to:
-        """
-        Hello $foo
-        """
+            """
+            Hello $foo
+            """
         Then "bar" is set to "Hello wørld"
 
 
@@ -52,17 +52,17 @@ Feature: Use Personas
         Given I enable single browser mode
         And browser "foobar"
         And I note browser session
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         And I note browser session
         Given "Foo" as the persona
         And I note browser session
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         And I note browser session
         And I set "bar" to "Hello world"
         Then "bar" is set to "Hello world"
         Given "Bar" as the persona
         And I note browser session
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         And I set "foo" to "Hello world"
         And I note browser session
         Then "foo" is set to "Hello world"

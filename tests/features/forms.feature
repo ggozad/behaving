@@ -5,7 +5,7 @@ Feature: Forms
 
     @web
     Scenario: Filling-in fields
-        When I visit "http://localhost:8080/forms.html"
+        When I visit "http://web/forms.html"
         Then "disabled" should be disabled
         And "name" should be enabled
         When I fill in "name" with "Foo Bar"
@@ -30,13 +30,13 @@ Feature: Forms
 
     @web
     Scenario: Checking for enabled/disabled fields
-        When I visit "http://localhost:8080/forms.html"
+        When I visit "http://web/forms.html"
         Then "disabled" should be disabled
         And "name" should be enabled
 
     @web
     Scenario: Checking HTML5 validation
-        When I visit "http://localhost:8080/forms.html"
+        When I visit "http://web/forms.html"
         And I fill in "email" with "foo@"
         Then field "email" should be invalid
         When I fill in "email" with "foo@"
@@ -45,7 +45,7 @@ Feature: Forms
 
     @web
     Scenario: Content editable
-        When I visit "http://localhost:8080/forms.html"
+        When I visit "http://web/forms.html"
         And I set the inner HTML of the element with id "ce" to "<p>Hello foo world</p>"
         Then I should see "Hello foo world"
         When I set the inner HTML of the element with class "ce" to "<p>Hello bar world</p>"
@@ -53,6 +53,6 @@ Feature: Forms
 
     @web
     Scenario: Checking required fields
-        When I visit "http://localhost:8080/forms.html"
+        When I visit "http://web/forms.html"
         Then field "name" should be required
         And field "passwd" should not be required

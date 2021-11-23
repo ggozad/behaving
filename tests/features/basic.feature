@@ -4,7 +4,7 @@ Feature: Text presence
     @web
     Scenario: Text presence
         Given a browser
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         Then I should see "Hello world"
         And I should not see "hidden"
         When I reload
@@ -14,7 +14,7 @@ Feature: Text presence
     @web
     Scenario: Element presence
         Given a browser
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         Then I should see an element with id "content"
         And I should see an element with the css selector "div#content"
         And I should not see an element with id "foo"
@@ -34,7 +34,7 @@ Feature: Text presence
     @web
     Scenario: JS interaction
         Given "Foo" as the persona
-        When I visit "http://localhost:8080"
+        When I visit "http://web"
         Then I should see "Hello world"
         When I execute the script "document.getElementById('helloworld').innerHTML='Hello JS';"
         Then I should see "Hello JS"
