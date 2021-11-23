@@ -42,17 +42,20 @@ services:
       - "4442:4442"
       - "4443:4443"
       - "4444:4444"
-  
+
   web:
     image: nginx
     ports:
       - 8080:80
     volumes:
       - ./tests/www:/usr/share/nginx/html
-  
+
   behaving:
     build: ./
+    image: behaving.dev
+    user: behaving
     container_name: behaving
+    stdin_open: true
     depends_on:
       - chrome
       - firefox
