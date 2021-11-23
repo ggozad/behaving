@@ -10,15 +10,17 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN pip install poetry
+RUN pip install supervisor
 
 COPY poetry.lock pyproject.toml /app/
 COPY src /app/src/
+COPY supervisord.conf /app
 
 WORKDIR /app
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-dev
 # COPY docker/runner /usr/bin/runner
-RUN mkdir /app/var && mkdir /app/var/mail && mkdir /app/var/sms && mkdir /app/var/gcm
+RUN mkdir /app/var && mkdir /app/var/log && mkdir /app/var/mail && mkdir /app/var/sms && mkdir /app/var/gcm
 
 RUN \
     adduser --disabled-password --disabled-login --system testuser
@@ -28,8 +30,7 @@ RUN chown -R testuser /app
 USER testuser
 
 # Just wait forever
-ENTRYPOINT ["tail"]
-CMD ["-f","/dev/null"]
+# ENTRYPOINT ["tail"]
+# CMD ["-f","/dev/null"]
 
-# ENTRYPOINT ["behave"]
-# CMD ["--no-capture","tests/features"]
+ENTRYPOINT ["supervisord"]
