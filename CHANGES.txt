@@ -1,6 +1,12 @@
 Changelog
 =========
 
+3.0.1 - 2021-12-02
+------------------
+
+- Option to accept self-signed certs.
+  [ggozad]
+
 3.0.0 - 2021-11-23
 ------------------
 

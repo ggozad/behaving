@@ -347,6 +347,8 @@ defaults:
     creating a browser)
 -   `base_url` (the base url for a browser, allows you to use relative
     paths)
+-   `accept_ssl_certs` (setting to `True` will accept self-signed/invalid
+    certificates. Defaults to `None`)
 
 You can run the tests simply by issuing
 

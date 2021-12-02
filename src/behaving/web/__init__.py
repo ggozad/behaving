@@ -38,6 +38,8 @@ def setup(context):
         chrome._DOWNLOAD_PATH = context.download_dir
         firefox._DOWNLOAD_PATH = context.download_dir
 
+    if not hasattr(context, "accept_ssl_certs"):
+        context.accept_ssl_certs = False
     context.browsers = {}
 
 

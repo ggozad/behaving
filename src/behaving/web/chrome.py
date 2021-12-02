@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from selenium.webdriver import Chrome
+from selenium.webdriver import DesiredCapabilities, Chrome
 from selenium.webdriver.chrome.options import Options
 from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
 from splinter.driver.webdriver.cookie_manager import CookieManager
@@ -20,7 +20,8 @@ class WebDriver(BaseWebDriver):
         fullscreen=False,
         options=None,
         headless=False,
-        **kwargs
+        desired_capabilities=None,
+        **kwargs,
     ):
 
         options = Options() if options is None else options
@@ -48,10 +49,14 @@ class WebDriver(BaseWebDriver):
 
         options.add_experimental_option("prefs", prefs)
 
-        self.driver = Chrome(chrome_options=options, **kwargs)
+        chrome_capabilities = DesiredCapabilities().CHROME.copy()
+        if desired_capabilities:
+            chrome_capabilities.update(desired_capabilities)
 
+        self.driver = Chrome(
+            chrome_options=options, desired_capabilities=chrome_capabilities, **kwargs
+        )
         self.element_class = WebDriverElement
-
         self._cookie_manager = CookieManager(self.driver)
 
         super(WebDriver, self).__init__(wait_time)
