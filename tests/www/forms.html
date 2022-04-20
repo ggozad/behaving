@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8" />
-<title>Forms test</title>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Forms test</title>
+  </head>
+  <body>
     <form name="register_form" action="result.html" method="get">
-        <input type="text" name="name" required="required"><br/>
-        <input type="password" name="passwd"><br/>
-        <input type="email" name="email"/><br/>
-        <input type="radio" name="sex" value="male">Male<br/>
-        <input type="radio" name="sex" value="female">Female<br/>
-        <input type="checkbox" name="subscribe" value="subscribe">Subscribe<br>
-        <input type="checkbox" name="digest" value="digest" checked="on">Digest<br>
-        <input type="text" name="disabled" disabled="true"/>
-        <select name="countries" multiple="multiple">
-            <option value="gr">Greece</option>
-            <option value="no">Norway</option>
-            <option value="br">Brazil</option>
-        </select>
-        <input type="file" name="file" >Attachment<br>
-        <input type="submit" name="register" value="Register">
+      <input type="text" name="name" required="required" /><br />
+      <input type="password" name="passwd" /><br />
+      <input type="email" name="email" /><br />
+      <input type="radio" name="sex" value="male" />Male<br />
+      <input type="radio" name="sex" value="female" />Female<br />
+      <input
+        type="checkbox"
+        name="subscribe"
+        value="subscribe"
+      />Subscribe<br />
+      <input
+        type="checkbox"
+        name="digest"
+        value="digest"
+        checked="on"
+      />Digest<br />
+      <input type="text" name="disabled" disabled="true" />
+      <select name="countries" multiple="multiple">
+        <option value="gr">Greece</option>
+        <option value="no">Norway</option>
+        <option value="br">Brazil</option>
+      </select>
+      <input type="file" name="file" />Attachment<br />
+      <input type="submit" name="register" value="Register" />
     </form>
-    <div id="ce" class="ce" contenteditable="true">
-    </div>
-
-</body>
-<script type="text/javascript">
-    window.onload = function () {
-    };
-</script>
+    <div id="ce" class="ce" contenteditable="true"></div>
+  </body>
+  <script type="text/javascript">
+    window.onload = function () {};
+  </script>
 </html>

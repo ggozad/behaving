@@ -29,11 +29,29 @@
     "python.linting.enabled": true,
     "restructuredtext.confPath": "",
     "python.linting.mypyEnabled": false,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "[yml]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true
+    },
+    "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true
+    },
+    
   },
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
     "ms-python.python",
-    "iteratec.bdd-power-tools"
+    "iteratec.bdd-power-tools",
+    "esbenp.prettier-vscode"
   ]
 }

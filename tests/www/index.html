@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8" />
-<title>Test page</title>
-<style type="text/css">
-    @media screen and (max-width: 500px) {
+  <head>
+    <meta charset="utf-8" />
+    <title>Test page</title>
+    <style type="text/css">
+      @media screen and (max-width: 500px) {
         #hidden_in_small_viewport {
-            display: none;
+          display: none;
         }
-    }
-    #hidden_in_small_viewport {
+      }
+      #hidden_in_small_viewport {
         background-color: red;
         width: 10px;
         height: 10px;
-    }
-</style>
-
-</head>
-<body>
+      }
+    </style>
+  </head>
+  <body>
     <div id="header">
-        <h1 id="helloworld">Hello world!</h1>
+      <h1 id="helloworld">Hello world!</h1>
     </div>
-    <div id="content"/>
+    <div id="content" />
     <div style="display: none">
-        <span id="hidden_text">I am hidden</span>
+      <span id="hidden_text">I am hidden</span>
     </div>
-    <div id="hidden_in_small_viewport">
-        Hidden in mobile
-    </div>
-    <div id="xpath-id" data-test="testing"/>
+    <div id="hidden_in_small_viewport">Hidden in mobile</div>
+    <div id="xpath-id" data-test="testing" />
     <a href="/page2.html">Page 2</a>
-</body>
-<script type="text/javascript">
+  </body>
+  <script type="text/javascript">
     var delayedText = function (options) {
-        var txtNode = document.createElement('span');
-        txtNode.id = options.id;
-        txtNode.innerHTML = options.text;
-        document.getElementById('content').appendChild(txtNode);
+      var txtNode = document.createElement("span");
+      txtNode.id = options.id;
+      txtNode.innerHTML = options.text;
+      document.getElementById("content").appendChild(txtNode);
     };
     window.onload = function () {
-        setTimeout(delayedText, 1000, {id:'late', text: 'Late text'});
-        setTimeout(delayedText, 5000, {id:'very-late', text: 'Very late text'})
+      setTimeout(delayedText, 1000, { id: "late", text: "Late text" });
+      setTimeout(delayedText, 5000, {
+        id: "very-late",
+        text: "Very late text",
+      });
     };
-</script>
+  </script>
 </html>
