@@ -1,6 +1,7 @@
 from behave import then
 
 from behaving.personas.persona import persona_vars
+from splinter.exceptions import ElementDoesNotExist
 
 
 def _process_table(table):
@@ -13,14 +14,24 @@ def _process_table(table):
     return headers, cells
 
 
-@then('the table with id "{id}" should be')
-@persona_vars
-def table_equals(context, id):
+def _find_table_by_id_or_xpath(context, selector):
     try:
-        table = context.browser.find_by_id(id).first
-    except IndexError:
+        table = context.browser.find_by_id(selector) or context.browser.find_by_xpath(
+            selector
+        )
+        return table.first
+    except (
+        IndexError,
+        ElementDoesNotExist,
+    ):
         assert False, "Table not found"
 
+
+@then('the table with id "{selector}" should be')
+@then('the table with xpath "{selector}" should be')
+@persona_vars
+def table_equals(context, selector):
+    table = _find_table_by_id_or_xpath(context, selector)
     headers, cells = _process_table(table)
     if headers:
         assert headers == context.table.headings, "Table headers do not match"
@@ -30,41 +41,33 @@ def table_equals(context, id):
     ] == cells, "Table cells do not match"
 
 
-@then('the table with id "{id}" should contain the rows')
+@then('the table with id "{selector}" should contain the rows')
+@then('the table with xpath "{selector}" should contain the rows')
 @persona_vars
-def table_contains(context, id):
-    try:
-        table = context.browser.find_by_id(id).first
-    except IndexError:
-        assert False, "Table not found"
-
+def table_contains(context, selector):
+    table = _find_table_by_id_or_xpath(context, selector)
     _, cells = _process_table(table)
     for row in [*context.table.rows, context.table.headings]:
 
         assert [cell for cell in row] in cells, f"{row} not found"
 
 
-@then('the table with id "{id}" should not contain the rows')
+@then('the table with id "{selector}" should not contain the rows')
+@then('the table with xpath "{selector}" should not contain the rows')
 @persona_vars
-def table_does_not_contain(context, id):
-    try:
-        table = context.browser.find_by_id(id).first
-    except IndexError:
-        assert False, "Table not found"
-
+def table_does_not_contain(context, selector):
+    table = _find_table_by_id_or_xpath(context, selector)
     _, cells = _process_table(table)
     for row in [*context.table.rows, context.table.headings]:
 
         assert [cell for cell in row] not in cells, f"{row} found"
 
 
-@then('row {row_no:d} in the table with id "{id}" should be')
+@then('row {row_no:d} in the table with id "{selector}" should be')
+@then('row {row_no:d} in the table with xpath "{selector}" should be')
 @persona_vars
-def row_equals(context, row_no, id):
-    try:
-        table = context.browser.find_by_id(id).first
-    except IndexError:
-        assert False, "Table not found"
+def row_equals(context, row_no, selector):
+    table = _find_table_by_id_or_xpath(context, selector)
 
     _, cells = _process_table(table)
     assert [cell for cell in context.table.headings] == cells[row_no]

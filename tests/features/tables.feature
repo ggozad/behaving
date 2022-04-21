@@ -24,6 +24,12 @@ Feature: HTML tables
             | Centro comercial Moctezuma | Francisco Chang | Mexico    |
             | Ernst Handel               | Roland Mendel   | Austria   |
 
+        Then the table with xpath "//table[@id='customers-thead']" should be
+            | Company                    | Contact         | Country   |
+            | Alfreds Futterkiste        | Maria Anders    | Germany   |
+            | Centro comercial Moctezuma | Francisco Chang | Mexico    |
+            | Ernst Handel               | Roland Mendel   | Austria   |
+
     @web
     Scenario: Asserting table does/(does not) contain rows
         When I visit "http://web/tables.html"
@@ -31,7 +37,15 @@ Feature: HTML tables
             | Alfreds Futterkiste        | Maria Anders    | Germany   |
             | Ernst Handel               | Roland Mendel   | Austria   |
 
+        And the table with xpath "//table[@id='customers-thead']" should contain the rows
+            | Alfreds Futterkiste        | Maria Anders    | Germany   |
+            | Ernst Handel               | Roland Mendel   | Austria   |
+
         And the table with id "customers-no-headers" should not contain the rows
+            | foo                        | Maria Anders    | Germany   |
+            | Ernst Handel               | bar             | Austria   |
+
+        And the table with xpath "//table[@id='customers-thead']" should not contain the rows
             | foo                        | Maria Anders    | Germany   |
             | Ernst Handel               | bar             | Austria   |
 
@@ -42,4 +56,5 @@ Feature: HTML tables
             | Alfreds Futterkiste        | Maria Anders    | Germany   |
         And row 1 in the table with id "customers-thead" should be
             | Centro comercial Moctezuma | Francisco Chang | Mexico    |
-    
+        And row 2 in the table with xpath "//table[@id='customers-thead']" should be
+            | Ernst Handel               | Roland Mendel   | Austria   |

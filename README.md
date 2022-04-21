@@ -534,7 +534,18 @@ as well as the directory to output data as parameters. For example,
     ...  
     | celln0 | celln1 | ... | cellnm |
 
+  - Then the table with xpath "`xpath`" should be  
+    | header1 | header2 | ... | header(m) |  
+    | cell00 | cell01 | ... | cell0m |  
+    | cell10 | cell11 | ... | cell1m |  
+    ...  
+    | celln0 | celln1 | ... | cellnm |
+
   - Then the table with id "`id`" should contain the rows  
+    | cell00 | cell01 | ... | cell0m |  
+    | cell10 | cell11 | ... | cell1m |
+
+  - Then the table with xpath "`xpath`" should contain the rows  
     | cell00 | cell01 | ... | cell0m |  
     | cell10 | cell11 | ... | cell1m |
 
@@ -542,7 +553,14 @@ as well as the directory to output data as parameters. For example,
     | cell00 | cell01 | ... | cell0m |  
     | cell10 | cell11 | ... | cell1m |
 
+  - Then the table with xpath "`xpath`" should not contain the rows  
+    | cell00 | cell01 | ... | cell0m |  
+    | cell10 | cell11 | ... | cell1m |
+
   - Then row `row_no` in the table with id "`id`" should be  
+    | cell00 | cell01 | ... | cell0m |
+
+  - Then row `row_no` in the table with xpath "`xpath`" should be  
     | cell00 | cell01 | ... | cell0m |
 
 - Alerts & prompts
