@@ -4,6 +4,7 @@ from behaving.personas.persona import persona_vars
 
 
 def _process_table(table):
+
     headers = [el.text for el in table.find_by_tag("th")]
     # We should be using here rows = table.find_by_xpath("//tr[not(th)]")
     # but for some reason this duplicates the rows.
@@ -12,18 +13,46 @@ def _process_table(table):
     return headers, cells
 
 
-@then(u'the table with id "{id}" should be')
+@then('the table with id "{id}" should be')
 @persona_vars
 def table_equals(context, id):
     try:
         table = context.browser.find_by_id(id).first
     except IndexError:
-        assert False, u"Table not found"
+        assert False, "Table not found"
 
     headers, cells = _process_table(table)
     if headers:
-        assert headers == context.table.headings, u"Table headers do not match"
+        assert headers == context.table.headings, "Table headers do not match"
 
     assert [
         [cell for cell in row] for row in context.table.rows
     ] == cells, "Table cells do not match"
+
+
+@then('the table with id "{id}" should contain the rows')
+@persona_vars
+def table_contains(context, id):
+    try:
+        table = context.browser.find_by_id(id).first
+    except IndexError:
+        assert False, "Table not found"
+
+    _, cells = _process_table(table)
+    for row in [*context.table.rows, context.table.headings]:
+
+        assert [cell for cell in row] in cells, f"{row} not found"
+
+
+@then('the table with id "{id}" should not contain the rows')
+@persona_vars
+def table_does_not_contain(context, id):
+    try:
+        table = context.browser.find_by_id(id).first
+    except IndexError:
+        assert False, "Table not found"
+
+    _, cells = _process_table(table)
+    for row in [*context.table.rows, context.table.headings]:
+
+        assert [cell for cell in row] not in cells, f"{row} found"
