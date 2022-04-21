@@ -56,3 +56,15 @@ def table_does_not_contain(context, id):
     for row in [*context.table.rows, context.table.headings]:
 
         assert [cell for cell in row] not in cells, f"{row} found"
+
+
+@then('row {row_no:d} in the table with id "{id}" should be')
+@persona_vars
+def row_equals(context, row_no, id):
+    try:
+        table = context.browser.find_by_id(id).first
+    except IndexError:
+        assert False, "Table not found"
+
+    _, cells = _process_table(table)
+    assert [cell for cell in context.table.headings] == cells[row_no]

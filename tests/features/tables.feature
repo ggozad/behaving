@@ -31,6 +31,15 @@ Feature: HTML tables
             | Alfreds Futterkiste        | Maria Anders    | Germany   |
             | Ernst Handel               | Roland Mendel   | Austria   |
 
-        And the table with id "customers-thead" should not contain the rows
+        And the table with id "customers-no-headers" should not contain the rows
             | foo                        | Maria Anders    | Germany   |
             | Ernst Handel               | bar             | Austria   |
+
+    @web
+    Scenario: Asserting equality on specific rows
+        When I visit "http://web/tables.html"
+        Then row 0 in the table with id "customers-thead" should be
+            | Alfreds Futterkiste        | Maria Anders    | Germany   |
+        And row 1 in the table with id "customers-thead" should be
+            | Centro comercial Moctezuma | Francisco Chang | Mexico    |
+    
