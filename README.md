@@ -563,6 +563,14 @@ as well as the directory to output data as parameters. For example,
   - Then row `row_no` in the table with xpath "`xpath`" should be  
     | cell00 | cell01 | ... | cell0m |
 
+  - Then the value of the cell in row `row_no`, column `col_no` in the table with id "`id`" should be "`value`"
+
+  - Then the value of the cell in row `row_no`, column `col_no` in the table with xpath "`xpath`" should be "`value`"
+
+  - Then the value of the cell in row `row_no`, column "`col_header`" in the table with id "`id`" should be "`value`"
+
+  - Then the value of the cell in row `row_no`, column "`col_header`" in the table with xpath "`xpath`" should be "`value`"
+
 - Alerts & prompts
 
   - When I enter "`text`" to the alert - When I accept the alert - When I dismiss the alert - Then I should see an alert - Then I should see an alert within `timeout` seconds - Then I should see an alert containing "`text`" - Then I should see an alert containing "`text`" within `timeout` seconds

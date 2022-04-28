@@ -1,7 +1,13 @@
 Changelog
 =========
 
-3.0.2 -
+3.0.3 - 
+------------------
+
+- Support assertions on cell values in tables.
+  [ggozad]
+
+3.0.2 - 2022-04-21
 ------------------
 
 - Steps to support HTML tables

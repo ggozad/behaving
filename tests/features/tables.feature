@@ -58,3 +58,12 @@ Feature: HTML tables
             | Centro comercial Moctezuma | Francisco Chang | Mexico    |
         And row 2 in the table with xpath "//table[@id='customers-thead']" should be
             | Ernst Handel               | Roland Mendel   | Austria   |
+
+    @web
+    Scenario: Asserting equality on specific cells
+        When I visit "http://web/tables.html"
+        Then the value of the cell in row 0, column 2 in the table with id "customers-thead" should be "Germany"
+        And the value of the cell in row 0, column 2 in the table with xpath "//table[@id='customers-thead']" should be "Germany"
+        And the value of the cell in row 0, column "Country" in the table with id "customers-thead" should be "Germany"
+        And the value of the cell in row 0, column "Country" in the table with xpath "//table[@id='customers-thead']" should be "Germany"
+        

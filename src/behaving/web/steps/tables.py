@@ -71,3 +71,31 @@ def row_equals(context, row_no, selector):
 
     _, cells = _process_table(table)
     assert [cell for cell in context.table.headings] == cells[row_no]
+
+
+@then(
+    'the value of the cell in row {row_no:d}, column {col_no:d} in the table with id "{selector}" should be "{value}"'
+)
+@then(
+    'the value of the cell in row {row_no:d}, column {col_no:d} in the table with xpath "{selector}" should be "{value}"'
+)
+@persona_vars
+def cell_equals(context, row_no, col_no, selector, value):
+    table = _find_table_by_id_or_xpath(context, selector)
+
+    _, cells = _process_table(table)
+    assert cells[row_no][col_no] == value, "Cells do not match"
+
+
+@then(
+    'the value of the cell in row {row_no:d}, column "{col_header}" in the table with id "{selector}" should be "{value}"'
+)
+@then(
+    'the value of the cell in row {row_no:d}, column "{col_header}" in the table with xpath "{selector}" should be "{value}"'
+)
+@persona_vars
+def cell_equals_with_column_header(context, row_no, col_header, selector, value):
+    table = _find_table_by_id_or_xpath(context, selector)
+
+    headers, cells = _process_table(table)
+    assert cells[row_no][headers.index(col_header)] == value, "Cells do not match"
