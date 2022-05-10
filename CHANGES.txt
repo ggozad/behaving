@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.3 - 
+3.0.3 - 2022-04-29
 ------------------
 
 - Support assertions on cell values in tables.
