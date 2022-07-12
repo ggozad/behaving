@@ -356,6 +356,7 @@ defaults:
 - `default_browser`
 - `default_browser_size` (tuple (width, height), applied to each
   browser as it's created)
+- `wait_time` (int, set a default timeout for `I should/not see ...` steps)
 - `max_browser_attempts` (how many times to retry creating the browser
   if it fails)
 - `remote_webdriver_url` (points to your selenium hub url or remote

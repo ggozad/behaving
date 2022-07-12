@@ -1,10 +1,19 @@
 import os
 import tempfile
+from functools import wraps
 from urllib.error import URLError
 
-from behaving.web import electron
-from behaving.web import chrome
-from behaving.web import firefox
+from behaving.web import chrome, electron, firefox
+
+
+def set_timeout(func):
+    @wraps(func)
+    def wrapper(context, *args, **kwargs):
+        if "timeout" not in kwargs and getattr(context, "wait_time", None) is not None:
+            kwargs["timeout"] = context.wait_time
+        return func(context, *args, **kwargs)
+
+    return wrapper
 
 
 # Generic setup/teardown for compatibility with pytest et al.
