@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "behaving"
-version = "3.0.3"
+version = "3.0.4"
 description = "BDD Behavior-Driven-Development testing"
 authors = ["Yiorgis Gozadinos <ggozadinos@gmail.com>"]
 license = "GPL"
