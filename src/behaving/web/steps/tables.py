@@ -1,5 +1,4 @@
 from behave import then
-
 from behaving.personas.persona import persona_vars
 from splinter.exceptions import ElementDoesNotExist
 
@@ -9,7 +8,7 @@ def _process_table(table):
     headers = [el.text for el in table.find_by_tag("th")]
     # We should be using here rows = table.find_by_xpath("//tr[not(th)]")
     # but for some reason this duplicates the rows.
-    rows = [r for r in table.find_by_tag("tr") if r.find_by_tag("td")]
+    rows = [r for r in table.find_by_tag("tr") if r.find_by_tag("td", wait_time=0)]
     cells = [[cell.text for cell in row.find_by_tag("td")] for row in rows]
     return headers, cells
 
