@@ -6,7 +6,9 @@ from behaving.personas.persona import persona_vars
 
 # Accepts a lambda as first paramter, returns lambda result on success, or False on timeout
 def _retry(func, timeout=0, delay=1):
-    assert isinstance(func, type(lambda: None)), "Retry expects a lambda as the first argument"
+    assert isinstance(
+        func, type(lambda: None)
+    ), "Retry expects a lambda as the first argument"
 
     start = time.time()
     while True:
@@ -33,28 +35,36 @@ def wait_for_timeout(context, timeout):
 @persona_vars
 def show_element_by_id(context, id):
     assert context.browser.find_by_id(id)
-    context.browser.execute_script('document.getElementById("%s").style.display="inline";' % id)
+    context.browser.execute_script(
+        'document.getElementById("%s").style.display="inline";' % id
+    )
 
 
 @step('I hide the element with id "{id}"')
 @persona_vars
 def hide_element_by_id(context, id):
     assert context.browser.find_by_id(id)
-    context.browser.execute_script('document.getElementById("%s").style.display="none";' % id)
+    context.browser.execute_script(
+        'document.getElementById("%s").style.display="none";' % id
+    )
 
 
 @step('I should see "{text}"')
 @step('I should see "{text}" within {timeout:d} seconds')
 @persona_vars
 def should_see_within_timeout(context, text, timeout=None):
-    assert context.browser.is_text_present(text, wait_time=timeout), f'Text "{text}" not found'
+    assert context.browser.is_text_present(
+        text, wait_time=timeout
+    ), f'Text "{text}" not found'
 
 
 @step('I should not see "{text}"')
 @step('I should not see "{text}" within {timeout:d} seconds')
 @persona_vars
 def should_not_see_within_timeout(context, text, timeout=None):
-    assert context.browser.is_text_not_present(text, wait_time=timeout), f'Text "{text}" was found'
+    assert context.browser.is_text_not_present(
+        text, wait_time=timeout
+    ), f'Text "{text}" was found'
 
 
 @step('I should see an element with id "{id}"')
