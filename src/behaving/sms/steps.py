@@ -1,6 +1,6 @@
 try:
     from urllib import urlencode
-    from urllib2 import Request, urlopen, HTTPError
+    from urllib2 import Request, urlopen, HTTPError  # type: ignore
 except ImportError:
     from urllib.parse import urlencode
     from urllib.request import Request, urlopen
@@ -26,7 +26,7 @@ def parse_sms_set_var(context, tel, expression):
     assert context.persona is not None, u"no persona is setup"
     msgs = context.sms.user_messages(tel)
     assert msgs, u"no sms received"
-
+    breakpoint()
     msg = msgs[-1]
     parse_text(context, msg, expression)
 

@@ -20,5 +20,6 @@ Feature: Send an SMS
         And I set "foo" to the body of the sms I received at "111"
         Then "foo" is set to "Hello wørld"
         When I send an sms to "111" with body "You password is: 'haxør'. Click here"
+        And I wait for 1 seconds
         And I parse the sms I received at "111" and set "password is: '{password}'"
         Then "password" is set to "haxør"
