@@ -1,18 +1,19 @@
 import logging
-import os
 import time
 from shutil import rmtree
+from pathlib import Path
+import os
 
 logger = logging.getLogger("behaving")
 
 
 class FSInspector(object):
     def __init__(self, path, timeout=5):
-        self.path = path
+        self.path = Path(path)
         self.timeout = timeout
 
     def messages_for_user(self, user):
-        user_path = os.path.join(self.path, user)
+        user_path = self.path / user
         try:
             root, dirs, paths = next(os.walk(user_path))
         except StopIteration:
@@ -23,8 +24,8 @@ class FSInspector(object):
 
         messages = []
         for path in paths:
-            path = os.path.join(user_path, path)
-            with open(path, "r") as f:
+            path = user_path / path
+            with path.open("r") as f:
                 messages.append(f.read())
         return messages
 
@@ -39,14 +40,14 @@ class FSInspector(object):
         return messages
 
     def clear(self):
-        dirs = os.listdir(self.path)
+        dirs = self.path.dir()
         for dir_path in dirs:
-            fn = os.path.join(self.path, dir_path)
+            fn: Path = self.path / dir_path
             try:
-                if os.path.isdir(fn):
-                    rmtree(os.path.join(self.path, dir_path))
+                if fn.is_dir(fn):
+                    rmtree(fn)
                 else:
-                    os.unlink(fn)
+                    fn.unlink()
             except OSError:
                 logger.error("Could not delete %s" % fn)
                 exit(1)
