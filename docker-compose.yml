@@ -1,47 +1,40 @@
-# To execute this docker-compose yml file use `docker-compose -f docker-compose-v3-dev.yml up`
-# Add the `-d` flag at the end for detached execution
-# To stop the execution, hit Ctrl+C, and then `docker-compose -f docker-compose-v3-dev.yml down`
 version: "3"
-services:
-  chrome:
-    image: selenium/node-chrome:4.1.3-20220405
-    container_name: selenium-chrome
-    shm_size: 2gb
-    depends_on:
-      - selenium-hub
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-      - SE_NODE_MAX_SESSIONS=5
-      - VNC_NO_PASSWORD=1
-    volumes:
-      - ./var/downloads:/home/seluser/Downloads
+networks:
+  behaving:
+    name: behaving
 
-  firefox:
-    image: selenium/node-firefox:4.1.3-20220405
-    container_name: selenium-firefox
-    shm_size: 2gb
-    depends_on:
-      - selenium-hub
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-      - SE_NODE_MAX_SESSIONS=5
-      - VNC_NO_PASSWORD=1
+services:
+  selenoid:
+    networks:
+      - behaving
+    image: aerokube/selenoid:latest-release
     volumes:
-      - ./var/downloads:/home/seluser/Downloads
-  selenium-hub:
-    image: selenium/hub:4.1.3-20220405
-    container_name: selenium-hub
+      - "./config:/etc/selenoid"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./var/video:/opt/selenoid/video"
+      - "./var/log:/opt/selenoid/logs"
+
+    environment:
+      - OVERRIDE_VIDEO_OUTPUT_DIR=./var/video
+    command:
+      [
+        "-conf",
+        "/etc/selenoid/browsers.json",
+        "-video-output-dir",
+        "/opt/selenoid/video",
+        "-log-output-dir",
+        "/opt/selenoid/logs",
+        "-container-network",
+        "behaving",
+      ]
     ports:
-      - "4442:4442"
-      - "4443:4443"
       - "4444:4444"
 
   web:
     image: nginx
+    container_name: web
+    networks:
+      - behaving
     ports:
       - 8080:80
     volumes:
@@ -50,12 +43,13 @@ services:
   behaving:
     build: ./
     image: behaving.dev
+    networks:
+      - behaving
     user: behaving
     container_name: behaving
     stdin_open: true
     depends_on:
-      - chrome
-      - firefox
+      - selenoid
     volumes:
       - ./tests:/app/tests
       - ./var/log:/app/var/log

@@ -15,9 +15,7 @@
   "runServices": [
     "behaving",
     "web",
-    "selenium-hub",
-    "chrome",
-    "firefox"
+    "selenoid",
   ],
 
   // The optional 'workspaceFolder' property is the path VS Code should open by default when

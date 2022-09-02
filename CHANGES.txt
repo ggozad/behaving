@@ -1,7 +1,10 @@
 Changelog
 =========
-3.1.0 -
+3.0.5 -
 ------------------
+
+- Drop selenium hub, use selenoid.
+  [ggozad]
 
 - Fix broken tests in selenium.
   [ggozad]
