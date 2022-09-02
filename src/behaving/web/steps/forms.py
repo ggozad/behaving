@@ -13,7 +13,7 @@ from behaving.personas.persona import persona_vars
 def i_fill_in_field(context, name, value):
     # Chrome does not clear, so we need to do manually
     if context.browser.driver_name == "Chrome":
-        context.execute_steps('When I clear field "%s"' % name)
+        context.execute_steps(f'When I clear field "{name}"')
     context.browser.fill(name, value)
 
 
@@ -86,7 +86,7 @@ def i_select(context, value, name):
         context.browser.select(name, value)
     except ElementDoesNotExist:
         inp = context.browser.find_by_xpath(
-            "//input[@name='%s'][@value='%s']" % (name, value)
+            f"//input[@name='{name}'][@value='{value}']"
         )
         assert inp, u"Element not found"
         inp.first.check()
@@ -107,7 +107,7 @@ def i_focus(context, name):
     elem = context.browser.driver.find_element_by_name(name)
     assert elem, u"Element not found"
     context.browser.execute_script(
-        'document.getElementsByName("%s")[0].focus();' % name
+        f'document.getElementsByName("{name}")[0].focus();'
     )
 
 
@@ -157,7 +157,7 @@ def i_attach(context, name, path):
 @persona_vars
 def set_html_content_to_element_with_id(context, id, contents):
     assert context.browser.evaluate_script(
-        "document.getElementById('%s').innerHTML = '%s'" % (id, contents)
+        f"document.getElementById('{id}').innerHTML = '{contents}'"
     ), u"Element not found or could not set HTML content"
 
 
@@ -165,7 +165,7 @@ def set_html_content_to_element_with_id(context, id, contents):
 @persona_vars
 def set_html_content_to_element_with_class(context, klass, contents):
     assert context.browser.evaluate_script(
-        "document.getElementsByClassName('%s')[0].innerHTML = '%s'" % (klass, contents)
+        f"document.getElementsByClassName('{klass}')[0].innerHTML = '{contents}'"
     ), u"Element not found or could not set HTML content"
 
 
@@ -218,7 +218,7 @@ def is_disabled(context, name):
 def field_is_valid(context, name):
     assert context.browser.find_by_name(name), u"Element not found"
     assert context.browser.evaluate_script(
-        "document.getElementsByName('%s')[0].checkValidity()" % name
+        f"document.getElementsByName('{name}')[0].checkValidity()"
     ), "Field is invalid"
 
 
@@ -228,7 +228,7 @@ def field_is_valid(context, name):
 def field_is_invalid(context, name):
     assert context.browser.find_by_name(name), u"Element not found"
     assert not context.browser.evaluate_script(
-        "document.getElementsByName('%s')[0].checkValidity()" % name
+        f"document.getElementsByName('{name}')[0].checkValidity()"
     ), "Field is valid"
 
 
@@ -237,7 +237,7 @@ def field_is_invalid(context, name):
 def field_is_required(context, name):
     assert context.browser.find_by_name(name), u"Element not found"
     assert context.browser.evaluate_script(
-        "document.getElementsByName('%s')[0].getAttribute('required')" % name
+        f"document.getElementsByName('{name}')[0].getAttribute('required')"
     ), "Field is not required"
 
 
@@ -246,7 +246,7 @@ def field_is_required(context, name):
 def field_is_not_required(context, name):
     assert context.browser.find_by_name(name), u"Element not found"
     assert not context.browser.evaluate_script(
-        "document.getElementsByName('%s')[0].getAttribute('required')" % name
+        f"document.getElementsByName('{name}')[0].getAttribute('required')"
     ), "Field is required"
 
 

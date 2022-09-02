@@ -26,9 +26,9 @@ def click_link_with_text_that_contains(context, text):
     text = text.replace('"', '\\"')  # Escape all double quotes
     text = text.replace("'", """', "'", '""")  # Escape all single quotes
     if "'" in text:
-        xpath = "//a[contains(string(), concat('%s'))]" % text
+        xpath = f"//a[contains(string(), concat('{text}'))]"
     else:
-        xpath = "//a[contains(string(), '%s')]" % text
+        xpath = f"//a[contains(string(), '{text}')]"
     anchors = context.browser.find_by_xpath(xpath)
     assert anchors, "Link not found"
     anchors[0].click()

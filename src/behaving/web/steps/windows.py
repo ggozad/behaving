@@ -12,7 +12,7 @@ def remember_window(context, window, name):
 def lookup_window(context, name):
     """ Finds a Selenium WebDriver window handle by name """
     assert hasattr(context, "name_to_window_"), "No saved windows"
-    assert name in context.name_to_window_, "{} not found in saved windows".format(name)
+    assert name in context.name_to_window_, f"{name} not found in saved windows"
     return context.name_to_window_[name]
 
 
@@ -25,7 +25,7 @@ def name_window(context, name):
 @when(u'I open a new window named "{name}" at "{url}"')
 def open_window(context, name, url):
     driver = context.browser.driver
-    driver.execute_script("window.open('{}', '{}')".format(url, name))
+    driver.execute_script(f"window.open('{url}', '{name}')")
     new_window = driver.window_handles[-1]
     remember_window(context, new_window, name)
     # this is Selenium's way of switching windows

@@ -48,5 +48,5 @@ class FSInspector(object):
                 else:
                     os.unlink(fn)
             except OSError:
-                logger.error("Could not delete %s" % fn)
+                logger.error(f"Could not delete {fn}")
                 exit(1)
