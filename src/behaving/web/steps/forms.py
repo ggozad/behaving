@@ -1,3 +1,4 @@
+import base64
 import os
 from behave import step
 from splinter.exceptions import ElementDoesNotExist
@@ -6,6 +7,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotInteractableException
 
 from behaving.personas.persona import persona_vars
+
+# Selenium 3 does not account for base64 no longer using encodestring.
+# Monkey patch base64 to make it compatible seems the easiest.
+base64.encodestring = base64.encodebytes
 
 
 @step(u'I fill in "{name}" with "{value}"')

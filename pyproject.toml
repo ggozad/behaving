@@ -22,7 +22,8 @@ readme = "README.md"
 python = "^3.10"
 parse = "^1.19.0"
 behave = "^1.2.6"
-splinter = "^0.16.0"
+splinter = "^0.18.1"
+selenium = "3.141.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.11b1"

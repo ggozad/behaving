@@ -226,21 +226,19 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
 name = "splinter"
-version = "0.16.0"
+version = "0.18.1"
 description = "browser abstraction for web acceptance testing"
 category = "main"
 optional = false
 python-versions = "*"
 
-[package.dependencies]
-selenium = ">=3.141.0,<4.0"
-six = "*"
-
 [package.extras]
-django = ["Django (>=1.7.11)", "cssselect", "lxml (>=2.3.6)", "six"]
+django = ["Django (>=2.0.6)", "cssselect", "lxml (>=4.2.4)"]
 edge = ["msedge-selenium-tools"]
-flask = ["Flask (>=1.0.2)", "cssselect", "lxml (>=2.3.6)"]
-"zope.testbrowser" = ["cssselect", "lxml (>=4.2.4)", "zope.testbrowser (>=5.2.4)"]
+flask = ["Flask (>=2.0.2)", "cssselect", "lxml (>=4.2.4)"]
+selenium3 = ["selenium (>=3.141.0,<4.0)"]
+selenium4 = ["selenium (>=4.1.0,<5.0)"]
+"zope.testbrowser" = ["cssselect", "lxml (>=4.2.4)", "zope.testbrowser (>=5.5.1)"]
 
 [[package]]
 name = "tomli"
@@ -282,7 +280,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "09903677988bd8d736b24fa73332312337a4a87923cc2a5e5337968383831d4e"
+content-hash = "1ad6769711050ac508f9c57d757a15f7ed298451407de78756b54daed6949bb7"
 
 [metadata.files]
 behave = [
@@ -365,8 +363,8 @@ six = [
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
 ]
 splinter = [
-    {file = "splinter-0.16.0-py3-none-any.whl", hash = "sha256:8d0734d483cb288f9edef2c7f5f5ad007dce6918e7bb902fe72057361219bf96"},
-    {file = "splinter-0.16.0.tar.gz", hash = "sha256:dbbbbee217d47d63bf607afdd2e2bdcee173dfbf492480115a5b99b201963ef0"},
+    {file = "splinter-0.18.1-py3-none-any.whl", hash = "sha256:616da85a0c99bef00b59e75eb29e2e48162027c68ccb81a12d1dfe6d26209692"},
+    {file = "splinter-0.18.1.tar.gz", hash = "sha256:4a14a9d1f9d1372c64b666627ef4e103d759379bc1a9bde0c487e00d70976b1e"},
 ]
 tomli = [
     {file = "tomli-1.2.3-py3-none-any.whl", hash = "sha256:e3069e4be3ead9668e21cb9b074cd948f7b3113fd9c8bba083f48247aab8b11c"},
