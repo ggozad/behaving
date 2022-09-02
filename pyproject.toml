@@ -19,7 +19,7 @@ repository = "https://github.com/ggozad/behaving"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.10"
 parse = "^1.19.0"
 behave = "^1.2.6"
 splinter = "^0.16.0"

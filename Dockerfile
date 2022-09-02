@@ -1,4 +1,4 @@
-FROM python:3.7.12-buster
+FROM python:3.10.6-slim-buster
 # ARG VERSION=99.0.0
 
 ENV DEBIAN_FRONTEND=noninteractive
