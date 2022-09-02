@@ -19,7 +19,7 @@ def record_browser_session(context):
 @step(u"I only used one browser session")
 def only_used_one_browser_session(context):
     sessions = len(context.current_sessions)
-    assert sessions == 1, "Oops, I used %s browsers sessions!" % sessions
+    assert sessions == 1, f"Oops, I used {sessions} browsers sessions!"
 
 
 @step(u"I pause the tests")

@@ -45,7 +45,7 @@ class GCMServer(SimpleHTTPRequestHandler):
                 except OSError:
                     self.send_error(
                         400,
-                        "Device directory [%s] could not be created" % recipient_dir,
+                        f"Device directory [{recipient_dir}] could not be created",
                     )
                     return
 

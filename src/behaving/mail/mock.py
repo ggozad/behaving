@@ -18,14 +18,14 @@ output_dir = None
 
 def getUniqueFilename(recipient_dir, ext="tmp"):
     filename = time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
-    dest = os.path.join(recipient_dir, "%s.%s" % (filename, ext))
+    dest = os.path.join(recipient_dir, f"{filename}.{ext}")
     i = 0
     while os.path.isfile(dest):
         i += 1
         if i > 1000:
-            raise IOError("Tried too many filenames like: %s" % dest)
+            raise IOError(f"Tried too many filenames like: {dest}")
         fname = filename + "_" + str(i)
-        dest = os.path.join(recipient_dir, "%s.%s" % (fname, ext))
+        dest = os.path.join(recipient_dir, f"{fname}.{ext}")
 
     return dest
 

@@ -23,7 +23,7 @@ def parse_text(context, text, expression):
         parser = parse.compile(expr)
         res = parser.parse(text)
 
-    assert res, u"expression not found"
-    assert res.named, u"expression not found"
+    assert res, "expression not found"
+    assert res.named, "expression not found"
     for key, val in res.named.items():
         context.persona[key] = val

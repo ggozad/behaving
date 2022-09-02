@@ -127,18 +127,14 @@ def _element_should_not_be_visible(context, css: str, timeout: int):
 
 def _n_elements_should_be_visible(context, expected: str, css: str, timeout: int):
     check = lambda: len(find_visible_by_css(context, css)) == expected
-    assert _retry(check, timeout), "Didn't find exactly {:d} visible elements".format(
-        expected
-    )
+    assert _retry(check, timeout), f"Didn't find exactly {expected:d} visible elements"
 
 
 def _at_least_n_elements_should_be_visible(
     context, expected: str, css: str, timeout: int
 ):
     check = lambda: len(find_visible_by_css(context, css)) >= expected
-    assert _retry(check, timeout), "Didn't find at least {:d} visible elements".format(
-        expected
-    )
+    assert _retry(check, timeout), f"Didn't find at least {expected:d} visible elements"
 
 
 @step('the element with the css selector "{css}" should be visible')

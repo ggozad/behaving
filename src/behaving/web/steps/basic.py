@@ -36,7 +36,7 @@ def wait_for_timeout(context, timeout):
 def show_element_by_id(context, id):
     assert context.browser.find_by_id(id)
     context.browser.execute_script(
-        'document.getElementById("%s").style.display="inline";' % id
+        f'document.getElementById("{id}").style.display="inline";'
     )
 
 
@@ -45,7 +45,7 @@ def show_element_by_id(context, id):
 def hide_element_by_id(context, id):
     assert context.browser.find_by_id(id)
     context.browser.execute_script(
-        'document.getElementById("%s").style.display="none";' % id
+        f'document.getElementById("{id}").style.display="none";'
     )
 
 

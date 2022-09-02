@@ -15,7 +15,7 @@ def given_a_persona(context, name):
     if hasattr(context, "browser"):
         if single_browser and hasattr(context, "is_connected"):
             return
-    context.execute_steps('Given browser "%s"' % name)
+    context.execute_steps(f'Given browser "{name}"')
     if single_browser:
         context.is_connected = True
 
@@ -48,11 +48,11 @@ def key_is_val(context, key, val):
 @persona_vars
 def key_is_dict(context, key):
     assert context.persona is not None, u"no persona is setup"
-    assert type(context.persona[key]) == dict, u"%s is not a dictionary" % type(key)
+    assert type(context.persona[key]) == dict, f"{type(key)} is not a dictionary"
 
 
 @step(u'I clone persona "{source}" to "{target}"')
 def clone_persona(context, source, target):
-    assert source in context.personas, u"Persona %s does not exist" % source
+    assert source in context.personas, f"Persona {source} does not exist"
     if target not in context.personas:
         context.personas[target] = Persona(context.personas.get(source))

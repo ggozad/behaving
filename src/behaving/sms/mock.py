@@ -64,7 +64,7 @@ class SMSServer(SimpleHTTPRequestHandler):
             code = body.split(None)[-1]
             p = subprocess.Popen("pbcopy", stdin=subprocess.PIPE)
             p.communicate(code.encode("utf-8"))
-            body = "%s and has been copied to the clipboard" % body
+            body = f"{body} and has been copied to the clipboard"
         if notifier:
             notifier.notify(body, title=to)
 
