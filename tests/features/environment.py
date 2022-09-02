@@ -24,6 +24,9 @@ def before_all(context):
     context.screenshots_dir = os.path.join(
         os.path.dirname(behaving.__file__), "../../var/screenshots/"
     )
+    context.download_dir = os.path.join(
+        os.path.dirname(behaving.__file__), "../../var/downloads/"
+    )
     benv.before_all(context)
 
 

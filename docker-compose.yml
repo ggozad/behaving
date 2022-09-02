@@ -5,6 +5,7 @@ version: "3"
 services:
   chrome:
     image: selenium/node-chrome:4.1.3-20220405
+    container_name: selenium-chrome
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -14,9 +15,12 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - SE_NODE_MAX_SESSIONS=5
       - VNC_NO_PASSWORD=1
+    volumes:
+      - ./var/downloads:/home/seluser/Downloads
 
   firefox:
     image: selenium/node-firefox:4.1.3-20220405
+    container_name: selenium-firefox
     shm_size: 2gb
     depends_on:
       - selenium-hub
@@ -26,7 +30,8 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - SE_NODE_MAX_SESSIONS=5
       - VNC_NO_PASSWORD=1
-
+    volumes:
+      - ./var/downloads:/home/seluser/Downloads
   selenium-hub:
     image: selenium/hub:4.1.3-20220405
     container_name: selenium-hub
@@ -58,3 +63,4 @@ services:
       - ./var/mail:/app/var/mail
       - ./var/sms:/app/var/sms
       - ./var/gcm:/app/var/gcm
+      - ./var/downloads:/app/var/downloads
