@@ -31,7 +31,7 @@
     "python.linting.flake8Path": "/usr/local/bin/flake8",
     "restructuredtext.confPath": "",
     "python.linting.mypyEnabled": false,
-    "python.analysis.extraPaths": ["/usr/local/lib/python3.7/site-packages"],
+    "python.analysis.extraPaths": ["/usr/local/lib/python3.10/site-packages"],
     "editor.formatOnSave": true,
     "[yml]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -48,8 +48,7 @@
     "[html]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.formatOnSave": true
-    },
-    
+    }
   },
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
