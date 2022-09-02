@@ -11,7 +11,7 @@ from behaving.personas.persona import persona_vars
 from behaving.utils import parse_text
 
 
-@step(u'I set "{key}" to the body of the sms I received at "{tel}"')
+@step('I set "{key}" to the body of the sms I received at "{tel}"')
 @persona_vars
 def set_var_to_sms_body(context, key, tel):
     assert context.persona is not None
@@ -20,31 +20,30 @@ def set_var_to_sms_body(context, key, tel):
     context.persona[key] = msgs[-1]
 
 
-@step(u'I parse the sms I received at "{tel}" and set "{expression}"')
+@step('I parse the sms I received at "{tel}" and set "{expression}"')
 @persona_vars
 def parse_sms_set_var(context, tel, expression):
-    assert context.persona is not None, u"no persona is setup"
+    assert context.persona is not None, "no persona is setup"
     msgs = context.sms.user_messages(tel)
-    assert msgs, u"no sms received"
-    breakpoint()
+    assert msgs, "no sms received"
     msg = msgs[-1]
     parse_text(context, msg, expression)
 
 
-@step(u'I should receive an sms at "{tel}" containing "{text}"')
+@step('I should receive an sms at "{tel}" containing "{text}"')
 @persona_vars
 def should_receive_sms_with_text(context, tel, text):
     msgs = context.sms.user_messages(tel)
     for msg in msgs:
         if text in msg:
             return
-    assert False, u"Text not found in sms"
+    assert False, "Text not found in sms"
 
 
-@step(u'I should receive an sms at "{tel}"')
+@step('I should receive an sms at "{tel}"')
 @persona_vars
 def should_receive_sms(context, tel):
-    assert context.sms.user_messages(tel), u"sms not received"
+    assert context.sms.user_messages(tel), "sms not received"
 
 
 @step('I send an sms to "{to}" with body "{body}"')
