@@ -1,6 +1,6 @@
 Changelog
 =========
-3.0.5 -
+3.0.5 - 2022-09-12
 ------------------
 
 - Drop selenium hub, use selenoid.
