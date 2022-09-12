@@ -53,12 +53,12 @@ def setup(context):
 
 
 def teardown(context):
-    for browser in context.browsers.values():
-        try:
-            browser.quit()
-        except URLError:
-            pass
     if hasattr(context, "browser"):
         del context.browser
     if hasattr(context, "browsers"):
+        for browser in context.browsers.values():
+            try:
+                browser.quit()
+            except URLError:
+                pass
         context.browsers.clear()
