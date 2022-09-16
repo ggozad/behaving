@@ -5,19 +5,25 @@ from behaving.personas.persona import persona_vars
 @step(u'I click the link to "{url}"')
 @persona_vars
 def click_link_to_url(context, url):
-    context.browser.click_link_by_href(url)
+    el = context.browser.links.find_by_href(url).first
+    assert el, f"Link {url} not found"
+    el.click()
 
 
 @step(u'I click the link to a url that contains "{url}"')
 @persona_vars
 def click_link_to_url_that_contains(context, url):
-    context.browser.click_link_by_partial_href(url)
+    el = context.browser.links.find_by_partial_href(url).first
+    assert el, f"Link containing {url} not found"
+    el.click()
 
 
 @step(u'I click the link with text "{text}"')
 @persona_vars
 def click_link_with_text(context, text):
-    context.browser.click_link_by_text(text)
+    el = context.browser.links.find_by_text(text).first
+    assert el, f"Link containing {text} not found"
+    el.click()
 
 
 @step(u'I click the link with text that contains "{text}"')
@@ -29,6 +35,6 @@ def click_link_with_text_that_contains(context, text):
         xpath = f"//a[contains(string(), concat('{text}'))]"
     else:
         xpath = f"//a[contains(string(), '{text}')]"
-    anchors = context.browser.find_by_xpath(xpath)
-    assert anchors, "Link not found"
-    anchors[0].click()
+    anchor = context.browser.find_by_xpath(xpath).first
+    assert anchor, f"Link containing {text} not found"
+    anchor.click()
