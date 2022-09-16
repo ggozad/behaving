@@ -51,6 +51,7 @@ services:
     depends_on:
       - selenoid
     volumes:
+      - ./src:/app/src
       - ./tests:/app/tests
       - ./var/log:/app/var/log
       - ./var/screenshots:/app/var/screenshots
