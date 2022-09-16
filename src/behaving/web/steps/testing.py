@@ -1,11 +1,6 @@
 from behave import step
 
 
-@step(u"I enable single browser mode")
-def enable_single_browser_mode(context):
-    context.single_browser = True
-
-
 @step(u"I note browser session")
 def record_browser_session(context):
     if hasattr(context, "current_sessions"):

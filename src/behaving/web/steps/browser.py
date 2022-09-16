@@ -29,10 +29,6 @@ def named_browser(context, name):
     else:
         context.browser_args["headless"] = False
 
-    single_browser = hasattr(context, "single_browser")
-    if single_browser and hasattr(context, "browser") and context.browser == name:
-        #  don't start up multiple browsers
-        return
     if name not in context.browsers:
         args = context.browser_args.copy()
         if context.accept_ssl_certs:
@@ -61,8 +57,6 @@ def named_browser(context, name):
             context.browsers[name].driver.set_window_size(*context.default_browser_size)
 
     context.browser = context.browsers[name]
-    if single_browser:
-        context.is_connected = True
 
 
 @step(u'the electron app "{app_path}"')
