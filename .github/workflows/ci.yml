@@ -1,0 +1,16 @@
+name: Docker Compose Actions Workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # need checkout before using compose-action
+      - uses: actions/checkout@v3
+      - name: Create folders
+        run: |
+          mkdir -p var/{log,screenshots,mail,sms,gcm,downloads}
+          chmod -R a+rwX var
+      - uses: isbang/compose-action@v1.2.0
+      - name: Test
+        run: |
+          docker-compose exec -T behaving behave tests/features
