@@ -45,8 +45,12 @@ services:
       - behaving
     ports:
       - 8080:80
+      - 8081:443
     volumes:
       - ./tests/www:/usr/share/nginx/html
+      - ./config/nginx.conf:/etc/nginx/templates/default.conf.template
+      - ./config/ssl/web.pem:/etc/nginx/cert/web.pem
+      - ./config/ssl/web-key.pem:/etc/nginx/cert/web-key.pem
 
   behaving:
     build: ./
