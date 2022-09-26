@@ -15,6 +15,8 @@
     "behaving",
     "web",
     "selenoid",
+    "firefox",
+    "chrome"
   ],
 
   // The optional 'workspaceFolder' property is the path VS Code should open by default when
