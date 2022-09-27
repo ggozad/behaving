@@ -632,4 +632,26 @@ as well as the directory to output data as parameters. For example,
 
 ## Docker integration
 
-A `Dockerfile` as well as a complete setup using `docker-compose` are provided to help you create selenium grid configurations that run your tests.
+A `Dockerfile` as well as a complete setup using `docker-compose` are provided to help you create selenium grid configurations that run your tests. In addition dev container configuration is included if VSCode is your thing.
+
+## Running behaving tests
+
+You can run all behaving tests as follows:
+
+Start docker compose:
+
+```
+docker-compose up
+```
+
+Open a shell in the behaving container:
+
+```
+docker-compose exec behaving bash
+```
+
+Run behaving tests:
+
+```
+behave tests/features
+```
