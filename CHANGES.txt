@@ -4,6 +4,12 @@ Changelog
 3.0.6 - 
 ------------------
 
+- Bug fixes. Selenium 4 prep.
+  [ggozad]
+
+- Allow finding elements by id if name selection does not work for certain form steps.
+  [ggozad]
+
 3.0.5 - 2022-09-12
 ------------------
 

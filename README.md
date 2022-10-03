@@ -499,12 +499,13 @@ as well as the directory to output data as parameters. For example,
 
 - Forms
 
-  - When I fill in "`name`" with "`value`"
-  - When I clear field "`name`"
-  - When I type "`value`" to "`name`" [same as fill, but happens slowly triggering keyboard events]
+  - When I fill in "`name|id`" with "`value`"
+  - When I clear field "`name|id`"
+  - When I type "`value`" to "`name|id`" [same as fill, but happens slowly triggering keyboard events]
   - When I choose "`value`" from "`name`"
-  - When I check "`name`"
-  - When I uncheck "`name`"
+  - When I check "`name|id`"
+  - When I uncheck "`name|id`"
+  - When I toggle "`name|id`"
   - When I select "`value`" from "`name`""
   - When I select by text "`text`" from "`name`""
   - When I press "`name|id|text|innerText`"

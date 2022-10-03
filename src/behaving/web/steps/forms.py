@@ -13,19 +13,28 @@ from behaving.personas.persona import persona_vars
 base64.encodestring = base64.encodebytes
 
 
+def find_by_name_or_id(context, selector):
+    el = context.browser.find_by_name(selector)
+    if not el:
+        el = context.browser.find_by_id(selector)
+    assert el, "Element with name or id {selector} not found"
+    return el.first
+
+
 @step(u'I fill in "{name}" with "{value}"')
 @persona_vars
-def i_fill_in_field(context, name, value):
+def fill_in_elem_by_name(context, name, value):
     # Chrome does not clear, so we need to do manually
     if context.browser.driver_name == "Chrome":
         context.execute_steps(f'When I clear field "{name}"')
-    context.browser.fill(name, value)
+    el = find_by_name_or_id(context, name)
+    el.fill(value)
 
 
 @step(u'I clear field "{name}"')
 @persona_vars
 def i_clear_field(context, name):
-    el = context.browser.find_by_name(name).first
+    el = find_by_name_or_id(context, name)
     # Chrome does not clear, so we need to do manually
     if context.browser.driver_name == "Chrome" and el._element.get_attribute(
         "type"
@@ -48,8 +57,8 @@ def i_clear_field(context, name):
 @step(u'I type "{value}" to "{name}"')
 @persona_vars
 def i_type_to(context, name, value):
-
-    for key in context.browser.type(name, value, slowly=True):
+    el = find_by_name_or_id(context, name)
+    for key in el.type(value, slowly=True):
         assert key
 
 
@@ -62,22 +71,20 @@ def i_choose_in_radio(context, name, value):
 @step(u'I check "{name}"')
 @persona_vars
 def i_check(context, name):
-
-    context.browser.check(name)
+    el = find_by_name_or_id(context, name)
+    el.check()
 
 
 @step(u'I uncheck "{name}"')
 @persona_vars
 def i_uncheck(context, name):
-
-    context.browser.uncheck(name)
+    el = find_by_name_or_id(context, name)
+    el.uncheck()
 
 
 @step(u'I toggle "{name}"')
 def i_toggle(context, name):
-    el = context.browser.find_by_name(name)
-    assert el, u"Element not found"
-    el = el.first
+    el = find_by_name_or_id(context, name)
     if el.checked:
         el.uncheck()
     else:
