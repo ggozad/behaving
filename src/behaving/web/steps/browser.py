@@ -32,7 +32,7 @@ def named_browser(context, name):
     if name not in context.browsers:
         args = context.browser_args.copy()
         if context.accept_ssl_certs:
-            if not hasattr(args, "desired_capabilities"):
+            if "desired_capabilities" not in args:
                 args["desired_capabilities"] = {}
             args["desired_capabilities"].update({"acceptInsecureCerts": True})
         if context.remote_webdriver_url:

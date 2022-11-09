@@ -7,6 +7,9 @@ Changelog
 - Github CI setup.
   [oyvinev, ggozad]
 
+- Fix desired_capabilities being overwritten.
+  [oyvinev, ggozad]
+
 - Skip tests that cannot run in a remote environment.
   [ggozad]
 
