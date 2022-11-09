@@ -1,8 +1,15 @@
 Changelog
 =========
 
+3.0.7 - 
+-------------------
+
+- arm64 support.
+  [ggozad]
+
 3.0.6 -  2022-10-03
 -------------------
+
 - Bug fixes. Selenium 4 prep.
   [ggozad]
 

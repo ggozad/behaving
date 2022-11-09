@@ -6,7 +6,7 @@ def before_all(context):
     import behaving
 
     context.remote_webdriver_url = "http://selenoid:4444/wd/hub"
-    context.default_browser = "firefox"
+    context.default_browser = "chrome"
     context.accept_ssl_certs = True
 
     context.attachment_dir = os.path.join(
