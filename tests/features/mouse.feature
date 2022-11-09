@@ -1,5 +1,6 @@
 Feature: Mouse interactions
 
+    @no_remote_webdriver
     @web
     Scenario: Mouse over and out
         # Firefox has trouble with mouse-out
