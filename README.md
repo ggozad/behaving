@@ -49,9 +49,9 @@ Feature: Email & SMS
 
     Scenario: Click link in an email
         Given a browser
-        When I send an email to "foo@bar.com" with subject "Crypho" and body "Try out our product at http://crypho.com"
+        When I send an email to "foo@bar.com" with subject "Hello" and body "Try out this website at http://google.com"
         And I click the link in the email I received at "foo@bar.com"
-        Then the browser's URL should be "http://crypho.com/"
+        Then the browser's URL should be "http://google.com/"
 
     Scenario: Receive SMS with body
         When I send an sms to "+4745690001" with body "Hello world"
@@ -635,7 +635,13 @@ as well as the directory to output data as parameters. For example,
 
 A `Dockerfile` as well as a complete setup using `docker-compose` are provided to help you create selenium grid configurations that run your tests. In addition dev container configuration is included if VSCode is your thing.
 
-Note: For `arm64` based systems (Apple M1/M2 included), you can run docker compose using the `docker-compose.arm64.yml` file.
+In addition we provide pre-build images on docker hub for the `linux/amd64` and `linux/arm64` platforms. Use
+
+```bash
+docker pull ggozadinos/behaving:latest
+```
+
+to pull the image.
 
 ## Running behaving tests
 
@@ -646,6 +652,8 @@ Start docker compose:
 ```
 docker-compose up
 ```
+
+(or if you have an M1/M2 mac you can use the `docker-compose.arm64.yml` instead)
 
 Open a shell in the behaving container:
 
