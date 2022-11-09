@@ -40,11 +40,12 @@ class WebDriver(BaseWebDriver):
             options.set_headless()
 
         prefs = {
-            "download": {
-                "default_directory": _DOWNLOAD_PATH,
-                "directory_upgrade": True,
-                "extensions_to_open": "",
-            }
+            "profile.default_content_settings.popups": 0,
+            "download.default_directory": _DOWNLOAD_PATH,
+            "download.prompt_for_download": False,
+            "download.directory_upgrade": True,
+            "safebrowsing.enabled": True,
+            "safebrowsing.disable_download_protection": True,
         }
 
         options.add_experimental_option("prefs", prefs)

@@ -7,6 +7,12 @@ Changelog
 - arm64 support.
   [ggozad]
 
+- Update chrome preferences for file downloads. Disable file tests when in using selenoid.
+  [ggozad]
+
+- Add selenoid UI to the stack.
+  [ggozad]
+
 3.0.6 -  2022-10-03
 -------------------
 
