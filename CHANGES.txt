@@ -4,6 +4,9 @@ Changelog
 3.0.7 - 
 -------------------
 
+- Skip tests that cannot run in a remote environment.
+  [ggozad]
+
 - arm64 support.
   [ggozad]
 

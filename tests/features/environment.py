@@ -35,6 +35,8 @@ def after_all(context):
 
 def before_feature(context, feature):
     benv.before_feature(context, feature)
+    if "no_remote_webdriver" in feature.tags and context.remote_webdriver_url:
+        feature.skip("Skipped feature, running in remote webdriver @skip")
 
 
 def after_feature(context, feature):
@@ -43,6 +45,8 @@ def after_feature(context, feature):
 
 def before_scenario(context, scenario):
     benv.before_scenario(context, scenario)
+    if "no_remote_webdriver" in scenario.tags and context.remote_webdriver_url:
+        scenario.skip("Skipped feature, running in remote webdriver @skip")
 
 
 def after_scenario(context, scenario):
