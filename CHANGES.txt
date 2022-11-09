@@ -4,6 +4,9 @@ Changelog
 3.0.7 - 
 -------------------
 
+- Github CI setup.
+  [oyvinev, ggozad]
+
 - Skip tests that cannot run in a remote environment.
   [ggozad]
 

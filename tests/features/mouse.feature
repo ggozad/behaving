@@ -9,4 +9,4 @@ Feature: Mouse interactions
         And I mouse over the element with xpath "//span[@id='mouse-interaction']"
         Then I should see "Over"
         When I mouse out of the element with xpath "//span[@id='mouse-interaction']"
-        Then I should see "and out" within 3 seconds
+        Then I should see "and out" within 5 seconds
