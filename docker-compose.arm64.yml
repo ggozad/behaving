@@ -1,0 +1,40 @@
+version: "3"
+networks:
+  behaving:
+    name: behaving
+
+services:
+  firefox:
+    extends:
+      file: docker-compose.yml
+      service: firefox
+
+  chrome:
+    image: sskorol/selenoid_chromium_vnc:100.0 # There are no official images for Chrome on arm64.
+    entrypoint: echo "Only here to make sure the image is available to selenoid"
+
+  selenoid:
+    extends:
+      file: docker-compose.yml
+      service: selenoid
+    command:
+      [
+        "-conf",
+        "/etc/selenoid/browsers.arm64.json",
+        "-video-output-dir",
+        "/opt/selenoid/video",
+        "-log-output-dir",
+        "/opt/selenoid/logs",
+        "-container-network",
+        "behaving",
+      ]
+
+  web:
+    extends:
+      file: docker-compose.yml
+      service: web
+
+  behaving:
+    extends:
+      file: docker-compose.yml
+      service: behaving

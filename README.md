@@ -635,6 +635,8 @@ as well as the directory to output data as parameters. For example,
 
 A `Dockerfile` as well as a complete setup using `docker-compose` are provided to help you create selenium grid configurations that run your tests. In addition dev container configuration is included if VSCode is your thing.
 
+Note: For `arm64` based systems (Apple M1/M2 included), you can run docker compose using the `docker-compose.arm64.yml` file.
+
 ## Running behaving tests
 
 You can run all behaving tests as follows:
