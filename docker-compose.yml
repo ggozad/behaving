@@ -37,6 +37,7 @@ services:
       - ./var/sms:/app/var/sms
       - ./var/gcm:/app/var/gcm
       - ./var/downloads:/app/var/downloads
+      - ./var/reports:/app/reports
 
   firefox:
     image: selenoid/firefox:latest
