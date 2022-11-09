@@ -4,6 +4,16 @@ networks:
     name: behaving
 
 services:
+  web:
+    extends:
+      file: docker-compose.yml
+      service: web
+
+  behaving:
+    extends:
+      file: docker-compose.yml
+      service: behaving
+
   firefox:
     extends:
       file: docker-compose.yml
@@ -29,12 +39,7 @@ services:
         "behaving",
       ]
 
-  web:
+  selenoid-ui:
     extends:
       file: docker-compose.yml
-      service: web
-
-  behaving:
-    extends:
-      file: docker-compose.yml
-      service: behaving
+      service: selenoid-ui

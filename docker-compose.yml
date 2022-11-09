@@ -4,6 +4,40 @@ networks:
     name: behaving
 
 services:
+  web:
+    image: nginx
+    container_name: web
+    networks:
+      - behaving
+    ports:
+      - 8080:80
+      - 8081:443
+    volumes:
+      - ./tests/www:/usr/share/nginx/html
+      - ./config/nginx.conf:/etc/nginx/templates/default.conf.template
+      - ./config/ssl/web.pem:/etc/nginx/cert/web.pem
+      - ./config/ssl/web-key.pem:/etc/nginx/cert/web-key.pem
+
+  behaving:
+    build: ./
+    image: behaving.dev
+    networks:
+      - behaving
+    user: behaving
+    container_name: behaving
+    stdin_open: true
+    depends_on:
+      - selenoid
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./var/log:/app/var/log
+      - ./var/screenshots:/app/var/screenshots
+      - ./var/mail:/app/var/mail
+      - ./var/sms:/app/var/sms
+      - ./var/gcm:/app/var/gcm
+      - ./var/downloads:/app/var/downloads
+
   firefox:
     image: selenoid/firefox:latest
     entrypoint: echo "Only here to make sure the image is available to selenoid"
@@ -38,36 +72,10 @@ services:
     ports:
       - "4444:4444"
 
-  web:
-    image: nginx
-    container_name: web
+  selenoid-ui:
+    image: "aerokube/selenoid-ui"
     networks:
       - behaving
     ports:
-      - 8080:80
-      - 8081:443
-    volumes:
-      - ./tests/www:/usr/share/nginx/html
-      - ./config/nginx.conf:/etc/nginx/templates/default.conf.template
-      - ./config/ssl/web.pem:/etc/nginx/cert/web.pem
-      - ./config/ssl/web-key.pem:/etc/nginx/cert/web-key.pem
-
-  behaving:
-    build: ./
-    image: behaving.dev
-    networks:
-      - behaving
-    user: behaving
-    container_name: behaving
-    stdin_open: true
-    depends_on:
-      - selenoid
-    volumes:
-      - ./src:/app/src
-      - ./tests:/app/tests
-      - ./var/log:/app/var/log
-      - ./var/screenshots:/app/var/screenshots
-      - ./var/mail:/app/var/mail
-      - ./var/sms:/app/var/sms
-      - ./var/gcm:/app/var/gcm
-      - ./var/downloads:/app/var/downloads
+      - "8082:8080"
+    command: ["--selenoid-uri", "http://selenoid:4444"]
