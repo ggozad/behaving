@@ -1,3 +1,4 @@
+@no_remote_webdriver
 Feature: File downloading
 
     @web

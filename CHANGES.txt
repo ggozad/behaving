@@ -1,6 +1,18 @@
 Changelog
 =========
 
+3.1.0 - 2022-11-10
+------------------
+
+- Upgrade to selenium 4.
+  [ggozad]
+
+- Simplify docker compose config.
+  [ggozad]
+
+- Fix file download tests in selenoid.
+  [ggozad]
+
 3.0.7 - 2022-11-09
 ------------------
 
