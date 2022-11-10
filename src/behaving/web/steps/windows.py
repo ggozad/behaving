@@ -25,11 +25,10 @@ def name_window(context, name):
 @when(u'I open a new window named "{name}" at "{url}"')
 def open_window(context, name, url):
     driver = context.browser.driver
-    driver.execute_script(f"window.open('{url}', '{name}')")
-    new_window = driver.window_handles[-1]
-    remember_window(context, new_window, name)
-    # this is Selenium's way of switching windows
-    driver.switch_to_window(new_window)
+    driver.switch_to.new_window('window')
+    driver.get(url)
+    handle = driver.window_handles[-1]
+    remember_window(context, handle, name)
 
 
 @when(u'I switch to the window named "{name}"')
@@ -42,4 +41,4 @@ def switch_window(context, name):
     I tried executing "window.focus()", but that didn't work either.
     """
     window = lookup_window(context, name)
-    context.browser.driver.switch_to_window(window)
+    context.browser.driver.switch_to.window(window)
