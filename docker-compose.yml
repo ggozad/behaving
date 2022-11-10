@@ -48,17 +48,20 @@ services:
     entrypoint: echo "Only here to make sure the image is available to selenoid"
 
   selenoid:
+    container_name: selenoid
     networks:
       - behaving
-    image: aerokube/selenoid:latest-release
+    build:
+      args:
+        - DOWNLOAD_VOLUME=$PWD/var/downloads
+      context: config/selenoid
     volumes:
-      - "./config:/etc/selenoid"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./var/video:/opt/selenoid/video"
       - "./var/log:/opt/selenoid/logs"
-
     environment:
       - OVERRIDE_VIDEO_OUTPUT_DIR=./var/video
+
     command:
       [
         "-conf",

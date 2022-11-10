@@ -6,7 +6,10 @@
         "image": "selenoid/firefox",
         "port": "4444",
         "path": "/wd/hub",
-        "tmpfs": { "/tmp": "size=512m" }
+        "tmpfs": { "/tmp": "size=512m" },
+        "volumes": [
+          "${DOWNLOAD_VOLUME}:/home/selenium/Downloads"
+        ]
       }
     }
   },
@@ -14,9 +17,12 @@
     "default": "latest",
     "versions": {
       "latest": {
-        "image": "selenoid/chrome",
+        "image": "$CHROME_IMAGE",
         "port": "4444",
-        "tmpfs": { "/tmp": "size=512m" }
+        "tmpfs": { "/tmp": "size=512m" },
+        "volumes": [
+          "${DOWNLOAD_VOLUME}:/home/selenium/Downloads"
+        ]
       }
     }
   }
