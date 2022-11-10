@@ -2,7 +2,6 @@ import base64
 import os
 from behave import step
 from splinter.exceptions import ElementDoesNotExist
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import ElementNotInteractableException
 
@@ -107,16 +106,15 @@ def i_select(context, value, name):
 @step(u'I select by text "{text}" from "{name}"')
 @persona_vars
 def i_select_text(context, text, name):
-    elem = context.browser.driver.find_element_by_name(name)
+    elem = context.browser.find_by_name(name)
     assert elem, u"Element not found"
-    select = Select(elem)
-    select.select_by_visible_text(text)
+    elem.select_by_text(text)
 
 
 @step(u'I focus on "{name}"')
 @persona_vars
 def i_focus(context, name):
-    elem = context.browser.driver.find_element_by_name(name)
+    elem = context.browser.find_by_name(name)
     assert elem, u"Element not found"
     context.browser.execute_script(
         f'document.getElementsByName("{name}")[0].focus();'
@@ -265,7 +263,7 @@ def field_is_not_required(context, name):
 @step(u'I send "{key}" to "{name}"')
 @persona_vars
 def press_enter(context, key, name):
-    element = context.browser.driver.find_element_by_name(name)
+    element = context.browser.find_by_name(name)
     key = getattr(Keys, key, None)
     assert element, u"Element not found"
     assert key, u"Key not in selenium.webdriver.common.keys.Keys"
