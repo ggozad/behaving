@@ -653,8 +653,6 @@ Start docker compose:
 docker-compose up
 ```
 
-(or if you have an M1/M2 mac you can use the `docker-compose.arm64.yml` instead)
-
 Open a shell in the behaving container:
 
 ```
