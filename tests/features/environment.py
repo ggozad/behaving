@@ -11,6 +11,9 @@ def before_all(context):
     context.browser_args = {
         "desired_capabilities": {
             "enableVNC": True,
+            "selenoid:options": {
+                "enableVNC": True,
+            },
         }
     }
     context.attachment_dir = os.path.join(
