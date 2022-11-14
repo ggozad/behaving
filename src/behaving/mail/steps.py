@@ -72,7 +72,7 @@ def click_link_in_email(context, address):
     assert mails, u"message not found"
     mail = email.message_from_string(mails[-1])
     links = []
-    payloads = mail.get_payload()
+    payloads = mail.get_payload(decode=True).decode("utf-8")
     if isinstance(payloads, str):
         payloads = [payloads]
     for payload in payloads:
