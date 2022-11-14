@@ -2,8 +2,8 @@ import os
 import time
 
 from behave import step
-from splinter.browser import Browser
 from selenium.common.exceptions import WebDriverException
+from splinter.browser import Browser
 
 
 @step(u"{brand} as the default browser")

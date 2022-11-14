@@ -1,10 +1,11 @@
 try:
     from urllib import urlencode
-    from urllib2 import Request, urlopen, HTTPError  # type: ignore
+
+    from urllib2 import HTTPError, Request, urlopen
 except ImportError:
+    from urllib.error import HTTPError
     from urllib.parse import urlencode
     from urllib.request import Request, urlopen
-    from urllib.error import HTTPError
 
 from behave import step
 from behaving.personas.persona import persona_vars

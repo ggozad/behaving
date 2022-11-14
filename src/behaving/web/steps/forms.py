@@ -1,11 +1,11 @@
 import base64
 import os
-from behave import step
-from splinter.exceptions import ElementDoesNotExist
-from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import ElementNotInteractableException
 
+from behave import step
 from behaving.personas.persona import persona_vars
+from selenium.common.exceptions import ElementNotInteractableException
+from selenium.webdriver.common.keys import Keys
+from splinter.exceptions import ElementDoesNotExist
 
 # Selenium 3 does not account for base64 no longer using encodestring.
 # Monkey patch base64 to make it compatible seems the easiest.

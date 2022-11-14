@@ -1,16 +1,16 @@
 import mimetypes
 
 from selenium.webdriver import DesiredCapabilities, Firefox
-from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
+from selenium.webdriver.firefox.options import Options
+from splinter.browser import _DRIVERS
 from splinter.driver.webdriver import (
     BaseWebDriver,
     WebDriverElement as WebDriverElement,
 )
 from splinter.driver.webdriver.cookie_manager import CookieManager
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-from splinter.browser import _DRIVERS
 
 _DOWNLOAD_PATH = "/tmp"
 _ALL_MIME_TYPES = ",".join(mimetypes.types_map.values())

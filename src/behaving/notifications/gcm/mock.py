@@ -1,10 +1,10 @@
 import argparse
+import json
 import logging
 import os
-import sys
-import json
-from http.server import SimpleHTTPRequestHandler
 import socketserver as SocketServer
+import sys
+from http.server import SimpleHTTPRequestHandler
 
 from behaving.mail.mock import getUniqueFilename
 

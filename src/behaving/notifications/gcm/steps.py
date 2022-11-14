@@ -1,13 +1,14 @@
-from behave import step
-from behaving.personas.persona import persona_vars
 import ast
 import json
 
+from behave import step
+from behaving.personas.persona import persona_vars
+
 try:
-    from urllib2 import Request, urlopen, HTTPError
+    from urllib2 import HTTPError, Request, urlopen
 except ImportError:
-    from urllib.request import Request, urlopen
     from urllib.error import HTTPError
+    from urllib.request import Request, urlopen
 
 
 def extract(dict_in, dict_out):

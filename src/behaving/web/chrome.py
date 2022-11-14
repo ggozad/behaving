@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from selenium.webdriver import DesiredCapabilities, Chrome
+from selenium.webdriver import Chrome, DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
+from splinter.browser import _DRIVERS
 from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
 from splinter.driver.webdriver.cookie_manager import CookieManager
-from splinter.browser import _DRIVERS
 
 _DOWNLOAD_PATH = "/tmp"
 

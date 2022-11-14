@@ -1,5 +1,5 @@
-from splinter.exceptions import ElementDoesNotExist
 from behave import step
+from splinter.exceptions import ElementDoesNotExist
 
 
 @step('I set "{key}" to the text of "{name}"')

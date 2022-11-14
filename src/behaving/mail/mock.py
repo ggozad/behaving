@@ -1,10 +1,10 @@
+import argparse
+import asyncore
+import logging
 import os
 import smtpd
 import sys
 import time
-import argparse
-import logging
-import asyncore
 
 try:
     from pync import Notifier

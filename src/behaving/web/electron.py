@@ -1,7 +1,7 @@
 from selenium.webdriver import Chrome
+from splinter.browser import _DRIVERS
 from splinter.driver.webdriver import BaseWebDriver, WebDriverElement
 from splinter.driver.webdriver.cookie_manager import CookieManager
-from splinter.browser import _DRIVERS
 
 
 class ElectronWebDriver(BaseWebDriver):
