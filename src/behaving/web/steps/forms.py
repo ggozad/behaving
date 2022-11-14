@@ -1,7 +1,7 @@
 import base64
 import os
 
-from behave import step
+from behave import then, when
 from behaving.personas.persona import persona_vars
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.webdriver.common.keys import Keys
@@ -20,7 +20,7 @@ def find_by_name_or_id(context, selector):
     return el.first
 
 
-@step(u'I fill in "{name}" with "{value}"')
+@when(u'I fill in "{name}" with "{value}"')
 @persona_vars
 def fill_in_elem_by_name(context, name, value):
     # Chrome does not clear, so we need to do manually
@@ -30,7 +30,7 @@ def fill_in_elem_by_name(context, name, value):
     el.fill(value)
 
 
-@step(u'I clear field "{name}"')
+@when(u'I clear field "{name}"')
 @persona_vars
 def i_clear_field(context, name):
     el = find_by_name_or_id(context, name)
@@ -53,7 +53,7 @@ def i_clear_field(context, name):
     el.clear()
 
 
-@step(u'I type "{value}" to "{name}"')
+@when(u'I type "{value}" to "{name}"')
 @persona_vars
 def i_type_to(context, name, value):
     el = find_by_name_or_id(context, name)
@@ -61,27 +61,27 @@ def i_type_to(context, name, value):
         assert key
 
 
-@step(u'I choose "{value}" from "{name}"')
+@when(u'I choose "{value}" from "{name}"')
 @persona_vars
 def i_choose_in_radio(context, name, value):
     context.browser.choose(name, value)
 
 
-@step(u'I check "{name}"')
+@when(u'I check "{name}"')
 @persona_vars
 def i_check(context, name):
     el = find_by_name_or_id(context, name)
     el.check()
 
 
-@step(u'I uncheck "{name}"')
+@when(u'I uncheck "{name}"')
 @persona_vars
 def i_uncheck(context, name):
     el = find_by_name_or_id(context, name)
     el.uncheck()
 
 
-@step(u'I toggle "{name}"')
+@when(u'I toggle "{name}"')
 def i_toggle(context, name):
     el = find_by_name_or_id(context, name)
     if el.checked:
@@ -90,7 +90,7 @@ def i_toggle(context, name):
         el.check()
 
 
-@step(u'I select "{value}" from "{name}"')
+@when(u'I select "{value}" from "{name}"')
 @persona_vars
 def i_select(context, value, name):
     try:
@@ -103,7 +103,7 @@ def i_select(context, value, name):
         inp.first.check()
 
 
-@step(u'I select by text "{text}" from "{name}"')
+@when(u'I select by text "{text}" from "{name}"')
 @persona_vars
 def i_select_text(context, text, name):
     elem = context.browser.find_by_name(name)
@@ -111,7 +111,7 @@ def i_select_text(context, text, name):
     elem.select_by_text(text)
 
 
-@step(u'I focus on "{name}"')
+@when(u'I focus on "{name}"')
 @persona_vars
 def i_focus(context, name):
     elem = context.browser.find_by_name(name)
@@ -121,7 +121,7 @@ def i_focus(context, name):
     )
 
 
-@step(u'I press "{name}"')
+@when(u'I press "{name}"')
 @persona_vars
 def i_press(context, name):
     element = context.browser.find_by_xpath(
@@ -140,7 +140,7 @@ def i_press(context, name):
     element.first.click()
 
 
-@step(u'I press the element with xpath "{xpath}"')
+@when(u'I press the element with xpath "{xpath}"')
 @persona_vars
 def i_press_xpath(context, xpath):
 
@@ -149,7 +149,7 @@ def i_press_xpath(context, xpath):
     button.first.click()
 
 
-@step('I attach the file "{path}" to "{name}"')
+@when('I attach the file "{path}" to "{name}"')
 @persona_vars
 def i_attach(context, name, path):
     if not os.path.exists(path):
@@ -163,7 +163,7 @@ def i_attach(context, name, path):
     context.browser.attach_file(name, path)
 
 
-@step('I set the inner HTML of the element with id "{id}" to "{contents}"')
+@when('I set the inner HTML of the element with id "{id}" to "{contents}"')
 @persona_vars
 def set_html_content_to_element_with_id(context, id, contents):
     assert context.browser.evaluate_script(
@@ -171,7 +171,7 @@ def set_html_content_to_element_with_id(context, id, contents):
     ), u"Element not found or could not set HTML content"
 
 
-@step('I set the inner HTML of the element with class "{klass}" to "{contents}"')
+@when('I set the inner HTML of the element with class "{klass}" to "{contents}"')
 @persona_vars
 def set_html_content_to_element_with_class(context, klass, contents):
     assert context.browser.evaluate_script(
@@ -179,7 +179,7 @@ def set_html_content_to_element_with_class(context, klass, contents):
     ), u"Element not found or could not set HTML content"
 
 
-@step(u'field "{name}" should have the value "{value}"')
+@then(u'field "{name}" should have the value "{value}"')
 @persona_vars
 def field_has_value(context, name, value):
     el = context.browser.find_by_xpath(
@@ -192,7 +192,7 @@ def field_has_value(context, name, value):
     )
 
 
-@step(u'field "{name}" should be empty')
+@then(u'field "{name}" should be empty')
 @persona_vars
 def field_is_empty(context, name):
     el = context.browser.find_by_xpath(
@@ -202,7 +202,7 @@ def field_is_empty(context, name):
     assert el.first.value == "", u"Field is not empty"
 
 
-@step(u'"{name}" should be enabled')
+@then(u'"{name}" should be enabled')
 @persona_vars
 def is_enabled(context, name):
     el = context.browser.find_by_xpath(
@@ -212,8 +212,8 @@ def is_enabled(context, name):
     assert el.first._element.is_enabled()
 
 
-@step(u'"{name}" should be disabled')
-@step(u'"{name}" should not be enabled')
+@then(u'"{name}" should be disabled')
+@then(u'"{name}" should not be enabled')
 @persona_vars
 def is_disabled(context, name):
     el = context.browser.find_by_xpath(
@@ -223,7 +223,7 @@ def is_disabled(context, name):
     assert not el.first._element.is_enabled()
 
 
-@step(u'field "{name}" should be valid')
+@then(u'field "{name}" should be valid')
 @persona_vars
 def field_is_valid(context, name):
     assert context.browser.find_by_name(name), u"Element not found"
@@ -232,8 +232,8 @@ def field_is_valid(context, name):
     ), "Field is invalid"
 
 
-@step(u'field "{name}" should be invalid')
-@step(u'field "{name}" should not be valid')
+@then(u'field "{name}" should be invalid')
+@then(u'field "{name}" should not be valid')
 @persona_vars
 def field_is_invalid(context, name):
     assert context.browser.find_by_name(name), u"Element not found"
@@ -242,7 +242,7 @@ def field_is_invalid(context, name):
     ), "Field is valid"
 
 
-@step(u'field "{name}" should be required')
+@then(u'field "{name}" should be required')
 @persona_vars
 def field_is_required(context, name):
     assert context.browser.find_by_name(name), u"Element not found"
@@ -251,7 +251,7 @@ def field_is_required(context, name):
     ), "Field is not required"
 
 
-@step(u'field "{name}" should not be required')
+@then(u'field "{name}" should not be required')
 @persona_vars
 def field_is_not_required(context, name):
     assert context.browser.find_by_name(name), u"Element not found"
@@ -260,7 +260,7 @@ def field_is_not_required(context, name):
     ), "Field is required"
 
 
-@step(u'I send "{key}" to "{name}"')
+@when(u'I send "{key}" to "{name}"')
 @persona_vars
 def press_enter(context, key, name):
     element = context.browser.find_by_name(name)

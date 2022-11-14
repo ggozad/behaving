@@ -1,18 +1,13 @@
-try:
-    from urllib import urlencode
+from urllib.error import HTTPError
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
-    from urllib2 import HTTPError, Request, urlopen
-except ImportError:
-    from urllib.error import HTTPError
-    from urllib.parse import urlencode
-    from urllib.request import Request, urlopen
-
-from behave import step
+from behave import then, when
 from behaving.personas.persona import persona_vars
 from behaving.utils import parse_text
 
 
-@step('I set "{key}" to the body of the sms I received at "{tel}"')
+@when('I set "{key}" to the body of the sms I received at "{tel}"')
 @persona_vars
 def set_var_to_sms_body(context, key, tel):
     assert context.persona is not None
@@ -21,7 +16,7 @@ def set_var_to_sms_body(context, key, tel):
     context.persona[key] = msgs[-1]
 
 
-@step('I parse the sms I received at "{tel}" and set "{expression}"')
+@when('I parse the sms I received at "{tel}" and set "{expression}"')
 @persona_vars
 def parse_sms_set_var(context, tel, expression):
     assert context.persona is not None, "no persona is setup"
@@ -31,7 +26,7 @@ def parse_sms_set_var(context, tel, expression):
     parse_text(context, msg, expression)
 
 
-@step('I should receive an sms at "{tel}" containing "{text}"')
+@then('I should receive an sms at "{tel}" containing "{text}"')
 @persona_vars
 def should_receive_sms_with_text(context, tel, text):
     msgs = context.sms.user_messages(tel)
@@ -41,13 +36,13 @@ def should_receive_sms_with_text(context, tel, text):
     assert False, "Text not found in sms"
 
 
-@step('I should receive an sms at "{tel}"')
+@then('I should receive an sms at "{tel}"')
 @persona_vars
 def should_receive_sms(context, tel):
     assert context.sms.user_messages(tel), "sms not received"
 
 
-@step('I send an sms to "{to}" with body "{body}"')
+@when('I send an sms to "{to}" with body "{body}"')
 @persona_vars
 def send_sms(context, to, body):
     url = "http://localhost:8199"

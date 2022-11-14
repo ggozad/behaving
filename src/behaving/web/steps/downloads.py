@@ -1,10 +1,10 @@
 import os
 
-from behave import step
+from behave import then
 from behaving.web.steps.basic import _retry
 
 
-@step(
+@then(
     u'the file "{filename}" containing "{text}" should have been downloaded within {timeout:d} seconds'
 )
 def verify_download_contents(context, filename, text, timeout):
@@ -20,7 +20,7 @@ def verify_download_contents(context, filename, text, timeout):
     assert text.encode() in contents, u"Text not found in file"
 
 
-@step(u'the file "{filename}" should have been downloaded within {timeout:d} seconds')
+@then(u'the file "{filename}" should have been downloaded within {timeout:d} seconds')
 def verify_download(context, filename, timeout):
     path = os.path.join(context.download_dir, filename)
 

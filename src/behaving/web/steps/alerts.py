@@ -1,10 +1,10 @@
-from behave import step
+from behave import then, when
 from behaving.personas.persona import persona_vars
 from behaving.web.steps.basic import _retry
 from selenium.common.exceptions import NoAlertPresentException
 
 
-@step(u"I should see an alert")
+@then(u"I should see an alert")
 def alert_is_present(context):
     try:
         assert context.browser.get_alert(), u"Alert not found"
@@ -12,7 +12,7 @@ def alert_is_present(context):
         assert False, u"Alert not found"
 
 
-@step(u"I should see an alert within {timeout:d} seconds")
+@then(u"I should see an alert within {timeout:d} seconds")
 def alert_is_present_timeout(context, timeout):
     def check():
         try:
@@ -24,7 +24,7 @@ def alert_is_present_timeout(context, timeout):
     assert _retry(check, timeout), u"Alert not found"
 
 
-@step(u'I should see an alert containing "{text}"')
+@then(u'I should see an alert containing "{text}"')
 def alert_contains_text(context, text):
     try:
         alert = context.browser.get_alert()
@@ -33,7 +33,7 @@ def alert_contains_text(context, text):
         assert False, u"Alert not found"
 
 
-@step(u'I should see an alert containing "{text}" within {timeout:d} seconds')
+@then(u'I should see an alert containing "{text}" within {timeout:d} seconds')
 def alert_contains_text_timeout(context, text, timeout):
     def check():
         try:
@@ -45,7 +45,7 @@ def alert_contains_text_timeout(context, text, timeout):
     assert _retry(check, timeout), u"Alert not found"
 
 
-@step(u'I enter "{text}" to the alert')
+@when(u'I enter "{text}" to the alert')
 @persona_vars
 def set_alert_text(context, text):
     alert = context.browser.driver.switch_to.alert
@@ -53,14 +53,14 @@ def set_alert_text(context, text):
     alert.send_keys(text)
 
 
-@step(u"I accept the alert")
+@when(u"I accept the alert")
 def accept_alert(context):
     alert = context.browser.driver.switch_to.alert
     assert alert, u"Alert not found"
     alert.accept()
 
 
-@step(u"I dismiss the alert")
+@when(u"I dismiss the alert")
 def dimiss_alert(context):
     alert = context.browser.driver.switch_to.alert
     assert alert, u"Alert not found"

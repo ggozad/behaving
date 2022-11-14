@@ -1,6 +1,6 @@
 import time
 
-from behave import step
+from behave import then, when
 from behaving.personas.persona import persona_vars
 
 
@@ -25,13 +25,13 @@ def _retry(func, timeout=0, delay=1):
             return None
 
 
-@step("I wait for {timeout:d} seconds")
+@when("I wait for {timeout:d} seconds")
 @persona_vars
 def wait_for_timeout(context, timeout):
     time.sleep(timeout)
 
 
-@step('I show the element with id "{id}"')
+@when('I show the element with id "{id}"')
 @persona_vars
 def show_element_by_id(context, id):
     assert context.browser.find_by_id(id)
@@ -40,7 +40,7 @@ def show_element_by_id(context, id):
     )
 
 
-@step('I hide the element with id "{id}"')
+@when('I hide the element with id "{id}"')
 @persona_vars
 def hide_element_by_id(context, id):
     assert context.browser.find_by_id(id)
@@ -49,8 +49,8 @@ def hide_element_by_id(context, id):
     )
 
 
-@step('I should see "{text}"')
-@step('I should see "{text}" within {timeout:d} seconds')
+@then('I should see "{text}"')
+@then('I should see "{text}" within {timeout:d} seconds')
 @persona_vars
 def should_see_within_timeout(context, text, timeout=None):
     assert context.browser.is_text_present(
@@ -58,8 +58,8 @@ def should_see_within_timeout(context, text, timeout=None):
     ), f'Text "{text}" not found'
 
 
-@step('I should not see "{text}"')
-@step('I should not see "{text}" within {timeout:d} seconds')
+@then('I should not see "{text}"')
+@then('I should not see "{text}" within {timeout:d} seconds')
 @persona_vars
 def should_not_see_within_timeout(context, text, timeout=None):
     assert context.browser.is_text_not_present(
@@ -67,8 +67,8 @@ def should_not_see_within_timeout(context, text, timeout=None):
     ), f'Text "{text}" was found'
 
 
-@step('I should see an element with id "{id}"')
-@step('I should see an element with id "{id}" within {timeout:d} seconds')
+@then('I should see an element with id "{id}"')
+@then('I should see an element with id "{id}" within {timeout:d} seconds')
 @persona_vars
 def should_see_element_with_id_within_timeout(context, id, timeout=None):
     assert context.browser.is_element_present_by_id(
@@ -76,8 +76,8 @@ def should_see_element_with_id_within_timeout(context, id, timeout=None):
     ), f'Element with id "{id}" not found'
 
 
-@step('I should not see an element with id "{id}"')
-@step('I should not see an element with id "{id}" within {timeout:d} seconds')
+@then('I should not see an element with id "{id}"')
+@then('I should not see an element with id "{id}" within {timeout:d} seconds')
 @persona_vars
 def should_not_see_element_with_id_within_timeout(context, id, timeout=None):
     assert context.browser.is_element_not_present_by_id(
@@ -85,8 +85,8 @@ def should_not_see_element_with_id_within_timeout(context, id, timeout=None):
     ), f'Element with id "{id}" was found'
 
 
-@step('I should see an element with xpath "{xpath}"')
-@step('I should see an element with xpath "{xpath}" within {timeout:d} seconds')
+@then('I should see an element with xpath "{xpath}"')
+@then('I should see an element with xpath "{xpath}" within {timeout:d} seconds')
 @persona_vars
 def should_see_element_with_xpath_within_timeout(context, xpath, timeout=None):
     assert context.browser.is_element_present_by_xpath(
@@ -94,8 +94,8 @@ def should_see_element_with_xpath_within_timeout(context, xpath, timeout=None):
     ), f'Element with xpath "{xpath}" not found'
 
 
-@step('I should not see an element with xpath "{xpath}"')
-@step('I should not see an element with xpath "{xpath}" within {timeout:d} seconds')
+@then('I should not see an element with xpath "{xpath}"')
+@then('I should not see an element with xpath "{xpath}" within {timeout:d} seconds')
 @persona_vars
 def should_not_see_element_with_xpath_within_timeout(context, xpath, timeout=None):
     assert context.browser.is_element_not_present_by_xpath(
@@ -103,12 +103,12 @@ def should_not_see_element_with_xpath_within_timeout(context, xpath, timeout=Non
     ), f'Element with xpath "{xpath}" was found'
 
 
-@step('I execute the script "{script}"')
+@when('I execute the script "{script}"')
 def execute_script(context, script):
     context.browser.execute_script(script)
 
 
-@step('I evaluate the script "{script}" and assign the result to "{key}"')
+@when('I evaluate the script "{script}" and assign the result to "{key}"')
 def evaluate_script(context, script, key):
     assert context.persona is not None, "no persona is setup"
     context.persona[key] = context.browser.evaluate_script(script)

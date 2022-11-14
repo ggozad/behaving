@@ -1,13 +1,13 @@
 from typing import Optional
 
-from behave import step
+from behave import then
 from behaving.web import set_timeout
 
 from .basic import _retry
 
 
-@step('the element with xpath "{xpath}" should have the class "{cls}"')
-@step(
+@then('the element with xpath "{xpath}" should have the class "{cls}"')
+@then(
     'the element with xpath "{xpath}" should have the class "{cls}" within {timeout:d} seconds'
 )
 @set_timeout
@@ -21,8 +21,8 @@ def element_by_xpath_should_have_class_within_timeout(
     assert _retry(check, timeout), "Class is not present on element"
 
 
-@step('the element with xpath "{xpath}" should not have the class "{cls}"')
-@step(
+@then('the element with xpath "{xpath}" should not have the class "{cls}"')
+@then(
     'the element with xpath "{xpath}" should not have the class "{cls}" within {timeout:d} seconds'
 )
 def element_by_xpath_should_not_have_class_within_timeout(
@@ -35,8 +35,8 @@ def element_by_xpath_should_not_have_class_within_timeout(
     assert _retry(check, timeout), "Class is present on element"
 
 
-@step('"{name}" should have the class "{cls}"')
-@step('"{name}" should have the class "{cls}" within {timeout:d} seconds')
+@then('"{name}" should have the class "{cls}"')
+@then('"{name}" should have the class "{cls}" within {timeout:d} seconds')
 def element_should_have_class_within_timeout(
     context, name: str, cls: str, timeout: int = 0
 ):
@@ -49,8 +49,8 @@ def element_should_have_class_within_timeout(
     assert _retry(check, timeout), "Class is not present on element"
 
 
-@step('"{name}" should not have the class "{cls}"')
-@step('"{name}" should not have the class "{cls}" within {timeout:d} seconds')
+@then('"{name}" should not have the class "{cls}"')
+@then('"{name}" should not have the class "{cls}" within {timeout:d} seconds')
 def element_should_not_have_class_within_timeout(
     context, name: str, cls: str, timeout: int = 0
 ):
@@ -63,8 +63,8 @@ def element_should_not_have_class_within_timeout(
     assert _retry(check, timeout), "Class is present on element"
 
 
-@step('I should see an element with the css selector "{css}"')
-@step(
+@then('I should see an element with the css selector "{css}"')
+@then(
     'I should see an element with the css selector "{css}" within {timeout:d} seconds'
 )
 def should_see_element_with_css_within_timeout(
@@ -75,8 +75,8 @@ def should_see_element_with_css_within_timeout(
     ), "Element not found"
 
 
-@step('I should not see an element with the css selector "{css}"')
-@step(
+@then('I should not see an element with the css selector "{css}"')
+@then(
     'I should not see an element with the css selector "{css}" within {timeout:d} seconds'
 )
 def should_not_see_element_with_css_within_timeout(
@@ -87,8 +87,8 @@ def should_not_see_element_with_css_within_timeout(
     ), "Element was found"
 
 
-@step('I should see {n:d} elements with the css selector "{css}"')
-@step(
+@then('I should see {n:d} elements with the css selector "{css}"')
+@then(
     'I should see at least {n:d} elements with the css selector "{css}" within {timeout:d} seconds'
 )
 def should_see_at_least_n_elements_with_css_within_timeout_seconds(
@@ -137,8 +137,8 @@ def _at_least_n_elements_should_be_visible(
     assert _retry(check, timeout), f"Didn't find at least {expected:d} visible elements"
 
 
-@step('the element with the css selector "{css}" should be visible')
-@step(
+@then('the element with the css selector "{css}" should be visible')
+@then(
     'the element with the css selector "{css}" should be visible within {timeout:d} seconds'
 )
 @set_timeout
@@ -148,8 +148,8 @@ def should_see_element_visible_with_css_within_timeout(
     _element_should_be_visible(context, css, timeout)
 
 
-@step('the element with the css selector "{css}" should not be visible')
-@step(
+@then('the element with the css selector "{css}" should not be visible')
+@then(
     'the element with the css selector "{css}" should not be visible within {timeout:d} seconds'
 )
 @set_timeout
@@ -159,8 +159,8 @@ def should_not_see_element_visible_with_css_within_timeout(
     _element_should_not_be_visible(context, css, timeout)
 
 
-@step('{n:d} elements with the css selector "{css}" should be visible')
-@step(
+@then('{n:d} elements with the css selector "{css}" should be visible')
+@then(
     '{n:d} elements with the css selector "{css}" should be visible within {timeout:d} seconds'
 )
 @set_timeout
@@ -170,8 +170,8 @@ def should_see_n_elements_visible_with_css_within_timeout(
     _n_elements_should_be_visible(context, n, css, timeout)
 
 
-@step('at least {n:d} elements with the css selector "{css}" should be visible')
-@step(
+@then('at least {n:d} elements with the css selector "{css}" should be visible')
+@then(
     'at least {n:d} elements with the css selector "{css}" should be visible within {timeout:d} seconds'
 )
 @set_timeout

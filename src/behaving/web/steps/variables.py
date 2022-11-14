@@ -1,8 +1,8 @@
-from behave import step
+from behave import when
 from splinter.exceptions import ElementDoesNotExist
 
 
-@step('I set "{key}" to the text of "{name}"')
+@when('I set "{key}" to the text of "{name}"')
 def set_key_to_el_text(context, key, name):
     assert context.persona is not None, u"no persona is setup"
     el = context.browser.find_by_xpath(
@@ -12,7 +12,7 @@ def set_key_to_el_text(context, key, name):
     context.persona[key] = el.first.text
 
 
-@step('I set "{key}" to the attribute "{attr}" of the element with xpath "{xpath}"')
+@when('I set "{key}" to the attribute "{attr}" of the element with xpath "{xpath}"')
 def set_key_to_xpath_attr(context, key, attr, xpath):
     assert context.persona is not None, u"no persona is setup"
     try:

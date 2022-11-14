@@ -1,14 +1,10 @@
 import ast
 import json
+from urllib.error import HTTPError
+from urllib.request import Request, urlopen
 
-from behave import step
+from behave import then, when
 from behaving.personas.persona import persona_vars
-
-try:
-    from urllib2 import HTTPError, Request, urlopen
-except ImportError:
-    from urllib.error import HTTPError
-    from urllib.request import Request, urlopen
 
 
 def extract(dict_in, dict_out):
@@ -27,7 +23,7 @@ def match(data, query):
     return True
 
 
-@step(u'I should receive a gcm notification at "{device_id}" containing "{message}"')
+@then(u'I should receive a gcm notification at "{device_id}" containing "{message}"')
 @persona_vars
 def should_receive_gcm_with_message(context, device_id, message):
     query = ast.literal_eval(message)
@@ -41,14 +37,14 @@ def should_receive_gcm_with_message(context, device_id, message):
     assert False, "Message not Found"
 
 
-@step(u'I should not have received any gcm notifications at "{device_id}"')
+@then(u'I should not have received any gcm notifications at "{device_id}"')
 @persona_vars
 def should_not_have_received_gcm(context, device_id):
     notifications = context.gcm.user_messages(device_id)
     assert len(notifications) == 0, "Have received notifications"
 
 
-@step('I send a gcm message "{message}"')
+@when('I send a gcm message "{message}"')
 def send_gcm_notification(context, message):
 
     url = "http://localhost:8200"

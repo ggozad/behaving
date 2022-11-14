@@ -8,7 +8,6 @@ import time
 
 try:
     from pync import Notifier
-
     notifier = Notifier
 except ImportError:
     notifier = None

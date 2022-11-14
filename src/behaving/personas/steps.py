@@ -1,8 +1,8 @@
-from behave import step
+from behave import given, then, when
 from behaving.personas.persona import Persona, persona_vars
 
 
-@step(u'"{name}" as the persona')
+@given(u'"{name}" as the persona')
 def given_a_persona(context, name):
 
     if name not in context.personas:
@@ -11,21 +11,21 @@ def given_a_persona(context, name):
     context.execute_steps(f'Given browser "{name}"')
 
 
-@step(u'I set "{key}" to "{val}"')
+@when(u'I set "{key}" to "{val}"')
 @persona_vars
 def set_variable(context, key, val):
     assert context.persona is not None, u"no persona is setup"
     context.persona[key] = val
 
 
-@step(u'I set "{key}" to')
+@when(u'I set "{key}" to')
 @persona_vars
 def set_variable_text(context, key):
     assert context.persona is not None, u"no persona is setup"
     context.persona[key] = context.text
 
 
-@step(u'"{key}" is set to "{val}"')
+@then(u'"{key}" is set to "{val}"')
 @persona_vars
 def key_is_val(context, key, val):
     assert context.persona is not None, u"no persona is setup"
@@ -35,14 +35,14 @@ def key_is_val(context, key, val):
     )
 
 
-@step(u'"{key}" is a dictionary')
+@then(u'"{key}" is a dictionary')
 @persona_vars
 def key_is_dict(context, key):
     assert context.persona is not None, u"no persona is setup"
     assert type(context.persona[key]) == dict, f"{type(key)} is not a dictionary"
 
 
-@step(u'I clone persona "{source}" to "{target}"')
+@when(u'I clone persona "{source}" to "{target}"')
 def clone_persona(context, source, target):
     assert source in context.personas, f"Persona {source} does not exist"
     if target not in context.personas:

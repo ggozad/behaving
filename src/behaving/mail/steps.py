@@ -7,7 +7,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from behave import step
+from behave import then, when
 from behaving.personas.persona import persona_vars
 
 MAIL_TIMEOUT = 5
@@ -18,7 +18,7 @@ URL_RE = re.compile(
 )
 
 
-@step(u'I should receive an email at "{address}" containing "{text}"')
+@then(u'I should receive an email at "{address}" containing "{text}"')
 @persona_vars
 def should_receive_email_containing_text(context, address, text):
     def filter_contents(mail):
@@ -30,7 +30,7 @@ def should_receive_email_containing_text(context, address, text):
     ), u"Text not found in email"
 
 
-@step(u'I should receive an email at "{address}" with subject "{subject}"')
+@then(u'I should receive an email at "{address}" with subject "{subject}"')
 @persona_vars
 def should_receive_email_with_subject(context, address, subject):
     def get_subject_from_mail(mail):
@@ -44,7 +44,7 @@ def should_receive_email_with_subject(context, address, subject):
     assert context.mail.user_messages(address, filter_contents), u"message not found"
 
 
-@step(u'I should receive an email at "{address}" with attachment "{filename}"')
+@then(u'I should receive an email at "{address}" with attachment "{filename}"')
 @persona_vars
 def should_receive_email_with_attachment(context, address, filename):
     def filter_contents(mail):
@@ -59,13 +59,13 @@ def should_receive_email_with_attachment(context, address, filename):
     assert context.mail.user_messages(address, filter_contents), u"message not found"
 
 
-@step(u'I should receive an email at "{address}"')
+@then(u'I should receive an email at "{address}"')
 @persona_vars
 def should_receive_email(context, address):
     assert context.mail.user_messages(address), u"message not found"
 
 
-@step(u'I click the link in the email I received at "{address}"')
+@when(u'I click the link in the email I received at "{address}"')
 @persona_vars
 def click_link_in_email(context, address):
     mails = context.mail.user_messages(address)
@@ -82,7 +82,7 @@ def click_link_in_email(context, address):
     context.browser.visit(url)
 
 
-@step(u'I parse the email I received at "{address}" and set "{expression}"')
+@when(u'I parse the email I received at "{address}" and set "{expression}"')
 @persona_vars
 def parse_email_set_var(context, address, expression):
     assert context.persona is not None, u"no persona is setup"
@@ -123,7 +123,7 @@ def parse_text(context, text, expression):
         context.persona[key] = val
 
 
-@step(
+@when(
     'I send an email to "{to}" with subject "{subject}" and body "{body}" and attachment "{filename}"'
 )
 @persona_vars
@@ -145,7 +145,7 @@ def send_email_attachment(context, to, subject, body, filename):
     s.quit()
 
 
-@step('I send an email to "{to}" with subject "{subject}" and body "{body}"')
+@when('I send an email to "{to}" with subject "{subject}" and body "{body}"')
 @persona_vars
 def send_email(context, to, subject, body):
     msg = MIMEText(body)
@@ -155,13 +155,13 @@ def send_email(context, to, subject, body):
     s.quit()
 
 
-@step('I should not have received any emails at "{address}"')
+@then('I should not have received any emails at "{address}"')
 @persona_vars
 def should_receive_no_messages(context, address):
     assert context.mail.messages_for_user(address) == [], u"Messages have been received"
 
 
-@step("I clear the email messages")
+@when("I clear the email messages")
 @persona_vars
 def clear_messages(context):
     context.mail.clear()

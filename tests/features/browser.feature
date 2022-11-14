@@ -73,23 +73,23 @@ Feature: Browser handling
     Scenario: Create Named Browser visit a site and close by name.
         Given Browser "aBrowser"
         When I visit "http://web"
-        Then I wait for 4 seconds
+        When I wait for 4 seconds
         And I close the browser "aBrowser"
         Given Browser "anotherBrowser"
         When I visit "http://web"
-        Then I wait for 4 seconds
+        And I wait for 4 seconds
         And I close the browser "anotherBrowser"
 
     @web
     Scenario: Create Personas and Close their respective browsers.
         Given "Foo" as the persona
         When I visit "http://web"
-        Then I wait for 4 seconds
+        When I wait for 4 seconds
 
         Given "Bar" as the persona
         When I visit "http://web"
-        Then I wait for 4 seconds
+        And I wait for 4 seconds
         And I close the browser "Bar"
 
-        Then I wait for 4 seconds
+        When I wait for 4 seconds
         And I close the browser "Foo"

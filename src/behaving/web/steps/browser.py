@@ -1,18 +1,18 @@
 import os
 import time
 
-from behave import step
+from behave import given, when
 from selenium.common.exceptions import WebDriverException
 from splinter.browser import Browser
 
 
-@step(u"{brand} as the default browser")
+@given(u"{brand} as the default browser")
 def given_some_browser(context, brand):
     brand = brand.lower()
     context.default_browser = brand
 
 
-@step(u"a browser")
+@given(u"a browser")
 def given_a_browser(context):
     if getattr(context, "headless", None):
         context.browser_args["headless"] = True
@@ -22,7 +22,7 @@ def given_a_browser(context):
     named_browser(context, "")
 
 
-@step(u'browser "{name}"')
+@given(u'browser "{name}"')
 def named_browser(context, name):
     if getattr(context, "headless", None):
         context.browser_args["headless"] = True
@@ -61,71 +61,71 @@ def named_browser(context, name):
     context.browser = context.browsers[name]
 
 
-@step(u'the electron app "{app_path}"')
+@given(u'the electron app "{app_path}"')
 def given_an_electron_app(context, app_path):
     assert os.path.isfile(app_path), u"Electron app not found"
     app_path = os.path.abspath(app_path)
     context.electron_app = app_path
 
 
-@step(u'I close the browser "{name}"')
+@when(u'I close the browser "{name}"')
 def close_browser(context, name):
     context.browsers[name].driver.close()
     del context.browsers[name]
 
 
-@step(u"I reload")
+@when(u"I reload")
 def reload(context):
     context.browser.reload()
 
 
-@step(u"I go back")
+@when(u"I go back")
 def go_back(context):
 
     context.browser.back()
 
 
-@step(u"I go forward")
+@when(u"I go forward")
 def go_forward(context):
     context.browser.forward()
 
 
-@step(u'I set the cookie "{key}" to "{value}"')
+@when(u'I set the cookie "{key}" to "{value}"')
 def set_cookie(context, key, value):
     context.browser.cookies.add({key: value})
 
 
-@step(u'I delete the cookie "{key}"')
+@when(u'I delete the cookie "{key}"')
 def delete_cookie(context, key):
     context.browser.cookies.delete(key)
 
 
-@step(u"I delete all cookies")
+@when(u"I delete all cookies")
 def delete_all_cookies(context):
     context.browser.cookies.delete()
 
 
-@step(u"I clear the localStorage")
+@when(u"I clear the localStorage")
 def clear_local_storage(context):
     context.browser.execute_script("localStorage.clear();")
 
 
-@step(u"I clear the sessionStorage")
+@when(u"I clear the sessionStorage")
 def clear_session_storage(context):
     context.browser.execute_script("sessionStorage.clear();")
 
 
-@step(u"I clear the browser storage")
+@when(u"I clear the browser storage")
 def clear_browser_storage(context):
     context.browser.execute_script("localStorage.clear();sessionStorage.clear();")
 
 
-@step(u"I resize the browser to {width}x{height}")
+@when(u"I resize the browser to {width}x{height}")
 def resize_browser(context, width, height):
     context.browser.driver.set_window_size(int(width), int(height))
 
 
-@step(u"I resize the viewport to {width}x{height}")
+@when(u"I resize the viewport to {width}x{height}")
 def resize_viewport(context, width, height):
     width = int(width)
     height = int(height)
@@ -141,12 +141,12 @@ def resize_viewport(context, width, height):
     )
 
 
-@step(u"I maximize the browser's window")
+@when(u"I maximize the browser's window")
 def maximize_window(context):
     context.browser.driver.maximize_window()
 
 
-@step(u"I take a screenshot")
+@when(u"I take a screenshot")
 def take_screenshot(context):
 
     assert context.screenshots_dir != "", u"no screenshots_dir specified"
