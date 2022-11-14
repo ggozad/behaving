@@ -1,13 +1,11 @@
 import email
-from email.header import decode_header, make_header
-from email.mime.base import MIMEBase
-from email.header import Header
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-import re
 import os.path
-from subprocess import check_output
+import re
+import smtplib
+from email.header import Header, decode_header, make_header
+from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 from behave import step
 from behaving.personas.persona import persona_vars

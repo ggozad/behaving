@@ -5,12 +5,12 @@ import subprocess
 import sys
 
 try:
-    from SimpleHTTPServer import SimpleHTTPRequestHandler
     import SocketServer
+    from SimpleHTTPServer import SimpleHTTPRequestHandler
     from urlparse import parse_qs
 except ImportError:
-    from http.server import SimpleHTTPRequestHandler
     import socketserver as SocketServer
+    from http.server import SimpleHTTPRequestHandler
     from urllib.parse import parse_qs
 
 try:

@@ -3,9 +3,8 @@ try:
 except ImportError:
     from urllib.parse import urljoin, urlparse
 from behave import step
-from behaving.utils import parse_text
-
 from behaving.personas.persona import persona_vars
+from behaving.utils import parse_text
 
 
 @step(u'the base url "{url}"')

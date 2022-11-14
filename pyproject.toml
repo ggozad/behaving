@@ -43,7 +43,7 @@ line-length = 88
 
 # Enable Flake's "E" and "F" codes by default and "I" for sorting imports.
 select = ["E", "F", "I"]
-ignore = []
+ignore = ["E501"]
 
 # Exclude a variety of commonly ignored directories.
 exclude = [

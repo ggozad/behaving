@@ -1,7 +1,7 @@
 from behave import step
-from selenium.common.exceptions import NoAlertPresentException
 from behaving.personas.persona import persona_vars
 from behaving.web.steps.basic import _retry
+from selenium.common.exceptions import NoAlertPresentException
 
 
 @step(u"I should see an alert")

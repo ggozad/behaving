@@ -1,6 +1,6 @@
 from behave import when
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
 
 
 @when(u'I switch to frame with css "{css}"')

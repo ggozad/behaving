@@ -1,9 +1,8 @@
-from behaving.web import environment as webenv
-from behaving.sms import environment as smsenv
 from behaving.mail import environment as mailenv
 from behaving.notifications.gcm import environment as gcmenv
-
 from behaving.personas import environment as personaenv
+from behaving.sms import environment as smsenv
+from behaving.web import environment as webenv
 
 
 def before_all(context):

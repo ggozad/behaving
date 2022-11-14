@@ -1,7 +1,5 @@
 from behave import step
-
-from behaving.personas.persona import Persona
-from behaving.personas.persona import persona_vars
+from behaving.personas.persona import Persona, persona_vars
 
 
 @step(u'"{name}" as the persona')
