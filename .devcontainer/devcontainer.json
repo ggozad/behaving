@@ -26,13 +26,14 @@
   "settings": {
     "python.formatting.provider": "black",
     "python.formatting.blackPath":"/usr/local/bin/black",
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true,
-    "python.linting.flake8Path": "/usr/local/bin/flake8",
     "restructuredtext.confPath": "",
-    "python.linting.mypyEnabled": false,
     "python.analysis.extraPaths": ["/usr/local/lib/python3.10/site-packages"],
     "editor.formatOnSave": true,
+    "ruff.path": ["/usr/local/bin/ruff"],
+    "ruff.args": [
+      "--config",
+      "/app/pyproject.toml"
+    ],
     "[yml]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.formatOnSave": true
@@ -54,6 +55,7 @@
   "extensions": [
     "ms-python.python",
     "iteratec.bdd-power-tools",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "charliermarsh.ruff"
   ]
 }

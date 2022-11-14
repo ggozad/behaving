@@ -125,19 +125,6 @@ pyreadline = {version = "*", markers = "platform_system == \"Windows\""}
 pyrepl = ">=0.8.2"
 
 [[package]]
-name = "flake8"
-version = "4.0.1"
-description = "the modular source code checker: pep8 pyflakes and co"
-category = "dev"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-mccabe = ">=0.6.0,<0.7.0"
-pycodestyle = ">=2.8.0,<2.9.0"
-pyflakes = ">=2.4.0,<2.5.0"
-
-[[package]]
 name = "h11"
 version = "0.14.0"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
@@ -152,14 +139,6 @@ description = "Internationalized Domain Names in Applications (IDNA)"
 category = "main"
 optional = false
 python-versions = ">=3.5"
-
-[[package]]
-name = "mccabe"
-version = "0.6.1"
-description = "McCabe checker, plugin for flake8"
-category = "dev"
-optional = false
-python-versions = "*"
 
 [[package]]
 name = "mypy-extensions"
@@ -242,26 +221,10 @@ docs = ["furo (>=2021.7.5b38)", "proselint (>=0.10.2)", "sphinx (>=4)", "sphinx-
 test = ["appdirs (==1.4.4)", "pytest (>=6)", "pytest-cov (>=2.7)", "pytest-mock (>=3.6)"]
 
 [[package]]
-name = "pycodestyle"
-version = "2.8.0"
-description = "Python style guide checker"
-category = "dev"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-
-[[package]]
 name = "pycparser"
 version = "2.21"
 description = "C parser in Python"
 category = "main"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-
-[[package]]
-name = "pyflakes"
-version = "2.4.0"
-description = "passive checker of Python programs"
-category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
@@ -299,6 +262,14 @@ description = "A Python SOCKS client module. See https://github.com/Anorov/PySoc
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[[package]]
+name = "ruff"
+version = "0.0.117"
+description = "An extremely fast Python linter, written in Rust."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
 
 [[package]]
 name = "selenium"
@@ -439,7 +410,7 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "1714a3a76a5b2f7d681919bef0e7d69e4312452eddb880306a5898ba27c03475"
+content-hash = "56ab6fdde3fdef7e11c83aec8fba5a333a8ff5919afa3bd058afeae54eb82725"
 
 [metadata.files]
 async-generator = [
@@ -544,10 +515,6 @@ fancycompleter = [
     {file = "fancycompleter-0.9.1-py3-none-any.whl", hash = "sha256:dd076bca7d9d524cc7f25ec8f35ef95388ffef9ef46def4d3d25e9b044ad7080"},
     {file = "fancycompleter-0.9.1.tar.gz", hash = "sha256:09e0feb8ae242abdfd7ef2ba55069a46f011814a80fe5476be48f51b00247272"},
 ]
-flake8 = [
-    {file = "flake8-4.0.1-py2.py3-none-any.whl", hash = "sha256:479b1304f72536a55948cb40a32dce8bb0ffe3501e26eaf292c7e60eb5e0428d"},
-    {file = "flake8-4.0.1.tar.gz", hash = "sha256:806e034dda44114815e23c16ef92f95c91e4c71100ff52813adf7132a6ad870d"},
-]
 h11 = [
     {file = "h11-0.14.0-py3-none-any.whl", hash = "sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761"},
     {file = "h11-0.14.0.tar.gz", hash = "sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d"},
@@ -555,10 +522,6 @@ h11 = [
 idna = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
-]
-mccabe = [
-    {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},
-    {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
@@ -587,17 +550,9 @@ platformdirs = [
     {file = "platformdirs-2.5.2-py3-none-any.whl", hash = "sha256:027d8e83a2d7de06bbac4e5ef7e023c02b863d7ea5d079477e722bb41ab25788"},
     {file = "platformdirs-2.5.2.tar.gz", hash = "sha256:58c8abb07dcb441e6ee4b11d8df0ac856038f944ab98b7be6b27b2a3c7feef19"},
 ]
-pycodestyle = [
-    {file = "pycodestyle-2.8.0-py2.py3-none-any.whl", hash = "sha256:720f8b39dde8b293825e7ff02c475f3077124006db4f440dcbc9a20b76548a20"},
-    {file = "pycodestyle-2.8.0.tar.gz", hash = "sha256:eddd5847ef438ea1c7870ca7eb78a9d47ce0cdb4851a5523949f2601d0cbbe7f"},
-]
 pycparser = [
     {file = "pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
     {file = "pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
-]
-pyflakes = [
-    {file = "pyflakes-2.4.0-py2.py3-none-any.whl", hash = "sha256:3bb3a3f256f4b7968c9c788781e4ff07dce46bdf12339dcda61053375426ee2e"},
-    {file = "pyflakes-2.4.0.tar.gz", hash = "sha256:05a85c2872edf37a4ed30b0cce2f6093e1d0581f8c19d7393122da7e25b2b24c"},
 ]
 Pygments = [
     {file = "Pygments-2.13.0-py3-none-any.whl", hash = "sha256:f643f331ab57ba3c9d89212ee4a2dabc6e94f117cf4eefde99a0574720d14c42"},
@@ -613,6 +568,24 @@ pysocks = [
     {file = "PySocks-1.7.1-py27-none-any.whl", hash = "sha256:08e69f092cc6dbe92a0fdd16eeb9b9ffbc13cadfe5ca4c7bd92ffb078b293299"},
     {file = "PySocks-1.7.1-py3-none-any.whl", hash = "sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5"},
     {file = "PySocks-1.7.1.tar.gz", hash = "sha256:3f8804571ebe159c380ac6de37643bb4685970655d3bba243530d6558b799aa0"},
+]
+ruff = [
+    {file = "ruff-0.0.117-py3-none-macosx_10_7_x86_64.whl", hash = "sha256:cb274e0447e91a1a7844b85cd0ef243d32732a4772140129f33bbc8891ca8577"},
+    {file = "ruff-0.0.117-py3-none-macosx_10_9_x86_64.macosx_11_0_arm64.macosx_10_9_universal2.whl", hash = "sha256:a670ccea678f1ddd9f9cac1a5681be8bf3b33010e56058d16b270dfb9b893b95"},
+    {file = "ruff-0.0.117-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:e0b624a7f3b617cccc89ce2fd2d7d5cb531bf9487b4a46574589883e1d0baea6"},
+    {file = "ruff-0.0.117-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:93d1dec6f04bbd3624624e7a48688592711cca1f725f7e85d20aca78690b19d4"},
+    {file = "ruff-0.0.117-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:4945fb95b0e5e933a00603809cbcca86e10f67ed6a65dbfc72bdaa69009d6c7d"},
+    {file = "ruff-0.0.117-py3-none-manylinux_2_17_ppc64.manylinux2014_ppc64.whl", hash = "sha256:055579c91988f82733c06bdf7f55a34c6435661275809bb2ed6cff89b8edd4ca"},
+    {file = "ruff-0.0.117-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:55b15aa90be50a6441e25ed72de44101a1817e5be56ef555b75af14a54d745f5"},
+    {file = "ruff-0.0.117-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:283211cd87811a5355f67c5c6baf9b4509a5ff97c8c2112123c65c45a4d8d646"},
+    {file = "ruff-0.0.117-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:d2dadc46b4cb00e6b93e673ddac5264984590581fa938ccd75517a8fac7e59ff"},
+    {file = "ruff-0.0.117-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:0ef99ddc3dacf53549f00969d7d72944ee4d454733bfb939e247a4d7fc255e7e"},
+    {file = "ruff-0.0.117-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:091caf1c083a8520c6244209c237312574f899ddc58bcf27a0a19a03a24ea6fa"},
+    {file = "ruff-0.0.117-py3-none-musllinux_1_2_i686.whl", hash = "sha256:0d07118d2e5b99d6be92b192a68188ca62353dde653e00fd3b4a05724b667e5d"},
+    {file = "ruff-0.0.117-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:79f514ae00fcb34934b5545d922a9b330dc41b085a0cc28a3f2d579279144dc7"},
+    {file = "ruff-0.0.117-py3-none-win32.whl", hash = "sha256:77415f8c20a7a4c992c0c6cb34954e14d6eb403c5170366dfebefb87b40b1f77"},
+    {file = "ruff-0.0.117-py3-none-win_amd64.whl", hash = "sha256:5b97cdf01b51bd166488a5f85af1694184d6617f4744dc59720d0b2a27c5ac09"},
+    {file = "ruff-0.0.117.tar.gz", hash = "sha256:c01d8bb7b430f91f8a0aef055228759454babb69fc28a0e232adf2ba1c6bf112"},
 ]
 selenium = [
     {file = "selenium-4.6.0-py3-none-any.whl", hash = "sha256:3f1999875ef487ae676a254e7293a68041f1f1ec76be81402d8a1cd5a481bf3b"},
