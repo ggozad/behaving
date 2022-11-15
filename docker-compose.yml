@@ -31,13 +31,7 @@ services:
     volumes:
       - ./src:/app/src
       - ./tests:/app/tests
-      - ./var/log:/app/var/log
-      - ./var/screenshots:/app/var/screenshots
-      - ./var/mail:/app/var/mail
-      - ./var/sms:/app/var/sms
-      - ./var/gcm:/app/var/gcm
-      - ./var/downloads:/app/var/downloads
-      - ./var/reports:/app/reports
+      - ./var:/app/var
 
   firefox:
     image: selenoid/firefox:latest
@@ -71,7 +65,7 @@ services:
         "-log-output-dir",
         "/opt/selenoid/logs",
         "-container-network",
-        "behaving",
+        "behaving"
       ]
     ports:
       - "4444:4444"
@@ -82,4 +76,4 @@ services:
       - behaving
     ports:
       - "8082:8080"
-    command: ["--selenoid-uri", "http://selenoid:4444"]
+    command: [ "--selenoid-uri", "http://selenoid:4444" ]

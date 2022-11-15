@@ -21,15 +21,9 @@ RUN mkdir /app/var && mkdir /app/var/log && mkdir /app/var/mail && mkdir /app/va
 WORKDIR /app
 RUN poetry config virtualenvs.create false
 RUN poetry install
-
 RUN useradd -ms /bin/bash behaving
-
 RUN chown -R behaving /app
-
 USER behaving
 
-# Just wait forever
-# ENTRYPOINT ["tail"]
-# CMD ["sleep", "infinity"]
 
 ENTRYPOINT [ "supervisord" ]
