@@ -26,8 +26,6 @@
   "settings": {
     "python.formatting.provider": "black",
     "python.formatting.blackPath":"/usr/local/bin/black",
-    "python.linting.run": "onSave",
-    "restructuredtext.confPath": "",
     "python.analysis.extraPaths": ["/usr/local/lib/python3.10/site-packages"],
     "editor.formatOnSave": true,
     "ruff.path": ["/usr/local/bin/ruff"],
