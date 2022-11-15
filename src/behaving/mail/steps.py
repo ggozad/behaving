@@ -9,7 +9,7 @@ from email.mime.text import MIMEText
 
 from behave import then, when
 from behaving.personas.persona import persona_vars
-
+from behaving.utils import deprecated
 MAIL_TIMEOUT = 5
 URL_RE = re.compile(
     r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|\
@@ -17,7 +17,7 @@ URL_RE = re.compile(
     re.I | re.S | re.U,
 )
 
-
+@deprecated('I should receive an email at "{address}" containing "{text}"', 'I should receive an email at "{address}" containing "{text}"')
 @then(u'I should receive an email at "{address}" containing "{text}"')
 @persona_vars
 def should_receive_email_containing_text(context, address, text):
@@ -29,7 +29,6 @@ def should_receive_email_containing_text(context, address, text):
         address, filter_contents
     ), u"Text not found in email"
 
-
 @then(u'I should receive an email at "{address}" with subject "{subject}"')
 @persona_vars
 def should_receive_email_with_subject(context, address, subject):
@@ -40,7 +39,6 @@ def should_receive_email_with_subject(context, address, subject):
     def filter_contents(mail):
         mail = email.message_from_string(mail)
         return subject == get_subject_from_mail(mail)
-
     assert context.mail.user_messages(address, filter_contents), u"message not found"
 
 
