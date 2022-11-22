@@ -9,8 +9,11 @@ Feature: Forms
         Then "disabled" should be disabled
         And "name" should be enabled
         When I fill in "name" with "Foo Bar"
-        And I fill in "passwd" with "hax0r"
-        And I choose "male" from "sex"
+        Then field "name" should have the value "Foo Bar"
+        
+        When I fill in "passwd" with "hax0r"
+        Then field "passwd" should have the value "hax0r" within 1 seconds
+        When I choose "male" from "sex"
         And I check "subscribe"
         And I uncheck "digest"
         And I toggle "digest"

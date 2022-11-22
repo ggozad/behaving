@@ -1,16 +1,13 @@
 Changelog
 =========
 
-3.1.2 - 
-------------------
-
-- Add timeout for field value
-  [mceike, ggozad]
-
 3.1.1 - 
 ------------------
 
-- Do not use @step decorator, be explicit about the step type
+- Add timeout for field value.
+  [mceike, ggozad]
+
+- Do not use @step decorator, be explicit about the step type.
   [ggozad]
 
 - Use ruff for linting.
