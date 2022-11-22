@@ -1,6 +1,12 @@
 Changelog
 =========
 
+3.1.2 - 
+------------------
+
+- Add timeout for field value
+  [mceike, ggozad]
+
 3.1.1 - 
 ------------------
 

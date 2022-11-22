@@ -517,6 +517,7 @@ as well as the directory to output data as parameters. For example,
   - When I send "`KEY`" to "`name`"
   - When I focus on "`name`"
   - Then field "`name`" should have the value "`value`"
+  - Then field "`name`" should have the value "`value`" within `timeout` seconds
   - Then "`name`" should be enabled
   - Then "`name`" should be disabled
   - Then "`name`" should not be enabled

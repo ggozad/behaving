@@ -180,10 +180,11 @@ def set_html_content_to_element_with_class(context, klass, contents):
 
 
 @then(u'field "{name}" should have the value "{value}"')
+@then(u'field "{name}" should have the value "{value}" within {timeout:d} seconds')
 @persona_vars
-def field_has_value(context, name, value):
+def field_has_value_within_timeout(context, name, value, timeout=None):
     el = context.browser.find_by_xpath(
-        ("//*[@id='%(name)s']|" "//*[@name='%(name)s']") % {"name": name}
+        ("//*[@id='%(name)s']|" "//*[@name='%(name)s']") % {"name": name}, wait_time=timeout
     )
     assert el, u"Element not found"
     assert el.first.value == value, "Values do not match, expected %s but got %s" % (
