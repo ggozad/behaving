@@ -639,7 +639,7 @@ A `Dockerfile` as well as a complete setup using `docker-compose` are provided t
 In addition we provide pre-build images on docker hub for the `linux/amd64` and `linux/arm64` platforms. Use
 
 ```bash
-docker pull ggozadinos/behaving:latest
+docker pull behaving/behaving:latest
 ```
 
 to pull the image.

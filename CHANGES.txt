@@ -1,8 +1,11 @@
 Changelog
 =========
 
-3.1.1 - 
+3.1.1 - 2022-11-24
 ------------------
+
+- behaving now a Docker-sponsored project.
+  [ggozad]
 
 - Add timeout for field value.
   [mceike, ggozad]
