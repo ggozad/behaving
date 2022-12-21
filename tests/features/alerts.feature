@@ -1,5 +1,4 @@
-Feature: Text presence
-
+Feature: Alerts & prompts
 
     @web
     Scenario: Alert

@@ -10,7 +10,7 @@ Feature: Forms
         And "name" should be enabled
         When I fill in "name" with "Foo Bar"
         Then field "name" should have the value "Foo Bar"
-        
+
         When I fill in "passwd" with "hax0r"
         Then field "passwd" should have the value "hax0r" within 1 seconds
         When I choose "male" from "sex"

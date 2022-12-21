@@ -1,6 +1,12 @@
 Changelog
 =========
 
+3.1.2 - 
+------------------
+
+- Use gherkin-lint for linting .feature files.
+  [ggozad]
+
 3.1.1 - 2022-11-24
 ------------------
 

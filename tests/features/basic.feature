@@ -1,6 +1,5 @@
 Feature: Text presence
 
-
     @web
     Scenario: Text presence
         Given a browser

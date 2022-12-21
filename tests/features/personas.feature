@@ -33,8 +33,6 @@ Feature: Use Personas
             """
         Then "bar" is set to "Hello wørld"
 
-
-
     @personas
     Scenario: Escaped persona variables
         Given "Foo" as the persona
@@ -45,7 +43,6 @@ Feature: Use Personas
         When I set "bar" to "\$1.00 Dollars"
         Then "bar" is set to "\$1.00 Dollars"
         And "bar" is set to "$foo Dollars"
-
 
     @personas
     Scenario: Clone persona
