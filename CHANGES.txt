@@ -4,6 +4,9 @@ Changelog
 3.1.2 - 
 ------------------
 
+- Respect base_url when opening new windows. Fixes #129
+  [ggozad]
+
 - Use gherkin-lint for linting .feature files.
   [ggozad]
 

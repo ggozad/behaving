@@ -25,3 +25,11 @@ Feature: Windows
         When I switch to the window named "window1"
         Then I should see "I'm window 1"
         But I should not see "I'm window 2"
+
+    Scenario: It can open a new window with relative urls when base_url is set.
+        Given a browser
+        Given the base url "http://web"
+        When I open a new window named "window1" at "/window1.html"
+        Then I should see "I'm window 1"
+        When I open a new window named "window2" at "http://web/window2.html"
+        Then I should see "I'm window 2"
