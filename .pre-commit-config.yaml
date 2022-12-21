@@ -1,9 +1,13 @@
 repos:
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.118
+    rev: v0.0.189
     hooks:
       - id: ruff
   - repo: https://github.com/psf/black
-    rev: 22.10.0
+    rev: 22.12.0
     hooks:
       - id: black
+  - repo: git://github.com/ggozad/gherkin-check
+    rev: "v0.1.0" # Use the sha or tag you want to point at
+    hooks:
+      - id: gherkin-check
