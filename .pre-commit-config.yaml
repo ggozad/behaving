@@ -7,7 +7,7 @@ repos:
     rev: 22.12.0
     hooks:
       - id: black
-  - repo: git://github.com/ggozad/gherkin-check
+  - repo: https://github.com/ggozad/gherkin-check
     rev: "v0.1.0" # Use the sha or tag you want to point at
     hooks:
       - id: gherkin-check
