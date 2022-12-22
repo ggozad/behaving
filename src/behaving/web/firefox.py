@@ -6,10 +6,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.firefox.options import Options
 from splinter.browser import _DRIVERS
-from splinter.driver.webdriver import (
-    BaseWebDriver,
-    WebDriverElement as WebDriverElement,
-)
+from splinter.driver.webdriver import BaseWebDriver
+from splinter.driver.webdriver import WebDriverElement as WebDriverElement
 from splinter.driver.webdriver.cookie_manager import CookieManager
 
 _DOWNLOAD_PATH = "/tmp"

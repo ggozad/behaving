@@ -4,6 +4,7 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from behave import then, when
+
 from behaving.personas.persona import persona_vars
 
 
@@ -23,7 +24,7 @@ def match(data, query):
     return True
 
 
-@then(u'I should receive a gcm notification at "{device_id}" containing "{message}"')
+@then('I should receive a gcm notification at "{device_id}" containing "{message}"')
 @persona_vars
 def should_receive_gcm_with_message(context, device_id, message):
     query = ast.literal_eval(message)
@@ -37,7 +38,7 @@ def should_receive_gcm_with_message(context, device_id, message):
     assert False, "Message not Found"
 
 
-@then(u'I should not have received any gcm notifications at "{device_id}"')
+@then('I should not have received any gcm notifications at "{device_id}"')
 @persona_vars
 def should_not_have_received_gcm(context, device_id):
     notifications = context.gcm.user_messages(device_id)
@@ -53,4 +54,4 @@ def send_gcm_notification(context, message):
     try:
         urlopen(req)
     except (HTTPError,):
-        assert False, u"Unable to send gcm message"
+        assert False, "Unable to send gcm message"

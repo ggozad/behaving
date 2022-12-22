@@ -1,6 +1,7 @@
 from behave import then
-from behaving.personas.persona import persona_vars
 from splinter.exceptions import ElementDoesNotExist
+
+from behaving.personas.persona import persona_vars
 
 
 def _process_table(table):

@@ -35,7 +35,7 @@ smsmock = "behaving.sms.mock:main"
 gcmmock = "behaving.notifications.gcm.mock:main"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.0.117"
+ruff = "^0.0.190"
 
 [tool.ruff]
 

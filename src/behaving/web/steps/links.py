@@ -1,8 +1,9 @@
 from behave import when
+
 from behaving.personas.persona import persona_vars
 
 
-@when(u'I click the link to "{url}"')
+@when('I click the link to "{url}"')
 @persona_vars
 def click_link_to_url(context, url):
     el = context.browser.links.find_by_href(url).first
@@ -10,7 +11,7 @@ def click_link_to_url(context, url):
     el.click()
 
 
-@when(u'I click the link to a url that contains "{url}"')
+@when('I click the link to a url that contains "{url}"')
 @persona_vars
 def click_link_to_url_that_contains(context, url):
     el = context.browser.links.find_by_partial_href(url).first
@@ -18,7 +19,7 @@ def click_link_to_url_that_contains(context, url):
     el.click()
 
 
-@when(u'I click the link with text "{text}"')
+@when('I click the link with text "{text}"')
 @persona_vars
 def click_link_with_text(context, text):
     el = context.browser.links.find_by_text(text).first
@@ -26,7 +27,7 @@ def click_link_with_text(context, text):
     el.click()
 
 
-@when(u'I click the link with text that contains "{text}"')
+@when('I click the link with text that contains "{text}"')
 @persona_vars
 def click_link_with_text_that_contains(context, text):
     text = text.replace('"', '\\"')  # Escape all double quotes

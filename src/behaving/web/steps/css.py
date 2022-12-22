@@ -1,6 +1,7 @@
 from typing import Optional
 
 from behave import then
+
 from behaving.web import set_timeout
 
 from .basic import _retry

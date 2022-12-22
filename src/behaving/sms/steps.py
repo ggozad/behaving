@@ -3,6 +3,7 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 from behave import then, when
+
 from behaving.personas.persona import persona_vars
 from behaving.utils import parse_text
 
