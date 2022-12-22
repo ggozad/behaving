@@ -35,7 +35,7 @@ def wait_for_timeout(context, timeout):
 @when('I show the element with id "{id}"')
 @persona_vars
 def show_element_by_id(context, id):
-    assert context.browser.find_by_id(id)
+    assert context.browser.find_by_id(id), f"Element with id {id} not found"
     context.browser.execute_script(
         f'document.getElementById("{id}").style.display="inline";'
     )
@@ -44,7 +44,7 @@ def show_element_by_id(context, id):
 @when('I hide the element with id "{id}"')
 @persona_vars
 def hide_element_by_id(context, id):
-    assert context.browser.find_by_id(id)
+    assert context.browser.find_by_id(id), f"Element with id {id} not found"
     context.browser.execute_script(
         f'document.getElementById("{id}").style.display="none";'
     )
@@ -111,5 +111,5 @@ def execute_script(context, script):
 
 @when('I evaluate the script "{script}" and assign the result to "{key}"')
 def evaluate_script(context, script, key):
-    assert context.persona is not None, "no persona is setup"
+    assert context.persona is not None, "No persona is setup"
     context.persona[key] = context.browser.evaluate_script(script)

@@ -11,18 +11,18 @@ from behaving.utils import parse_text
 @when('I set "{key}" to the body of the sms I received at "{tel}"')
 @persona_vars
 def set_var_to_sms_body(context, key, tel):
-    assert context.persona is not None
+    assert context.persona is not None, "No persona is setup"
     msgs = context.sms.user_messages(tel)
-    assert msgs
+    assert msgs, f"No sms received at {tel}"
     context.persona[key] = msgs[-1]
 
 
 @when('I parse the sms I received at "{tel}" and set "{expression}"')
 @persona_vars
 def parse_sms_set_var(context, tel, expression):
-    assert context.persona is not None, "no persona is setup"
+    assert context.persona is not None, "No persona is setup"
     msgs = context.sms.user_messages(tel)
-    assert msgs, "no sms received"
+    assert msgs, f"No sms received at {tel}"
     msg = msgs[-1]
     parse_text(context, msg, expression)
 
@@ -34,13 +34,13 @@ def should_receive_sms_with_text(context, tel, text):
     for msg in msgs:
         if text in msg:
             return
-    assert False, "Text not found in sms"
+    assert False, f'Text "{text}" not found in {tel} sms.'
 
 
 @then('I should receive an sms at "{tel}"')
 @persona_vars
 def should_receive_sms(context, tel):
-    assert context.sms.user_messages(tel), "sms not received"
+    assert context.sms.user_messages(tel), f"Sms not received at {tel}"
 
 
 @when('I send an sms to "{to}" with body "{body}"')
@@ -54,4 +54,4 @@ def send_sms(context, to, body):
     try:
         urlopen(req)
     except HTTPError:
-        assert False
+        assert "Could not send sms"

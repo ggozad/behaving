@@ -29,7 +29,7 @@ def alert_is_present_timeout(context, timeout):
 def alert_contains_text(context, text):
     try:
         alert = context.browser.get_alert()
-        assert text in alert.text, "Text not found"
+        assert text in alert.text, f"Text {text} not found in alerts"
     except NoAlertPresentException:
         assert False, "Alert not found"
 
@@ -43,7 +43,7 @@ def alert_contains_text_timeout(context, text, timeout):
         except NoAlertPresentException:
             return False
 
-    assert _retry(check, timeout), "Alert not found"
+    assert _retry(check, timeout), f"Alert containing {text} not found"
 
 
 @when('I enter "{text}" to the alert')

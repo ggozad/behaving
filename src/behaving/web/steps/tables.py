@@ -1,3 +1,5 @@
+from pprint import pformat
+
 from behave import then
 from splinter.exceptions import ElementDoesNotExist
 
@@ -24,7 +26,7 @@ def _find_table_by_id_or_xpath(context, selector):
         IndexError,
         ElementDoesNotExist,
     ):
-        assert False, "Table not found"
+        assert False, f"Table with id or xpath {selector} not found"
 
 
 @then('the table with id "{selector}" should be')
@@ -34,11 +36,19 @@ def table_equals(context, selector):
     table = _find_table_by_id_or_xpath(context, selector)
     headers, cells = _process_table(table)
     if headers:
-        assert headers == context.table.headings, "Table headers do not match"
-
-    assert [
-        [cell for cell in row] for row in context.table.rows
-    ] == cells, "Table cells do not match"
+        assert headers == context.table.headings, (
+            f"Table headers do not match. Expected:\n"
+            f"{context.table.headings}\n"
+            f"Got:\n"
+            f"{headers}"
+        )
+    expected_cells = [[cell for cell in row] for row in context.table.rows]
+    assert expected_cells == cells, (
+        f"Table cells do not match. Expected:\n"
+        f"{pformat(expected_cells)}\n"
+        f"Got:\n"
+        f"{pformat(cells)}"
+    )
 
 
 @then('the table with id "{selector}" should contain the rows')
@@ -48,7 +58,6 @@ def table_contains(context, selector):
     table = _find_table_by_id_or_xpath(context, selector)
     _, cells = _process_table(table)
     for row in [*context.table.rows, context.table.headings]:
-
         assert [cell for cell in row] in cells, f"{row} not found"
 
 
@@ -70,7 +79,13 @@ def row_equals(context, row_no, selector):
     table = _find_table_by_id_or_xpath(context, selector)
 
     _, cells = _process_table(table)
-    assert [cell for cell in context.table.headings] == cells[row_no]
+    expected_row = [cell for cell in context.table.headings]
+    assert expected_row == cells[row_no], (
+        f"Rows did not match. Expected:\n"
+        f"{expected_row}\n"
+        f"Got:\n"
+        f"{cells[row_no]}"
+    )
 
 
 @then(
@@ -84,7 +99,9 @@ def cell_equals(context, row_no, col_no, selector, value):
     table = _find_table_by_id_or_xpath(context, selector)
 
     _, cells = _process_table(table)
-    assert cells[row_no][col_no] == value, "Cells do not match"
+    assert (
+        cells[row_no][col_no] == value
+    ), f"Cells do not match, expected {value} but got {cells[row_no][col_no]}"
 
 
 @then(
@@ -98,4 +115,6 @@ def cell_equals_with_column_header(context, row_no, col_header, selector, value)
     table = _find_table_by_id_or_xpath(context, selector)
 
     headers, cells = _process_table(table)
-    assert cells[row_no][headers.index(col_header)] == value, "Cells do not match"
+    assert (
+        cells[row_no][headers.index(col_header)] == value
+    ), f"Cells do not match, expected {value} but got {cells[row_no][headers.index(col_header)]}"

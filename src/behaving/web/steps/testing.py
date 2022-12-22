@@ -1,7 +1,7 @@
 from behave import then, when
 
 
-@when(u"I note browser session")
+@when("I note browser session")
 def record_browser_session(context):
     if hasattr(context, "current_sessions"):
         current_sessions = context.current_sessions
@@ -11,13 +11,13 @@ def record_browser_session(context):
     context.current_sessions = current_sessions
 
 
-@then(u"I only used one browser session")
+@then("I only used one browser session")
 def only_used_one_browser_session(context):
     sessions = len(context.current_sessions)
     assert sessions == 1, f"Oops, I used {sessions} browsers sessions!"
 
 
-@when(u"I pause the tests")
+@when("I pause the tests")
 def pause_tests(context):
     context._runner.stop_capture()
     print("\tPress ENTER to continue")

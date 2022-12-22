@@ -17,7 +17,7 @@ def find_by_name_or_id(context, selector):
     el = context.browser.find_by_name(selector)
     if not el:
         el = context.browser.find_by_id(selector)
-    assert el, "Element with name or id {selector} not found"
+    assert el, f"Element with name or id {selector} not found"
     return el.first
 
 
@@ -50,7 +50,7 @@ def i_clear_field(context, name):
         for i in range(0, chars):
             el._element.send_keys(Keys.BACKSPACE)
 
-    assert el, "Element not found"
+    assert el, f"Element with name or id {name} not found"
     el.clear()
 
 
@@ -100,7 +100,7 @@ def i_select(context, value, name):
         inp = context.browser.find_by_xpath(
             f"//input[@name='{name}'][@value='{value}']"
         )
-        assert inp, "Element not found"
+        assert inp, f"Element with name {name} not found"
         inp.first.check()
 
 
@@ -108,7 +108,7 @@ def i_select(context, value, name):
 @persona_vars
 def i_select_text(context, text, name):
     elem = context.browser.find_by_name(name)
-    assert elem, "Element not found"
+    assert elem, f"Element with name {name} not found"
     elem.select_by_text(text)
 
 
@@ -116,7 +116,7 @@ def i_select_text(context, text, name):
 @persona_vars
 def i_focus(context, name):
     elem = context.browser.find_by_name(name)
-    assert elem, "Element not found"
+    assert elem, f"Element with name {name} not found"
     context.browser.execute_script(f'document.getElementsByName("{name}")[0].focus();')
 
 
@@ -135,7 +135,9 @@ def i_press(context, name):
         )
         % {"name": name}
     )
-    assert element, "Element not found"
+    assert (
+        element
+    ), f"Element with name/id or button like element described by {name} not found"
     element.first.click()
 
 
@@ -144,7 +146,7 @@ def i_press(context, name):
 def i_press_xpath(context, xpath):
 
     button = context.browser.find_by_xpath(xpath)
-    assert button, "Element not found"
+    assert button, f"Element with xpath {xpath} not found"
     button.first.click()
 
 
@@ -154,7 +156,7 @@ def i_attach(context, name, path):
     if not os.path.exists(path):
         path = os.path.join(context.attachment_dir, path)
         if not os.path.exists(path):
-            assert False, "File not found"
+            assert False, f"File {path} not found"
     try:
         context.browser.find_by_name(name).first._element.clear()
     except ElementNotInteractableException:
@@ -167,7 +169,7 @@ def i_attach(context, name, path):
 def set_html_content_to_element_with_id(context, id, contents):
     assert context.browser.evaluate_script(
         f"document.getElementById('{id}').innerHTML = '{contents}'"
-    ), "Element not found or could not set HTML content"
+    ), f"Element with id {id} not found or could not set HTML content"
 
 
 @when('I set the inner HTML of the element with class "{klass}" to "{contents}"')
@@ -175,7 +177,7 @@ def set_html_content_to_element_with_id(context, id, contents):
 def set_html_content_to_element_with_class(context, klass, contents):
     assert context.browser.evaluate_script(
         f"document.getElementsByClassName('{klass}')[0].innerHTML = '{contents}'"
-    ), "Element not found or could not set HTML content"
+    ), f"Element with class {klass} not found or could not set HTML content"
 
 
 @then('field "{name}" should have the value "{value}"')
@@ -186,11 +188,10 @@ def field_has_value_within_timeout(context, name, value, timeout=None):
         ("//*[@id='%(name)s']|" "//*[@name='%(name)s']") % {"name": name},
         wait_time=timeout,
     )
-    assert el, "Element not found"
-    assert el.first.value == value, "Values do not match, expected %s but got %s" % (
-        value,
-        el.first.value,
-    )
+    assert el, f"Element with name or id {name} not found"
+    assert (
+        el.first.value == value
+    ), f"Values for element {name} do not match, expected {value} but got {el.first.value}"
 
 
 @then('field "{name}" should be empty')
@@ -199,8 +200,8 @@ def field_is_empty(context, name):
     el = context.browser.find_by_xpath(
         ("//*[@id='%(name)s']|" "//*[@name='%(name)s']") % {"name": name}
     )
-    assert el, "Element not found"
-    assert el.first.value == "", "Field is not empty"
+    assert el, f"Element with name or id {name} not found"
+    assert el.first.value == "", f"Field {name} is not empty"
 
 
 @then('"{name}" should be enabled')
@@ -209,8 +210,8 @@ def is_enabled(context, name):
     el = context.browser.find_by_xpath(
         ("//*[@id='%(name)s']|" "//*[@name='%(name)s']") % {"name": name}
     )
-    assert el, "Element not found"
-    assert el.first._element.is_enabled()
+    assert el, f"Element with name or id {name} not found"
+    assert el.first._element.is_enabled(), f"Element {name} is not enabled"
 
 
 @then('"{name}" should be disabled')
@@ -220,45 +221,45 @@ def is_disabled(context, name):
     el = context.browser.find_by_xpath(
         ("//*[@id='%(name)s']|" "//*[@name='%(name)s']") % {"name": name}
     )
-    assert el, "Element not found"
-    assert not el.first._element.is_enabled()
+    assert el, f"Element with name or id {name} not found"
+    assert not el.first._element.is_enabled(), f"Element {name} is not enabled"
 
 
 @then('field "{name}" should be valid')
 @persona_vars
 def field_is_valid(context, name):
-    assert context.browser.find_by_name(name), "Element not found"
+    assert context.browser.find_by_name(name), f"Element {name} not found"
     assert context.browser.evaluate_script(
         f"document.getElementsByName('{name}')[0].checkValidity()"
-    ), "Field is invalid"
+    ), f"Field {name} is invalid"
 
 
 @then('field "{name}" should be invalid')
 @then('field "{name}" should not be valid')
 @persona_vars
 def field_is_invalid(context, name):
-    assert context.browser.find_by_name(name), "Element not found"
+    assert context.browser.find_by_name(name), f"Element {name} not found"
     assert not context.browser.evaluate_script(
         f"document.getElementsByName('{name}')[0].checkValidity()"
-    ), "Field is valid"
+    ), f"Field {name} is valid"
 
 
 @then('field "{name}" should be required')
 @persona_vars
 def field_is_required(context, name):
-    assert context.browser.find_by_name(name), "Element not found"
+    assert context.browser.find_by_name(name), f"Element {name} not found"
     assert context.browser.evaluate_script(
         f"document.getElementsByName('{name}')[0].getAttribute('required')"
-    ), "Field is not required"
+    ), f"Field {name} is not required"
 
 
 @then('field "{name}" should not be required')
 @persona_vars
 def field_is_not_required(context, name):
-    assert context.browser.find_by_name(name), "Element not found"
+    assert context.browser.find_by_name(name), f"Element {name} not found"
     assert not context.browser.evaluate_script(
         f"document.getElementsByName('{name}')[0].getAttribute('required')"
-    ), "Field is required"
+    ), f"Field {name} is required"
 
 
 @when('I send "{key}" to "{name}"')
@@ -266,6 +267,6 @@ def field_is_not_required(context, name):
 def press_enter(context, key, name):
     element = context.browser.find_by_name(name)
     key = getattr(Keys, key, None)
-    assert element, "Element not found"
+    assert element, f"Element {name} not found"
     assert key, "Key not in selenium.webdriver.common.keys.Keys"
     element.send_keys(key)

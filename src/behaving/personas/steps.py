@@ -15,25 +15,24 @@ def given_a_persona(context, name):
 @when('I set "{key}" to "{val}"')
 @persona_vars
 def set_variable(context, key, val):
-    assert context.persona is not None, "no persona is setup"
+    assert context.persona is not None, "No persona is setup"
     context.persona[key] = val
 
 
 @when('I set "{key}" to')
 @persona_vars
 def set_variable_text(context, key):
-    assert context.persona is not None, "no persona is setup"
+    assert context.persona is not None, "No persona is setup"
     context.persona[key] = context.text
 
 
 @then('"{key}" is set to "{val}"')
 @persona_vars
 def key_is_val(context, key, val):
-    assert context.persona is not None, "no persona is setup"
-    assert context.persona[key] == val, "%s != %s, values do not match" % (
-        context.persona[key],
-        val,
-    )
+    assert context.persona is not None, "No persona is setup"
+    assert (
+        context.persona[key] == val
+    ), f"{context.persona[key]} != {val}, values do not match"
 
 
 @then('"{key}" is a dictionary')

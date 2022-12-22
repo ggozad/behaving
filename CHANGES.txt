@@ -1,6 +1,12 @@
 Changelog
 =========
 
+3.1.3 - 
+------------------
+
+- Provide useful error messages on asserts.
+  [ggozad]
+
 3.1.2 - 2022-12-21 
 ------------------
 

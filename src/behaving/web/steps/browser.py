@@ -6,13 +6,13 @@ from selenium.common.exceptions import WebDriverException
 from splinter.browser import Browser
 
 
-@given(u"{brand} as the default browser")
+@given("{brand} as the default browser")
 def given_some_browser(context, brand):
     brand = brand.lower()
     context.default_browser = brand
 
 
-@given(u"a browser")
+@given("a browser")
 def given_a_browser(context):
     if getattr(context, "headless", None):
         context.browser_args["headless"] = True
@@ -22,7 +22,7 @@ def given_a_browser(context):
     named_browser(context, "")
 
 
-@given(u'browser "{name}"')
+@given('browser "{name}"')
 def named_browser(context, name):
     if getattr(context, "headless", None):
         context.browser_args["headless"] = True
@@ -44,7 +44,7 @@ def named_browser(context, name):
         elif context.default_browser:
             args["driver_name"] = context.default_browser
         if context.default_browser == "electron":
-            assert context.electron_app, u"You need to set the electron app path"
+            assert context.electron_app, "You need to set the electron app path"
             args["binary"] = context.electron_app
         browser_attempts = 0
         while browser_attempts < context.max_browser_attempts:
@@ -61,71 +61,71 @@ def named_browser(context, name):
     context.browser = context.browsers[name]
 
 
-@given(u'the electron app "{app_path}"')
+@given('the electron app "{app_path}"')
 def given_an_electron_app(context, app_path):
-    assert os.path.isfile(app_path), u"Electron app not found"
+    assert os.path.isfile(app_path), "Electron app not found"
     app_path = os.path.abspath(app_path)
     context.electron_app = app_path
 
 
-@when(u'I close the browser "{name}"')
+@when('I close the browser "{name}"')
 def close_browser(context, name):
     context.browsers[name].driver.close()
     del context.browsers[name]
 
 
-@when(u"I reload")
+@when("I reload")
 def reload(context):
     context.browser.reload()
 
 
-@when(u"I go back")
+@when("I go back")
 def go_back(context):
 
     context.browser.back()
 
 
-@when(u"I go forward")
+@when("I go forward")
 def go_forward(context):
     context.browser.forward()
 
 
-@when(u'I set the cookie "{key}" to "{value}"')
+@when('I set the cookie "{key}" to "{value}"')
 def set_cookie(context, key, value):
     context.browser.cookies.add({key: value})
 
 
-@when(u'I delete the cookie "{key}"')
+@when('I delete the cookie "{key}"')
 def delete_cookie(context, key):
     context.browser.cookies.delete(key)
 
 
-@when(u"I delete all cookies")
+@when("I delete all cookies")
 def delete_all_cookies(context):
     context.browser.cookies.delete()
 
 
-@when(u"I clear the localStorage")
+@when("I clear the localStorage")
 def clear_local_storage(context):
     context.browser.execute_script("localStorage.clear();")
 
 
-@when(u"I clear the sessionStorage")
+@when("I clear the sessionStorage")
 def clear_session_storage(context):
     context.browser.execute_script("sessionStorage.clear();")
 
 
-@when(u"I clear the browser storage")
+@when("I clear the browser storage")
 def clear_browser_storage(context):
     context.browser.execute_script("localStorage.clear();sessionStorage.clear();")
 
 
-@when(u"I resize the browser to {width}x{height}")
+@when("I resize the browser to {width}x{height}")
 def resize_browser(context, width, height):
     context.browser.driver.set_window_size(int(width), int(height))
 
 
-@when(u"I resize the viewport to {width}x{height}")
+@when("I resize the viewport to {width}x{height}")
 def resize_viewport(context, width, height):
     width = int(width)
     height = int(height)
@@ -141,21 +141,21 @@ def resize_viewport(context, width, height):
     )
 
 
-@when(u"I maximize the browser's window")
+@when("I maximize the browser's window")
 def maximize_window(context):
     context.browser.driver.maximize_window()
 
 
-@when(u"I take a screenshot")
+@when("I take a screenshot")
 def take_screenshot(context):
 
-    assert context.screenshots_dir != "", u"no screenshots_dir specified"
+    assert context.screenshots_dir != "", "no screenshots_dir specified"
 
     filename = (
         context.scenario.feature.name
-        + u"-"
+        + "-"
         + context.scenario.name
-        + u"-"
+        + "-"
         + time.strftime("%Y-%m-%d-%H%M%S", time.gmtime(time.time()))
     )
     filename = os.path.join(context.screenshots_dir, filename)
