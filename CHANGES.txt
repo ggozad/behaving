@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.1.3 - 
+3.1.3 - 2022-12-23
 ------------------
 
 - Provide useful error messages on asserts.
