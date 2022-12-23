@@ -8,7 +8,6 @@ from .frames import *
 from .links import *
 from .mouse import *
 from .tables import *
-from .testing import *
 from .url import *
 from .variables import *
 from .windows import *

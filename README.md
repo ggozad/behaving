@@ -244,16 +244,6 @@ And I press "Submit"
 You can see the test in action on video
 [here](http://vimeo.com/63672466/).
 
-There maybe instances where you require personas but do not want a
-seperate browser associated with each persona, this can be achieved by
-adding the attribute _single_browser_ to the context object (usually
-performed in one of the hooks in `environment.py`), e.g:
-
-```python
-def before_scenario(context):
-    context.single_browser = True
-```
-
 ## Setting up a test environment
 
 Start by installing _behaving_ by using either `pip` or `easy_install`.
