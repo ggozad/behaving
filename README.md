@@ -1,5 +1,9 @@
 # behaving
 
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ggozad/behaving/ci.yml)](https://github.com/ggozad/behaving/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/behaving)](https://pypi.org/project/behaving/)
+[![Docker Image Version (latest by date)](https://img.shields.io/docker/v/behaving/behaving)](https://hub.docker.com/repository/docker/behaving/behaving)
+
 _behaving_ is a web application testing framework for
 Behavior-Driven-Development, based on
 [behave](http://pypi.python.org/pypi/behave) and
