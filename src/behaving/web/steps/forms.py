@@ -65,6 +65,7 @@ def i_type_to(context, name, value):
 @when('I choose "{value}" from "{name}"')
 @persona_vars
 def i_choose_in_radio(context, name, value):
+    find_by_name_or_id(context, name)
     context.browser.choose(name, value)
 
 
@@ -89,6 +90,20 @@ def i_toggle(context, name):
         el.uncheck()
     else:
         el.check()
+
+
+@then('the field "{name}" should be checked')
+def is_checked(context, name):
+    el = find_by_name_or_id(context, name)
+    assert el.checked, f'The field with name or id "{name}" was expected to be checked.'
+
+
+@then('the field "{name}" should be unchecked')
+def is_not_checked(context, name):
+    el = find_by_name_or_id(context, name)
+    assert (
+        not el.checked
+    ), f'The field with name or id "{name}" was expected to be unchecked.'
 
 
 @when('I select "{value}" from "{name}"')

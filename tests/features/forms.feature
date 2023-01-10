@@ -15,9 +15,13 @@ Feature: Forms
         Then field "passwd" should have the value "hax0r" within 1 seconds
         When I choose "male" from "sex"
         And I check "subscribe"
-        And I uncheck "digest"
-        And I toggle "digest"
-        And I select "no" from "countries"
+        Then field "subscribe" should have the value "subscribe"
+        And the field "digest" should be checked
+        When I uncheck "digest"
+        Then the field "digest" should be unchecked
+        When I toggle "digest"
+        Then the field "digest" should be checked
+        When I select "no" from "countries"
         And I select by text "Greece" from "countries"
         And I attach the file "test.txt" to "file"
         And I press "register"
