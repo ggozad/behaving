@@ -6,6 +6,7 @@ Changelog
 
 - Add 'When the field "{name}" is checked' step.
   Add 'When the field "{name}" is unchecked' step.
+  Add 'Then the selection "{name}" should have the options "{values}" selected' step.
   [ggozad]
 
 3.1.3 - 2022-12-23

@@ -196,17 +196,26 @@ def set_html_content_to_element_with_class(context, klass, contents):
 
 
 @then('field "{name}" should have the value "{value}"')
-@then('field "{name}" should have the value "{value}" within {timeout:d} seconds')
 @persona_vars
 def field_has_value_within_timeout(context, name, value, timeout=None):
-    el = context.browser.find_by_xpath(
-        ("//*[@id='%(name)s']|" "//*[@name='%(name)s']") % {"name": name},
-        wait_time=timeout,
-    )
-    assert el, f"Element with name or id {name} not found"
+    el = find_by_name_or_id(context, name)
     assert (
-        el.first.value == value
-    ), f"Values for element {name} do not match, expected {value} but got {el.first.value}"
+        el.value == value
+    ), f'Values for element {name} do not match, expected "{value}" but got "{el.value}"'
+
+
+@then('the selection "{name}" should have the option "{values}" selected')
+@then('the selection "{name}" should have the options "{values}" selected')
+@persona_vars
+def select_has_selected_within_timeout(context, name, values, timeout=None):
+    el = find_by_name_or_id(context, name)
+    assert el.tag_name == "select", f"Element {name} is not a <select/>"
+    values = set([v.strip() for v in values.split(",")])
+    options = el.find_by_tag("option")
+    selected = set([o.value for o in options if o.selected])
+    assert (
+        selected == values
+    ), f'Values for element {name} do not match, expected "{values}" but got "{selected}"'
 
 
 @then('field "{name}" should be empty')

@@ -12,7 +12,7 @@ Feature: Forms
         Then field "name" should have the value "Foo Bar"
 
         When I fill in "passwd" with "hax0r"
-        Then field "passwd" should have the value "hax0r" within 1 seconds
+        Then field "passwd" should have the value "hax0r"
         When I choose "male" from "sex"
         And I check "subscribe"
         Then field "subscribe" should have the value "subscribe"
@@ -23,7 +23,8 @@ Feature: Forms
         Then the field "digest" should be checked
         When I select "no" from "countries"
         And I select by text "Greece" from "countries"
-        And I attach the file "test.txt" to "file"
+        Then the selection "countries" should have the options "gr, no" selected
+        When I attach the file "test.txt" to "file"
         And I press "register"
         Then the browser's URL should contain "name=Foo+Bar"
         And the browser's URL should contain "passwd=hax0r"
