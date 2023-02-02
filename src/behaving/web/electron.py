@@ -5,11 +5,9 @@ from splinter.driver.webdriver.cookie_manager import CookieManager
 
 
 class ElectronWebDriver(BaseWebDriver):
-
     driver_name = "Electron"
 
     def __init__(self, wait_time=2, fullscreen=False, binary=""):
-
         dc = {}
         dc["browserName"] = "electron"
         dc["chromeOptions"] = {

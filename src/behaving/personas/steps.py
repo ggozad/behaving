@@ -5,7 +5,6 @@ from behaving.personas.persona import Persona, persona_vars
 
 @given('"{name}" as the persona')
 def given_a_persona(context, name):
-
     if name not in context.personas:
         context.personas[name] = Persona()
     context.persona = context.personas[name]

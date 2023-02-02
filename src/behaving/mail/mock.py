@@ -8,6 +8,7 @@ import time
 
 try:
     from pync import Notifier
+
     notifier = Notifier
 except ImportError:
     notifier = None
@@ -57,8 +58,7 @@ class DebuggingServer(smtpd.DebuggingServer):
 
 
 def main(args=sys.argv[1:]):
-    """Main function called by `mailmock` command.
-    """
+    """Main function called by `mailmock` command."""
     parser = argparse.ArgumentParser(description="Mail mock server")
 
     parser.add_argument("-p", "--port", default="8025", help="The port to use")

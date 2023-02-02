@@ -16,7 +16,9 @@ def setup(context):
                 os.mkdir(path)
             logger.info(f"No default mail path for mailmock is specified. Using {path}")
         except OSError:
-            logger.error(f"No default mail path for mailmock is specified. Unable to create {path}")
+            logger.error(
+                f"No default mail path for mailmock is specified. Unable to create {path}"
+            )
             exit(1)
         context.mail_path = path
     context.mail = FSInspector(context.mail_path)

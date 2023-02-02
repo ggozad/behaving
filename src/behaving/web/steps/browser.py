@@ -81,7 +81,6 @@ def reload(context):
 
 @when("I go back")
 def go_back(context):
-
     context.browser.back()
 
 
@@ -148,7 +147,6 @@ def maximize_window(context):
 
 @when("I take a screenshot")
 def take_screenshot(context):
-
     assert context.screenshots_dir != "", "no screenshots_dir specified"
 
     filename = (

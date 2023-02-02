@@ -7,7 +7,6 @@ from behaving.personas.persona import persona_vars
 
 
 def _process_table(table):
-
     headers = [el.text for el in table.find_by_tag("th")]
     # We should be using here rows = table.find_by_xpath("//tr[not(th)]")
     # but for some reason this duplicates the rows.
@@ -68,7 +67,6 @@ def table_does_not_contain(context, selector):
     table = _find_table_by_id_or_xpath(context, selector)
     _, cells = _process_table(table)
     for row in [*context.table.rows, context.table.headings]:
-
         assert [cell for cell in row] not in cells, f"{row} found"
 
 

@@ -70,8 +70,7 @@ class SMSServer(SimpleHTTPRequestHandler):
 
 
 def main(args=sys.argv[1:]):
-    """Main function called by `smsmock` command.
-    """
+    """Main function called by `smsmock` command."""
     parser = argparse.ArgumentParser(description="SMS mock server")
     parser.add_argument("-p", "--port", default="8199", help="The port to use")
 

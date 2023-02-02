@@ -15,7 +15,6 @@ _ALL_MIME_TYPES = ",".join(mimetypes.types_map.values())
 
 
 class WebDriver(BaseWebDriver):
-
     driver_name = "Firefox"
 
     def __init__(
@@ -30,7 +29,6 @@ class WebDriver(BaseWebDriver):
         wait_time=2,
         desired_capabilities=None,
     ):
-
         firefox_profile = FirefoxProfile(profile)
         firefox_profile.set_preference("extensions.logging.enabled", False)
         firefox_profile.set_preference("network.dns.disableIPv6", False)
