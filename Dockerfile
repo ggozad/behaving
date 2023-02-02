@@ -20,6 +20,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Do not ever buffer console output
 ENV PYTHONUNBUFFERED 1
 
+RUN pip install --upgrade pip
 RUN pip install poetry
 RUN pip install supervisor
 

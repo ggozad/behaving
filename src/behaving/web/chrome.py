@@ -10,7 +10,6 @@ _DOWNLOAD_PATH = "/tmp"
 
 
 class WebDriver(BaseWebDriver):
-
     driver_name = "Chrome"
 
     def __init__(
@@ -23,7 +22,6 @@ class WebDriver(BaseWebDriver):
         desired_capabilities=None,
         **kwargs,
     ):
-
         options = Options() if options is None else options
 
         if user_agent is not None:

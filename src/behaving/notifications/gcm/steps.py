@@ -47,7 +47,6 @@ def should_not_have_received_gcm(context, device_id):
 
 @when('I send a gcm message "{message}"')
 def send_gcm_notification(context, message):
-
     url = "http://localhost:8200"
     req = Request(url, message.encode("utf-8"))
 

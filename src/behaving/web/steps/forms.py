@@ -159,7 +159,6 @@ def i_press(context, name):
 @when('I press the element with xpath "{xpath}"')
 @persona_vars
 def i_press_xpath(context, xpath):
-
     button = context.browser.find_by_xpath(xpath)
     assert button, f"Element with xpath {xpath} not found"
     button.first.click()
