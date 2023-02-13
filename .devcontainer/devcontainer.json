@@ -1,15 +1,8 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.205.2/containers/docker-existing-docker-compose
-// If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
 {
   "name": "Behaving dev",
-  // Update the 'dockerComposeFile' list if you have more compose files or use different names.
-  // The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
   "dockerComposeFile": [
     "../docker-compose.yml"
   ],
-  // The 'service' property is the name of the service for the container that VS Code should
-  // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
   "service": "behaving",
   "runServices": [
     "behaving",
@@ -20,42 +13,43 @@
     "selenoid-ui"
   ],
 
-  // The optional 'workspaceFolder' property is the path VS Code should open by default when
-  // connected. This is typically a file mount in .devcontainer/docker-compose.yml
   "workspaceFolder": "/app",
-  // Set *default* container specific settings.json values on container create.
-  "settings": {
-    "python.formatting.provider": "black",
-    "python.formatting.blackPath":"/usr/local/bin/black",
-    "python.analysis.extraPaths": ["/usr/local/lib/python3.10/site-packages"],
-    "editor.formatOnSave": true,
-    "ruff.path": ["/usr/local/bin/ruff"],
-    "ruff.args": [
-      "--config",
-      "/app/pyproject.toml"
-    ],
-    "[yml]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.formatOnSave": true
-    },
-    "[json]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.formatOnSave": true
-    },
-    "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.formatOnSave": true
-    },
-    "[html]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.formatOnSave": true
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.formatting.provider": "black",
+        "python.formatting.blackPath":"/usr/local/bin/black",
+        "python.analysis.extraPaths": ["/usr/local/lib/python3.10/site-packages"],
+        "editor.formatOnSave": true,
+        "ruff.path": ["/usr/local/bin/ruff"],
+        "ruff.args": [
+          "--config",
+          "/app/pyproject.toml"
+        ],
+        "[yml]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true
+        },
+        "[html]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true
+        }
+      },
+      "extensions": [
+        "ms-python.python",
+        "iteratec.bdd-power-tools",
+        "esbenp.prettier-vscode",
+        "charliermarsh.ruff"
+      ]        
     }
-  },
-  // Add the IDs of extensions you want installed when the container is created.
-  "extensions": [
-    "ms-python.python",
-    "iteratec.bdd-power-tools",
-    "esbenp.prettier-vscode",
-    "charliermarsh.ruff"
-  ]
+  }
 }
