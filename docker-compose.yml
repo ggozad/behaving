@@ -19,7 +19,9 @@ services:
       - ./config/ssl/web-key.pem:/etc/nginx/cert/web-key.pem
 
   behaving:
-    build: ./
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
     image: behaving.dev
     networks:
       - behaving
