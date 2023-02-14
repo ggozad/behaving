@@ -3,7 +3,6 @@ FROM python:3.10-slim-bullseye
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
 
-
 # Do not write .pyc files
 ENV PYTHONDONTWRITEBYTECODE 1
 # Do not ever buffer console output
