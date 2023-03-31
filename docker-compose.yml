@@ -34,7 +34,7 @@ services:
       - ./var:/app/var
 
   firefox:
-    image: selenoid/firefox:latest
+    image: selenoid/firefox:110.0
     entrypoint: echo "Only here to make sure the image is available to selenoid"
 
   chrome:

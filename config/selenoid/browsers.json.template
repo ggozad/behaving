@@ -3,7 +3,7 @@
     "default": "latest",
     "versions": {
       "latest": {
-        "image": "selenoid/firefox",
+        "image": "selenoid/firefox:110.0",
         "port": "4444",
         "path": "/wd/hub",
         "tmpfs": { "/tmp": "size=512m" },
