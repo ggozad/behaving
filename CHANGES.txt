@@ -4,6 +4,12 @@ Changelog
 3.1.4 - 
 ------------------
 
+- Require python 3.9 as minimum not 3.10.
+  [ggozad]
+
+- Reduce docker image size.
+  [ggozad]
+
 - Add 'When the field "{name}" is checked' step.
   Add 'When the field "{name}" is unchecked' step.
   Add 'Then the selection "{name}" should have the options "{values}" selected' step.
