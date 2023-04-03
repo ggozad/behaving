@@ -7,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from splinter.exceptions import ElementDoesNotExist
 
 from behaving.personas.persona import persona_vars
+from behaving.web.steps.basic import _retry
 
 # Selenium 3 does not account for base64 no longer using encodestring.
 # Monkey patch base64 to make it compatible seems the easiest.
@@ -197,10 +198,19 @@ def set_html_content_to_element_with_class(context, klass, contents):
 @then('field "{name}" should have the value "{value}"')
 @then('field "{name}" should have the value "{value}" within {timeout:d} seconds')
 @persona_vars
-def field_has_value_within_timeout(context, name, value, timeout=None):
-    el = find_by_name_or_id(context, name, timeout=timeout)
+def field_has_value_within_timeout(context, name, value, timeout=0):
+    def check():
+        try:
+            el = find_by_name_or_id(context, name)
+            return el and el.value == value
+        except AssertionError:
+            return False
+
+    if _retry(check, timeout):
+        return
+    el = find_by_name_or_id(context, name)
     assert (
-        el.value == value
+        False
     ), f'Values for element {name} do not match, expected "{value}" but got "{el.value}"'
 
 
@@ -213,10 +223,22 @@ def field_has_value_within_timeout(context, name, value, timeout=None):
     'the selection "{name}" should have the options "{values}" selected within {timeout:d} seconds'
 )
 @persona_vars
-def select_has_selected_within_timeout(context, name, values, timeout=None):
-    el = find_by_name_or_id(context, name, timeout=timeout)
-    assert el.tag_name == "select", f"Element {name} is not a <select/>"
+def select_has_selected_within_timeout(context, name, values, timeout=0):
     values = set([v.strip() for v in values.split(",")])
+
+    def check():
+        try:
+            el = find_by_name_or_id(context, name)
+            options = el.find_by_tag("option")
+            selected = set([o.value for o in options if o.selected])
+            return el and values == selected
+        except AssertionError:
+            return False
+
+    if _retry(check, timeout):
+        return
+
+    el = find_by_name_or_id(context, name)
     options = el.find_by_tag("option")
     selected = set([o.value for o in options if o.selected])
     assert (
