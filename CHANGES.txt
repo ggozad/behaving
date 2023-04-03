@@ -1,6 +1,7 @@
 Changelog
 =========
-3.1.5 - 
+
+3.1.5 - 2023-04-03
 ------------------
 
 - Fix form steps to accept a timeout ("within X seconds").
