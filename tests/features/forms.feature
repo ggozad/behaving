@@ -8,9 +8,9 @@ Feature: Forms
         When I visit "http://web/forms.html"
         Then "disabled" should be disabled
         And "name" should be enabled
-        When I fill in "name" with "Foo Bar"
-        Then field "name" should have the value "Foo Bar"
-
+        # Checking field values with timeout
+        When I execute the script "setTimeout(() => { document.getElementsByName('name')[0].value = 'Foo Bar'}, 2000)"
+        Then field "name" should have the value "Foo Bar" within 3 seconds
         When I fill in "passwd" with "hax0r"
         Then field "passwd" should have the value "hax0r"
         When I choose "male" from "sex"
@@ -22,8 +22,9 @@ Feature: Forms
         When I toggle "digest"
         Then the field "digest" should be checked
         When I select "no" from "countries"
-        And I select by text "Greece" from "countries"
-        Then the selection "countries" should have the options "gr, no" selected
+        Then the selection "countries" should have the options "no" selected
+        When I execute the script "setTimeout(() => { document.getElementsByName('countries')[0].options[0].selected = true}, 2000)"
+        Then the selection "countries" should have the options "gr, no" selected within 3 seconds
         When I attach the file "test.txt" to "file"
         And I press "register"
         Then the browser's URL should contain "name=Foo+Bar"
