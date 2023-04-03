@@ -13,10 +13,10 @@ from behaving.personas.persona import persona_vars
 base64.encodestring = base64.encodebytes
 
 
-def find_by_name_or_id(context, selector):
-    el = context.browser.find_by_name(selector)
+def find_by_name_or_id(context, selector, timeout=None):
+    el = context.browser.find_by_name(selector, wait_time=timeout)
     if not el:
-        el = context.browser.find_by_id(selector)
+        el = context.browser.find_by_id(selector, wait_time=timeout)
     assert el, f"Element with name or id {selector} not found"
     return el.first
 
@@ -195,9 +195,10 @@ def set_html_content_to_element_with_class(context, klass, contents):
 
 
 @then('field "{name}" should have the value "{value}"')
+@then('field "{name}" should have the value "{value}" within {timeout:d} seconds')
 @persona_vars
 def field_has_value_within_timeout(context, name, value, timeout=None):
-    el = find_by_name_or_id(context, name)
+    el = find_by_name_or_id(context, name, timeout=timeout)
     assert (
         el.value == value
     ), f'Values for element {name} do not match, expected "{value}" but got "{el.value}"'
@@ -205,9 +206,15 @@ def field_has_value_within_timeout(context, name, value, timeout=None):
 
 @then('the selection "{name}" should have the option "{values}" selected')
 @then('the selection "{name}" should have the options "{values}" selected')
+@then(
+    'the selection "{name}" should have the option "{values}" selected within {timeout:d} seconds'
+)
+@then(
+    'the selection "{name}" should have the options "{values}" selected within {timeout:d} seconds'
+)
 @persona_vars
 def select_has_selected_within_timeout(context, name, values, timeout=None):
-    el = find_by_name_or_id(context, name)
+    el = find_by_name_or_id(context, name, timeout=timeout)
     assert el.tag_name == "select", f"Element {name} is not a <select/>"
     values = set([v.strip() for v in values.split(",")])
     options = el.find_by_tag("option")
