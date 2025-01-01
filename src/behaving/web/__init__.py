@@ -1,9 +1,11 @@
 import os
 import tempfile
+import mimetypes
 from functools import wraps
 from urllib.error import URLError
 
-from behaving.web import chrome, electron, firefox
+DOWNLOAD_PATH = "/tmp"
+ALL_MIME_TYPES = ",".join(mimetypes.types_map.values())
 
 
 def set_timeout(func):
@@ -44,8 +46,8 @@ def setup(context):
     # Setup download path
     if not hasattr(context, "download_dir"):
         context.download_dir = tempfile.mkdtemp()
-        chrome._DOWNLOAD_PATH = context.download_dir
-        firefox._DOWNLOAD_PATH = context.download_dir
+        global DOWNLOAD_PATH
+        DOWNLOAD_PATH = context.download_dir
 
     if not hasattr(context, "accept_ssl_certs"):
         context.accept_ssl_certs = False

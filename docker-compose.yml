@@ -1,11 +1,10 @@
-version: "3"
 networks:
   behaving:
     name: behaving
 
 services:
   web:
-    image: nginx
+    image: nginx:latest
     container_name: web
     networks:
       - behaving
@@ -28,17 +27,21 @@ services:
     user: behaving
     container_name: behaving
     stdin_open: true
+    tty: true
     depends_on:
       - selenoid
     volumes:
       - ./src:/app/src
       - ./tests:/app/tests
       - ./var:/app/var
+      - ./reports:/app/reports
 
+#keep .config/selenoid/browers.json.template in sync
   firefox:
-    image: selenoid/firefox:110.0
+    image: selenoid/firefox:latest
     entrypoint: echo "Only here to make sure the image is available to selenoid"
 
+#keep .config/selenoid/browers.json.template in sync
   chrome:
     image: selenoid/chrome:latest
     entrypoint: echo "Only here to make sure the image is available to selenoid"
@@ -73,7 +76,7 @@ services:
       - "4444:4444"
 
   selenoid-ui:
-    image: "aerokube/selenoid-ui"
+    image: "aerokube/selenoid-ui:latest"
     networks:
       - behaving
     ports:

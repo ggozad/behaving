@@ -1,6 +1,30 @@
 Changelog
 =========
 
+3.2.0 - 2024-01-03
+------------------
+
+
+- Moved from patch-level locks to minimum version checks (ensuring compatibility until major changes break things)
+  [duttonw]
+
+- Removed Splinters overrides of browsers
+  - light touch behaving, so it should work with newer versions of splinter
+  [duttonw]
+
+- Added automatic PyPI version publishing via GitHub (once PyPI OIDC trust to repo is established)
+  [duttonw]
+
+- Introduced flake8 for code linting
+  [duttonw]
+
+- Updated GitHub Action `ci.yml` to use the latest versions
+  [duttonw]
+
+- Added GitHub Action `publish.yml` to allow version push auto publish
+  [duttonw]
+
+
 3.1.5 - 2023-04-03
 ------------------
 

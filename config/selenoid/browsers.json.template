@@ -3,7 +3,7 @@
     "default": "latest",
     "versions": {
       "latest": {
-        "image": "selenoid/firefox:110.0",
+        "image": "selenoid/firefox:125.0",
         "port": "4444",
         "path": "/wd/hub",
         "tmpfs": { "/tmp": "size=512m" },
@@ -17,7 +17,7 @@
     "default": "latest",
     "versions": {
       "latest": {
-        "image": "$CHROME_IMAGE",
+        "image": "selenoid/chrome:latest",
         "port": "4444",
         "tmpfs": { "/tmp": "size=512m" },
         "volumes": [

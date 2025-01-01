@@ -20,6 +20,10 @@ Please refer to _behave_'s excellent
 how to use it, how to write your custom steps and make it possible to
 extend _behaving_.
 
+### Contributing
+
+See [CONTRIBUTING.rst](./src/behaving/CONTRIBUTING.rst)
+
 ## Hello world
 
 Starting to use _behaving_ is pretty easy. Inside some python module,
