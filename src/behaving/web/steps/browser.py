@@ -56,12 +56,18 @@ def get_default_selenium_options(driver_name, args):
 
     elif browser_name == "EDGE":
         from selenium.webdriver.edge.options import Options
-        options = Options()
+        if "options" in args and isinstance(args["options"], Options):
+            options = args["options"]
+        else:
+            options = Options()
 
     elif browser_name == "FIREFOX":
         from selenium.webdriver.firefox.options import Options
         from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
-        options = Options()
+        if "options" in args and isinstance(args["options"], Options):
+            options = args["options"]
+        else:
+            options = Options()
 
         profile = args.pop("profile", None)
         firefox_profile = FirefoxProfile(profile)
@@ -88,7 +94,23 @@ def get_default_selenium_options(driver_name, args):
 
     elif browser_name == "SAFARI":
         from selenium.webdriver.safari.options import Options
-        options = Options()
+        if "options" in args and isinstance(args["options"], Options):
+            options = args["options"]
+        else:
+            options = Options()
+
+    elif browser_name == "EDGE":
+        from selenium.webdriver.edge.options import Options
+        if "options" in args and isinstance(args["options"], Options):
+            options = args["options"]
+        else:
+            options = Options()
+    elif browser_name == "INTERNETEXPLORER":
+        from selenium.webdriver.ie.options import Options
+        if "options" in args and isinstance(args["options"], Options):
+            options = args["options"]
+        else:
+            options = Options()
 
     else:
         raise ValueError(f"Unsupported browser {browser_name}")
@@ -161,8 +183,9 @@ def named_browser(context, name):
                         options.set_capability(key, value)
                     args.pop("desired_capabilities", None)
 
+                retry_count = getattr(args, 'retry_count', 3)
                 context.browsers[name] = Browser(driver_name=driver_name,
-                                                 retry_count=getattr(args, 'retry_count', 3),
+                                                 retry_count=retry_count,
                                                  config=config,
                                                  **args)
                 break
