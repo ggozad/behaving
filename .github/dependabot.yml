@@ -1,0 +1,39 @@
+---
+# https://docs.github.com/en/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#insecure-external-code-execution
+    # PIP needs this flag.
+    insecure-external-code-execution: allow
+    schedule:
+      interval: daily
+      time: "08:00"
+      timezone: "Australia/Brisbane"
+    open-pull-requests-limit: 10
+    reviewers:
+      - duttonw
+
+  - package-ecosystem: "docker"
+    directories:
+     - "/"
+     - "/docker"
+     - "/config/**"
+    schedule:
+      interval: daily
+      time: "08:00"
+      timezone: "Australia/Brisbane"
+    open-pull-requests-limit: 10
+    reviewers:
+      - duttonw
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "08:00"
+      timezone: "Australia/Brisbane"
+    open-pull-requests-limit: 10
+    reviewers:
+      - duttonw
