@@ -3,6 +3,11 @@ on:
   push:
   workflow_call:
 
+# Required for https://github.com/mikepenz/action-junit-report/issues/23
+permissions:
+    checks: write
+    pull-requests: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -44,3 +49,4 @@ jobs:
         if: always() # always run even if the previous step fails
         with:
           report_paths: "**/TESTS-*.xml"
+          comment: true
