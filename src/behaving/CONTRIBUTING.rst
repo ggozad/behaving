@@ -23,6 +23,20 @@ To set things up run:
 
 This will download and setup everything you need and also build the mobile test apps on iOS and android.
 
+Updating poetry lock file
+-------------------------
+
+When pyproject.toml is updated, please also update poetry lock file
+
+::
+
+    pip install --upgrade pip
+    pip install --upgrade poetry
+    pip install --upgrade supervisor
+    poetry config virtualenvs.create false
+    poetry install
+    poetry lock
+
 Running tests
 -------------
 
@@ -54,3 +68,19 @@ to run all iOS tests or
     ./bin/test --no-capture
 
 to be able to get a ``pdb`` prompt for instance.
+
+
+Alt Setup and running tests via CICD pipeline
+----------
+
+- Install docker
+- Build
+  ::
+       docker compose build
+
+- Start
+  ::
+       bash docker compose up
+- Test
+  ::
+       bash docker compose exec -T behaving behave --junit tests/features

@@ -1,0 +1,136 @@
+---
+name: Publish to pypi
+on:
+  push:
+  #On versioned releases
+    tags:
+      - '*.*.*'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      force:
+        type: choice
+        description: Retry Publish Version
+        options:
+          - No
+          - Yes
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'pypi'
+        type: choice
+        options:
+          - pypi
+          - testpypi
+      dryRun:
+        description: 'Dry Run deployment (set to false to deploy)'
+        required: true
+        type: boolean
+        default: true
+
+
+
+jobs:
+
+  validateVersion:
+    runs-on: ubuntu-latest
+    if: github.repository == 'ggozad/behaving'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Validate tag version
+        if: ${{ startsWith(github.ref, 'refs/tags') }}
+        run: |
+          TAG_VALUE=${GITHUB_REF/refs\/tags\//}
+          PYTHON_VERSION=$(grep -E '\b^version\s?=\s?"[^"]+"' pyproject.toml  | awk -F '"' '{print $2}')
+          echo "Tag version is [$TAG_VALUE], Python version is [$PYTHON_VERSION]"
+          if [ "$TAG_VALUE" != "$PYTHON_VERSION" ]; then
+            echo "Version mismatch; tag version is [$TAG_VALUE] but Python version is [$PYTHON_VERSION]" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+  test:
+    needs: validateVersion
+    name: Test
+    uses: ./.github/workflows/ci.yml # Call the reusable workflow
+
+  publishSkipped:
+    if: github.repository != 'ggozad/behaving'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "## Skipping PyPI publish on downstream repository" >> $GITHUB_STEP_SUMMARY
+
+  publish:
+    needs: test
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+    name: Publish Package
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment || 'pypi' }}
+      url: ${{ steps.version.outputs.url }}
+    concurrency:
+      group: ${{ github.event.inputs.environment }}-deployment
+      cancel-in-progress: false
+    env:
+      ENVIRONMENT: ${{ github.event.inputs.environment || 'pypi' }}
+    steps:
+      - name: Get Git Tag and set url from environment
+        id: version
+        run: |
+          #!/bin/bash
+
+          TAG_VALUE=${GITHUB_REF/refs\/tags\//}
+          echo "version=${TAG_VALUE}" >> $GITHUB_OUTPUT
+
+          # Extract the repository name (minus the owner/org)
+          reponame=$(basename $GITHUB_REPOSITORY)
+          echo "reponame=${reponame}" >> $GITHUB_OUTPUT
+
+          if [ "$env.ENVIRONMENT" == "testpypi" ]; then
+            url="https://test.pypi.org/project/$reponame/$TAG_VALUE/"
+            echo "environment=${env.ENVIRONMENT}" >> $GITHUB_OUTPUT
+          else
+            url="https://pypi.org/project/$reponame/$TAG_VALUE/"
+            echo "environment=pypi" >> $GITHUB_OUTPUT
+          fi
+
+          echo "url=${url}" >> $GITHUB_OUTPUT
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build package ${{ steps.version.outputs.reponame }} @ ${{ steps.version.outputs.version }}
+        run: |
+          pip install build
+          pip install twine
+          python -m build
+      - name: Publish package distributions to PyPI
+        if: ${{ startsWith(github.ref, 'refs/tags') && steps.version.outputs.environment == 'pypi' && github.event.inputs.dryRun != 'true' }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+#        with:
+#          skip-existing: true
+#          verbose: true
+#          print-hash: true
+      - name: Test Publish package distributions to PyPI
+        if: ${{ startsWith(github.ref, 'refs/tags') && steps.version.outputs.environment == 'testpypi' && github.event.inputs.dryRun == 'true' }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+#          skip-existing: true
+#          verbose: true
+#          print-hash: true
+      - name: Summary output
+        if: ${{ startsWith(github.ref, 'refs/tags') && github.event.inputs.dryRun != 'true' }}
+        run:
+          echo "Published ${{ steps.version.outputs.repo_name }} @ ${{ steps.version.outputs.version }} to ${{ steps.version.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: (TEST RUN) Test Publish package distributions to PyPI
+        if: ${{ github.event.inputs.dryRun == 'true' }}
+        run:
+          echo "Dry run deployment, did not publish" >> $GITHUB_STEP_SUMMARY

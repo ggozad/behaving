@@ -1,4 +1,4 @@
-FROM python:3.9-slim-bullseye
+FROM python:3.10-slim-bullseye
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
@@ -8,7 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Do not ever buffer console output
 ENV PYTHONUNBUFFERED 1
 
-RUN pip install --upgrade pip poetry pip install supervisor
+RUN pip install --upgrade pip && pip install --upgrade poetry && pip install --upgrade supervisor
 
 COPY poetry.lock pyproject.toml README.md config/supervisord.conf .gherkin-lintrc /app/
 COPY src /app/src/

@@ -9,11 +9,12 @@ def before_all(context):
     context.remote_webdriver_url = "http://selenoid:4444/wd/hub"
     context.default_browser = "chrome"
     context.accept_ssl_certs = True
+    # https://aerokube.com/selenoid/latest/
     context.browser_args = {
         "desired_capabilities": {
-            "enableVNC": True,
             "selenoid:options": {
                 "enableVNC": True,
+                "enableVideo": False
             },
         }
     }

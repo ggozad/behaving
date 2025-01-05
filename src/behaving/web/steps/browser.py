@@ -1,9 +1,21 @@
 import os
 import time
+import logging
 
 from behave import given, when
 from selenium.common.exceptions import WebDriverException
+from splinter import browser
 from splinter.browser import Browser
+from splinter.config import Config
+from splinter.driver.webdriver.chrome import WebDriver as ChromeWebDriver
+
+from behaving.web import DOWNLOAD_PATH, ALL_MIME_TYPES
+
+logger = logging.getLogger(__name__)
+
+browser._DRIVERS.update({
+    "electron": ChromeWebDriver,
+})
 
 
 @given("{brand} as the default browser")
@@ -14,12 +26,96 @@ def given_some_browser(context, brand):
 
 @given("a browser")
 def given_a_browser(context):
-    if getattr(context, "headless", None):
-        context.browser_args["headless"] = True
-    else:
-        context.browser_args["headless"] = False
-
     named_browser(context, "")
+
+
+def get_default_selenium_options(driver_name, args):
+    browser_name = driver_name.upper()
+    # Handle case where user specifies IE with a space in it
+    if browser_name == "INTERNET EXPLORER":
+        browser_name = "INTERNETEXPLORER"
+
+    # Collect correct Options class for Selenium based on browser.
+    if browser_name in ("CHROME", "ELECTRON", "REMOTE"):
+        from selenium.webdriver.chrome.options import Options
+        options = Options()
+
+        options.add_argument("--use-fake-device-for-media-stream")
+        options.add_argument("--use-fake-ui-for-media-stream")
+
+        prefs = {
+            "profile.default_content_settings.popups": 0,
+            "download.default_directory": DOWNLOAD_PATH,
+            "download.prompt_for_download": False,
+            "download.directory_upgrade": True,
+            "safebrowsing.enabled": True,
+            "safebrowsing.disable_download_protection": True,
+        }
+
+        options.add_experimental_option("prefs", prefs)
+
+    elif browser_name == "EDGE":
+        from selenium.webdriver.edge.options import Options
+        if "options" in args and isinstance(args["options"], Options):
+            options = args["options"]
+        else:
+            options = Options()
+
+    elif browser_name == "FIREFOX":
+        from selenium.webdriver.firefox.options import Options
+        from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
+        if "options" in args and isinstance(args["options"], Options):
+            options = args["options"]
+        else:
+            options = Options()
+
+        profile = args.pop("profile", None)
+        firefox_profile = FirefoxProfile(profile)
+        firefox_profile.set_preference("extensions.logging.enabled", False)
+        firefox_profile.set_preference("network.dns.disableIPv6", False)
+
+        firefox_profile.set_preference("browser.download.folderList", 2)
+        firefox_profile.set_preference(
+            "browser.download.manager.showWhenStarting", False
+        )
+        firefox_profile.set_preference("browser.download.dir", DOWNLOAD_PATH)
+        firefox_profile.set_preference(
+            "browser.helperApps.neverAsk.saveToDisk", ALL_MIME_TYPES
+        )
+        firefox_profile.set_preference("permissions.default.microphone", 1)
+        firefox_profile.set_preference("permissions.default.camera", 1)
+        # firefox_profile.set_preference("browser.helperApps.alwaysAsk.force", False)
+        # firefox_profile.set_preference("browser.download.manager.showWhenStarting", False)
+
+        if args("profile_preferences"):
+            for key, value in args("profile_preferences").items():
+                firefox_profile.set_preference(key, value)
+            args.pop("profile_preferences", None)
+
+    elif browser_name == "SAFARI":
+        from selenium.webdriver.safari.options import Options
+        if "options" in args and isinstance(args["options"], Options):
+            options = args["options"]
+        else:
+            options = Options()
+
+    elif browser_name == "EDGE":
+        from selenium.webdriver.edge.options import Options
+        if "options" in args and isinstance(args["options"], Options):
+            options = args["options"]
+        else:
+            options = Options()
+    elif browser_name == "INTERNETEXPLORER":
+        from selenium.webdriver.ie.options import Options
+        if "options" in args and isinstance(args["options"], Options):
+            options = args["options"]
+        else:
+            options = Options()
+
+    else:
+        raise ValueError(f"Unsupported browser {browser_name}")
+
+    return options
 
 
 @given('browser "{name}"')
@@ -32,27 +128,71 @@ def named_browser(context, name):
     if name not in context.browsers:
         args = context.browser_args.copy()
         if context.accept_ssl_certs:
-            if "desired_capabilities" not in args:
-                args["desired_capabilities"] = {}
-            args["desired_capabilities"].update({"acceptInsecureCerts": True})
+            if "arguments" not in args:
+                args["arguments"] = []
+            args["arguments"].append("--ignore-certificate-errors")
+
         if context.remote_webdriver_url:
-            args["driver_name"] = "remote"
+            driver_name = "remote"
             del args["headless"]
             if context.default_browser:
                 args["browser"] = context.default_browser
                 args["command_executor"] = context.remote_webdriver_url
         elif context.default_browser:
-            args["driver_name"] = context.default_browser
+            driver_name = context.default_browser
+        else:
+            driver_name = "firefox"
+
         if context.default_browser == "electron":
             assert context.electron_app, "You need to set the electron app path"
             args["binary"] = context.electron_app
         browser_attempts = 0
         while browser_attempts < context.max_browser_attempts:
             try:
-                context.browsers[name] = Browser(**args)
+                # Generate Splinter Config
+                config = Config()
+                if getattr(args, 'extensions', None) and isinstance(args['extensions'], list):
+                    config.extensions = args("extensions")
+                args.pop('extensions', None)
+                config.fullscreen = getattr(args, 'fullscreen', False)
+                args.pop('fullscreen', None)
+                config.headless = getattr(args, "headless", False)
+                args.pop('headless', None)
+                config.incognito = getattr(args, "incognito", False)
+                args.pop('incognito', None)
+                config.user_agent = getattr(args, 'user_agent', None)
+                args.pop('user_agent', None)
+
+                # Generate Selenium Options
+                options = get_default_selenium_options(driver_name, args)
+                args["options"] = options
+
+                if "arguments" in args:
+                    for arg in args["arguments"]:
+                        options.add_argument(arg)
+                    args.pop("arguments", None)
+
+                if "capabilities" in args:
+                    for key, value in args["capabilities"]:
+                        options.set_capability(key, value)
+                    args.pop("capabilities", None)
+
+                if "desired_capabilities" in args:
+                    # Legacy name
+                    for key, value in args["desired_capabilities"].items():
+                        options.set_capability(key, value)
+                    args.pop("desired_capabilities", None)
+
+                retry_count = getattr(args, 'retry_count', 3)
+                context.browsers[name] = Browser(driver_name=driver_name,
+                                                 retry_count=retry_count,
+                                                 config=config,
+                                                 **args)
                 break
-            except WebDriverException:
+            except WebDriverException as e:
                 browser_attempts += 1
+                if (browser_attempts < context.max_browser_attempts):
+                    raise e
         else:
             raise WebDriverException("Failed to initialize browser")
         if context.default_browser_size:
@@ -101,7 +241,7 @@ def delete_cookie(context, key):
 
 @when("I delete all cookies")
 def delete_all_cookies(context):
-    context.browser.cookies.delete()
+    context.browser.cookies.delete_all()
 
 
 @when("I clear the localStorage")

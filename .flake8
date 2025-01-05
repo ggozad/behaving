@@ -1,0 +1,27 @@
+[flake8]
+# @see https://flake8.pycqa.org/en/latest/user/configuration.html?highlight=.flake8
+
+
+# Extended output format.
+format = pylint
+
+# Show the source of errors.
+show_source = True
+statistics = True
+count = True
+
+max-complexity = 10
+max-line-length = 88
+
+# List ignore rules one per line.
+ignore =
+    C901
+    E501
+    W503
+# Ignore [F401, 403] unused imports - for now
+    F401
+    F403
+# Ignore [E731] do not assign a lambda expression, use a def - for now
+    E731
+# Ignore: [E721] do not compare types, for exact checks use `is` / `is not`, for instance checks use `isinstance()` - for now
+    E721

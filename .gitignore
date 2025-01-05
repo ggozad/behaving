@@ -8,3 +8,5 @@ __pycache__/
 /dist/
 /venv/
 /poetry.toml
+/.idea
+/reports
