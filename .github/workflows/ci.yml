@@ -32,7 +32,7 @@ jobs:
           chmod -R a+rwX var
           chmod -R a+rwX reports
 
-      - uses: isbang/compose-action@v2.0.2
+      - uses: isbang/compose-action@v2.2.0
 
       - name: Test
         run: |
