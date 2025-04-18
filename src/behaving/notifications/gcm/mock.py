@@ -35,7 +35,7 @@ class GCMServer(SimpleHTTPRequestHandler):
             self.send_error(400, "No recipients")
             return
 
-        global output_dir
+        global output_dir  # noqa: F824
         for recipient in recipients:
             recipient = str(recipient)
             recipient_dir = os.path.join(output_dir, recipient)

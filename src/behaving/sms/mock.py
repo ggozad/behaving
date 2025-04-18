@@ -47,7 +47,7 @@ class SMSServer(SimpleHTTPRequestHandler):
         self.send_header("Content-type:", "text/json")
         self.end_headers()
         self.wfile.write(b'{"messages":[{"status":"0"}]}')
-        global output_dir
+        global output_dir  # noqa: F824
         phone_dir = os.path.join(output_dir, to)
         if not os.path.exists(phone_dir):
             try:

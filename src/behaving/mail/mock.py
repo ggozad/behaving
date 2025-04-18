@@ -32,7 +32,7 @@ def getUniqueFilename(recipient_dir, ext="tmp"):
 
 class DebuggingServer(smtpd.DebuggingServer):
     def __init__(self, localaddr, remoteaddr, log_to_stdout=True):
-        global output_dir
+        global output_dir  # noqa: F824
         self.path = output_dir
         self.log_to_stdout = log_to_stdout
         smtpd.DebuggingServer.__init__(self, localaddr, remoteaddr)
