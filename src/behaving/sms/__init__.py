@@ -13,10 +13,10 @@ def setup(context):
         try:
             if not os.path.isdir(path):
                 os.mkdir(path)
-            logger.info(f"No default sms path for smsmock is specified. Using {path}")
+            logger.info("No default sms path for smsmock is specified. Using %s", path)
         except OSError:
             logger.error(
-                f"No default sms path for smsmock is specified. Unable to create {path}"
+                "No default sms path for smsmock is specified. Unable to create %s", path
             )
             exit(1)
         context.sms_path = path

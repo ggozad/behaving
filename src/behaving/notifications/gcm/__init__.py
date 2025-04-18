@@ -13,10 +13,10 @@ def setup(context):
         try:
             if not os.path.isdir(path):
                 os.mkdir(path)
-            logger.info(f"No default gcm path for gcmmock is specified. Using {path}")
+            logger.info("No default gcm path for gcmmock is specified. Using %s", path)
         except OSError:
             logger.error(
-                f"No default gcm path for gcmmock is specified. Unable to create {path}"
+                "No default gcm path for gcmmock is specified. Unable to create %s", path
             )
             exit(1)
         context.gcm_path = path

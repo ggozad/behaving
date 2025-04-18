@@ -14,10 +14,10 @@ def setup(context):
         try:
             if not os.path.isdir(path):
                 os.mkdir(path)
-            logger.info(f"No default mail path for mailmock is specified. Using {path}")
+            logger.info("No default mail path for mailmock is specified. Using %s", path)
         except OSError:
             logger.error(
-                f"No default mail path for mailmock is specified. Unable to create {path}"
+                "No default mail path for mailmock is specified. Unable to create %s", path
             )
             exit(1)
         context.mail_path = path
