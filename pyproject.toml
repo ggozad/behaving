@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "behaving"
-version = "3.2.0"
+version = "3.2.1"
 description = "BDD Behavior-Driven-Development testing"
 authors = ["Yiorgis Gozadinos <ggozadinos@gmail.com>",
            "William Dutton <will.dutt@gmail.com>"]
