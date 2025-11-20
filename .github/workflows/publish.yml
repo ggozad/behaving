@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'ggozad/behaving'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-python@v6
         with:
@@ -103,7 +103,7 @@ jobs:
           echo "url=${url}" >> $GITHUB_OUTPUT
 
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Build package ${{ steps.version.outputs.reponame }} @ ${{ steps.version.outputs.version }}
         run: |
