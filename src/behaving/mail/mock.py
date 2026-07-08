@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 import argparse
+import asyncio
 import logging
 import os
 import sys
@@ -89,8 +90,11 @@ def main(args=sys.argv[1:]):
 
     controller = Controller(DebuggingHandler(options.output_dir, options.log_to_stdout), hostname="0.0.0.0", port=int(options.port))
     controller.start()
-    input('SMTP server running. Press Return to stop server and exit.')
-    controller.stop()
+    try:
+        asyncio.get_event_loop().run_forever()
+    except KeyboardInterrupt:
+        print("Stopping mail mock...")
+        controller.stop()
 
 
 if __name__ == "__main__":
