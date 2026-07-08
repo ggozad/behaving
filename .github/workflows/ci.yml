@@ -33,6 +33,8 @@ jobs:
           chmod -R a+rwX reports
 
       - uses: hoverkraft-tech/compose-action@v3.0.0
+        with:
+          services-log-level: info
 
       - name: Test
         run: |
