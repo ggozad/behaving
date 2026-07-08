@@ -41,8 +41,10 @@ class DebuggingHandler(Debugging):
         rcpttos = envelope.rcpt_tos
         data = envelope.content
         if self.log_to_stdout:
-            super().handle_DATA(server, session, envelope)
+            result = super().handle_DATA(server, session, envelope)
             sys.stdout.flush()
+        else:
+            result = '250 Message accepted for delivery'
         if self.path is None:
             return
         for addr in rcpttos:
@@ -55,6 +57,8 @@ class DebuggingHandler(Debugging):
 
         if notifier:
             notifier.notify(data, title=rcpttos, execute="open -a TextEdit " + dest)
+
+        return result
 
 
 def main(args=sys.argv[1:]):
