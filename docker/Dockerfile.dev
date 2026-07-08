@@ -1,16 +1,12 @@
+FROM node:24-slim as node_source
+
 FROM python:3.11-slim-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
 
-RUN \
-    apt-get update && apt-get install -yqq wget gnupg && \
-    echo "deb https://deb.nodesource.com/node_24.x bookworm main" > /etc/apt/sources.list.d/nodesource.list && \
-    wget -qO- https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
-    apt-get update && \
-    apt-get upgrade -yqq && \
-    apt-get install -yqq nodejs && \
-    rm -rf /var/lib/apt/lists/*
+COPY --from=node_source /usr/local/bin/node /usr/local/bin/
+COPY --from=node_source /usr/local/lib/node_modules /usr/local/lib/
 
 # Install gherkin-lint
 RUN npm install -g gherkin-lint
