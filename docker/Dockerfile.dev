@@ -1,12 +1,7 @@
-FROM node:24-slim as node_source
-
-FROM python:3.11-slim-bookworm
+FROM python:3.13-slim-trixie
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
-
-COPY --from=node_source /usr/local/bin/node /usr/local/bin/
-COPY --from=node_source /usr/local/lib/node_modules /usr/local/lib/
 
 # Install gherkin-lint
 RUN npm install -g gherkin-lint
