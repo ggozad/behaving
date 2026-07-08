@@ -26,8 +26,7 @@ parse = ">=1.20.2"
 behave = ">=1.2.6"
 splinter = ">=0.21.0"
 selenium = ">=4"
-pyasyncore = ">=1.0.5"
-standard-smtpd = ">=3.13.0"
+aiosmtpd = ">=1.4.6"
 
 [tool.poetry.scripts]
 mailmock = "behaving.mail.mock:main"
