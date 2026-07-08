@@ -21,7 +21,6 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.dev
-    image: behaving.dev
     networks:
       - behaving
     user: behaving
