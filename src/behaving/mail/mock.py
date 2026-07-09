@@ -40,6 +40,7 @@ class DebuggingHandler(Debugging):
     async def handle_DATA(self, server, session, envelope):
         rcpttos = envelope.rcpt_tos
         data = envelope.content
+        print(f"Received email with data {data}")
         if self.log_to_stdout:
             result = super().handle_DATA(server, session, envelope)
             sys.stdout.flush()
@@ -57,6 +58,7 @@ class DebuggingHandler(Debugging):
             if notifier:
                 notifier.notify(data, title=rcpttos, execute="open -a TextEdit " + dest)
 
+        print(f"Returning email result: {result}")
         return result
 
 
