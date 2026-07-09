@@ -40,12 +40,9 @@ class DebuggingHandler(Debugging):
     async def handle_DATA(self, server, session, envelope):
         rcpttos = envelope.rcpt_tos
         data = envelope.content
-        print(f"Received email with data {data}")
         if self.log_to_stdout:
-            result = super().handle_DATA(server, session, envelope)
+            super().handle_DATA(server, session, envelope)
             sys.stdout.flush()
-        else:
-            result = '250 Message accepted for delivery'
         if self.path:
             for addr in rcpttos:
                 path = os.path.join(self.path, addr)
@@ -58,8 +55,7 @@ class DebuggingHandler(Debugging):
             if notifier:
                 notifier.notify(data, title=rcpttos, execute="open -a TextEdit " + dest)
 
-        print(f"Returning email result: {result}")
-        return result
+        return '250 OK'
 
 
 def main(args=sys.argv[1:]):
