@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "behaving"
-version = "3.2.1"
+version = "3.3.0"
 description = "BDD Behavior-Driven-Development testing"
 authors = ["Yiorgis Gozadinos <ggozadinos@gmail.com>",
            "William Dutton <will.dutt@gmail.com>"]
@@ -14,7 +14,9 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Software Development :: Quality Assurance",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3"
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.14"
 ]
 keywords = ["BDD", "Behavior-Driven-Development", "testing"]
 repository = "https://github.com/ggozad/behaving"
