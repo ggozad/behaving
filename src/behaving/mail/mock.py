@@ -45,18 +45,17 @@ class DebuggingHandler(Debugging):
             sys.stdout.flush()
         else:
             result = '250 Message accepted for delivery'
-        if self.path is None:
-            return
-        for addr in rcpttos:
-            path = os.path.join(self.path, addr)
-            if not os.path.exists(path):
-                os.makedirs(path)
-            dest = getUniqueFilename(path, "eml")
-            with open(dest, "wb") as f:
-                f.write(data)
+        if self.path:
+            for addr in rcpttos:
+                path = os.path.join(self.path, addr)
+                if not os.path.exists(path):
+                    os.makedirs(path)
+                dest = getUniqueFilename(path, "eml")
+                with open(dest, "wb") as f:
+                    f.write(data)
 
-        if notifier:
-            notifier.notify(data, title=rcpttos, execute="open -a TextEdit " + dest)
+            if notifier:
+                notifier.notify(data, title=rcpttos, execute="open -a TextEdit " + dest)
 
         return result
 
