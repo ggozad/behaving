@@ -346,14 +346,14 @@ files = [
 
 [[package]]
 name = "parse"
-version = "1.20.2"
+version = "1.22.1"
 description = "parse() is the opposite of format()"
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "parse-1.20.2-py2.py3-none-any.whl", hash = "sha256:967095588cb802add9177d0c0b6133b5ba33b1ea9007ca800e526f42a85af558"},
-    {file = "parse-1.20.2.tar.gz", hash = "sha256:b41d604d16503c79d81af5165155c0b20f6c8d6c559efa66b4b695c3e5a0a0ce"},
+    {file = "parse-1.22.1-py2.py3-none-any.whl", hash = "sha256:20f0925a46f06602485ac90d751764d0697fd8455aaa97489ba8953a4b66de32"},
+    {file = "parse-1.22.1.tar.gz", hash = "sha256:d3a4740ec3da338e2b258b2d69741b731eadfddca59e24a14bc4ee5fce38c911"},
 ]
 
 [[package]]
