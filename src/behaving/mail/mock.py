@@ -1,10 +1,13 @@
+# encoding: utf-8
+
 import argparse
-import asyncore
 import logging
 import os
-import smtpd
 import sys
 import time
+
+from aiosmtpd.controller import Controller
+from aiosmtpd.handlers import Debugging
 
 try:
     from pync import Notifier
@@ -12,8 +15,6 @@ try:
     notifier = Notifier
 except ImportError:
     notifier = None
-
-output_dir = None
 
 
 def getUniqueFilename(recipient_dir, ext="tmp"):
@@ -30,31 +31,31 @@ def getUniqueFilename(recipient_dir, ext="tmp"):
     return dest
 
 
-class DebuggingServer(smtpd.DebuggingServer):
-    def __init__(self, localaddr, remoteaddr, log_to_stdout=True):
-        global output_dir  # noqa: F824
+class DebuggingHandler(Debugging):
+    def __init__(self, output_dir, log_to_stdout=True):
         self.path = output_dir
         self.log_to_stdout = log_to_stdout
-        smtpd.DebuggingServer.__init__(self, localaddr, remoteaddr)
+        super().__init__(sys.stdout)
 
-    def process_message(
-        self, peer, mailfrom, rcpttos, data, mail_options=[], rcpt_options=[]
-    ):
+    async def handle_DATA(self, server, session, envelope):
+        rcpttos = envelope.rcpt_tos
+        data = envelope.content
         if self.log_to_stdout:
-            smtpd.DebuggingServer.process_message(self, peer, mailfrom, rcpttos, data)
+            super().handle_DATA(server, session, envelope)
             sys.stdout.flush()
-        if self.path is None:
-            return
-        for addr in rcpttos:
-            path = os.path.join(self.path, addr)
-            if not os.path.exists(path):
-                os.makedirs(path)
-            dest = getUniqueFilename(path, "eml")
-            with open(dest, "wb") as f:
-                f.write(data)
+        if self.path:
+            for addr in rcpttos:
+                path = os.path.join(self.path, addr)
+                if not os.path.exists(path):
+                    os.makedirs(path)
+                dest = getUniqueFilename(path, "eml")
+                with open(dest, "wb") as f:
+                    f.write(data)
 
-        if notifier:
-            notifier.notify(data, title=rcpttos, execute="open -a TextEdit " + dest)
+            if notifier:
+                notifier.notify(data, title=rcpttos, execute="open -a TextEdit " + dest)
+
+        return '250 OK'
 
 
 def main(args=sys.argv[1:]):
@@ -86,14 +87,15 @@ def main(args=sys.argv[1:]):
             os.mkdir(options.output_dir)
         except OSError:
             logging.error("Output directory could not be created")
-    global output_dir
-    output_dir = options.output_dir
 
-    smtpd = DebuggingServer(("0.0.0.0", int(options.port)), None, options.log_to_stdout)
+    controller = Controller(DebuggingHandler(options.output_dir, options.log_to_stdout), hostname="0.0.0.0", port=int(options.port))
+    controller.start()
     try:
-        asyncore.loop()
+        while True:
+            time.sleep(999999999)
     except KeyboardInterrupt:
-        smtpd.close()
+        print("Stopping mail mock...")
+        controller.stop()
 
 
 if __name__ == "__main__":
