@@ -51,6 +51,6 @@ def send_gcm_notification(context, message):
     req = Request(url, message.encode("utf-8"))
 
     try:
-        urlopen(req)
+        urlopen(req, timeout=30)
     except (HTTPError,):
         assert False, "Unable to send gcm message"
